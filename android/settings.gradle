@@ -1,0 +1,3 @@
+rootProject.name = 'H2H'
+
+include ':app'

@@ -1,0 +1,2 @@
+json_key_file("apiKey.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("io.taher.h2h") # e.g. com.krausefx.app

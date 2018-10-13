@@ -1,0 +1,19 @@
+# This file contains ruby gems (dependencies) which are needed for the CI
+source 'https://rubygems.org'
+
+# Danger for ci linting and gitlab comments on merge requests
+gem 'danger-gitlab', '~>5.0'
+gem 'danger-swiftlint'
+
+# rake is needed explicitly for fastlane
+gem 'rake'
+
+# fastlane is used for running xcodebuild commands
+gem 'fastlane'
+
+# badge is used for automated badge creation
+# gem 'badge'
+
+# Plugin path for fastlane (auto generated lines)
+plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
+eval_gemfile(plugins_path) if File.exist?(plugins_path)
