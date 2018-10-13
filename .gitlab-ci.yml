@@ -4,8 +4,8 @@ image: openjdk:8-jdk
 
 variables:
   ANDROID_COMPILE_SDK: "26"
-  ANDROID_BUILD_TOOLS: "26.0.2"
-  ANDROID_SDK_TOOLS: "26.0.2"
+  ANDROID_BUILD_TOOLS: "24.0.0"
+  ANDROID_SDK_TOOLS: "24.4.1"
 
 before_script:
   - apt-get --quiet update --yes
@@ -20,7 +20,9 @@ before_script:
   - echo y | android-sdk-linux/tools/android --silent update sdk --no-ui --all --filter extra-google-m2repository
   - export ANDROID_HOME=$PWD/android-sdk-linux
   - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
-  - chmod +x ./gradlew
+  
+stages:
+  - release
 
 internal_release:
   stage: release
