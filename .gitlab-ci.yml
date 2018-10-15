@@ -22,9 +22,10 @@ stages:
 internal_release:
   stage: release
   script:
+    - echo $API_JSON >> apiKey.json
+    - echo $API_JSON
     - npm install
     - cd android
-    - echo $API_JSON >> apiKey.json
     - bundle install --path=./.bundler
     - fastlane beta
   artifacts:
