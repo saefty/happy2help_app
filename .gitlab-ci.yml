@@ -12,8 +12,11 @@ cache:
   paths:
   - node_modules/
   - android/.bundler
+  - .gradle/wrapper
+  - .gradle/caches
   
 before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
   - chmod +x android/gradlew
   
 stages:
