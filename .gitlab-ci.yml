@@ -11,7 +11,7 @@ cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
   - node_modules/
-  - .bundler
+  - android/.bundler
   
 before_script:
   - chmod +x android/gradlew
@@ -22,9 +22,9 @@ stages:
 internal_release:
   stage: release
   script:
+    - npm install
     - cd android
     - bundle install --path=./.bundler
-    - npm install
     - fastlane beta
   artifacts:
     paths:
