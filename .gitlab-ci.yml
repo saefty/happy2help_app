@@ -7,6 +7,9 @@ variables:
   ANDROID_BUILD_TOOLS: "24.0.0"
   ANDROID_SDK_TOOLS: "24.4.1"
   
+before_script:
+  - chmod +x android/gradlew
+  
 stages:
   - release
 
