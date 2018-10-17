@@ -99,14 +99,14 @@ android {
 
     dexOptions {
         preDexLibraries false
-        javaMaxHeapSize "8g"
+        javaMaxHeapSize "6g"
     }
 
     defaultConfig {
         applicationId "io.taher.h2h"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
+        versionCode rootProject.ext.version
         versionName "0.0.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
