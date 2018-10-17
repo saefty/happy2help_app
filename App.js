@@ -9,6 +9,16 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image } from 'react-native';
 
+import { Sentry } from 'react-native-sentry';
+import { SentrySeverity } from 'react-native-sentry';
+import { SentryLog } from 'react-native-sentry';
+
+Sentry.config('https://62202530116e405e9bdf7dca8a105ecd@sentry.io/1303411', {logLevel: SentryLog.Verbose })
+
+if (!global.__DEV__) {
+  Sentry.install();
+}
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -19,6 +29,8 @@ const instructions = Platform.select({
 type Props = {};
 export default class App extends Component<Props> {
   render() {
+    Sentry.captureBreadcrumb({message: 'Test msg', category: 'start', data: { some: 'data', as: 'json' }});
+    throw new Error('test');
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to Happy to Help!</Text>
