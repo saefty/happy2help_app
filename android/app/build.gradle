@@ -106,7 +106,7 @@ android {
         applicationId "io.taher.h2h"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode System.getenv('CI_PIPELINE_ID')
+        versionCode 8
         versionName "0.0.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"
