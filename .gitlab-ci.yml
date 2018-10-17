@@ -26,6 +26,7 @@ internal_release:
   stage: release
   script:
     - npm install
+    - react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
     - cd android
     - echo $API_KEY >> apiKey.json
     - bundle install --path=./.bundler

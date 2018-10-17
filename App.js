@@ -30,10 +30,9 @@ type Props = {};
 export default class App extends Component<Props> {
   render() {
     Sentry.captureBreadcrumb({message: 'Test msg', category: 'start', data: { some: 'data', as: 'json' }});
-    throw new Error('test');
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to Happy to Help!</Text>
+        <Text style={styles.welcome}>Welcome to Happy to Help...!</Text>
         <Image source={require('./assets/imgs/h2h_app.png')}></Image>
       </View>
     );

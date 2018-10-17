@@ -71,13 +71,18 @@ import com.android.build.OutputFile
  *   extraPackagerArgs: []
  * ]
  */
-
 project.ext.react = [
-    entryFile: "index.js"
+    entryFile: "index.js",
+    // whether to bundle JS and assets in debug mode
+    bundleInDebug: false,
+    // whether to bundle JS and assets in release mode
+    bundleInRelease: true 
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/react-native-sentry/sentry.gradle"
+
+
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -96,7 +101,7 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion '28.0.2'
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     dexOptions {
         preDexLibraries false
@@ -166,3 +171,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
