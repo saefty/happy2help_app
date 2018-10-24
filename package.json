@@ -9,7 +9,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "apollo-boost": "^0.1.17",
+    "apollo-client-preset": "^1.0.8",
+    "graphql": "^14.0.2",
+    "graphql-tag": "^2.10.0",
     "react": "16.4.1",
+    "react-apollo": "^2.2.4",
     "react-native": "0.56.1",
     "react-native-sentry": "^0.39.0"
   },
