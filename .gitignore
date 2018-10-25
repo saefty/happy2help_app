@@ -57,3 +57,5 @@ buck-out/
 
 # Apk data
 */app/build
+
+.vscode

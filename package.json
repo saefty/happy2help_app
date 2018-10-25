@@ -6,22 +6,43 @@
     "bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "start": "react-native run-android",
     "build": "npm run bundle && cd android && ./gradlew clean assembleRelease",
-    "test": "jest"
+    "test": "jest",
+    "prettier": "prettier './**/*.js'",
+    "precommit": "lint-staged",
+    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "apollo-boost": "^0.1.17",
     "apollo-client-preset": "^1.0.8",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
+    "i18next": "^12.0.0",
     "react": "16.4.1",
     "react-apollo": "^2.2.4",
+    "react-i18next": "^8.1.2",
     "react-native": "0.56.1",
+    "react-native-languages": "^3.0.1",
     "react-native-sentry": "^0.39.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "babel-jest": "23.6.0",
     "babel-preset-react-native": "^5",
+    "eslint": "^5.7.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-flowtype": "^3.0.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-react-native": "^3.5.0",
+    "eslint-plugin-standard": "^4.0.0",
     "jest": "23.6.0",
+    "prettier": "^1.14.3",
     "react-test-renderer": "16.4.1"
   },
   "jest": {

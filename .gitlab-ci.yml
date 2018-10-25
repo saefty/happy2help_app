@@ -24,6 +24,8 @@ stages:
 
 internal_release:
   stage: release
+  only: 
+    - master
   script:
     - npm install
     - npm run bundle
