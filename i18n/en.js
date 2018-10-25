@@ -1,5 +1,6 @@
 export default {
     common: {
-        title: 'Test en!',
+        title: 'Deutsch',
+        welcome: 'Welcome to Happy to Help'
     },
 };
