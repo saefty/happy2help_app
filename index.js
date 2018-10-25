@@ -1,7 +1,7 @@
 /** @format */
 // @flow
 import React, { Component } from 'react';
-import { AppRegistry, Button } from 'react-native';
+import { AppRegistry, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
 
@@ -21,6 +21,11 @@ import i18n from './i18n/i18n';
 type I18nProps = {
     t: i18n.t,
 };
+
+const style = StyleSheet.create({
+    btn: { width: '100%', justifyContent: 'center' },
+    text: { padding: 50, textAlign: 'center', backgroundColor: '#198EBC', color: '#ffffff', fontSize: 20 },
+});
 
 export default class AppApollo extends Component<I18nProps> {
     constructor(props) {
@@ -47,12 +52,14 @@ export default class AppApollo extends Component<I18nProps> {
                 screenProps={this.props.t}
             >
                 <App />
-                <Button
+                <TouchableOpacity
                     onPress={() => {
                         this.onLanguageChange('de');
                     }}
-                    title={this.props.t('title')}
-                />
+                    style={style.btn}
+                >
+                    <Text style={style.text}>{this.props.t('title')}</Text>
+                </TouchableOpacity>
             </ApolloProvider>
         );
     }

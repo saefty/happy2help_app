@@ -3,6 +3,7 @@ package io.taher.h2h;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.reactcommunity.rnlanguages.RNLanguagesPackage;
 import io.sentry.RNSentryPackage;
 import com.facebook.react.ReactNativeHost;
@@ -12,6 +13,7 @@ import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;
 import java.util.List;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -25,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
             new RNLanguagesPackage(),
             new RNSentryPackage()
       );

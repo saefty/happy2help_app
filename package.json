@@ -5,6 +5,7 @@
   "scripts": {
     "bundle": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "start": "react-native run-android",
+    "start:old": "node node_modules/react-native/local-cli/cli.js start",
     "build": "npm run bundle && cd android && ./gradlew clean assembleRelease",
     "test": "jest",
     "prettier": "prettier './**/*.js'",
@@ -28,7 +29,8 @@
     "react-i18next": "^8.1.2",
     "react-native": "0.56.1",
     "react-native-languages": "^3.0.1",
-    "react-native-sentry": "^0.39.0"
+    "react-native-sentry": "^0.39.0",
+    "react-native-splash-screen": "^3.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
