@@ -60,7 +60,7 @@ export default class AppApollo extends Component<I18nProps> {
 
     logIn = async (jwt: string) => {
         // Save the JWT value in the apollo cache
-        await this.state.apolloClient.mutate({
+        const result = await this.state.apolloClient.mutate({
             mutation: gql`
                 mutation SetJWT($jwt: String) {
                     setJWT(jwt: $jwt) @clientcomponentWillMount() {
