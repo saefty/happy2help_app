@@ -38,12 +38,6 @@ const style = StyleSheet.create({
     },
 });
 
-const GET_JWT = gql`
-    query {
-        JWT @client
-    }
-`;
-
 export default class AppApollo extends Component<I18nProps> {
     state = {
         apolloClient: undefined,
@@ -56,26 +50,17 @@ export default class AppApollo extends Component<I18nProps> {
 
     async componentDidMount() {
         const cfg = await createApolloConfiguration();
+
         await this.setState({
             apolloClient: new ApolloClient(cfg),
         });
-        const result = await this.state.apolloClient.query({
-            query: GET_JWT,
-        });
-        if (result.data.JWT) {
-            console.log('login from cache');
-            await this.logIn(result.data.JWT);
-        }
+
         SplashScreen.hide();
     }
 
     logIn = async (jwt: string) => {
-        // Configure header
-        const cfg = await createApolloConfiguration(jwt);
-        const newClient = new ApolloClient(cfg);
-
-        // save JWT
-        await newClient.mutate({
+        // Save the JWT value in the apollo cache
+        await this.state.apolloClient.mutate({
             mutation: gql`
                 mutation SetJWT($jwt: String) {
                     setJWT(jwt: $jwt) @client
@@ -83,19 +68,15 @@ export default class AppApollo extends Component<I18nProps> {
             `,
             variables: { jwt },
         });
-
-        // set new Client
-        await this.setState({
-            apolloClient: newClient,
-        });
     };
 
     logOut = async () => {
-        await AsyncStorage.removeItem('apollo-cache-persist');
+        await AsyncStorage.clear();
         await this.state.apolloClient.resetStore();
     };
 
-    onLanguageChange(language) {
+    onLanguageChange(language) { // eslint-disable-line
+        // i18n.changeLanguage(language);
         if (i18n.language === 'de') {
             i18n.changeLanguage('en');
         } else {

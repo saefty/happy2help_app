@@ -51,6 +51,7 @@ class LoginForm extends Component<Props> {
                     password: value.password,
                 },
             });
+            console.log(token)
             this.props.logIn(token.data.tokenAuth.token);
         }
     }
