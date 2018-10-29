@@ -52,7 +52,8 @@ class LoginForm extends Component<Props> {
                 },
             });
             console.log(token)
-            this.props.logIn(token.data.tokenAuth.token);
+            await this.props.logIn(token.data.tokenAuth.token);
+            this.setState({})
         }
     }
 

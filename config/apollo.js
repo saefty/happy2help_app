@@ -31,34 +31,32 @@ export const createApolloConfiguration = async () => {
         debug: true, // enables console logging
     });
 
-    const CreateHeaderLink = () => {
-        return setContext(async (_, { headers, cache }) => {
-            let result = '';
-            try {
-                // retrieve the JWT token form cache
-                result = await cache.readQuery({
-                    query: gql`
-                        query {
-                            JWT @client
-                        }
-                    `,
-                });
-            } catch (E) {} // eslint-disable-line
+    const CreateHeaderLink = setContext(async (_, { headers, cache }) => {
+        let result = '';
+        try {
+            // retrieve the JWT token form cache
+            result = await cache.readQuery({
+                query: gql`
+                    query {
+                        JWT @client
+                    }
+                `,
+            });
+        } catch (E) {} // eslint-disable-line
 
-            // get the authentication token from local storage if it exists
-            const token = result && result.JWT ? result.JWT : '';
-            // return the headers to the context so httpLink can read them
-            return {
-                headers: {
-                    ...headers,
-                    authorization: token ? `JWT ${token}` : '',
-                },
-            };
-        });
-    };
+        // get the authentication token from local storage if it exists
+        const token = result && result.JWT ? result.JWT : '';
+        // return the headers to the context so httpLink can read them
+        return {
+            headers: {
+                ...headers,
+                authorization: token ? `JWT ${token}` : '',
+            },
+        };
+    });
 
     const Links = [
-        CreateHeaderLink(),
+        CreateHeaderLink,
         stateLink,
         new HttpLink({
             uri: 'https://h2h-dev.taher.io/graphql/',
