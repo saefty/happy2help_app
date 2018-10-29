@@ -9,8 +9,9 @@ import { ApolloLink } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { AsyncStorage } from 'react-native';
 import { persistCache } from 'apollo-cache-persist';
+import gql from 'graphql-tag';
 
-export const createApolloConfiguration = async (jwt: string) => {
+export const createApolloConfiguration = async () => {
     // This is the same cache you pass into new ApolloClient
     const cache = new InMemoryCache();
     const cfg = {
@@ -30,10 +31,22 @@ export const createApolloConfiguration = async (jwt: string) => {
         debug: true, // enables console logging
     });
 
-    const CreateHeaderLink = jwt => {
-        return setContext((_, { headers }) => {
+    const CreateHeaderLink = () => {
+        return setContext(async (_, { headers, cache }) => {
+            let result = '';
+            try {
+                // retrieve the JWT token form cache
+                result = await cache.readQuery({
+                    query: gql`
+                        query {
+                            JWT @client
+                        }
+                    `,
+                });
+            } catch (E) {} // eslint-disable-line
+
             // get the authentication token from local storage if it exists
-            const token = jwt;
+            const token = result && result.JWT ? result.JWT : '';
             // return the headers to the context so httpLink can read them
             return {
                 headers: {
@@ -45,7 +58,7 @@ export const createApolloConfiguration = async (jwt: string) => {
     };
 
     const Links = [
-        CreateHeaderLink(jwt),
+        CreateHeaderLink(),
         stateLink,
         new HttpLink({
             uri: 'https://h2h-dev.taher.io/graphql/',
