@@ -32,7 +32,6 @@ class App extends Component<Props> {
                 <Query
                     query={gql`
                         query {
-                            JWT @client
                             user {
                                 edges {
                                     node {
@@ -43,6 +42,7 @@ class App extends Component<Props> {
                             }
                         }
                     `}
+                    pollInterval={500}
                 >
                     {({ loading, error, data }) => {
                         if (loading) return <Text>Loading...</Text>;
