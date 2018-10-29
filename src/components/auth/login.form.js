@@ -43,7 +43,6 @@ class LoginForm extends Component<Props> {
     onPress = async () => {
         // retrieve value from form
         var value = this.form.current.getValue();
-        this.props.logIn('123124124');
 
         if (value) {
             const token = await this.props.mutate({
@@ -53,7 +52,6 @@ class LoginForm extends Component<Props> {
                 },
             });
             this.props.logIn(token.data.tokenAuth.token);
-            console.log(token.data.tokenAuth.token, 'token.data.tokenAuth.token')
         }
     }
 
@@ -73,6 +71,14 @@ class LoginForm extends Component<Props> {
                     underlayColor="#99d9f4"
                 >
                     <Text style={styles.buttonText}>Save</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={this.props.logOut}
+                    onChange={this.onChange}
+                    underlayColor="#99d9f4"
+                >
+                    <Text style={styles.buttonText}>Delete</Text>
                 </TouchableOpacity>
             </View>
         );
