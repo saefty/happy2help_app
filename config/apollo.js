@@ -13,21 +13,22 @@ import { persistCache } from 'apollo-cache-persist';
 export const createApolloConfiguration = async (jwt: string) => {
     // This is the same cache you pass into new ApolloClient
     const cache = new InMemoryCache();
-
-    const stateLink = withClientState({
+    const cfg = {
         cache,
         resolvers: Resolvers,
         typeDefs: TypeDefs,
         defaults: Defaults,
-    });
+    };
+
+    const stateLink = withClientState(cfg);
 
     await persistCache({
         cache,
         storage: AsyncStorage,
         trigger: 'background',
         maxSize: 1048576 * 100, // 100 MB
-        debug: true // enables console logging
-    })
+        debug: true, // enables console logging
+    });
 
     const CreateHeaderLink = jwt => {
         return setContext((_, { headers }) => {

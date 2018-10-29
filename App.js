@@ -32,14 +32,12 @@ class App extends Component<Props> {
                 <Query
                     query={gql`
                         query {
-                            JWT @client {
-                                __typename
-                                value
-                            }
+                            JWT @client
                             user {
                                 edges {
                                     node {
                                         username
+                                        email
                                     }
                                 }
                             }
@@ -47,17 +45,16 @@ class App extends Component<Props> {
                     `}
                 >
                     {({ loading, error, data }) => {
-                        console.log(loading, error, data);
                         if (loading) return <Text>Loading...</Text>;
                         if (error) return <Text>{error.message}</Text>;
                         let username;
                         if(data.user) {
-                            username = <Text>{data.user.edges[0].node.username}</Text>
+                            username = <Text>{data.user.edges[0].node.username} {data.user.edges[0].node.email}</Text>
                         }
                         return (
                             <View>
                                 {username}
-                                <Text>{JSON.stringify(data.JWT.value)}</Text>
+                                <Text>{JSON.stringify(data.JWT)}</Text>
                             </View>
                         );
                     }}
