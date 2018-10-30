@@ -63,7 +63,9 @@ export default class AppApollo extends Component<I18nProps> {
         const result = await this.state.apolloClient.mutate({
             mutation: gql`
                 mutation SetJWT($jwt: String) {
-                    setJWT(jwt: $jwt) @client
+                    setJWT(jwt: $jwt) @clientcomponentWillMount() {
+        
+    }
                 }
             `,
             variables: { jwt },
