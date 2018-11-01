@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { Sentry } from 'react-native-sentry';
@@ -8,6 +8,7 @@ import { SentryConfig } from './config/sentry';
 import { DefaultStyles } from './config/style';
 import { withNamespaces } from 'react-i18next';
 import { Button } from 'react-native-paper';
+import MapView from 'react-native-maps';
 
 Sentry.config(SentryConfig.link, SentryConfig.props);
 
@@ -30,6 +31,37 @@ class App extends Component<Props> {
     render() {
         return (
             <View style={DefaultStyles.container}>
+                <MapView
+                    accessible={true}
+                    style={styles.map}
+                />
+                <Button onPress={this.props.logOut} style={styles.logOut} mode="contained">
+                    Log out
+                </Button>
+            </View>
+        );
+    }
+}
+export default withNamespaces('common', {
+    bindI18n: 'languageChanged',
+    bindStore: false,
+})(App);
+
+var styles = StyleSheet.create({
+    map: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
+    logOut: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+    }
+});
+/*
                 <Query
                     query={gql`
                         query {
@@ -49,7 +81,7 @@ class App extends Component<Props> {
                         return (
                             <View>
                                 <Text>All Users:</Text>
-                                {data.allUsers.map((user) => {
+                                {data.allUsers.map(user => {
                                     return (
                                         <Text key={user.id}>
                                             {user.username}
@@ -66,14 +98,4 @@ class App extends Component<Props> {
                         );
                     }}
                 </Query>
-                <Text style={DefaultStyles.welcome}>
-                    {this.props.t('welcome')}
-                </Text>
-            </View>
-        );
-    }
-}
-export default withNamespaces('common', {
-    bindI18n: 'languageChanged',
-    bindStore: false,
-})(App);
+                */
