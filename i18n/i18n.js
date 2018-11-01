@@ -5,6 +5,9 @@ import en from './en';
 
 i18n.use(reactI18nextModule).init({
     fallbackLng: 'en',
+    react: {
+        wait: true
+    },
 
     resources: {
         en,

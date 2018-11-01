@@ -3,6 +3,7 @@ package io.taher.h2h;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.reactcommunity.rnlanguages.RNLanguagesPackage;
 import io.sentry.RNSentryPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
             new SplashScreenReactPackage(),
             new RNLanguagesPackage(),
             new RNSentryPackage()

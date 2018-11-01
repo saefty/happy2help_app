@@ -10,6 +10,7 @@ import { HttpLink } from 'apollo-link-http';
 import { AsyncStorage } from 'react-native';
 import { persistCache } from 'apollo-cache-persist';
 import gql from 'graphql-tag';
+import { onError } from 'apollo-link-error';
 
 export const createApolloConfiguration = async () => {
     // This is the same cache you pass into new ApolloClient
@@ -54,8 +55,12 @@ export const createApolloConfiguration = async () => {
             },
         };
     });
+    const errorLink = onError(({ graphQLErrors }) => {
+        if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message))
+      })
 
     const Links = [
+        errorLink,
         CreateHeaderLink,
         stateLink,
         new HttpLink({

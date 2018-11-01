@@ -1,13 +1,13 @@
 // @flow
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View } from 'react-native';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { Sentry } from 'react-native-sentry';
 import { SentryConfig } from './config/sentry';
 import { DefaultStyles } from './config/style';
 import { withNamespaces } from 'react-i18next';
-import { LoginForm } from './src/components/auth/login.form';
+import { Button } from 'react-native-paper';
 
 Sentry.config(SentryConfig.link, SentryConfig.props);
 
@@ -17,6 +17,7 @@ if (!global.__DEV__) {
 
 type Props = {
     t: i18n.t,
+    logOut: () => void,
 };
 class App extends Component<Props> {
     componentDidMount() {
@@ -32,13 +33,10 @@ class App extends Component<Props> {
                 <Query
                     query={gql`
                         query {
-                            user {
-                                edges {
-                                    node {
-                                        username
-                                        email
-                                    }
-                                }
+                            allUsers {
+                                id
+                                username
+                                email
                             }
                         }
                     `}
@@ -47,14 +45,23 @@ class App extends Component<Props> {
                     {({ loading, error, data }) => {
                         if (loading) return <Text>Loading...</Text>;
                         if (error) return <Text>{error.message}</Text>;
-                        let username;
-                        if(data.user) {
-                            username = <Text>{data.user.edges[0].node.username} {data.user.edges[0].node.email}</Text>
-                        }
+
                         return (
                             <View>
-                                {username}
-                                <Text>{JSON.stringify(data.JWT)}</Text>
+                                <Text>All Users:</Text>
+                                {data.allUsers.map((user) => {
+                                    return (
+                                        <Text key={user.id}>
+                                            {user.username}
+                                        </Text>
+                                    );
+                                })}
+                                <Button
+                                    onPress={this.props.logOut}
+                                    mode="contained"
+                                >
+                                    Log out
+                                </Button>
                             </View>
                         );
                     }}
