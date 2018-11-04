@@ -27,8 +27,8 @@ internal_release:
   only: 
     - master
   script:
-    - npm install
-    - npm run bundle
+    - npm install -g yarn
+    - yarn
     - cd android
     - echo $API_KEY >> apiKey.json
     - bundle install --path=./.bundler
