@@ -9,6 +9,7 @@ import { DefaultStyles } from './config/style';
 import { withNamespaces } from 'react-i18next';
 import { Button } from 'react-native-paper';
 import MapView from 'react-native-maps';
+import EventList from 'src/components/listview/eventList'
 
 Sentry.config(SentryConfig.link, SentryConfig.props);
 
@@ -29,8 +30,9 @@ class App extends Component<Props> {
         });
     }
     render() {
+        /*     
         return (
-            <View style={DefaultStyles.container}>
+             <View style={DefaultStyles.container}>
                 <MapView
                     accessible={true}
                     style={styles.map}
@@ -38,8 +40,15 @@ class App extends Component<Props> {
                 <Button onPress={this.props.logOut} style={styles.logOut} mode="contained">
                     Log out
                 </Button>
+                
             </View>
         );
+        */
+       return (             
+           <View style={DefaultStyles.container}>
+                <EventList></EventList>
+           </View>
+       );
     }
 }
 export default withNamespaces('common', {
