@@ -66,7 +66,7 @@ class SignUpForm extends Component<Props> {
             },
         });
         actions.setSubmitting(false);
-        this.props.setSignUp(false)
+        this.props.setSignUp(false);
 
         //await this.props.logIn(token.data.tokenAuth.token);
     };
@@ -183,8 +183,8 @@ var styles = StyleSheet.create({
         marginBottom: -10,
     },
     signIn: {
-        marginTop: 5
-    }
+        marginTop: 5,
+    },
 });
 
 const NameSpaced = withNamespaces(['User', 'errors'])(SignUpForm);
