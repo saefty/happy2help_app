@@ -22,7 +22,7 @@ export class LogoutButton extends Component<Props> {
             <View>
                 <Button
                     onPress={this.props.logOut}
-                    style={{ margin: 10 }}
+                    style={styles.logoutButton}
                     mode="contained"
                 >
                     Log out

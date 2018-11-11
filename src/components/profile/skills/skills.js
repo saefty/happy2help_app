@@ -32,8 +32,8 @@ export class Skills extends Component<Props> {
 
     render() {
         return (
-            <View style={{ margin: 10 }}>
-                <Title style={{ margin: 5 }}>Skills</Title>
+            <View style={styles.container}>
+                <Title style={styles.title}>Skills</Title>
                 <View style={styles.chipBox}>
                     {this.createSkills()}
                 </View>

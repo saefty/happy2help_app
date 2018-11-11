@@ -29,7 +29,7 @@ export class ProfileView extends Component<Props> {
         return (
             <View style={styles.outerContainer}>
                 <View style={styles.innerContainer}>
-                    <Header />
+                    <Header userName='ron_weasley' location='Berlin, Deutschland'/>
                     <Skills skillObjects={skillObjects} />
                 </View>
                 <LogoutButton {...this.props} />
