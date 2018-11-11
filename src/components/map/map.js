@@ -4,8 +4,6 @@ import {
     View,
     StyleSheet
 } from 'react-native';
-import { BottomNavigation, Text } from 'react-native-paper';
-import { ProfileView } from '../profile/profileView';
 import MapView from 'react-native-maps';
 import { DefaultStyles } from '../../../config/style';
 

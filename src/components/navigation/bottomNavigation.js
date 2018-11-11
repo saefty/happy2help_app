@@ -1,6 +1,7 @@
+// @flow
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
-import { ProfileView } from '../profile/profileView';
+import { ProfileView } from '../../screens/profile/profile.screen';
 import { Map } from '../map/map'
 
 
@@ -17,6 +18,7 @@ type Props = {
     t: i18n.t,
     logOut: () => void,
 };
+
 export class Navigation extends React.Component <Props> {
     state = {
         index: 0,
