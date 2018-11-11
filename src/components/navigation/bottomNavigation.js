@@ -1,12 +1,13 @@
+// @flow
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
 import { ProfileView } from '../profile/profileView';
 import { Map } from '../map/map'
-
+import { withNamespaces, i18n } from 'react-i18next';
 
 //const ProfileRoute = <ProfileView logOut={this.props.logOut} ></ProfileView>;
 
-const MapRoute = () => <Map ></Map>;
+const MapRoute = () => <Map></Map>;
 
 const ListRoute = () => <Text>List</Text>;
 const ChatRoute = () => <Text>Chat</Text>;
@@ -17,14 +18,20 @@ type Props = {
     t: i18n.t,
     logOut: () => void,
 };
-export class Navigation extends React.Component <Props> {
+
+type State = {
+    index: number,
+    routes: Array<any>,
+}
+
+class Navigation extends React.Component <Props, State> {
     state = {
         index: 0,
         routes: [
-            { key: 'profile', title: 'Profile', icon: 'person' },
-            { key: 'map', title: 'Map', icon: 'map' },
-            { key: 'list', title: 'List', icon: 'list' },
-            { key: 'chat', title: 'Chat', icon: 'chat-bubble' },
+            { key: 'profile', title: this.props.t('profile'), icon: 'person' },
+            { key: 'map', title: this.props.t('map'), icon: 'map' },
+            { key: 'list', title: this.props.t('list'), icon: 'list' },
+            { key: 'chat', title: this.props.t('chat'), icon: 'chat-bubble' },
         ],
     };
 
@@ -48,3 +55,5 @@ export class Navigation extends React.Component <Props> {
         );
     }
 }
+
+export const I18nNavigation = withNamespaces(['Navigation'])(Navigation);

@@ -4,19 +4,18 @@ import {
     View,
     StyleSheet
 } from 'react-native';
-import { BottomNavigation, Text } from 'react-native-paper';
-import { ProfileView } from '../profile/profileView';
 import MapView from 'react-native-maps';
 import { DefaultStyles } from '../../../config/style';
+import { i18n } from 'react-i18next';
 
 
 
 type Props = {
-    t: i18n.t,
+    t?: i18n.t,
 };
 
 export class Map extends Component<Props> {
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
     }
     render() {
