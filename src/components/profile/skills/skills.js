@@ -5,18 +5,12 @@ import { Title } from 'react-native-paper';
 
 import { SkillChip } from './skillChip/skillChip';
 import { styles } from './skillsStyle';
-
-type SkillObject  = {
-    text: string,
-    approved: boolean,
-}
+import { SkillObject } from './../../../models/skill.model';
 
 type Props = {
     t: i18n.t,
     skillObjects: SkillObject[],
 };
-
-
 
 export class Skills extends Component<Props> {
     constructor(props) {
@@ -24,8 +18,8 @@ export class Skills extends Component<Props> {
     }
     createSkills = () => {
         let skills = [];
-        this.props.skillObjects.forEach((skillObject) => {
-            skills.push(<SkillChip text={skillObject.text} approved={skillObject.approved} />)
+        this.props.skillObjects.forEach(skillObject => {
+            skills.push(<SkillChip skillObject={skillObject} />);
         });
         return skills;
     };
@@ -34,9 +28,7 @@ export class Skills extends Component<Props> {
         return (
             <View style={styles.container}>
                 <Title style={styles.title}>Skills</Title>
-                <View style={styles.chipBox}>
-                    {this.createSkills()}
-                </View>
+                <View style={styles.chipBox}>{this.createSkills()}</View>
             </View>
         );
     }

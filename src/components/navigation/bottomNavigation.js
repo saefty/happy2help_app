@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
-import { ProfileView } from '../../screens/profile/profile.screen';
+import { MyProfile } from '../../screens/myProfile/myprofile.screen';
 import { Map } from '../map/map'
 
 
@@ -33,7 +33,7 @@ export class Navigation extends React.Component <Props> {
     _handleIndexChange = index => this.setState({ index });
 
     _renderScene = BottomNavigation.SceneMap({
-        profile: () => <ProfileView {...this.props} ></ProfileView>,
+        profile: () => <MyProfile {...this.props} ></MyProfile>,
         map: MapRoute,
         list: ListRoute,
         chat: ChatRoute,
