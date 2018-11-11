@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
-import { ProfileView } from '../../components/profile/profile';
 
 const GET_PROFILE = gql`
     {
@@ -17,17 +16,6 @@ const GET_PROFILE = gql`
         }
     }
 `;
-
-// const myView = probs => (
-//     <Query query={GET_PROFILE}>
-//         {({ loading, error, data }) => {
-//             if (loading) return 'Loading...';
-//             if (error) return `Error! ${error.message}`;
-
-//             return <ProfileView username={data.user.username} {...probs} />;
-//         }}
-//     </Query>
-// );
 
 type Props = {
     t: i18n.t,
@@ -44,14 +32,14 @@ export class ProfileDataProvider extends Component<Props> {
     render() {
         return (
             <View>
-                
                 <Query query={GET_PROFILE}>
                     {({ loading, error, data }) => {
-                        if (loading) return 'Loading...';
-                        if (error) return `Error! ${error.message}`;
-                        return (
-                            this.props.children(data.user)
-                        );
+                        if (loading) return null;
+                        if (error) {
+                            console.warn(`Error! ${error.message}`);
+                            return null;
+                        }
+                        return this.props.children(data.user);
                     }}
                 </Query>
             </View>
