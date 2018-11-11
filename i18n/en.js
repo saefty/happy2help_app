@@ -16,7 +16,11 @@ export default {
         signIn: 'Sign In',
         signUp: 'Sign Up',
         invalidCredentials: 'Password or Username are invalid!'
-
-
+    },
+    Navigation: {
+        profile: 'Profile',
+        map: 'Map',
+        list: 'List',
+        chat: 'Chat',
     }
 };
