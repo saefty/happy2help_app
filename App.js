@@ -1,49 +1,37 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+// @flow
+import React, { Component } from 'react';
+import { Sentry } from 'react-native-sentry';
+import { SentryConfig } from './config/sentry';
+import { withNamespaces, i18n } from 'react-i18next';
+import { I18nNavigation } from './src/components/navigation/bottomNavigation'
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+Sentry.config(SentryConfig.link, SentryConfig.props);
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to Happy to Help!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
-  }
+if (!global.__DEV__) {
+    Sentry.install();
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+type Props = {
+    t: i18n.t,
+    logOut: () => void,
+};
+
+class App extends Component<Props> {
+    componentDidMount() {
+        Sentry.captureBreadcrumb({
+            message: 'Test msg',
+            category: 'start',
+            data: { some: 'data', as: 'json' },
+        });
+    }
+    render() {
+        return (
+            <I18nNavigation logOut={this.props.logOut} />
+        );
+    }
+}
+export default withNamespaces('common', {
+    bindI18n: 'languageChanged',
+    bindStore: false,
+})(App);

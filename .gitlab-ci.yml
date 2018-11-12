@@ -1,0 +1,40 @@
+# This file is a template, and might need editing before it works on your project.
+# Read more about this script on this blog post https://about.gitlab.com/2016/11/30/setting-up-gitlab-ci-for-android-projects/, by Greyson Parrelli
+image: saeftaher/react-native-app-builder
+
+variables:
+  ANDROID_COMPILE_SDK: "26"
+  ANDROID_BUILD_TOOLS: "24.0.0"
+  ANDROID_SDK_TOOLS: "24.4.1"
+  
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+  - node_modules/
+  - android/.bundler
+  - .gradle/wrapper
+  - .gradle/caches
+  
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+  - chmod +x android/gradlew
+  
+stages:
+  - release
+
+internal_release:
+  stage: release
+  only: 
+    - master
+  script:
+    - npm install -g yarn
+    - yarn
+    - cd android
+    - echo $API_KEY >> apiKey.json
+    - bundle install --path=./.bundler
+    - fastlane beta
+  artifacts:
+    paths:
+    - app/build/outputs/
+
+

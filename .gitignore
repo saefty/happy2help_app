@@ -39,7 +39,6 @@ yarn-error.log
 # BUCK
 buck-out/
 \.buckd/
-*.keystore
 
 # fastlane
 #
@@ -58,3 +57,5 @@ buck-out/
 
 # Apk data
 */app/build
+
+.vscode

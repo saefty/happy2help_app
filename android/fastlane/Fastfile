@@ -23,7 +23,7 @@ platform :android do
   
     # sh "your_script.sh"
     # You can also use other beta testing services here
-    supply track: "internal"
+    supply track: "internal", json_key_data: ENV["API_KEY"]
   end
 
   desc "Deploy a new version to the Google Play"
