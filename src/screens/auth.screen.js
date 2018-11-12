@@ -5,12 +5,13 @@ import { SignInFormGQL } from '../components/auth/signIn.form';
 import { SignUpFormGQL } from '../components/auth/signUp.form';
 
 type Props = {
-    logIn: (jwtToken: String) => undefined,
-    logOut: () => undefined,
-    mutate: graphql.mutate,
+    logIn: (jwtToken: string) => Promise<void>,
+    logOut: () => Promise<void>,
 };
-
-export class AuthScreen extends Component<Props> {
+type State = {
+    signUp: boolean
+}
+export class AuthScreen extends Component<Props, State> {
     state = {
         signUp: true,
     };

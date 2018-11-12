@@ -12,7 +12,7 @@ import { graphql } from 'react-apollo';
 import { Formik, ErrorMessage } from 'formik';
 import { TextInput, Button, HelperText } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { withNamespaces } from 'react-i18next';
+import { withNamespaces, i18n } from 'react-i18next';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as Yup from 'yup';
 import * as Colors from '../../../themes/colors';
@@ -39,7 +39,11 @@ type Props = {
     t: i18n.t,
 };
 
-class SignUpForm extends Component<Props> {
+type State = {
+    validationSchema: Yup.Schema,
+}
+
+class SignUpForm extends Component<Props, State> {
     constructor(props) {
         super(props);
         const SignUpSchema = Yup.object().shape({
@@ -66,7 +70,7 @@ class SignUpForm extends Component<Props> {
             },
         });
         actions.setSubmitting(false);
-        this.props.setSignUp(false)
+        this.props.setSignUp(false);
 
         //await this.props.logIn(token.data.tokenAuth.token);
     };
@@ -183,8 +187,8 @@ var styles = StyleSheet.create({
         marginBottom: -10,
     },
     signIn: {
-        marginTop: 5
-    }
+        marginTop: 5,
+    },
 });
 
 const NameSpaced = withNamespaces(['User', 'errors'])(SignUpForm);
