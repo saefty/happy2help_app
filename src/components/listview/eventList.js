@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from "react";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import { Card, Title, Paragraph } from 'react-native-paper';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
@@ -9,12 +9,12 @@ import eventsMock from '../../../assets/mockdata/mockevents';
 type Props = {
 };
 
-class EventList extends Component<Props> {
+export class EventList extends Component<Props> {
   constructor(props) {
     super(props);
 
     this.state = {
-      data = eventsMock,
+      data: eventsMock,
     };
   }
 // name, description, organization, creator
@@ -24,14 +24,15 @@ class EventList extends Component<Props> {
       <View style={styles.container}>
         <FlatList
             data={this.state.data}
-            renderItem={({event}) => { 
+            keyExtractor={(item, index) => item.id}
+            renderItem={({item}) => { 
             
             return (
               <Card>
                 <Card.Content>
-                  <Title>{event.name}</Title>
-                  <Paragraph>{event.description.substr(0, 20)}...</Paragraph>
-                  <Paragraph>{(event.organization ? event.organization : event.creator)}</Paragraph>
+                  <Title>{item.name}</Title>
+                  <Paragraph>{item.description.substr(0, 100)}...</Paragraph>
+                  <Paragraph>{(item.organization ? item.organization : item.creator)}</Paragraph>
                 </Card.Content>
               </Card>
             );}}
@@ -40,12 +41,12 @@ class EventList extends Component<Props> {
     );
   }
 }
-
+//                 <Card.Cover source={{ uri: 'https://picsum.photos/700' }}/>
 var styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        marginTop: 15,
-        padding: 20,
+        marginTop: 5,
+        padding: 0,
         width: '95%',
     },
     name: {
@@ -55,5 +56,3 @@ var styles = StyleSheet.create({
         color: '#ffffff',
     },
 });
-
-export default EventList;
