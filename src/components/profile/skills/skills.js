@@ -17,6 +17,9 @@ export class Skills extends Component<Props> {
         super(props);
     }
     createSkills = () => {
+        //creating for each given skill a skillchip
+        // return this.props.skillObjects.map((skillObject,i) => <SkillChip key={i} skillObject={skillObject} />)
+        
         let skills = [];
         this.props.skillObjects.forEach(skillObject => {
             skills.push(<SkillChip skillObject={skillObject} />);
