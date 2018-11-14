@@ -24,8 +24,16 @@ let eventsMock = [
         + " but i need 2 strong guys or gals  help. I have some food for you (veggie, if you want)",
         organization: undefined,
         creator: "Charlotte Burg",
-        image: "src2",
+        image: undefined,
         id: "2"
+    },
+    {
+        name: "Test Event",
+        description: "<<TESTDATA>>testdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdata",
+        organization: undefined,
+        creator: "Charlotte Burg",
+        image: undefined,
+        id: "3"
     },
     {
         name: "Test Event",

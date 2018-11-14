@@ -1,15 +1,14 @@
 // @flow
 import React, { Component } from "react";
-import { View, Text, FlatList, Image, StyleSheet } from "react-native";
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { View, Text, FlatList, Image } from "react-native";
 import eventsMock from '../../../assets/mockdata/mockevents';
+import styles from '../../../themes/listview.styles';
 
 type Props = {
 };
 
 export class EventList extends Component<Props> {
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
   }
@@ -46,14 +45,14 @@ export class EventList extends Component<Props> {
       </View>
     );
   }
-  getImage(image) {
+  getImage(image: any) {
     if(image) {
     return (
       <Image style={styles.image} source={{uri: 'https://picsum.photos/200'}} />
     );
     } else {
       return (
-        <View style={{width: 0, height: 0}}></View>
+        <View style={{width: '100%', height: 0}}></View>
       );
     }
   }
@@ -63,56 +62,3 @@ export class EventList extends Component<Props> {
     );
   }
 }
-//                 <Card.Cover source={{ uri: 'https://picsum.photos/700' }}/>
-var styles = StyleSheet.create({
-    container: {
-      alignItems: 'center',
-      marginTop: 5,
-      marginBottom: 5,
-    },
-    cardContainer: {
-      borderWidth: 3,
-      borderColor: 'steelblue',
-      borderStyle: 'solid',
-      borderRadius: 4,
-    },
-    titleContainer: {
-      backgroundColor: 'steelblue',
-      justifyContent: 'center',
-      height: 30,
-    },
-    title: {
-      color: 'white',
-      fontSize: 18,
-      fontWeight: 'bold'
-    },
-    image: {
-      width: '100%',
-      height: 150,
-    },
-    descriptionContainer: {
-      backgroundColor: 'white',
-      maxHeight: 55,
-      marginLeft: 2,
-    },
-    description: {
-      color: '#666'
-    },
-    creatorContainer: {
-      backgroundColor: 'white',
-      marginRight: 5,
-      height: 20,
-      justifyContent: 'center',
-      alignItems: 'flex-end'
-    },
-    creator: {
-      fontSize: 12,
-      color: 'black',
-      fontWeight: 'bold'
-    },
-    separator: {
-      width: '100%',
-      height: 5,
-      backgroundColor: 'white',
-    }
-});

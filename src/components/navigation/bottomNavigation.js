@@ -4,12 +4,13 @@ import { BottomNavigation, Text } from 'react-native-paper';
 import { ProfileView } from '../profile/profileView';
 import { Map } from '../map/map'
 import { withNamespaces, i18n } from 'react-i18next';
+import { EventList } from '../listview/eventList';
 
 //const ProfileRoute = <ProfileView logOut={this.props.logOut} ></ProfileView>;
 
 const MapRoute = () => <Map></Map>;
 
-const ListRoute = () => <Text>List</Text>;
+const ListRoute = () => <EventList></EventList>;
 const ChatRoute = () => <Text>Chat</Text>;
 
 
