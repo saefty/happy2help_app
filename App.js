@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Sentry } from 'react-native-sentry';
+import { View } from 'react-native'
 import { SentryConfig } from './config/sentry';
 import { withNamespaces, i18n } from 'react-i18next';
 import { I18nNavigation } from './src/components/navigation/bottomNavigation'
@@ -26,9 +27,11 @@ class App extends Component<Props> {
         });
     }
     render() {
+         
         return (
             <I18nNavigation logOut={this.props.logOut} />
         );
+        
     }
 }
 export default withNamespaces('common', {
