@@ -120,7 +120,7 @@ export default class AppApollo extends Component<I18nProps, State> {
 
     render() {
         // Blank screen if apollo was not started
-        if (!this.state.apolloClient) return <View />;
+        if (!this.state.apolloClient.query) return <View />;
         let path;
         if (this.state.loggedIn === false) {
             path = <AuthScreen logIn={this.logIn} logOut={this.logOut} />;
