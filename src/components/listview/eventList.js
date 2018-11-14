@@ -4,13 +4,9 @@ import { View, Text, FlatList, Image } from "react-native";
 import eventsMock from '../../../assets/mockdata/mockevents';
 import styles from '../../../themes/listview.styles';
 
-type Props = {
-};
-
-export class EventList extends Component<Props> {
-  constructor(props: Props) {
+export class EventList extends Component<any> {
+  constructor(props: any) {
     super(props);
-
   }
 // name, description, organization, creator
 
