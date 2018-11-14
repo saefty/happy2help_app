@@ -5,6 +5,7 @@ import { View } from 'react-native'
 import { SentryConfig } from './config/sentry';
 import { withNamespaces, i18n } from 'react-i18next';
 import { I18nNavigation } from './src/components/navigation/bottomNavigation'
+import { EventList } from './src/components/listview/eventList'
 
 
 Sentry.config(SentryConfig.link, SentryConfig.props);
@@ -33,9 +34,7 @@ class App extends Component<Props> {
         );
         */
        return (             
-           <View>
-                <EventList />
-           </View>
+           <EventList></EventList>
        );
     }
 }
