@@ -24,10 +24,12 @@ export class ProfileView extends Component<Props> {
             {
                 text: 'Hygiene Karte',
                 approved: true,
+                id: 0
             },
             {
                 text: 'Computerexperte',
                 approved: false,
+                id: 1
             },
         ];
         return (
