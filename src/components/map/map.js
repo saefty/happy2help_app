@@ -6,15 +6,16 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import { DefaultStyles } from '../../../config/style';
+import { i18n } from 'react-i18next';
 
 
 
 type Props = {
-    t: i18n.t,
+    t?: i18n.t,
 };
 
 export class Map extends Component<Props> {
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
     }
     render() {

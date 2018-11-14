@@ -22,14 +22,18 @@ import { H2HTheme } from './themes/default.theme';
 type I18nProps = {
     t: i18n.t,
 };
+type State = {
+    apolloClient: ApolloClient,
+    loggedIn: boolean,
+}
 
-export default class AppApollo extends Component<I18nProps> {
+export default class AppApollo extends Component<I18nProps, State> {
     state = {
-        apolloClient: undefined,
+        apolloClient: {},
         loggedIn: true, // Be optimistic and hope the user is logged in
     };
 
-    constructor(props) {
+    constructor(props: I18nProps) {
         super(props);
         RNLanguages.addEventListener('change', this.onLanguageChange);
     }
@@ -46,7 +50,7 @@ export default class AppApollo extends Component<I18nProps> {
         SplashScreen.hide();
     }
 
-    verifyLogin = async (): boolean => {
+    verifyLogin = async (): Promise<boolean> => {
         // Get JWT
         const result = await this.state.apolloClient.query({
             query: gql`
@@ -105,8 +109,7 @@ export default class AppApollo extends Component<I18nProps> {
         });
     };
 
-    onLanguageChange(language) {
-        // eslint-disable-line
+    onLanguageChange(language: any) {        // eslint-disable-line
         // i18n.changeLanguage(language);
         if (i18n.language === 'de') {
             i18n.changeLanguage('en');
@@ -117,7 +120,7 @@ export default class AppApollo extends Component<I18nProps> {
 
     render() {
         // Blank screen if apollo was not started
-        if (!this.state.apolloClient) return <View />;
+        if (!this.state.apolloClient.query) return <View />;
         let path;
         if (this.state.loggedIn === false) {
             path = <AuthScreen logIn={this.logIn} logOut={this.logOut} />;
