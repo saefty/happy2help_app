@@ -12,6 +12,8 @@ import { persistCache } from 'apollo-cache-persist';
 import gql from 'graphql-tag';
 import { onError } from 'apollo-link-error';
 
+import Config from 'react-native-config';
+
 export const createApolloConfiguration = async () => {
     // This is the same cache you pass into new ApolloClient
     const cache = new InMemoryCache();
@@ -56,15 +58,17 @@ export const createApolloConfiguration = async () => {
         };
     });
     const errorLink = onError(({ graphQLErrors }) => {
-        if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message))
-      })
+        if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message));
+    });
 
+    const serverURI = Config.DEV_SERVER === 'true' ? 'http://localhost:3000/graphql/' : 'https://h2h-dev.taher.io/graphql/';
+    console.log(serverURI);
     const Links = [
         errorLink,
         CreateHeaderLink,
         stateLink,
         new HttpLink({
-            uri: 'https://h2h-dev.taher.io/graphql/',
+            uri: serverURI,
         }),
     ];
 

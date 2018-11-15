@@ -59,3 +59,5 @@ buck-out/
 */app/build
 
 .vscode
+
+artifacts/*

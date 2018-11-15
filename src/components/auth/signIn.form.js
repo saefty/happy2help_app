@@ -1,12 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    View,
-    Image,
-    TextInput as NativeTextInput,
-    StatusBar,
-} from 'react-native';
+import { StyleSheet, View, Image, TextInput as NativeTextInput, StatusBar } from 'react-native';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Formik, ErrorMessage } from 'formik';
@@ -33,8 +27,8 @@ type Props = {
 };
 type State = {
     validationSchema: Yup.Schema,
-    signInError?: String
-}
+    signInError?: String,
+};
 
 class SignInForm extends Component<Props, State> {
     constructor(props) {
@@ -43,10 +37,15 @@ class SignInForm extends Component<Props, State> {
             userName: Yup.string().required(this.props.t('errors:required')),
             password: Yup.string().required(this.props.t('errors:required')),
         });
-        this.state = { validationSchema: SignInSchema, signInError: undefined };
+        this.state = {
+            validationSchema: SignInSchema,
+            signInError: undefined,
+        };
     }
     onSignIn = async (formValues, actions) => {
-        this.setState({ signInError: undefined });
+        this.setState({
+            signInError: undefined,
+        });
 
         try {
             const token = await this.props.mutate({
@@ -58,7 +57,10 @@ class SignInForm extends Component<Props, State> {
             await this.props.logIn(token.data.tokenAuth.token);
         } catch (e) {
             actions.setSubmitting(false);
-            this.setState({ signInError: this.props.t('invalidCredentials') });
+            this.setState({
+                signInError: this.props.t('invalidCredentials'),
+            });
+            console.log(e);
         }
     };
 
@@ -68,71 +70,39 @@ class SignInForm extends Component<Props, State> {
                 <StatusBar backgroundColor={Colors.primaryStatusBar} />
                 <View style={styles.container}>
                     <View style={styles.bannerWrapper}>
-                        <Image
-                            resizeMode="contain"
-                            style={styles.banner}
-                            source={require('../../../assets/images/logo_app2.png')}
-                        />
+                        <Image resizeMode="contain" style={styles.banner} source={require('../../../assets/images/logo_app2.png')} />
                     </View>
-                    <Formik
-                        validationSchema={this.state.validationSchema}
-                        onSubmit={this.onSignIn}
-                    >
-                        {({
-                            errors,
-                            handleChange,
-                            handleSubmit,
-                            isSubmitting,
-                            values,
-                        }) => (
+                    <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSignIn}>
+                        {({ errors, handleChange, handleSubmit, isSubmitting, values }) => (
                             <View>
                                 <TextInput
+                                    testID="userName"
                                     onChangeText={handleChange('userName')}
                                     value={values.userName}
                                     label={this.props.t('userName')}
                                     error={errors.userName}
                                 />
-                                <HelperText
-                                    type="error"
-                                    visible={errors.userName}
-                                >
+                                <HelperText type="error" visible={errors.userName}>
                                     <ErrorMessage name="userName" />
                                 </HelperText>
                                 <TextInput
+                                    testID="password"
                                     onChangeText={handleChange('password')}
                                     value={values.password}
                                     label={this.props.t('password')}
                                     error={errors.password}
-                                    render={props => (
-                                        <NativeTextInput
-                                            secureTextEntry={true}
-                                            {...props}
-                                        />
-                                    )}
+                                    render={props => <NativeTextInput secureTextEntry={true} {...props} />}
                                 />
-                                <HelperText
-                                    type="error"
-                                    visible={errors.password}
-                                >
+                                <HelperText type="error" visible={errors.password}>
                                     <ErrorMessage name="password" />
                                 </HelperText>
-
-                                <HelperText
-                                    type="error"
-                                    visible={this.state.signInError !== undefined}
-                                >
+                                <HelperText type="error" visible={this.state.signInError !== undefined}>
                                     {String(this.state.signInError)}
                                 </HelperText>
                                 <Button
                                     mode="contained"
                                     dark={false}
-                                    icon={({ size, color }) => (
-                                        <Icon
-                                            size={size}
-                                            color={color}
-                                            name="login"
-                                        />
-                                    )}
+                                    icon={({ size, color }) => <Icon size={size} color={color} name="login" />}
                                     disabled={isSubmitting}
                                     onPress={handleSubmit}
                                     style={styles.button}
@@ -142,14 +112,8 @@ class SignInForm extends Component<Props, State> {
                             </View>
                         )}
                     </Formik>
-                    <Button
-                        mode="outlined"
-                        style={styles.signUp}
-                        onPress={() => this.props.setSignUp(true)}
-                    >
-                        <Text style={styles.signUpText}>
-                            {this.props.t('signUp')}
-                        </Text>
+                    <Button mode="outlined" style={styles.signUp} onPress={() => this.props.setSignUp(true)}>
+                        <Text style={styles.signUpText}> {this.props.t('signUp')} </Text>
                     </Button>
                 </View>
             </KeyboardAwareScrollView>
