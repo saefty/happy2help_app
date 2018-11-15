@@ -3,9 +3,9 @@
 image: saeftaher/react-native-app-builder
 
 variables:
-  ANDROID_COMPILE_SDK: "26"
-  ANDROID_BUILD_TOOLS: "24.0.0"
-  ANDROID_SDK_TOOLS: "24.4.1"
+  ANDROID_COMPILE_SDK: "27"
+  ANDROID_BUILD_TOOLS: "27.0.3"
+  ANDROID_SDK_TOOLS: "26.1.0"
   
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -18,16 +18,27 @@ cache:
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
   - chmod +x android/gradlew
+  - npm install -g yarn
   
 stages:
+  - test
   - release
+  
+# KVM not supported
+#e2e-test:
+#  stage: test
+#  script:
+#    - yarn
+#    - chmod +x wait-for-emulator.sh
+#    - echo no | /opt/android-sdk-linux/tools/bin/avdmanager create avd --force --name testAVD --abi armeabi-v7a --package 'system-images;android-26;google_apis;x86'
+#    - /opt/android-sdk-linux/emulator/emulator -avd testAVD -no-window -no-audio &
+#    - ./wait-for-emulator.sh
 
 internal_release:
   stage: release
   only: 
     - master
   script:
-    - npm install -g yarn
     - yarn
     - cd android
     - echo $API_KEY >> apiKey.json
