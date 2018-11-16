@@ -4,15 +4,14 @@ import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import { styles } from './logoutButtonStyle';
-
-
+import { withNamespaces, i18n } from 'react-i18next';
 
 type Props = {
     t: i18n.t,
     logOut: () => void,
 };
 
-export class LogoutButton extends Component<Props> {
+class LogoutButtonComponent extends Component<Props> {
     constructor(props) {
         super(props);
     }
@@ -20,14 +19,12 @@ export class LogoutButton extends Component<Props> {
     render() {
         return (
             <View>
-                <Button
-                    onPress={this.props.logOut}
-                    style={styles.logoutButton}
-                    mode="contained"
-                >
-                    Log out
+                <Button onPress={this.props.logOut} style={styles.logoutButton} mode="contained">
+                    {this.props.t('logOut')}
                 </Button>
             </View>
         );
     }
 }
+
+export const LogoutButton = withNamespaces(['User'])(LogoutButtonComponent);

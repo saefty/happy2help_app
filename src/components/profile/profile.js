@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Skills } from './skills/skills';
+import { SkillList } from './skillList/skillList';
 import { Header } from './header/header';
 import { LogoutButton } from './logoutButton/logoutButton';
 import { styles } from './profileScreenStyle';
@@ -41,7 +41,7 @@ export class ProfileView extends Component<Props> {
                         userName={this.props.user.username}
                         location={this.props.user.profile.location}
                     />
-                    <Skills skillObjects={skillObjects} />
+                    <SkillList skillObjects={skillObjects} />
                 </View>
                 <LogoutButton {...this.props} />
             </View>
