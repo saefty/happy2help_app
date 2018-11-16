@@ -34,16 +34,14 @@ export class ProfileView extends Component<Props> {
             },
         ];
         return (
-            // <View style={styles.outerContainer}>
             <View>
-                {/* <View style={styles.innerContainer}> */}
+                <Appbar.Header style={styles.appbar}>
+                    {/* Need content to get the icon on the right */}
+                    <Appbar.Content title="" />
+                    <Appbar.Action icon="edit" onPress={console.warn('pressed')} />
+                    <Appbar.Action icon="more-vert" onPress={console.warn('presses')} />
+                </Appbar.Header>
                 <View>
-                    <Appbar style={styles.bottom}>
-                        <Appbar.Action icon="archive" onPress={() => console.log('Pressed archive')} />
-                        <Appbar.Action icon="mail" onPress={() => console.log('Pressed mail')} />
-                        <Appbar.Action icon="label" onPress={() => console.log('Pressed label')} />
-                        <Appbar.Action icon="delete" onPress={() => console.log('Pressed delete')} />
-                    </Appbar>
                     <Header userName={this.props.user.username} location={this.props.user.profile.location} />
                     <Skills skillObjects={skillObjects} />
                 </View>

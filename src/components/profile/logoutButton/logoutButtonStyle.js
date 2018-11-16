@@ -3,5 +3,6 @@ import { StyleSheet } from 'react-native';
 
 
 export const styles = StyleSheet.create({
-    logoutButton: { margin: 10 },
+    logoutButton: { margin: 10,
+    elevation: 0 },
 });

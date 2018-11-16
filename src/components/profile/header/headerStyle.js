@@ -4,7 +4,7 @@ import { H2HTheme } from './../../../../themes/default.theme';
 
 export const styles = StyleSheet.create({
     container: {
-        height: 150,
+        height: 100,
     },
     colouredBlock: {
         position: 'absolute',
