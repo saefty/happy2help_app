@@ -5,11 +5,12 @@ import { Text } from 'react-native-paper';
 
 import { ProfilePicture } from './profilePicture/profilePicture';
 import { styles } from './headerStyle';
+import { LocationObject } from './../../../models/location.model'
 
 type Props = {
     t: i18n.t,
     userName: string,
-    location: string,
+    location: LocationObject,
 };
 
 export class Header extends Component<Props> {
@@ -27,7 +28,7 @@ export class Header extends Component<Props> {
                             {this.props.userName}{' '}
                         </Text>
                         <Text style={styles.location}>
-                            {this.props.location}{' '}
+                            {this.props.location ? this.props.location.name : ''}{' '}
                         </Text>
                     </View>
                 </View>

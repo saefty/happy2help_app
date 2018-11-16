@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Skills } from './skills/skills';
+import { Appbar } from 'react-native-paper';
 import { Header } from './header/header';
 import { LogoutButton } from './logoutButton/logoutButton';
 import { styles } from './profileScreenStyle';
@@ -24,23 +25,26 @@ export class ProfileView extends Component<Props> {
             {
                 text: 'Hygiene Karte',
                 approved: true,
-                id: 0
+                id: 0,
             },
             {
                 text: 'Computerexperte',
                 approved: false,
-                id: 1
+                id: 1,
             },
         ];
         return (
             // <View style={styles.outerContainer}>
-            <View >
+            <View>
                 {/* <View style={styles.innerContainer}> */}
-                <View >
-                    <Header
-                        userName={this.props.user.username}
-                        location={this.props.user.profile.location}
-                    />
+                <View>
+                    <Appbar style={styles.bottom}>
+                        <Appbar.Action icon="archive" onPress={() => console.log('Pressed archive')} />
+                        <Appbar.Action icon="mail" onPress={() => console.log('Pressed mail')} />
+                        <Appbar.Action icon="label" onPress={() => console.log('Pressed label')} />
+                        <Appbar.Action icon="delete" onPress={() => console.log('Pressed delete')} />
+                    </Appbar>
+                    <Header userName={this.props.user.username} location={this.props.user.profile.location} />
                     <Skills skillObjects={skillObjects} />
                 </View>
                 <LogoutButton {...this.props} />
