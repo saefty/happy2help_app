@@ -12,6 +12,7 @@ type Props = {
     t: i18n.t,
     logOut: () => void,
     user: UserObject,
+    navigation: any
 };
 
 export class ProfileView extends Component<Props> {
@@ -38,7 +39,7 @@ export class ProfileView extends Component<Props> {
                 <Appbar.Header style={styles.appbar}>
                     {/* Need content to get the icon on the right */}
                     <Appbar.Content title="" />
-                    <Appbar.Action icon="edit" onPress={console.warn('pressed')} />
+                    <Appbar.Action icon="edit" onPress={this.props.navigation.navigate('navigation.EditMyProfile')} />
                     <Appbar.Action icon="more-vert" onPress={console.warn('presses')} />
                 </Appbar.Header>
                 <View>
