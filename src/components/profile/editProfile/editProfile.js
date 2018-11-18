@@ -49,7 +49,7 @@ export class EditProfile extends Component<Props> {
                     <TextInput iconName="person" label="Username" value={this.props.user.username} />
                     <TextInput iconName="place" label="Location" value={this.props.user.profile.location ? this.props.user.profile.location.name : ''} />
 
-                    <Skills skillObjects={skillObjects} />
+                    <Skills skillObjects={skillObjects} onClose={() => console.log('Pressed')} />
                   
                   
 

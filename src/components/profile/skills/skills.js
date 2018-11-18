@@ -11,6 +11,7 @@ import { AddSkillChip } from './skillChip/addSkillChip';
 type Props = {
     t: i18n.t,
     skillObjects: SkillObject[],
+    onClose?: () => mixed
 };
 
 export class Skills extends Component<Props> {
@@ -19,7 +20,7 @@ export class Skills extends Component<Props> {
     }
     createSkills = () => {
         //creating for each given skill a skillchip
-        return this.props.skillObjects.map(skillObject => <SkillChip key={skillObject.id} skillObject={skillObject} onClose={() => console.log('Closed')} />);
+        return this.props.skillObjects.map(skillObject => <SkillChip key={skillObject.id} skillObject={skillObject} onClose={this.props.onClose ? this.props.onClose : null } />);
     };
 
     render() {
