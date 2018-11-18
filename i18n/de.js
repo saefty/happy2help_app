@@ -15,6 +15,8 @@ export default {
         email: 'E-Mail',
         signIn: 'Anmelden',
         signUo: 'Registieren',
-        invalidCredentials: 'Passwort oder Benutzername falsch!'
+        invalidCredentials: 'Passwort oder Benutzername falsch!',
+        location: 'Standort',
+        editProfile: 'Profil bearbeiten'
     },
 };

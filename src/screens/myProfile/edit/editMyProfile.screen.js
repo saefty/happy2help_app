@@ -1,7 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { ProfileView } from './../../../components/viewProfile/profile';
+import { EditProfile } from '../../../components/editProfile/editProfile';
+import { ProfileDataProvider } from './../profileDataProvider';
+
+
 
 type Props = {
     t: i18n.t,
@@ -16,9 +19,9 @@ export class EditMyProfile extends Component<Props> {
     render() {
         return (
             <View>
-                <Text>
-                    editScreen
-                </Text>
+                <ProfileDataProvider>
+                    {user => <EditProfile user={user} {...this.props}/>}
+                </ProfileDataProvider>
             </View>
         );
     }

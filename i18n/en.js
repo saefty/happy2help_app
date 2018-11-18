@@ -15,7 +15,9 @@ export default {
         email: 'E-Mail',
         signIn: 'Sign In',
         signUp: 'Sign Up',
-        invalidCredentials: 'Password or Username are invalid!'
+        invalidCredentials: 'Password or Username are invalid!',
+        editProfile: 'Edit profile',
+        location: 'Location'
     },
     Navigation: {
         profile: 'Profile',
@@ -23,4 +25,5 @@ export default {
         list: 'List',
         chat: 'Chat',
     }
+
 };
