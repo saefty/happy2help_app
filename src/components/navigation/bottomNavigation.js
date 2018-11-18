@@ -7,8 +7,23 @@ import { withNamespaces, i18n } from 'react-i18next';
 import { EventList } from '../listview/eventList';
 
 //const ProfileRoute = <ProfileView logOut={this.props.logOut} ></ProfileView>;
-
-const MapRoute = () => <Map></Map>;
+const randomEvents = (amount: number) => {
+    const events = [];
+    for(let i = 0; i <= amount; i++){
+        events.push({ 
+            id: `${i}`,
+            description: 'Some event description',
+            name: 'Berliner Tafel e.V.',
+            location: {
+                name: 'gsdf',
+                longitude: 13.404954 + (Math.random() -.5) * .05,
+                latitude: 52.520008 + (Math.random()- .5) * .05
+            }
+        })
+    }
+    return events;
+}
+const MapRoute = () => <Map events={randomEvents(1500)}></Map>;
 
 const ListRoute = () => <EventList></EventList>;
 const ChatRoute = () => <Text>Chat</Text>;
@@ -27,7 +42,7 @@ type State = {
 
 class Navigation extends React.Component <Props, State> {
     state = {
-        index: 0,
+        index: 1,
         routes: [
             { key: 'profile', title: this.props.t('profile'), icon: 'person' },
             { key: 'map', title: this.props.t('map'), icon: 'map' },

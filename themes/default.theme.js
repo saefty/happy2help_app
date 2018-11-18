@@ -1,14 +1,15 @@
 /* @flow */
 
-import { DefaultTheme } from 'react-native-paper';
 import color from 'color';
+import { primaryColor } from './colors';
+import { DefaultTheme } from 'react-native-paper';
 
 export const H2HTheme = {
     dark: true,
     roundness: 4,
     colors: {
         primary: '#008FB8',
-        accent: '#03dac4',
+        accent: color(primaryColor).darken(.5).string(),
         background: '#f6f6f6',
         surface: '#ffffff',
         error: '#B00020',

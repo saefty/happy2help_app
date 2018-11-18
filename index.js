@@ -1,7 +1,7 @@
 /** @format */
 // @flow
 import React, { Component } from 'react';
-import { AppRegistry, View, AsyncStorage } from 'react-native';
+import { AppRegistry, View, AsyncStorage, PermissionsAndroid } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -26,6 +26,8 @@ type State = {
     apolloClient: ApolloClient,
     loggedIn: boolean,
 }
+import { requestPermission } from './src/helpers/requestPermission';
+
 
 export default class AppApollo extends Component<I18nProps, State> {
     state = {
@@ -39,6 +41,9 @@ export default class AppApollo extends Component<I18nProps, State> {
     }
 
     async componentDidMount() {
+        await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+        await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION)
+
         const cfg = await createApolloConfiguration();
 
         await this.setState({
