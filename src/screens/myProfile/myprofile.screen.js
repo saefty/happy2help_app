@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { ProfileDataProvider } from './profileDataProvider';
-import { ProfileView } from './../../components/viewProfile/profile';
+import { ProfileView } from '../../components/profile/viewProfile/viewProfile';
 
 type Props = {
     t: i18n.t,

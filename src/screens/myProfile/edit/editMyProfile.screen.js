@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { EditProfile } from '../../../components/editProfile/editProfile';
+import { View } from 'react-native';
+import { EditProfile } from '../../../components/profile/editProfile/editProfile';
 import { ProfileDataProvider } from './../profileDataProvider';
 
 

@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { TextInput } from './TextinputWithIcon/textInput';
 import { styles } from './editProfileStyle';
-import { Appbar, TextInput as TextInputRNP } from 'react-native-paper';
-import { ProfilePicture } from './profilePicture/profilePicture';
-import { Skills } from './skills/skills';
+import { Appbar } from 'react-native-paper';
+import { ProfilePicture } from '../profilePicture/profilePicture';
+import { Skills } from '../../editProfile/skills/skills';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type Props = {
@@ -43,9 +43,7 @@ export class EditProfile extends Component<Props> {
                     </Appbar.Header>
 
                     <View style={{ alignItems: 'center' }}>
-                        <ProfilePicture style={styles.profilePicture} {...this.props} />
-                        {/* <Header userName={this.props.user.username} location={this.props.user.profile.location} />
-                    <Skills skillObjects={skillObjects} /> */}
+                        <ProfilePicture style={styles.profilePicture} {...this.props} />                       
                     </View>
 
                     <TextInput iconName="person" label="Username" value={this.props.user.username} />
