@@ -13,6 +13,7 @@ type Props = {
     t: i18n.t,
     skillObjects: SkillObject[],
     editable?: bool,
+    updateSkills?: () => mixed,
 };
 
 export class Skills extends Component<Props> {
@@ -27,14 +28,14 @@ export class Skills extends Component<Props> {
         let skills = this.state.skillArray;
         skills.push(skill);
         this.setState({ skillArray: skills });
+        this.props.updateSkills(skills); //propagate changes to editProfile Component
     };
 
     deleteSkill = skillToDelete => {
         let skills = this.state.skillArray;
         skills = skills.filter(skill => skill.id != skillToDelete.id)
-        console.log( skills);
         this.setState({ skillArray: skills });
-        console.log( this.state.skillArray);        
+        this.props.updateSkills(skills); //propagate changes to editProfile Component
     };
 
 

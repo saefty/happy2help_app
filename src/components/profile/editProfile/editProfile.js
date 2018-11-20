@@ -12,13 +12,62 @@ import { UserObject } from './../../../models/user.model';
 type Props = {
     t: i18n.t,
     logOut: () => void,
-    user: UserObject,
+    user: UserObject, //the old userobject
 };
 
 export class EditProfile extends Component<Props> {
     constructor(props) {
         super(props);
+        this.state = {
+            user: props.user, //the new userobect
+        };
     }
+
+    updateSkills = skills => {
+        let user = this.state.user;
+        user.skills = skills;
+        console.log(user);
+        this.setState({ user: user });
+    };
+
+    updateUsername = username => {
+        let user = this.state.user;
+        user.username = username;
+        this.setState({ user: user });
+    };
+
+    updateLocationName = locationname => {
+        let user = this.state.user;
+        user.profile.location.name = locationname;
+        this.setState({ user: user });
+    };
+
+    saveUser = () => {
+        console.log(this.state.user);
+        if (this.props.user.username != this.state.user.username) {
+            //do update Username Mutation
+        }
+
+        if (!this.props.user.profile.location || this.props.user.profile.location.name != this.states.user.profile.location.name) {
+            //do update User Location Mutation
+        }
+        //delete skills
+        if (this.props.user.skills) {
+            this.props.user.skills.forEach(skill => {
+                //if a skill misses which has been in props
+                if (!this.state.user.skills.find(stateSkill => stateSkill.id == skill.id)) {
+                    //do delete Skill Mutation
+                }
+            });
+        }
+        //create new skills
+        this.state.user.skills.forEach(skill => {
+            if (skill.id >= 100) {
+                //do create new Skill Mutation
+            }
+        });
+        // TODO navigate to viewProfile Screen
+    };
 
     render() {
         //this will be replaced if the backend is ready to pass the user's skills
@@ -36,24 +85,21 @@ export class EditProfile extends Component<Props> {
         ];
         return (
             <KeyboardAwareScrollView>
-                    <Appbar.Header style={styles.appbar}>
-                        <Appbar.BackAction onPress={console.log('back')} />
-                        <Appbar.Content title="Profil bearbeiten" />
-                        <Appbar.Action icon="check" onPress={console.log('presses')} />
-                        <Appbar.Action icon="more-vert" onPress={console.log('presses')} />
-                    </Appbar.Header>
+                <Appbar.Header style={styles.appbar}>
+                    <Appbar.BackAction onPress={console.log('back')} />
+                    <Appbar.Content title="Profil bearbeiten" />
+                    <Appbar.Action icon="check" onPress={this.saveUser} />
+                    <Appbar.Action icon="more-vert" onPress={console.log('presses')} />
+                </Appbar.Header>
 
-                    <View style={{ alignItems: 'center' }}>
-                        <ProfilePicture style={styles.profilePicture} {...this.props} />                       
-                    </View>
+                <View style={{ alignItems: 'center' }}>
+                    <ProfilePicture style={styles.profilePicture} {...this.props} />
+                </View>
 
-                    <TextInput iconName="person" label="Username" value={this.props.user.username} />
-                    <TextInput iconName="place" label="Location" value={this.props.user.profile.location ? this.props.user.profile.location.name : ''} />
+                <TextInput iconName="person" label="Username" value={this.props.user.username} />
+                <TextInput iconName="place" label="Location" value={this.props.user.profile.location ? this.props.user.profile.location.name : ''} />
 
-                    <Skills skillObjects={skillObjects} editable={true} />
-                  
-                  
-
+                <Skills skillObjects={skillObjects} editable={true} updateSkills={this.updateSkills} />
             </KeyboardAwareScrollView>
         );
     }
