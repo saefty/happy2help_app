@@ -5,8 +5,9 @@ import { TextInput } from './TextinputWithIcon/textInput';
 import { styles } from './editProfileStyle';
 import { Appbar } from 'react-native-paper';
 import { ProfilePicture } from '../profilePicture/profilePicture';
-import { Skills } from '../../editProfile/skills/skills';
+import { Skills } from '../skills/skills';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { UserObject } from './../../../models/user.model';
 
 type Props = {
     t: i18n.t,
@@ -49,7 +50,7 @@ export class EditProfile extends Component<Props> {
                     <TextInput iconName="person" label="Username" value={this.props.user.username} />
                     <TextInput iconName="place" label="Location" value={this.props.user.profile.location ? this.props.user.profile.location.name : ''} />
 
-                    <Skills skillObjects={skillObjects} onClose={() => console.log('Pressed')} />
+                    <Skills skillObjects={skillObjects} editable={true} />
                   
                   
 
