@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
 import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen';
-//import { MyProfile } from '../../screens/myProfile/myprofile.screen';
+// import { MyProfile } from '../../screens/myProfile/myprofile.screen';
 
 import { Map } from '../map/map'
 import { withNamespaces, i18n } from 'react-i18next';
