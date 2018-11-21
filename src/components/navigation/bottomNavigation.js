@@ -1,15 +1,41 @@
 // @flow
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
-import { ProfileView } from '../profile/profileView';
+import { MyProfile } from '../../screens/myProfile/myprofile.screen';
 import { Map } from '../map/map'
 import { withNamespaces, i18n } from 'react-i18next';
+import { ListView } from '../../screens/listView/listView.screen';
 
 //const ProfileRoute = <ProfileView logOut={this.props.logOut} ></ProfileView>;
+const randomEvents = (amount: number) => {
+    const events = [];
+    for(let i = 0; i <= amount; i++){
+        events.push({ 
+            id: `${i}`,
+            description: 'Some event description',
+            name: 'Berliner Tafel e.V.',
+            creator: {
+                username: "Username",
+                profile: {
+                    location: {
+                        name: "Locationname",
+                        longitude: 0,
+                        latitude: 0
+                    }
+                }
+            },
+            location: {
+                name: 'gsdf',
+                longitude: 13.404954 + (Math.random() -.5) * .05,
+                latitude: 52.520008 + (Math.random()- .5) * .05
+            }
+        })
+    }
+    return events;
+}
+const MapRoute = () => <Map events={randomEvents(1500)}></Map>;
 
-const MapRoute = () => <Map></Map>;
-
-const ListRoute = () => <Text>List</Text>;
+const ListRoute = () => <ListView></ListView>;
 const ChatRoute = () => <Text>Chat</Text>;
 
 
@@ -26,7 +52,7 @@ type State = {
 
 class Navigation extends React.Component <Props, State> {
     state = {
-        index: 0,
+        index: 1,
         routes: [
             { key: 'profile', title: this.props.t('profile'), icon: 'person' },
             { key: 'map', title: this.props.t('map'), icon: 'map' },
@@ -38,7 +64,7 @@ class Navigation extends React.Component <Props, State> {
     _handleIndexChange = index => this.setState({ index });
 
     _renderScene = BottomNavigation.SceneMap({
-        profile: () => <ProfileView {...this.props} ></ProfileView>,
+        profile: () => <MyProfile {...this.props} ></MyProfile>,
         map: MapRoute,
         list: ListRoute,
         chat: ChatRoute,

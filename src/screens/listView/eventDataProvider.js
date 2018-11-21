@@ -1,0 +1,51 @@
+// @flow
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import gql from 'graphql-tag';
+import { Query, graphql } from 'react-apollo';
+
+const GET_EVENTS = gql`
+    {
+        events {
+            id
+            name
+            description
+            creator {
+                username
+            }
+            organisation {
+                name
+                id
+                description
+            }
+        }
+    }
+`;
+
+type Props = {
+    query: graphql.query,
+    children: React.PropTypes.node,
+};
+
+export class EventDataProvider extends Component<Props> {
+    constructor(props: Props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <View>
+                <Query query={GET_EVENTS}>
+                {({ loading, error, data }) => {
+                        if (loading) return null;
+                        if (error) {
+                            console.warn(`ApolloError! ${error.message}`);
+                            return null;
+                        }
+                        return this.props.children(data.events);
+                    }}
+                </Query>
+            </View>
+        );
+    }
+}

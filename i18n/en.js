@@ -1,13 +1,13 @@
 export default {
     common: {
         title: 'Deutsch',
-        welcome: 'Welcome to Happy to Help'
+        welcome: 'Welcome to Happy to Help',
     },
     errors: {
         toShort: 'Too short!',
         toLong: 'Too long!',
         email: 'Invalid e-mail address',
-        required: 'This field is required!'
+        required: 'This field is required!',
     },
     User: {
         userName: 'Username',
@@ -15,12 +15,15 @@ export default {
         email: 'E-Mail',
         signIn: 'Sign In',
         signUp: 'Sign Up',
-        invalidCredentials: 'Password or Username are invalid!'
+        invalidCredentials: 'Password or Username are invalid!',
+        logOut: 'Log out',
+        creditPoints: 'Credit Points',
     },
     Navigation: {
         profile: 'Profile',
         map: 'Map',
         list: 'List',
         chat: 'Chat',
-    }
+        skills: 'Skills',
+    },
 };
