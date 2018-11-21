@@ -12,6 +12,7 @@ export async function requestPermission(permission) {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log("You can use the ", permission)
       } else {
+        requestPermission(permission);
         console.log(permission, " permission denied")
       }
     } catch (err) {

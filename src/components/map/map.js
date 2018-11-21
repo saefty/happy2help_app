@@ -74,7 +74,6 @@ export class Map extends Component<Props, State> {
             const watchId = navigator.geolocation.watchPosition(this.watchPosition, undefined, {
                 enableHighAccuracy: true,
                 timeout: 5000,
-                maximumAge: 1000,
             });
             this.setState({ userLocationWatchId: watchId })
         }
