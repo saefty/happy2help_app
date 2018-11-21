@@ -6,7 +6,7 @@ import { Appbar } from 'react-native-paper';
 import { Header } from './header/header';
 import { LogoutButton } from './logoutButton/logoutButton';
 import { styles } from './viewProfileStyle';
-import { UserObject } from '../../../models/user.model';
+import type { UserObject } from '../../../models/user.model';
 
 type Props = {
     t: i18n.t,

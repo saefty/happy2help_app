@@ -8,6 +8,7 @@ import { ProfilePicture } from '../profilePicture/profilePicture';
 import { Skills } from '../skills/skills';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { UserObject } from './../../../models/user.model';
+import { SkillObject } from './../../../models/skill.model';
 
 type Props = {
     t: i18n.t,
@@ -15,18 +16,41 @@ type Props = {
     user: UserObject, //the old userobject
 };
 
+type States = {
+    user: UserObject,
+};
+
 export class EditProfile extends Component<Props> {
     constructor(props) {
         super(props);
+        console.log(props.user)
+        let user = props.user;
+        user.skills = [
+            {
+                text: 'Hygiene Karte',
+                approved: true,
+                id: 0,
+            },
+            {
+                text: 'Computerexperte',
+                approved: false,
+                id: 1,
+            },
+        ];
         this.state = {
             user: props.user, //the new userobect
         };
     }
 
-    updateSkills = skills => {
+    addSkill = (skill: SkillObject) => {
         let user = this.state.user;
-        user.skills = skills;
-        console.log(user);
+        user.skills.push(skill);
+        this.setState({ user: user });
+    };
+
+    deleteSkill = (skillToDelete: SkillObject) => {
+        let user = this.state.user;
+        user.skills = user.skills.filter(skill => skill.id != skillToDelete.id);
         this.setState({ user: user });
     };
 
@@ -99,7 +123,7 @@ export class EditProfile extends Component<Props> {
                 <TextInput iconName="person" label="Username" value={this.props.user.username} />
                 <TextInput iconName="place" label="Location" value={this.props.user.profile.location ? this.props.user.profile.location.name : ''} />
 
-                <Skills skillObjects={skillObjects} editable={true} updateSkills={this.updateSkills} />
+                <Skills skillObjects={this.state.user.skills} editable={true} addSkill={this.addSkills} deleteSkill={this.deleteSkill} />
             </KeyboardAwareScrollView>
         );
     }

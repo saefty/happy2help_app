@@ -20,7 +20,7 @@ const GET_PROFILE = gql`
 type Props = {
     t: i18n.t,
     logOut: () => void,
-    query: graphql.query,
+    query:  .query,
     children: React.PropTypes.node,
 };
 
