@@ -6,6 +6,7 @@ import { Header } from './header/header';
 import { LogoutButton } from './logoutButton/logoutButton';
 import { styles } from './profileScreenStyle';
 import { UserObject } from '../../models/user.model';
+import { CreditPoints } from './creditPoints/creditPoints';
 
 type Props = {
     t: i18n.t,
@@ -24,23 +25,21 @@ export class ProfileView extends Component<Props> {
             {
                 text: 'Hygiene Karte',
                 approved: true,
-                id: 0
+                id: 0,
             },
             {
                 text: 'Computerexperte',
                 approved: false,
-                id: 1
+                id: 1,
             },
         ];
         return (
             // <View style={styles.outerContainer}>
-            <View >
+            <View>
                 {/* <View style={styles.innerContainer}> */}
-                <View >
-                    <Header
-                        userName={this.props.user.username}
-                        location={this.props.user.profile.location}
-                    />
+                <View>
+                    <Header userName={this.props.user.username} location={this.props.user.profile.location} />
+                    <CreditPoints creditPoints={this.props.user.profile.creditPoints} /> 
                     <SkillList skillObjects={skillObjects} />
                 </View>
                 <LogoutButton {...this.props} />

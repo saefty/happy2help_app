@@ -12,6 +12,7 @@ const GET_PROFILE = gql`
                 location {
                     name
                 }
+                creditPoints
             }
         }
     }
