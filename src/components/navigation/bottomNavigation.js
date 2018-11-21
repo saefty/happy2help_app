@@ -4,7 +4,7 @@ import { BottomNavigation, Text } from 'react-native-paper';
 import { MyProfile } from '../../screens/myProfile/myprofile.screen';
 import { Map } from '../map/map'
 import { withNamespaces, i18n } from 'react-i18next';
-import { EventList } from '../listview/eventList';
+import { ListView } from '../../screens/listView/listView.screen';
 
 //const ProfileRoute = <ProfileView logOut={this.props.logOut} ></ProfileView>;
 const randomEvents = (amount: number) => {
@@ -14,6 +14,16 @@ const randomEvents = (amount: number) => {
             id: `${i}`,
             description: 'Some event description',
             name: 'Berliner Tafel e.V.',
+            creator: {
+                username: "Username",
+                profile: {
+                    location: {
+                        name: "Locationname",
+                        longitude: 0,
+                        latitude: 0
+                    }
+                }
+            },
             location: {
                 name: 'gsdf',
                 longitude: 13.404954 + (Math.random() -.5) * .05,
@@ -25,7 +35,7 @@ const randomEvents = (amount: number) => {
 }
 const MapRoute = () => <Map events={randomEvents(1500)}></Map>;
 
-const ListRoute = () => <EventList></EventList>;
+const ListRoute = () => <ListView></ListView>;
 const ChatRoute = () => <Text>Chat</Text>;
 
 

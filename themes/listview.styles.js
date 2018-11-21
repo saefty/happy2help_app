@@ -30,6 +30,12 @@ const styles = StyleSheet.create({
     },
     descriptionContainer: {
       backgroundColor: 'white',
+      maxHeight: 75,
+      marginLeft: 2,
+      marginRight: 2,
+    },
+    descriptionContainerImage: {
+      backgroundColor: 'white',
       maxHeight: 55,
       marginLeft: 2,
       marginRight: 2,
