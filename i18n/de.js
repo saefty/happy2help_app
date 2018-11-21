@@ -17,6 +17,8 @@ export default {
         signUp: 'Registieren',
         invalidCredentials: 'Passwort oder Benutzername falsch!',
         logOut: 'Abmelden',
-        skills: 'Fähigkeiten'
+        skills: 'Fähigkeiten',
+        creditPoints: 'Helfer Punkte',
+
     },
 };

@@ -17,6 +17,7 @@ export default {
         signUp: 'Sign Up',
         invalidCredentials: 'Password or Username are invalid!',
         logOut: 'Log out',
+        creditPoints: 'Credit Points',
     },
     Navigation: {
         profile: 'Profile',
