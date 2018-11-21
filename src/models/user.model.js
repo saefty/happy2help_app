@@ -1,7 +1,6 @@
 // @flow
 
-import { LocationObject } from './location.model';
-import { CreditPoints } from '../components/profile/creditPoints/creditPoints';
+import type { LocationObject } from './location.model';
 
 export type UserObject  = {
     username: string,
