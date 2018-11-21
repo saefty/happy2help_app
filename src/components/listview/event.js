@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Card, Title, Paragraph } from 'react-native-paper';
 import type { EventObject } from '../../models/event.model';
 
-// TODO: model benutzen
+
 type Props = {
     event: EventObject,
 };
