@@ -13,18 +13,33 @@ const GET_EVENTS = gql`
             creator {
                 username
             }
+            location {
+                latitude
+                longitude
+                name
+            }
             organisation {
                 name
                 id
                 description
+            }
+            jobSet {
+                id
+                name
+                description
+                totalPositions	
+                participationSet {
+                    id
+                }
             }
         }
     }
 `;
 
 type Props = {
-    query: graphql.query,
+    pollInterval?: number,
     children: React.PropTypes.node,
+    
 };
 
 export class EventDataProvider extends Component<Props> {
@@ -35,7 +50,7 @@ export class EventDataProvider extends Component<Props> {
     render() {
         return (
             <View>
-                <Query query={GET_EVENTS}>
+                <Query query={GET_EVENTS} pollInterval={this.props.pollInterval}>
                 {({ loading, error, data }) => {
                         if (loading) return null;
                         if (error) {

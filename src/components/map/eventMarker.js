@@ -10,6 +10,7 @@ import { H2HTheme } from '../../../themes/default.theme';
 
 type Props = {
     event: EventObject,
+    onEventTouch: (event: EventObject) => void
 };
 
 
@@ -43,9 +44,12 @@ export class EventMarker extends Component<Props> {
                 title={this.props.event.name}
                 description={this.props.event.description}
                 tracksViewChanges={false}
-            >
+                onPress={(e) => {
+                    e.stopPropagation();
+                    this.props.onEventTouch(this.props.event)
 
-            </Marker>
+                }}
+            />
         );
     }
 }
