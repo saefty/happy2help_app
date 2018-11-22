@@ -28,7 +28,6 @@ type State = {
 }
 import { requestPermission } from './src/helpers/requestPermission';
 
-
 export default class AppApollo extends Component<I18nProps, State> {
     state = {
         apolloClient: {},
@@ -105,13 +104,14 @@ export default class AppApollo extends Component<I18nProps, State> {
     };
 
     logOut = async () => {
-        // Clear storages
-        await AsyncStorage.clear();
-        await this.state.apolloClient.resetStore();
         // Clear login state
         await this.setState({
             loggedIn: false,
         });
+        // Clear storages
+        await AsyncStorage.clear();
+        await this.state.apolloClient.resetStore();
+ 
     };
 
     onLanguageChange(language: any) {        // eslint-disable-line
