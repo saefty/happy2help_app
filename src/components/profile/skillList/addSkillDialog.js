@@ -17,7 +17,7 @@ type State = {
     skillname: string,
 };
 
-export class AddSkillDialogComponent extends Component<Props, State> {
+class AddSkillDialogComponent extends Component<Props, State> {
     constructor(props) {
         super(props);
         this.state = {
