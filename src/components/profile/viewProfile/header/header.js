@@ -7,6 +7,7 @@ import { ProfilePicture } from './../../profilePicture/profilePicture';
 import { styles } from './headerStyle';
 import type { LocationObject } from './../../../../models/location.model'
 
+
 type Props = {
     t: i18n.t,
     userName: string,
@@ -24,12 +25,8 @@ export class Header extends Component<Props> {
                 <View style={styles.headerTextContainer}>
                     <ProfilePicture style={styles.profilePicture}/>
                     <View style={styles.nameAndLocationContainer}>
-                        <Text style={styles.userName}>
-                            {this.props.userName}{' '}
-                        </Text>
-                        <Text style={styles.location}>
-                            {this.props.location ? this.props.location.name : ''}{' '}
-                        </Text>
+                        <Text style={styles.userName}>{this.props.userName} </Text>
+                        <Text style={styles.location}>{this.props.location ? this.props.location.name : ''} </Text>
                     </View>
                 </View>
             </View>

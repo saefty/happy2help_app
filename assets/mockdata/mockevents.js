@@ -15,7 +15,7 @@ let eventsMock = [
         description: "<<TESTDATA>>We prepare and give out food for those in need",
         organization: "Food For All",
         creator: "Peter Oak",
-        image: "src",
+        image: undefined,
         id: "1"
     },
     {
@@ -24,7 +24,7 @@ let eventsMock = [
         + " but i need 2 strong guys or gals  help. I have some food for you (veggie, if you want)",
         organization: undefined,
         creator: "Charlotte Burg",
-        image: undefined,
+        image: "https://picsum.photos/200",
         id: "2"
     },
     {
@@ -40,7 +40,7 @@ let eventsMock = [
         description: "<<TESTDATA>>testdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdatatestdata",
         organization: undefined,
         creator: "Charlotte Burg",
-        image: "src2",
+        image: "https://picsum.photos/200",
         id: "4"
     }
 ];

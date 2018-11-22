@@ -14,11 +14,14 @@ export default {
         password: 'Passwort',
         email: 'E-Mail',
         signIn: 'Anmelden',
-        signUo: 'Registieren',
-        invalidCredentials: 'Passwort oder Benutzername falsch!',
         location: 'Standort',
         editProfile: 'Profil bearbeiten',
-        addSkill: 'Fähigkeit hinzufügen'
+        addSkill: 'Fähigkeit hinzufügen',
+        signUp: 'Registieren',
+        invalidCredentials: 'Passwort oder Benutzername falsch!',
+        logOut: 'Abmelden',
+        skills: 'Fähigkeiten',
+        creditPoints: 'Helfer Punkte',
 
     },
 };

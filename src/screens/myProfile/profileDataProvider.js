@@ -12,6 +12,7 @@ const GET_PROFILE = gql`
                 location {
                     name
                 }
+                creditPoints
             }
             skills {
                 id
@@ -37,7 +38,6 @@ export class ProfileDataProvider extends Component<Props> {
     render() {
         return (
             <View>
-                {console.log(GET_PROFILE)}
                 <Query query={GET_PROFILE}>
                     {({ loading, error, data }) => {
                         if (loading) return null;

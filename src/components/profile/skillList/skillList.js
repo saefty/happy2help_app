@@ -4,9 +4,11 @@ import { View } from 'react-native';
 import { Title } from 'react-native-paper';
 
 import { SkillChip } from './skillChip/skillChip';
-import { styles } from './skillsStyle';
 import type { SkillObject } from './../../../models/skill.model';
 import { AddSkillDialog } from './addSkillDialog';
+import { styles } from './skillListStyle';
+import { withNamespaces, i18n } from 'react-i18next';
+
 type Props = {
     t: i18n.t,
     skillObjects: SkillObject[],
@@ -14,14 +16,11 @@ type Props = {
     deleteSkill?: (skill: SkillObject) => mixed,
 };
 
-
-
-export class Skills extends Component<Props> {
+class SkillListComponent extends Component<Props> {
     constructor(props) {
         super(props);
        
     }
-
 
     render() {
         let Render_Skills = this.props.skillObjects.map(skill => (
@@ -30,7 +29,7 @@ export class Skills extends Component<Props> {
 
         return (
             <View style={styles.container}>
-                <Title style={styles.title}>Skills</Title>
+                <Title style={styles.title}>{this.props.t('skills')}</Title>
                 <View style={styles.chipBox}>
                     {Render_Skills}
                     {this.props.addSkill ? <AddSkillDialog addSkill={this.props.addSkill} /> : null}
@@ -39,3 +38,5 @@ export class Skills extends Component<Props> {
         );
     }
 }
+
+export const SkillList = withNamespaces(['User'])(SkillListComponent);

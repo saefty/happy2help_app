@@ -21,13 +21,7 @@ const REGISTER = gql`
     mutation Register($username: String!, $password: String!, $email: String!) {
         createUser(username: $username, password: $password, email: $email) {
             user {
-                id
-                password
-                email
-            }
-            profile {
-                birthday
-                creditPoints
+                id      
             }
         }
     }

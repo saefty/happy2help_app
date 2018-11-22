@@ -5,7 +5,7 @@ import { TextInput } from './TextinputWithIcon/textInput';
 import { styles } from './editProfileStyle';
 import { Appbar } from 'react-native-paper';
 import { ProfilePicture } from '../profilePicture/profilePicture';
-import { Skills } from '../skills/skills';
+import { SkillList } from '../skillList/skillList';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import type { UserObject } from './../../../models/user.model';
 import type { SkillObject } from './../../../models/skill.model';
@@ -24,7 +24,6 @@ type State = {
 class EditProfileComponent extends Component<Props, State> {
     constructor(props) {
         super(props);
-        console.log(props.user);       
         this.state = {
             user: props.user, //the new userobect
         };
@@ -55,7 +54,6 @@ class EditProfileComponent extends Component<Props, State> {
     };
 
     saveUser = () => {
-        console.log(this.state.user);
         if (this.props.user.username != this.state.user.username) {
             //do update Username Mutation
         }
@@ -85,12 +83,12 @@ class EditProfileComponent extends Component<Props, State> {
         return (
             <KeyboardAwareScrollView>
                 <Appbar.Header style={styles.appbar}>
-                    <Appbar.Action icon="close" onPress={console.log('close')} />
+                    <Appbar.Action icon="close"/>
 
                     <Appbar.Content title={this.props.t('editProfile')} />
 
                     <Appbar.Action icon="check" onPress={this.saveUser} />
-                    <Appbar.Action icon="more-vert" onPress={console.log('presses')} />
+                    <Appbar.Action icon="more-vert"  />
                 </Appbar.Header>
 
                 <View style={{ alignItems: 'center' }}>
@@ -100,7 +98,7 @@ class EditProfileComponent extends Component<Props, State> {
                 <TextInput iconName="person" label="Username" value={this.props.user.username} />
                 <TextInput iconName="place" label="Location" value={this.props.user.profile.location ? this.props.user.profile.location.name : ''} />
 
-                <Skills skillObjects={this.state.user.skills} editable={true} addSkill={this.addSkill} deleteSkill={this.deleteSkill} />
+                <SkillList skillObjects={this.state.user.skills} editable={true} addSkill={this.addSkill} deleteSkill={this.deleteSkill} />
             </KeyboardAwareScrollView>
         );
     }

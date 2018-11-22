@@ -9,5 +9,6 @@ export type UserObject  = {
 }
 
 type ProfileObject = {
-    location?: LocationObject
+    location?: LocationObject,
+    creditPoints: number,
 }
