@@ -16,14 +16,18 @@ export default {
         signIn: 'Sign In',
         signUp: 'Sign Up',
         invalidCredentials: 'Password or Username are invalid!',
+        editProfile: 'Edit profile',
+        location: 'Location',
+        addSkill: 'Add Skill',
         logOut: 'Log out',
         creditPoints: 'Credit Points',
+        skills: 'Skills',
+
     },
     Navigation: {
         profile: 'Profile',
         map: 'Map',
         list: 'List',
         chat: 'Chat',
-        skills: 'Skills',
     },
 };

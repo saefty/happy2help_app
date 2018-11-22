@@ -1,10 +1,10 @@
 // @flow
 import { StyleSheet } from 'react-native';
-import { H2HTheme } from './../../../../themes/default.theme';
+import { H2HTheme } from './../../../../../themes/default.theme';
 
 export const styles = StyleSheet.create({
     container: {
-        height: 150,
+        height: 100,
     },
     colouredBlock: {
         position: 'absolute',
@@ -26,4 +26,12 @@ export const styles = StyleSheet.create({
     },
     location: { fontSize: 15 },
     nameAndLocationContainer: { margin: 10 },
+    profilePicture: {
+        width: 110,
+        height: 110,
+        borderRadius: 150,
+        margin: 10,
+        borderWidth: 8,
+        borderColor: 'white',
+    },
 });

@@ -1,15 +1,17 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { ProfileDataProvider } from './profileDataProvider';
-import { ProfileView } from './../../components/profile/profile';
+import { EditProfile } from '../../../components/profile/editProfile/editProfile';
+import { ProfileDataProvider } from './../profileDataProvider';
+
+
 
 type Props = {
     t: i18n.t,
     logOut: () => void,
 };
 
-export class MyProfile extends Component<Props> {
+export class EditMyProfile extends Component<Props> {
     constructor(props) {
         super(props);
     }
@@ -18,7 +20,7 @@ export class MyProfile extends Component<Props> {
         return (
             <View>
                 <ProfileDataProvider>
-                    {user => <ProfileView user={user} {...this.props}/>}
+                    {user => <EditProfile user={user} {...this.props}/>}
                 </ProfileDataProvider>
             </View>
         );

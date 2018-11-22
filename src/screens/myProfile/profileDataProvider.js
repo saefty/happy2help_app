@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
 
@@ -14,6 +14,11 @@ const GET_PROFILE = gql`
                 }
                 creditPoints
             }
+            skills {
+                id
+                name 
+                approved
+            }
         }
     }
 `;
@@ -21,7 +26,7 @@ const GET_PROFILE = gql`
 type Props = {
     t: i18n.t,
     logOut: () => void,
-    query: graphql.query,
+    query:  graphql.query,
     children: React.PropTypes.node,
 };
 

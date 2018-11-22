@@ -1,13 +1,18 @@
 // @flow
 import { StyleSheet } from 'react-native';
 
+
+
 export const styles = StyleSheet.create({
+    appbar: {
+       
+    },
     profilePicture: {
-        width: 110,
-        height: 110,
-        borderRadius: 150,
-        margin: 10,
+        width: 200,
+        height: 200,
+        borderRadius: 200,
+        margin: 20,
         borderWidth: 8,
         borderColor: 'white',
-    },
+    }
 });
