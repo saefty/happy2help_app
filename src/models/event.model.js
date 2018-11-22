@@ -1,6 +1,7 @@
 // @flow
 import type { LocationObject } from './location.model';
 import type { UserObject } from './user.model.js';
+import type { Job } from './job.model.js';
 
 export type EventObject = {
     id: string,
@@ -12,5 +13,6 @@ export type EventObject = {
         description: string,
         id: string
     },
+    jobSet: Array<Job>,
     location: LocationObject 
 }

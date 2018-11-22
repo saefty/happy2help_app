@@ -3,9 +3,10 @@ import type { EventObject } from '../../models/event.model';
 import React, { Component } from 'react';
 import {
     View,
+    StyleSheet,
     Text
 } from 'react-native';
-import { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE, Region } from 'react-native-maps';
 import { DefaultStyles } from '../../../config/style';
 //import { i18n } from 'react-i18next';
 import { EventMarker } from './eventMarker';
@@ -14,7 +15,10 @@ import { MapStyle as styles } from './map.style';
 
 
 type Props = {
-    events?: Array<EventObject>
+    events?: Array<EventObject>,
+    onEventTouch: (event: EventObject) => void,
+    setUserViewPoint: (region: Region) => void,
+    initialRegion: Region
 };
 
 type State = {
@@ -104,11 +108,13 @@ export class Map extends Component<Props, State> {
       }    
     
     render() {
+        console.log('render')
         return (
             <View style={[DefaultStyles.container, styles.mapContainer, {paddingTop: this.state.paddingTop}]}>
                 <ClusteredMapView
                     ref={(r: ClusteredMapView) => { this.map = r }}
                     accessible={true}
+                    cache={true}
                     style={[styles.map]}
                     showsUserLocation={true}
                     showsMyLocationButton={true}
@@ -117,18 +123,18 @@ export class Map extends Component<Props, State> {
                     showsBuildings={false}
                     showsIndoors={false}
                     data={this.props.events}
-                    initialRegion={{
+                    initialRegion={this.props.initialRegion || {
                         latitude: this.state.userCords.latitude,
                         longitude: this.state.userCords.longitude,
                         latitudeDelta: initialZoom,
                         longitudeDelta: initialZoom,
                     }}
+                    onRegionChange={this.props.setUserViewPoint}
                     renderCluster={this.renderCluster}
-                    renderMarker={(event) => <EventMarker key={`event${event.id}`} tracksViewChanges={false} event={event}/>}
+                    renderMarker={(event) => <EventMarker onEventTouch={(event) => this.props.onEventTouch(event)} key={`event${event.id}`} tracksViewChanges={false} event={event}/>}
                 >
                 </ClusteredMapView>
             </View>
         );
     }
 }
-

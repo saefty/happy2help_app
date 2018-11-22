@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { EventDataProvider } from './eventDataProvider';
+import { EventDataProvider } from '../../providers/eventDataProvider';
 import { EventList } from './../../components/listview/eventList';
 
 type Props = {

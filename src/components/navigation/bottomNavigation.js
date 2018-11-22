@@ -4,6 +4,8 @@ import { BottomNavigation, Text } from 'react-native-paper';
 import { MyProfile } from '../../screens/myProfile/myprofile.screen';
 import { Map } from '../map/map'
 import { withNamespaces, i18n } from 'react-i18next';
+import { EventList } from '../listview/eventList';
+import { MapScreen } from '../../screens/map/map.screen';
 import { ListView } from '../../screens/listView/listView.screen';
 
 //const ProfileRoute = <ProfileView logOut={this.props.logOut} ></ProfileView>;
@@ -33,8 +35,7 @@ const randomEvents = (amount: number) => {
     }
     return events;
 }
-const MapRoute = () => <Map events={randomEvents(1500)}></Map>;
-
+const MapRoute = () => <MapScreen events={randomEvents(1500)}></MapScreen>;
 const ListRoute = () => <ListView></ListView>;
 const ChatRoute = () => <Text>Chat</Text>;
 
