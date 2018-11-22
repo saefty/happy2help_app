@@ -13,6 +13,11 @@ const GET_PROFILE = gql`
                     name
                 }
             }
+            skills {
+                id
+                name 
+                approved
+            }
         }
     }
 `;
@@ -20,7 +25,7 @@ const GET_PROFILE = gql`
 type Props = {
     t: i18n.t,
     logOut: () => void,
-    query:  .query,
+    query:  graphql.query,
     children: React.PropTypes.node,
 };
 
@@ -32,6 +37,7 @@ export class ProfileDataProvider extends Component<Props> {
     render() {
         return (
             <View>
+                {console.log(GET_PROFILE)}
                 <Query query={GET_PROFILE}>
                     {({ loading, error, data }) => {
                         if (loading) return null;

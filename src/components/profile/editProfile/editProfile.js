@@ -7,8 +7,9 @@ import { Appbar } from 'react-native-paper';
 import { ProfilePicture } from '../profilePicture/profilePicture';
 import { Skills } from '../skills/skills';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { UserObject } from './../../../models/user.model';
-import { SkillObject } from './../../../models/skill.model';
+import type { UserObject } from './../../../models/user.model';
+import type { SkillObject } from './../../../models/skill.model';
+import { withNamespaces, i18n } from 'react-i18next';
 
 type Props = {
     t: i18n.t,
@@ -16,27 +17,14 @@ type Props = {
     user: UserObject, //the old userobject
 };
 
-type States = {
+type State = {
     user: UserObject,
 };
 
-export class EditProfile extends Component<Props> {
+class EditProfileComponent extends Component<Props, State> {
     constructor(props) {
         super(props);
-        console.log(props.user)
-        let user = props.user;
-        user.skills = [
-            {
-                text: 'Hygiene Karte',
-                approved: true,
-                id: 0,
-            },
-            {
-                text: 'Computerexperte',
-                approved: false,
-                id: 1,
-            },
-        ];
+        console.log(props.user);       
         this.state = {
             user: props.user, //the new userobect
         };
@@ -86,32 +74,21 @@ export class EditProfile extends Component<Props> {
         }
         //create new skills
         this.state.user.skills.forEach(skill => {
-            if (skill.id >= 100) {
+            if (skill.unsaved) {
                 //do create new Skill Mutation
             }
         });
         // TODO navigate to viewProfile Screen
     };
 
-    render() {
-        //this will be replaced if the backend is ready to pass the user's skills
-        let skillObjects = [
-            {
-                text: 'Hygiene Karte',
-                approved: true,
-                id: 0,
-            },
-            {
-                text: 'Computerexperte',
-                approved: false,
-                id: 1,
-            },
-        ];
+    render() {       
         return (
             <KeyboardAwareScrollView>
                 <Appbar.Header style={styles.appbar}>
-                    <Appbar.BackAction onPress={console.log('back')} />
-                    <Appbar.Content title="Profil bearbeiten" />
+                    <Appbar.Action icon="close" onPress={console.log('close')} />
+
+                    <Appbar.Content title={this.props.t('editProfile')} />
+
                     <Appbar.Action icon="check" onPress={this.saveUser} />
                     <Appbar.Action icon="more-vert" onPress={console.log('presses')} />
                 </Appbar.Header>
@@ -123,8 +100,10 @@ export class EditProfile extends Component<Props> {
                 <TextInput iconName="person" label="Username" value={this.props.user.username} />
                 <TextInput iconName="place" label="Location" value={this.props.user.profile.location ? this.props.user.profile.location.name : ''} />
 
-                <Skills skillObjects={this.state.user.skills} editable={true} addSkill={this.addSkills} deleteSkill={this.deleteSkill} />
+                <Skills skillObjects={this.state.user.skills} editable={true} addSkill={this.addSkill} deleteSkill={this.deleteSkill} />
             </KeyboardAwareScrollView>
         );
     }
 }
+
+export const EditProfile = withNamespaces(['User'])(EditProfileComponent);

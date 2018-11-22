@@ -17,7 +17,8 @@ export default {
         signUp: 'Sign Up',
         invalidCredentials: 'Password or Username are invalid!',
         editProfile: 'Edit profile',
-        location: 'Location'
+        location: 'Location',
+        addSkill: 'Add Skill'
     },
     Navigation: {
         profile: 'Profile',

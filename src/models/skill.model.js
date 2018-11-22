@@ -3,6 +3,7 @@
 
 export type SkillObject  = {
     id: number,
-    text: string,
+    name: string,
     approved: boolean,
+    unsaved?: boolean,
 }

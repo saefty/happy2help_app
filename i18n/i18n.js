@@ -4,7 +4,7 @@ import de from './de';
 import en from './en';
 
 i18n.use(reactI18nextModule).init({
-    fallbackLng: 'en',
+    fallbackLng: 'de',
     react: {
         wait: true
     },

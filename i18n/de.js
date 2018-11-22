@@ -17,6 +17,8 @@ export default {
         signUo: 'Registieren',
         invalidCredentials: 'Passwort oder Benutzername falsch!',
         location: 'Standort',
-        editProfile: 'Profil bearbeiten'
+        editProfile: 'Profil bearbeiten',
+        addSkill: 'Fähigkeit hinzufügen'
+
     },
 };

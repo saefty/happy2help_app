@@ -17,22 +17,11 @@ type Props = {
 export class ProfileView extends Component<Props> {
     constructor(props) {
         super(props);
+        console.log(props.user);
     }
 
     render() {
-        //this will be replaced if the backend is ready to pass the user's skills
-        let skillObjects = [
-            {
-                text: 'Hygiene Karte',
-                approved: true,
-                id: 0,
-            },
-            {
-                text: 'Computerexperte',
-                approved: false,
-                id: 1,
-            },
-        ];
+        
         return (
             <View>
                 <Appbar.Header style={styles.appbar}>
@@ -43,7 +32,7 @@ export class ProfileView extends Component<Props> {
                 </Appbar.Header>
                 <View>
                     <Header userName={this.props.user.username} location={this.props.user.profile.location} />
-                    <Skills skillObjects={skillObjects} />
+                    <Skills skillObjects={this.props.user.skills} />
                 </View>
                 <LogoutButton {...this.props} />
             </View>

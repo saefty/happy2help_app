@@ -6,7 +6,7 @@ import { Title } from 'react-native-paper';
 import { SkillChip } from './skillChip/skillChip';
 import { styles } from './skillsStyle';
 import type { SkillObject } from './../../../models/skill.model';
-import { AddSkillDialog } from './skillChip/addSkillChip/addSkillDialog';
+import { AddSkillDialog } from './addSkillDialog';
 type Props = {
     t: i18n.t,
     skillObjects: SkillObject[],

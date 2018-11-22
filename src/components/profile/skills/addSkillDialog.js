@@ -1,22 +1,28 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Button, Paragraph, Dialog, Portal, TextInput } from 'react-native-paper';
-import { AddSkillChip } from './addSkillChip';
-// import { SkillObject } from './../../../../../models/skill.model';
+import { Button, Dialog, Portal, TextInput } from 'react-native-paper';
+import { AddSkillChip } from './skillChip/addSkillChip/addSkillChip';
+import  uuidv1  from 'uuid/v1';
+import { withNamespaces, i18n } from 'react-i18next';
+
 
 type Props = {
     t: i18n.t,
     addSkill: any,
 };
 
-export class AddSkillDialog extends Component<Props> {
+type State = {
+    visible: boolean,
+    skillname: string,
+};
+
+export class AddSkillDialogComponent extends Component<Props, State> {
     constructor(props) {
         super(props);
         this.state = {
             visible: false,
             skillname: '',
-            skillId: 100,
         };
     }
 
@@ -39,7 +45,7 @@ export class AddSkillDialog extends Component<Props> {
                 <AddSkillChip onPress={this._showDialog} />
                 <Portal>
                     <Dialog visible={this.state.visible} onDismiss={this._hideDialog}>
-                        <Dialog.Title>Add Skill</Dialog.Title>
+                        <Dialog.Title>{this.props.t('addSkill')}</Dialog.Title>
                         <Dialog.Content>
                             <TextInput autoFocus={true} onChangeText={this.handleSkillname} />
                         </Dialog.Content>
@@ -48,11 +54,11 @@ export class AddSkillDialog extends Component<Props> {
                             <Button
                                 onPress={() => {
                                     let skill = {
-                                        text: this.state.skillname,
+                                        name: this.state.skillname,
                                         approved: false,
-                                        id: this.state.skillId,
-                                    };
-                                    this.setState({skillId: this.state.skillId + 1})
+                                        id: uuidv1(),
+                                        unsaved: true,
+                                    };                                    
                                     this.hideAndCreateSkill(skill);
                                 }}
                             >
@@ -65,3 +71,5 @@ export class AddSkillDialog extends Component<Props> {
         );
     }
 }
+
+export const AddSkillDialog = withNamespaces(['User'])(AddSkillDialogComponent);
