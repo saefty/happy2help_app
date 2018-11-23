@@ -1,7 +1,9 @@
 // @flow
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
-import { MyProfile } from '../../screens/myProfile/myprofile.screen';
+// import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen';
+import { MyProfile } from '../../screens/myProfile/view/myprofile.screen';
+
 import { Map } from '../map/map'
 import { withNamespaces, i18n } from 'react-i18next';
 import { EventList } from '../listview/eventList';

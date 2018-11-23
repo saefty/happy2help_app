@@ -19,7 +19,7 @@ class CreditPointsComponent extends Component<Props> {
 
     render() {      
         return (
-            <View>
+            <View style={styles.view}>
                 <Divider style={styles.divider} />
                 <View style={styles.outerContainer}>
                     <Text style={styles.title}>{this.props.t('creditPoints')}</Text>

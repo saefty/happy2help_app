@@ -1,11 +1,11 @@
 // @flow
 import React, { Component } from 'react';
-import { Image, View } from 'react-native';
-import { styles } from './profilePictureStyle'
+import { Image, View, StyleSheet } from 'react-native';
 
 type Props = {
     t: i18n.t,
-    src: string,
+    src?: string,
+    style: StyleSheet,
 };
 
 export class ProfilePicture extends Component<Props> {
@@ -16,8 +16,8 @@ export class ProfilePicture extends Component<Props> {
         return (
             <View>
                 <Image
-                    source={require('./../../../../../assets/images/profile/baseline_person_black_48.png')}
-                    style={styles.profilePicture}
+                    source={require('./../../../../assets/images/profile/baseline_person_black_48.png')}
+                    style={this.props.style}
                 />
             </View>
         );

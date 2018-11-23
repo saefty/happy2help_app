@@ -1,6 +1,5 @@
 // @flow
 import { StyleSheet } from 'react-native';
-import { H2HTheme } from '../../../../themes/default.theme';
 
 export const styles = StyleSheet.create({
     divider: { backgroundColor: '#cccccc', margin: 10, height: 2 },
@@ -8,4 +7,5 @@ export const styles = StyleSheet.create({
     innerContainer: { flexDirection: 'row', alignItems: 'center' },
     title: { fontSize: 20 },
     creditPoints: {fontSize: 30 },
+    view: {marginTop: 15},
 });
