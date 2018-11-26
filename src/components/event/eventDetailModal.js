@@ -56,7 +56,7 @@ export class EventDetailModal extends Component<Props> {
             <Modal visible={this.props.visible} onDismiss={this.props.onDismiss}>
                 <Card>
                     <Card.Content>
-                        <Title>{this.props.event.name} - {this.props.event.location.name}</Title>
+                        <Title>{this.props.event.name} - {this.props.event.location ? this.props.event.location.name: ''}</Title>
                         <Paragraph>{this.props.event.description}</Paragraph>
                         <Divider />
                         <Subheading>Jobs</Subheading>
