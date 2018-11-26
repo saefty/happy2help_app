@@ -24,4 +24,8 @@ export default {
         creditPoints: 'Helfer Punkte',
 
     },
+    Event: {
+        myEvents: 'Meine Events',
+        myJobs: 'Meine Jobs',
+    }
 };

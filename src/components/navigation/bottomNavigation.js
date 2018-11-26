@@ -6,9 +6,9 @@ import { MyProfile } from '../../screens/myProfile/view/myprofile.screen';
 
 import { Map } from '../map/map'
 import { withNamespaces, i18n } from 'react-i18next';
-import { EventList } from '../listview/eventList';
 import { MapScreen } from '../../screens/map/map.screen';
 import { ListView } from '../../screens/listView/listView.screen';
+import { MyEventList } from '../../screens/myEventList/myEventList.screen';
 
 //const ProfileRoute = <ProfileView logOut={this.props.logOut} ></ProfileView>;
 const randomEvents = (amount: number) => {
@@ -39,7 +39,7 @@ const randomEvents = (amount: number) => {
 }
 const MapRoute = () => <MapScreen events={randomEvents(1500)}></MapScreen>;
 const ListRoute = () => <ListView></ListView>;
-const ChatRoute = () => <Text>Chat</Text>;
+const ChatRoute = () => <MyEventList></MyEventList>;
 
 
 

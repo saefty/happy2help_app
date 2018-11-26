@@ -24,6 +24,10 @@ export default {
         skills: 'Skills',
 
     },
+    Event: {
+        myEvents: 'My Events',
+        myJobs: 'My Jobs',
+    },
     Navigation: {
         profile: 'Profile',
         map: 'Map',
