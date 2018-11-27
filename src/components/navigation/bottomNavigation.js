@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
-// import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen';
-import { MyProfile } from '../../screens/myProfile/view/myprofile.screen';
+import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen';
+//import { MyProfile } from '../../screens/myProfile/view/myprofile.screen';
 
 import { Map } from '../map/map'
 import { withNamespaces, i18n } from 'react-i18next';
@@ -55,7 +55,7 @@ type State = {
 
 class Navigation extends React.Component <Props, State> {
     state = {
-        index: 1,
+        index: 0,
         routes: [
             { key: 'profile', title: this.props.t('profile'), icon: 'person' },
             { key: 'map', title: this.props.t('map'), icon: 'map' },
@@ -67,7 +67,7 @@ class Navigation extends React.Component <Props, State> {
     _handleIndexChange = index => this.setState({ index });
 
     _renderScene = BottomNavigation.SceneMap({
-        profile: () => <MyProfile {...this.props} ></MyProfile>,
+        profile: () => <EditMyProfile {...this.props} ></EditMyProfile>,
         map: MapRoute,
         list: ListRoute,
         chat: ChatRoute,
