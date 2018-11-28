@@ -22,6 +22,14 @@ export default {
         logOut: 'Abmelden',
         skills: 'Fähigkeiten',
         creditPoints: 'Helfer Punkte',
-
     },
+    Event: {
+        eventName: 'Veranstaltungsname',
+        description: 'Beschreibung',
+        locationSearch: 'Standortsuche',
+        create: 'Veröffentlichen',
+        editTitle: 'Event bearbeiten',
+        createTitle: 'Event erstellen'
+
+    }
 };

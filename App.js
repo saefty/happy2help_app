@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import { Sentry } from 'react-native-sentry';
 import { SentryConfig } from './config/sentry';
 import { withNamespaces, i18n } from 'react-i18next';
-import { I18nNavigation } from './src/components/navigation/bottomNavigation';
-
 import { AppContainer } from './src/components/navigation/navigation';
+import { EditEventFormNamespaced } from './src/components/event/edit.event.form';
 
 Sentry.config(SentryConfig.link, SentryConfig.props);
 
@@ -31,7 +30,8 @@ class App extends Component<Props> {
             <AppContainer screenProps={{
                 logOut: this.props.logOut
             }}/> //new react navigation tab navigator    
-            // <I18nNavigation logOut={this.props.logOut} /> //old paper bottom navigation
+            
+           // <I18nNavigation logOut={this.props.logOut} /> //old paper bottom navigation
         );
     }
 }
