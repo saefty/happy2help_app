@@ -9,7 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 type Props = {
   events: Array<EventObject>,
-  jobs: Array<any>,  
+  participationSet: Array<any>,  
 }
 
 
@@ -22,16 +22,25 @@ export class UserEventList extends Component<Props> {
 
   render() {
       return (
+        <View style={{alignContent: "center"}}>
         <View>
-          <View><Text>My Events</Text></View>
+          <View style={{backgroundColor: "#008FB8", justifyContent: "center"}}>
+            <Text style={{color: "#fff", fontSize: 25, marginLeft: 5}}>My Events</Text>
+          </View>
+          <View style={{backgroundColor: "#eee", alignItems: "center"}}>
           <KeyboardAwareScrollView>
-          {this.props.events.map((event) => <MyEvent key={event.id} event={event}></MyEvent>)}
+            {this.props.events.map((event) => <MyEvent key={event.id} event={event}></MyEvent>)}
           </KeyboardAwareScrollView>
-          
-          <View><Text>My Jobs</Text></View>
+        </View>
+        </View>
+        <View>
+          <View style={{backgroundColor: "#008FB8", justifyContent: "center"}}>
+            <Text style={{color: "#fff", fontSize: 25, marginLeft: 5}}>My Jobs</Text>
+          </View>
           <KeyboardAwareScrollView>
-          {this.props.jobs.map((job) => <MyJob key={job.job.id} job={job.job}></MyJob>)}
+            {this.props.participationSet.map((participation) => <MyJob key={participation.id} job={participation.job} participationState={participation.state}></MyJob>)}
           </KeyboardAwareScrollView>
+        </View>
         </View>
       );
   }

@@ -5,6 +5,7 @@ import type { Job } from '../../models/job.model';
 
 type Props = {
     job: Job,
+    participationState: number,
 };
 
 export class MyJob extends Component<Props> {

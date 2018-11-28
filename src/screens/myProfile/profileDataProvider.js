@@ -7,6 +7,7 @@ import { Query, graphql } from 'react-apollo';
 const GET_PROFILE = gql`
     {
         user {
+            id
             username
             profile {
                 location {

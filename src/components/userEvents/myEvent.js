@@ -21,7 +21,7 @@ export class MyEvent extends Component<Props> {
             ? "As Admin for: " + this.props.event.organisation.name
             : "private";
         return (
-            <Card>
+            <Card style={{margin: 5}}>
                 <Card.Content>
                     <Title>{this.props.event.name}</Title>  
                     <Paragraph>{description}</Paragraph>

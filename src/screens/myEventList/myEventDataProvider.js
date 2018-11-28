@@ -18,6 +18,8 @@ const GET_EVENTS = gql`
             }
         }
         participationSet {
+            id
+            state
             job {
                 id
                 name

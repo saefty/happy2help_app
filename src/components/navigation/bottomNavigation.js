@@ -37,7 +37,8 @@ const randomEvents = (amount: number) => {
     }
     return events;
 }
-const MapRoute = () => <MapScreen events={randomEvents(1500)}></MapScreen>;
+const MapRoute = () => <Text>Hi</Text>
+// <MapScreen events={randomEvents(1500)}></MapScreen>;
 const ListRoute = () => <ListView></ListView>;
 const ChatRoute = () => <MyEventList></MyEventList>;
 
