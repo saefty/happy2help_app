@@ -40,24 +40,21 @@ export class MapScreen extends Component<Props, State> {
     }
 
     setUserViewPoint = (region: Region) => {
-        this.setState({ userRegion: region })
+        //this.setState({ userRegion: region })
     }
 
     render() {
         return (
             <View>
-
                 <Portal>
                     <EventDetailModal visible={this.state.visible} onDismiss={this.hideModal} event={this.state.event}></EventDetailModal>
                 </Portal>
-                <EventDataProvider pollInterval={30000}>
+                <EventDataProvider pollInterval={undefined}>
                     {(events) => {
                         return  <Map events={events} onEventTouch={this.openEventModal} initialRegion={this.state.userRegion} setUserViewPoint={this.setUserViewPoint}/>
                     }}
                 </EventDataProvider>
-
             </View>
-
         )
     }
 }

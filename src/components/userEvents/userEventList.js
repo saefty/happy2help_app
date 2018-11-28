@@ -16,7 +16,6 @@ type Props = {
 
 
 export class UserEventList extends Component<Props> {
-  
   constructor(props: Props) {
     super(props);
   }
@@ -24,32 +23,28 @@ export class UserEventList extends Component<Props> {
   render() {
       return (
         <View style={styles.container}>
-          <View>
-              <View style={styles.header}>
-                <Text style={styles.title}>My Events</Text>
+          <KeyboardAwareScrollView>
+            <View>
+                <View style={styles.header}>
+                  <Text style={styles.title}>My Events</Text>
+                </View>
+              <View>
+                  {this.props.events.map((event) => <MyEvent key={event.id} event={event}></MyEvent>)}
               </View>
+            </View>
+
             <View>
-              <KeyboardAwareScrollView>
-                {this.props.events.map((event) => <MyEvent key={event.id} event={event}></MyEvent>)}
-              </KeyboardAwareScrollView>
+              <View style={styles.header}>
+                <Text style={styles.title}>My Jobs</Text>
+              </View>
+              <View>
+                  {this.props.participationSet.map((participation) => <MyJob key={participation.id} job={participation.job} participationState={participation.state}></MyJob>)}
+              </View>
             </View>
-          </View>
-
-          <View>
-            <View style={styles.header}>
-              <Text style={styles.title}>My Jobs</Text>
-            </View>
-            <View>
-              <KeyboardAwareScrollView>
-                {this.props.participationSet.map((participation) => <MyJob key={participation.id} job={participation.job} participationState={participation.state}></MyJob>)}
-              </KeyboardAwareScrollView>
-            </View>
-          </View>
-
-          
-          <EventFAB />
-          
-
+          </KeyboardAwareScrollView>
+          <EventFAB addEvent={() => {
+            this.props.navigation.navigate('Edit')
+          }} />
         </View>
       );
   }

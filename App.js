@@ -16,7 +16,6 @@ type Props = {
     t: i18n.t,
     logOut: () => void,
 };
-
 class App extends Component<Props> {
     componentDidMount() {
         Sentry.captureBreadcrumb({
@@ -25,11 +24,12 @@ class App extends Component<Props> {
             data: { some: 'data', as: 'json' },
         });
     }
+
     render() {
         return (
             <AppContainer screenProps={{
-                logOut: this.props.logOut
-            }}/> //new react navigation tab navigator    
+                logOut: this.props.logOut,
+            }} /> //new react navigation tab navigator    
             
            // <I18nNavigation logOut={this.props.logOut} /> //old paper bottom navigation
         );
