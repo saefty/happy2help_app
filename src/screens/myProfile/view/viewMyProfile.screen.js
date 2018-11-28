@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { ProfileDataProvider } from '../profileDataProvider';
-import { ProfileView } from './../../../components/profile/viewProfile/viewProfile';
+import ProfileView from '../../../components/profile/viewProfile/viewProfile';
 
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
     logOut: () => void,
 };
 
-export class MyProfile extends Component<Props> {
+export class ViewMyProfile extends Component<Props> {
     constructor(props) {
         super(props);
     }
