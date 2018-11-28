@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginBottom: 2,
     },
+    margin: {
+        margin: 5,
+    }
 });
 
 export default styles;

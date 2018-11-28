@@ -1,12 +1,14 @@
 // @flow
 import React, { Component } from "react";
 import { View, Text } from "react-native";
+import { Portal } from "react-native-paper";
 import type { EventObject } from '../../models/event.model';
 import { MyEvent } from './myEvent';
 import { MyJob } from './myJob';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './userEvents.styles';
 import { EventFAB } from './eventFAB';
+
 type Props = {
   events: Array<EventObject>,
   participationSet: Array<any>,  
@@ -44,9 +46,9 @@ export class UserEventList extends Component<Props> {
             </View>
           </View>
 
-          <View>
-            <EventFAB />
-          </View>
+          
+          <EventFAB />
+          
 
         </View>
       );

@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Card, Title, Paragraph, Text } from 'react-native-paper';
 import type { Job } from '../../models/job.model';
-
+import styles from './userEvents.styles';
 type Props = {
     job: Job,
     participationState: number,
@@ -17,7 +17,7 @@ export class MyJob extends Component<Props> {
     render() {
             
         return (
-            <Card style={{margin: 5}}>
+            <Card style={styles.margin}>
                 <Card.Content>
                     <Title>{this.props.job.name}</Title>  
                     <Paragraph>{this.props.job.description}</Paragraph>
@@ -26,11 +26,19 @@ export class MyJob extends Component<Props> {
             </Card>
         );   
     }
-
+/*
+        (1, 'Participated'),
+        (2, 'Applied'),
+        (3, 'Declined'),
+        (4, 'Accepted'),
+        (5, 'Canceled'),
+*/
     getStateStr(state: number) {
-        if (state === 0) return "";
-        if (state === 1) return "";
-        if (state === 2) return "";
-        return "stateNotFound";
+        if (state === 1) return "Participated";
+        if (state === 2) return "Applied";
+        if (state === 3) return "Declined";
+        if (state === 4) return "Accepted";
+        if (state === 5) return "Canceled";
+        return "";
     }
 }

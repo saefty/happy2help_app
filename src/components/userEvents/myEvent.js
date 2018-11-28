@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { Card, Title, Paragraph } from 'react-native-paper';
 import type { EventObject } from '../../models/event.model';
+import styles from './userEvents.styles';
 
 type Props = {
     event: EventObject,
@@ -21,7 +22,7 @@ export class MyEvent extends Component<Props> {
             ? "As Admin for: " + this.props.event.organisation.name
             : "private";
         return (
-            <Card style={{margin: 5}}>
+            <Card style={styles.margin}>
                 <Card.Content>
                     <Title>{this.props.event.name}</Title>  
                     <Paragraph>{description}</Paragraph>
