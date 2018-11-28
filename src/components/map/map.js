@@ -108,7 +108,6 @@ export class Map extends Component<Props, State> {
       }    
     
     render() {
-        console.log('render')
         return (
             <View style={[DefaultStyles.container, styles.mapContainer, {paddingTop: this.state.paddingTop}]}>
                 <ClusteredMapView

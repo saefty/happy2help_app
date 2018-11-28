@@ -6,6 +6,7 @@ import type { EventObject } from '../../models/event.model';
 
 type Props = {
     event: EventObject,
+    onEventTouch: (event: EventObject) => void,
 };
 
 export class Event extends Component<Props> {
@@ -25,7 +26,7 @@ export class Event extends Component<Props> {
             : this.props.event.creator.username;
         // return event card with mock picture
         return (
-            <Card>
+            <Card onPress={() => this.props.onEventTouch(this.props.event)}>
                 <Card.Content>
                     <Card.Cover source={{uri: "https://picsum.photos/200" }} />
                     <Title>{this.props.event.name}</Title>  
