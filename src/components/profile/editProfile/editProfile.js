@@ -10,6 +10,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import type { UserObject } from './../../../models/user.model';
 import type { SkillObject } from './../../../models/skill.model';
 import { withNamespaces, i18n } from 'react-i18next';
+import { withNavigation } from 'react-navigation';
+
 
 type Props = {
     t: i18n.t,
@@ -27,7 +29,7 @@ class EditProfileComponent extends Component<Props, State> {
         this.state = {
             user: props.user, //the new userobect
         };
-    }
+    }   
 
     addSkill = (skill: SkillObject) => {
         let user = this.state.user;
@@ -79,16 +81,14 @@ class EditProfileComponent extends Component<Props, State> {
         // TODO navigate to viewProfile Screen
     };
 
-    render() {       
+    render() {
         return (
             <KeyboardAwareScrollView>
                 <Appbar.Header style={styles.appbar}>
-                    <Appbar.Action icon="close"/>
-
+                    <Appbar.Action icon="close" onPress={() => this.props.navigation.navigate('View')} />
                     <Appbar.Content title={this.props.t('editProfile')} />
-
                     <Appbar.Action icon="check" onPress={this.saveUser} />
-                    <Appbar.Action icon="more-vert"  />
+                    <Appbar.Action icon="more-vert" />
                 </Appbar.Header>
 
                 <View style={{ alignItems: 'center' }}>
@@ -104,4 +104,4 @@ class EditProfileComponent extends Component<Props, State> {
     }
 }
 
-export const EditProfile = withNamespaces(['User'])(EditProfileComponent);
+export const EditProfile = withNavigation(withNamespaces(['User'])(EditProfileComponent));

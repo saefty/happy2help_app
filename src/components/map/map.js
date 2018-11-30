@@ -78,7 +78,6 @@ export class Map extends Component<Props, State> {
             const watchId = navigator.geolocation.watchPosition(this.watchPosition, undefined, {
                 enableHighAccuracy: true,
                 timeout: 5000,
-                maximumAge: 1000,
             });
             this.setState({ userLocationWatchId: watchId })
         }
@@ -108,7 +107,6 @@ export class Map extends Component<Props, State> {
       }    
     
     render() {
-        console.log('render')
         return (
             <View style={[DefaultStyles.container, styles.mapContainer, {paddingTop: this.state.paddingTop}]}>
                 <ClusteredMapView
