@@ -22,11 +22,16 @@ export default {
         logOut: 'Abmelden',
         skills: 'Fähigkeiten',
         creditPoints: 'Helfer Punkte',
-
     },
     Event: {
         myEvents: 'Meine Events',
         myJobs: 'Meine Jobs',
+        eventName: 'Veranstaltungsname',
+        description: 'Beschreibung',
+        locationSearch: 'Standortsuche',
+        create: 'Veröffentlichen',
+        editTitle: 'Event bearbeiten',
+        createTitle: 'Event erstellen',
     },
     Job: {
         participated: "Du hast teilgenommen.",

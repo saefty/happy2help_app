@@ -6,14 +6,16 @@ import { Event } from '../listview/event';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './userEvents.styles';
 
+
 type Props = {
   events: Array<EventObject>,
+  onEventTouch: (event: EventObject) => void,
 }
 
 const MAX_DESCRIPTION_LENGTH = 50;
 
 export class UserEventList extends Component<Props> {
-  
+
   constructor(props: Props) {
     super(props);
   }
@@ -29,6 +31,7 @@ export class UserEventList extends Component<Props> {
               event={event}
               style={styles.card}
               showCreatorName={false}
+              onEventTouch={this.props.onEventTouch}
               descriptionMaxLength={MAX_DESCRIPTION_LENGTH}
               />)
             }

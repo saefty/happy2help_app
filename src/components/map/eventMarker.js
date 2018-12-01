@@ -47,7 +47,6 @@ export class EventMarker extends Component<Props> {
                 onPress={(e) => {
                     e.stopPropagation();
                     this.props.onEventTouch(this.props.event)
-
                 }}
             />
         );

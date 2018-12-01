@@ -6,7 +6,7 @@ import { Query, graphql } from 'react-apollo';
 
 const GET_EVENTS = gql`
 {
-    user {
+user {
         id
         eventSet {
             id
@@ -16,6 +16,15 @@ const GET_EVENTS = gql`
                 id
       	        name
             }
+          jobSet {
+            id
+            name
+            description
+            totalPositions	
+            participationSet {
+            	id
+            }
+          }
         }
         participationSet {
             id

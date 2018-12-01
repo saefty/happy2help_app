@@ -27,6 +27,13 @@ export default {
     Event: {
         myEvents: 'My Events',
         myJobs: 'My Jobs',
+        eventName: 'Event name',
+        description: 'Description',
+        locationSearch: 'Location search',
+        create: 'Publish',
+        editTitle: 'Edit event',
+        createTitle: 'Create event'
+
     },
     Navigation: {
         profile: 'Profile',

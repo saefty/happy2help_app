@@ -7,7 +7,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from '../userEvents/userEvents.styles';
 
 type Props = {
-  events: Array<EventObject>,  
+  events: Array<EventObject>,
+  onEventTouch: (event: EventObject) => void,
 }
 
 const MAX_DESCRIPTION_LENGTH = 100;
@@ -27,6 +28,7 @@ export class EventList extends Component<Props> {
           <Event 
           key={event.id} 
           event={event}
+          onEventTouch={this.props.onEventTouch}
           descriptionMaxLength={MAX_DESCRIPTION_LENGTH}
           style={styles.card}
           showCreatorName={true}

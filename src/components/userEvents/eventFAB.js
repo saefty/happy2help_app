@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { FAB, Portal } from 'react-native-paper';
 
 type Props = {
+    addEvent: () => void,
 };
 
 type State = {
@@ -14,7 +15,6 @@ export class EventFAB extends Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
-
         this.state = {
             open: false,
         }
@@ -35,12 +35,9 @@ export class EventFAB extends Component<Props, State> {
     }
     get actions() {
         return [
-            { icon: 'add', onPress: this.add },
+            { icon: 'add', onPress: this.props.addEvent },
             { icon: 'help', label: 'info', onPress: this.info},
         ];
-    }
-    add() {
-        console.log('Pressed add');
     }
     info() {
         console.log("Pressed info");
