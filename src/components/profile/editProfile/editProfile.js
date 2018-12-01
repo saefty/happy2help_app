@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { TextInput } from './TextinputWithIcon/textInput';
+import { TextInput } from '../../utils/TextinputWithIcon/textInput';
 import { styles } from './editProfileStyle';
 import { Appbar } from 'react-native-paper';
 import { ProfilePicture } from '../profilePicture/profilePicture';
@@ -10,54 +10,21 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import type { UserObject } from './../../../models/user.model';
 import type { SkillObject } from './../../../models/skill.model';
 import { withNamespaces, i18n } from 'react-i18next';
+import { clone } from './../../../helpers/clone';
+
+import { mutations } from './editProfileMutations';
 
 import gql from 'graphql-tag';
-import { graphql, Mutation } from 'react-apollo';
-
-const CREATE_LOCATION = gql`
-    mutation createLocation($longitude: Float!, $latitude: Float!, $name: String!) {
-        createLocation(latitude: $longitude, longitude: $latitude, name: $name) {
-            location {
-                id
-            }
-        }
-    }
-`;
-
-const UPDATE_USER_LOCATION = gql`
-    mutation updateUserLocation($locationId: Int!) {
-        updateUser(locationId: $locationId) {
-            user {
-                username
-            }
-        }
-    }
-`;
-
-const CREATE_SKILL = gql`
-    mutation createSkill($name: String!) {
-        createSkill(name: $name) {
-            skill {
-                id
-            }
-        }
-    }
-`;
-
-const DELETE_SKILL = gql`
-    mutation deleteSkill($skillId: ID!) {
-        deleteSkill(skillId: $skillId) {
-            skill {
-                id
-            }
-        }
-    }
-`;
+import { graphql, Mutation, compose } from 'react-apollo';
 
 type Props = {
     t: i18n.t,
     logOut: () => void,
     user: UserObject, //the old userobject
+    createLocationMutation: graphql.mutate,
+    updateUserLocationMutation: graphql.mutate,
+    createSkillMutation: graphql.mutate,
+    deleteSkillMutation: graphql.mutate,
 };
 
 type State = {
@@ -67,9 +34,7 @@ type State = {
 class EditProfileComponent extends Component<Props, State> {
     constructor(props) {
         super(props);
-        this.state = {
-            user: JSON.parse(JSON.stringify(props.user)), //the new userobject
-        };
+        this.state = { user: clone(props.user) };
     }
 
     addSkill = (skill: SkillObject) => {
@@ -90,28 +55,43 @@ class EditProfileComponent extends Component<Props, State> {
         this.setState({ user: user });
     };
 
-    saveUser = async (createLocationMutation, updateUserLocationMutation, createSkillMutation, deleteSkillMutation) => {
-        if (!this.props.user.profile.location || this.props.user.profile.location.name != this.state.user.profile.location.name) {
-            let response = await createLocationMutation({ variables: { longitude: 123.123, latitude: 123.123, name: this.state.user.profile.location.name } });
-            updateUserLocationMutation({ variables: { locationId: response.data.createLocation.location.id } });
+    //functions to save changes in the db:
+
+    saveLocationInDb = async (locationName) => {
+        let response = await this.props.createLocationMutation({ variables: { longitude: 123.123, latitude: 123.123, name: locationName } });
+        this.props.updateUserLocationMutation({ variables: { locationId: response.data.createLocation.location.id } });
+    };
+
+    createSkillsInDb = (skills) => {
+        for (const skill of skills) {
+            this.props.createSkillMutation({ variables: { name: skill.name } });
         }
-        //create new skills
-        this.state.user.skills.forEach(skill => {
-            if (skill.unsaved) {
-                createSkillMutation({ variables: { name: skill.name } });
-            }
-        });
-        //delete skills
-        if (this.props.user.skills) {
-            this.props.user.skills.forEach(skill => {
-                //if a skill misses which has been in props
-                if (!this.state.user.skills.find(stateSkill => stateSkill.id == skill.id)) {
-                    deleteSkillMutation({variables: { skillId: skill.id}})
-                }
-            });
+    };
+
+    deleteSkillsInDb = (skillsToDeleteIds) => {
+        for (const skillId of skillsToDeleteIds) {
+            this.props.deleteSkillMutation({ variables: { skillId: skillId } });
+        }
+    };
+
+    saveChanges = async () => {
+        const oldLocation = this.props.user.profile.location;
+        const newLocation = this.state.user.profile.location;
+        if (!oldLocation || oldLocation.name != newLocation.name) {
+            this.saveLocationInDb(newLocation.name);
         }
 
-        // TODO navigate to viewProfile Screen
+        const oldSkills = this.props.user.skills;
+        const newSkills = this.state.user.skills;
+
+        const oldSkillIds = oldSkills.map(skill => skill.id);
+        const newSkillIds = newSkills.map(skill => skill.id);
+
+        const skillsToCreate = newSkills.filter(skill => !oldSkillIds.includes(skill.id));
+        const skillsToDeleteIds = oldSkills.filter(skill => !newSkillIds.includes(skill.id)).map(skill => skill.id);
+
+        this.deleteSkillsInDb(skillsToDeleteIds);
+        this.createSkillsInDb(skillsToCreate);
     };
 
     render() {
@@ -120,34 +100,13 @@ class EditProfileComponent extends Component<Props, State> {
                 <Appbar.Header style={styles.appbar}>
                     <Appbar.Action icon="close" />
                     <Appbar.Content title={this.props.t('editProfile')} />
-
-                    <Mutation mutation={CREATE_LOCATION}>
-                        {createLocationMutation => (
-                            <Mutation mutation={UPDATE_USER_LOCATION}>
-                                {updateUserLocationMutation => (
-                                    <Mutation mutation={CREATE_SKILL}>
-                                        {createSkillMutation => (
-                                            <Mutation mutation={DELETE_SKILL}>
-                                                {deleteSkillMutation => (
-                                                    <Appbar.Action
-                                                        icon="check"
-                                                        onPress={() => {
-                                                            this.saveUser(
-                                                                createLocationMutation,
-                                                                updateUserLocationMutation,
-                                                                createSkillMutation,
-                                                                deleteSkillMutation
-                                                            );
-                                                        }}
-                                                    />
-                                                )}
-                                            </Mutation>
-                                        )}
-                                    </Mutation>
-                                )}
-                            </Mutation>
-                        )}
-                    </Mutation>
+                    <Appbar.Action
+                        icon="check"
+                        onPress={async () => {
+                            await this.saveChanges();
+                            // TODO navigate back to viewProfile Screen
+                        }}
+                    />
                 </Appbar.Header>
 
                 <View style={{ alignItems: 'center' }}>
@@ -159,11 +118,15 @@ class EditProfileComponent extends Component<Props, State> {
                     value={this.props.user.profile.location ? this.props.user.profile.location.name : ''}
                     update={this.updateLocationName}
                 />
-
                 <SkillList skillObjects={this.state.user.skills} editable={true} addSkill={this.addSkill} deleteSkill={this.deleteSkill} />
             </KeyboardAwareScrollView>
         );
     }
 }
 
-export const EditProfile = withNamespaces(['User'])(EditProfileComponent);
+export const EditProfile = compose(
+    graphql(mutations.CREATE_LOCATION, { name: 'createLocationMutation' }),
+    graphql(mutations.UPDATE_USER_LOCATION, { name: 'updateUserLocationMutation' }),
+    graphql(mutations.CREATE_SKILL, { name: 'createSkillMutation' }),
+    graphql(mutations.DELETE_SKILL, { name: 'deleteSkillMutation' })
+)(withNamespaces(['User'])(EditProfileComponent));

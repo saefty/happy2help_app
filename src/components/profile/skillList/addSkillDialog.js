@@ -58,7 +58,8 @@ class AddSkillDialogComponent extends Component<Props, State> {
                                         approved: false,
                                         id: uuidv1(),
                                         unsaved: true,
-                                    };                                    
+                                    };               
+                                    this.setState({ skillname: '' });                   
                                     this.hideAndCreateSkill(skill);
                                 }}
                             >
