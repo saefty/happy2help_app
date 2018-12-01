@@ -16,7 +16,7 @@ export class ListView extends Component<Props> {
         return (
             <View>
                 <EventDataProvider>
-                {events => <EventList events={events} {...this.props}/>}
+                {events => <EventList events={events}/>}
                 </EventDataProvider>
             </View>
         );

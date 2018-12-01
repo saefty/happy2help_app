@@ -18,8 +18,21 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginBottom: 2,
     },
-    margin: {
+    card: {
         margin: 5,
+    },
+    eventScreen: {
+        
+    },
+    list : {
+        height: "50%",
+    },
+    fab : {
+        position: "absolute",
+
+    },
+    scroll: {
+        height: "85%",
     }
 });
 

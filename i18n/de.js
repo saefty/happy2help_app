@@ -27,5 +27,12 @@ export default {
     Event: {
         myEvents: 'Meine Events',
         myJobs: 'Meine Jobs',
-    }
+    },
+    Job: {
+        participated: "Du hast teilgenommen.",
+        applied: "Du bist angemeldet.",
+        declined: "Du wurdest abgelehnt.",
+        accepted: "Du wurdest akzeptiert.",
+        canceled: "Die Teilnahme wurde abgebrochen.",
+    },
 };

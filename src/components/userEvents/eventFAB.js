@@ -11,36 +11,38 @@ type State = {
 
 export class EventFAB extends Component<Props, State> {
 
+
     constructor(props: Props) {
         super(props);
 
         this.state = {
             open: false,
         }
+        
     }
 
     render() {
+        let buttonIcon = this.state.open ? 'highlight-off' : 'add';
         return (
             <FAB.Group
               open={this.state.open}
-              icon={this.state.open ? 'today' : 'add'}
-              style={{
-                  top: 5
-              }}
-              actions={[
-                { icon: 'add', onPress: () => console.log('Pressed add') },
-                { icon: 'star', label: 'Star', onPress: () => console.log('Pressed star')},
-                { icon: 'email', label: 'Email', onPress: () => console.log('Pressed email') },
-                { icon: 'notifications', label: 'Remind', onPress: () => console.log('Pressed notifications') },
-              ]}
+              icon={buttonIcon}
+              style={{top: 5, position: 'absolute'}}
+              actions={this.actions}
               onStateChange={({ open }) => this.setState({ open })}
-              onPress={() => {
-                if (this.state.open) {
-                  // do something if the speed dial is open
-                }
-              }}
             />
         );
     }
-              
+    get actions() {
+        return [
+            { icon: 'add', onPress: this.add },
+            { icon: 'help', label: 'info', onPress: this.info},
+        ];
+    }
+    add() {
+        console.log('Pressed add');
+    }
+    info() {
+        console.log("Pressed info");
+    }         
 }

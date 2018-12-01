@@ -34,4 +34,11 @@ export default {
         list: 'List',
         chat: 'Chat',
     },
+    Job: {
+        participated: "You participated.",
+        applied: "You applied.",
+        declined: "You were declined.",
+        accepted: "You were accepted.",
+        canceled: "The job was canceled.",
+    },
 };

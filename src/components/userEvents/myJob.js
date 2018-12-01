@@ -2,13 +2,17 @@
 import React, { Component } from "react";
 import { Card, Title, Paragraph, Text } from 'react-native-paper';
 import type { Job } from '../../models/job.model';
-import styles from './userEvents.styles';
+import { withNamespaces, i18n } from 'react-i18next';
+
+
 type Props = {
     job: Job,
     participationState: number,
+    style: any ,
+    t: i18n.t,
 };
 
-export class MyJob extends Component<Props> {
+class MyJobComponent extends Component<Props> {
 
     constructor(props: Props) {
         super(props);
@@ -17,28 +21,25 @@ export class MyJob extends Component<Props> {
     render() {
             
         return (
-            <Card style={styles.margin}>
+            <Card style={this.props.style}>
                 <Card.Content>
                     <Title>{this.props.job.name}</Title>  
                     <Paragraph>{this.props.job.description}</Paragraph>
-                    <Text>{this.getStateStr(this.props.participationState)}</Text>
+                    <Text>{this.StateString}</Text>
                 </Card.Content>
             </Card>
         );   
     }
-/*
-        (1, 'Participated'),
-        (2, 'Applied'),
-        (3, 'Declined'),
-        (4, 'Accepted'),
-        (5, 'Canceled'),
-*/
-    getStateStr(state: number) {
-        if (state === 1) return "Participated";
-        if (state === 2) return "Applied";
-        if (state === 3) return "Declined";
-        if (state === 4) return "Accepted";
-        if (state === 5) return "Canceled";
+
+    get StateString() {
+        let state = this.props.participationState;
+        if (state === 1) return this.props.t("participated");
+        if (state === 2) return this.props.t("applied");
+        if (state === 3) return this.props.t("declined");
+        if (state === 4) return this.props.t("accepted");
+        if (state === 5) return this.props.t("canceled");
         return "";
     }
 }
+
+export const MyJob = withNamespaces(['Job'])(MyJobComponent);
