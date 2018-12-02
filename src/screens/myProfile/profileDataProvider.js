@@ -38,7 +38,7 @@ export class ProfileDataProvider extends Component<Props> {
     render() {
         return (
             <View>
-                <Query query={GET_PROFILE} fetchPolicy="no-cache">
+                <Query query={GET_PROFILE}>
                     {({ loading, error, data }) => {
                         if (loading) return null;
                         if (error) {

@@ -24,6 +24,15 @@ export default {
         skills: 'Skills',
 
     },
+    Event: {
+        eventName: 'Event name',
+        description: 'Description',
+        locationSearch: 'Location search',
+        create: 'Publish',
+        editTitle: 'Edit event',
+        createTitle: 'Create event'
+
+    },
     Navigation: {
         profile: 'Profile',
         map: 'Map',

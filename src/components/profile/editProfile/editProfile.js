@@ -14,8 +14,9 @@ import { clone } from './../../../helpers/clone';
 
 import { mutations } from './editProfileMutations';
 
-import gql from 'graphql-tag';
 import { graphql, Mutation, compose } from 'react-apollo';
+import { withNavigation } from 'react-navigation';
+
 
 type Props = {
     t: i18n.t,
@@ -98,13 +99,13 @@ class EditProfileComponent extends Component<Props, State> {
         return (
             <KeyboardAwareScrollView>
                 <Appbar.Header style={styles.appbar}>
-                    <Appbar.Action icon="close" />
+                    <Appbar.Action icon="close" onPress={() => {this.props.navigation.goBack()}} />
                     <Appbar.Content title={this.props.t('editProfile')} />
                     <Appbar.Action
                         icon="check"
                         onPress={async () => {
                             await this.saveChanges();
-                            // TODO navigate back to viewProfile Screen
+                            this.props.navigation.goBack();
                         }}
                     />
                 </Appbar.Header>
@@ -129,4 +130,4 @@ export const EditProfile = compose(
     graphql(mutations.UPDATE_USER_LOCATION, { name: 'updateUserLocationMutation' }),
     graphql(mutations.CREATE_SKILL, { name: 'createSkillMutation' }),
     graphql(mutations.DELETE_SKILL, { name: 'deleteSkillMutation' })
-)(withNamespaces(['User'])(EditProfileComponent));
+)(withNavigation(withNamespaces(['User'])(EditProfileComponent)));
