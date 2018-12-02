@@ -10,6 +10,7 @@ type Props = {
     iconName: string,
     label: string,
     value?: string,
+    update: (text: string) => mixed,
 };
 
 export class TextInput extends Component<Props> {
@@ -25,10 +26,15 @@ export class TextInput extends Component<Props> {
                         <Icon name={this.props.iconName} size={32} />
                     </View>
                     <View style={{ height: 30, width: '80%' }}>
-                        <TextInputRNP label={this.props.label}  
-                        placeholder={this.props.value}
-                        onChangeText={(text) => this.setState({text})}
-                        value={this.state.text} />
+                        <TextInputRNP
+                            label={this.props.label}
+                            placeholder={this.props.value}
+                            onChangeText={text => {
+                                this.setState({ text });
+                                this.props.update(text);
+                            }}
+                            value={this.state.text}
+                        />
                     </View>
                 </View>
             </View>
