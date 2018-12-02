@@ -1,8 +1,8 @@
 // // @flow
 // import * as React from 'react';
 // import { BottomNavigation, Text } from 'react-native-paper';
-// // import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen';
-// import { MyProfile } from '../../screens/myProfile/myProfileRoot';
+// import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen';
+//import { MyProfile } from '../../screens/myProfile/view/myprofile.screen';
 
 // import { Map } from '../map/map'
 // import { withNamespaces, i18n } from 'react-i18next';
@@ -46,16 +46,28 @@
 // const ChatRoute = () => <Text>Chat</Text>;
 
 
+// class Navigation extends React.Component <Props, State> {
+//     state = {
+//         index: 0,
+//         routes: [
+//             { key: 'profile', title: this.props.t('profile'), icon: 'person' },
+//             { key: 'map', title: this.props.t('map'), icon: 'map' },
+//             { key: 'list', title: this.props.t('list'), icon: 'list' },
+//             { key: 'chat', title: this.props.t('chat'), icon: 'chat-bubble' },
+//         ],
+//     };
 
 // type Props = {
 //     t: i18n.t,
 //     logOut: () => void,
 // };
 
-// type State = {
-//     index: number,
-//     routes: Array<any>,
-// }
+    // _renderScene = BottomNavigation.SceneMap({
+    //     profile: () => <EditMyProfile {...this.props} ></EditMyProfile>,
+    //     map: MapRoute,
+    //     list: ListRoute,
+    //     chat: ChatRoute,
+    // });
 
 // class Navigation extends React.Component <Props, State> {
 //     state = {
