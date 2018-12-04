@@ -31,7 +31,7 @@ class MyJobComponent extends Component<Props> {
         );   
     }
 
-    get StateString() {
+    get StateString() : string {
         let state = this.props.participationState;
         if (state === 1) return this.props.t("participated");
         if (state === 2) return this.props.t("applied");
