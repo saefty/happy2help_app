@@ -10,16 +10,8 @@ import { ViewMyProfile } from '../../screens/myProfile/view/viewMyProfile.screen
 import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen';
 import { MapScreen } from '../../screens/map/map.screen';
 import { ListView } from '../../screens/listView/listView.screen';
-
-class Chat extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text>Chat</Text>
-            </View>
-        );
-    }
-}
+import { MyEventList } from '../../screens/myEventList/myEventList.screen';
+import { EditEventFormNamespaced } from '../event/edit.event.form';
 
 //Navigation
 const ProfileStackNavigator = createStackNavigator(
@@ -35,33 +27,53 @@ const ProfileStackNavigator = createStackNavigator(
     }
 );
 
+const MyEventsStackNavigator = createStackNavigator(
+    {
+        View: MyEventList,
+        Edit: EditEventFormNamespaced,
+    },
+    {
+        headerMode: 'none',
+        navigationOptions:  ({navigation})=>{
+            let { routeName } = navigation.state.routes[navigation.state.index];
+            let navigationOptions = {};
+            if (routeName === 'Edit') {
+                navigationOptions.tabBarVisible = false;
+            }
+            return navigationOptions;
+        }
+    },
+    {
+        initialRouteName: 'View',
+    }
+);
 const TabNavigator = createMaterialBottomTabNavigator(
     {
         Profile: ProfileStackNavigator,
-        Map: MapScreen,
+        Discover: MapScreen,
         List: ListView,
-        Chat: Chat,
+        MyEvents: MyEventsStackNavigator,
     },
     {
         initialRouteName: 'Profile',
-        labeled: false,
+        labeled: true,
         shifting: false,
         defaultNavigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ tintColor }) => {
+            tabBarIcon: ({ tintColor }: any) => {// eslint-disable-line
                 const { routeName } = navigation.state;
                 let iconName;
                 switch (routeName) {
                     case 'Profile':
                         iconName = 'person';
                         break;
-                    case 'Map':
-                        iconName = 'map';
+                    case 'Discover':
+                        iconName = 'search';
                         break;
                     case 'List':
                         iconName = 'list';
                         break;
-                    case 'Chat':
-                        iconName = 'chat-bubble';
+                    case 'MyEvents':
+                        iconName = 'event-available';
                 }               
                 return <Icon name={iconName} size={25} color={tintColor} />;
             },

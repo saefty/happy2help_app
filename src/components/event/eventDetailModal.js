@@ -1,5 +1,5 @@
 // @flow
-import type EventObject from '../../models/event.model';
+import type { EventObject } from '../../models/event.model';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Modal, Card, Title, Button, Paragraph, Text, Divider, Subheading } from 'react-native-paper';

@@ -24,12 +24,20 @@ export default {
         creditPoints: 'Helfer Punkte',
     },
     Event: {
+        myEvents: 'Meine Events',
+        myJobs: 'Meine Jobs',
         eventName: 'Veranstaltungsname',
         description: 'Beschreibung',
         locationSearch: 'Standortsuche',
         create: 'Veröffentlichen',
         editTitle: 'Event bearbeiten',
-        createTitle: 'Event erstellen'
-
-    }
+        createTitle: 'Event erstellen',
+    },
+    Job: {
+        participated: "Du hast teilgenommen.",
+        applied: "Du bist angemeldet.",
+        declined: "Du wurdest abgelehnt.",
+        accepted: "Du wurdest akzeptiert.",
+        canceled: "Die Teilnahme wurde abgebrochen.",
+    },
 };

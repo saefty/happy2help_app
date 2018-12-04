@@ -25,6 +25,8 @@ export default {
 
     },
     Event: {
+        myEvents: 'My Events',
+        myJobs: 'My Jobs',
         eventName: 'Event name',
         description: 'Description',
         locationSearch: 'Location search',
@@ -38,5 +40,12 @@ export default {
         map: 'Map',
         list: 'List',
         chat: 'Chat',
+    },
+    Job: {
+        participated: "You participated.",
+        applied: "You applied.",
+        declined: "You were declined.",
+        accepted: "You were accepted.",
+        canceled: "The job was canceled.",
     },
 };

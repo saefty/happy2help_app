@@ -2,7 +2,7 @@
 import type EventObject from '../../models/event.model';
 import React, { Component } from 'react';
 import { View, StyleSheet, TextInput as NativeTextInput } from 'react-native';
-import { Button, Text, TextInput, HelperText, Subheading, Headline } from 'react-native-paper';
+import { Button, Text, TextInput, HelperText, Subheading, Headline, Appbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -20,7 +20,6 @@ type State = {
 }
 
 class EditEventForm extends Component<Props, State> {
-    
     constructor(props: Props) {
         super(props);
         const EventSchema = Yup.object().shape({
@@ -41,20 +40,18 @@ class EditEventForm extends Component<Props, State> {
     }
 
     getInitialFormValues = () => {
-        return this.props.event || {
-            eventName: '124',
-            description: '12312314124',
-            location: {
-                formatted_address: 'Stav'
-            }
-        }
+        return this.props.event || {}
     }
 
     render() {
         return (
             <KeyboardAwareScrollView>
+                <Appbar.Header style={styles.appbar}>
+                    <Appbar.Action icon="close" onPress={() => this.props.navigation.goBack()} />
+                    <Appbar.Content title={this.props.t(!this.props.event ? 'createTitle' : 'editTitle')} />
+                    <Appbar.Action icon="check"/>
+                </Appbar.Header>
                 <View style={styles.container}>
-                    <Headline>{this.props.t(!this.props.event ? 'createTitle' : 'editTitle')}</Headline>
                     <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSubmit} initialValues={this.getInitialFormValues()}>
                         {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
                             <View>

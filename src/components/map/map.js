@@ -1,6 +1,6 @@
 // @flow
 import type { EventObject } from '../../models/event.model';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
     View,
     StyleSheet,
@@ -33,7 +33,7 @@ type State = {
 
 const initialZoom = .05;
 
-export class Map extends Component<Props, State> {
+export class Map extends PureComponent<Props, State> {
     state = {
         userCords: {
             latitude: 0,
@@ -68,11 +68,6 @@ export class Map extends Component<Props, State> {
     }
 
     componentDidMount() {
-        this.setState({userCords: {
-            latitude: 0,
-            longitude: 0,
-            follow: false
-        }})
         setTimeout(() => this.setState({paddingTop: 0}), 100);
         if(this.state.userLocationWatchId === -1) {
             const watchId = navigator.geolocation.watchPosition(this.watchPosition, undefined, {

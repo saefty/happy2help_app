@@ -4,42 +4,56 @@ import { View } from 'react-native';
 import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
 
-const GET_PROFILE = gql`
-    {
-        user {
+const GET_EVENTS = gql`
+{
+user {
+        id
+        eventSet {
             id
-            username
-            profile {
-                location {
-                    name
-                }
-                creditPoints
-            }
-            skills {
+            name
+            description
+            organisation {
                 id
-                name 
-                approved
+      	        name
+            }
+          jobSet {
+            id
+            name
+            description
+            totalPositions	
+            participationSet {
+            	id
+            }
+          }
+        }
+        participationSet {
+            id
+            state
+            job {
+                id
+                name
+                description
             }
         }
-    }
+   }
+}
 `;
 
 type Props = {
-    t: i18n.t,
     logOut: () => void,
     query:  graphql.query,
-    children: React.PropTypes.node,
+    children: () => Component<any,any>,
 };
 
-export class ProfileDataProvider extends Component<Props> {
-    constructor(props) {
+export class MyEventDataProvider extends Component<Props> {
+    constructor(props: Props) {
         super(props);
     }
 
     render() {
         return (
             <View>
-                <Query query={GET_PROFILE}>
+                <Query query={GET_EVENTS}>
                     {({ loading, error, data }) => {
                         if (loading) return null;
                         if (error) {
