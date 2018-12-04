@@ -42,7 +42,7 @@ user {
 type Props = {
     logOut: () => void,
     query:  graphql.query,
-    children: React.PropTypes.node,
+    children: () => Component<any,any>,
 };
 
 export class MyEventDataProvider extends Component<Props> {

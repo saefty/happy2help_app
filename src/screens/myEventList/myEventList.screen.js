@@ -1,27 +1,28 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Portal } from 'react-native-paper'
+import { Portal, Headline } from 'react-native-paper'
 import { UserEventList } from '../../components/userEvents/userEventList';
 import { UserJobList } from '../../components/userEvents/userJobList';
 import { MyEventDataProvider } from './myEventDataProvider';
 import { EventFAB } from '../../components/userEvents/eventFAB';
 import styles from '../../components/userEvents/userEvents.styles';
-import { Header } from '../../components/userEvents/header';
 import { Provider } from 'react-native-paper'
 import type { EventObject } from '../../models/event.model';
 import { H2HTheme } from '../../../themes/default.theme';
 import { EventDetailModal } from '../../components/event/eventDetailModal';
+import { withNamespaces, i18n } from 'react-i18next';
 
 
 type Props = {
+    t: i18n.t,
 };
 
 type State = {
     event?: EventObject,
     visible: boolean,
 }
-export class MyEventList extends Component<Props, State> {
+class MyEventListComponent extends Component<Props, State> {
     
     constructor(props: Props) {
         super(props);
@@ -55,14 +56,14 @@ export class MyEventList extends Component<Props, State> {
                         <View style={styles.eventScreen}>
                             
                             <View style={styles.list}>
-                                <Header text={'My Events'}/>
+                                <Headline>{this.props.t("myEvents")}</Headline>
                                 <UserEventList 
                                     events={user.eventSet} 
                                     onEventTouch={this.openEventModal}/>
                             </View>
 
                             <View style={styles.list}>
-                                <Header text={'My Jobs'}/>
+                                <Headline>{this.props.t("myJobs")}</Headline>
                                 <UserJobList
                                     participationSet={user.participationSet} />
                             </View>
@@ -78,3 +79,4 @@ export class MyEventList extends Component<Props, State> {
         );
     }
 }
+export const MyEventList = withNamespaces(['Event'])(MyEventListComponent);
