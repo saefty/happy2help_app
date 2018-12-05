@@ -19,7 +19,9 @@ export class ListView extends Component<any, State> {
     }
 
     openEventModal = (event: EventObject) => {
-        this.setState({event: event, visible: true });
+        this.props.navigation.navigate('DetailedEventView', {
+            event: event
+        })
     }
 
     hideModal = () => {
@@ -29,9 +31,7 @@ export class ListView extends Component<any, State> {
     render() {
         return (
             <View>
-                <Portal>
-                    <EventDetailModal visible={this.state.visible} onDismiss={this.hideModal} event={this.state.event}></EventDetailModal>
-                </Portal>
+                <EventDetailModal visible={this.state.visible} onDismiss={this.hideModal} event={this.state.event}></EventDetailModal>
                 <EventDataProvider>
                     {events => <EventList onEventTouch={this.openEventModal} events={events} {...this.props}/>}
                 </EventDataProvider>

@@ -23,15 +23,6 @@ const GET_EVENTS = gql`
                 id
                 description
             }
-            jobSet {
-                id
-                name
-                description
-                totalPositions	
-                participationSet {
-                    id
-                }
-            }
         }
     }
 `;

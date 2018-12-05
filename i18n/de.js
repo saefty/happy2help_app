@@ -34,10 +34,17 @@ export default {
         createTitle: 'Event erstellen',
     },
     Job: {
+        description: 'Beschreibung: ',
+        positions: 'Stellen',
         participated: "Du hast teilgenommen.",
         applied: "Du bist angemeldet.",
         declined: "Du wurdest abgelehnt.",
         accepted: "Du wurdest akzeptiert.",
         canceled: "Die Teilnahme wurde abgebrochen.",
     },
+    JobParticipationButton: {
+        'Participated': 'Teilgenommen',
+        'Applied': 'Bewerben',
+        'Canceled': 'Bewerbung zurückziehen'
+    }
 };

@@ -42,10 +42,17 @@ export default {
         chat: 'Chat',
     },
     Job: {
+        description: 'Description: ',
+        positions: 'Positions',
         participated: "You participated.",
         applied: "You applied.",
         declined: "You were declined.",
         accepted: "You were accepted.",
         canceled: "The job was canceled.",
     },
+    JobParticipationButton: {
+        'Participated': 'Participated',
+        'Applied': 'Apply',
+        'Canceled': 'Cancel application'
+    }
 };

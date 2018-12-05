@@ -31,8 +31,11 @@ export class MapScreen extends Component<Props, State> {
         userRegion: Region
     }
     openEventModal = (event: EventObject) => {
-        this.setState({event: event, visible: true });
-        this.forceUpdate();
+        this.props.navigation.navigate('DetailedEventView', {
+            event: event
+        })
+        //this.setState({event: event, visible: true });
+        //this.forceUpdate();
     }
 
     hideModal = () => {
@@ -46,9 +49,6 @@ export class MapScreen extends Component<Props, State> {
     render() {
         return (
             <View>
-                <Portal>
-                    <EventDetailModal visible={this.state.visible} onDismiss={this.hideModal} event={this.state.event}></EventDetailModal>
-                </Portal>
                 <EventDataProvider pollInterval={undefined}>
                     {(events) => {
                         return  <Map events={events} onEventTouch={this.openEventModal} initialRegion={this.state.userRegion} setUserViewPoint={this.setUserViewPoint}/>
