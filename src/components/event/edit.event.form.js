@@ -79,8 +79,8 @@ class EditEventForm extends Component<Props, State> {
     }
 
     getStartEnd() {
-        let start = "2018-11-30T11:40:21+00:00";
-        let end = "2019-11-30T11:40:21+00:00";
+        let start = "2019-11-30T11:40:21+00:00";
+        let end = "2020-11-30T11:40:21+00:00";
         return { start , end };
     }
     getInitialFormValues = () => {
