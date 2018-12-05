@@ -13,7 +13,8 @@ import { styles } from './viewOrganisation.style';
 
 type Props = {
     t: i18n.t,
-    organisation: Object
+    organisation: Object,
+    close: () => void
 };
 
 class _OrganisationView extends Component<Props> {
@@ -25,8 +26,8 @@ class _OrganisationView extends Component<Props> {
         return (
             <View style={{ height: 100 + '%' }}>
                 <Appbar.Header>
-                    <Appbar.BackAction />
-                    <Appbar.Content title={this.props.organisation.name} subtitle="Organisation" />
+                    <Appbar.BackAction onPress={() => {this.props.close()}}/>
+                    <Appbar.Content title={this.props.organisation.name} subtitle="Organization" />
                     <Appbar.Action icon="edit" />
                     <Appbar.Action icon="more-vert" />
                 </Appbar.Header>

@@ -2,16 +2,19 @@
 
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 
 import { OrganisationView } from '../../components/organisation/viewOrganisation'
 import organisationMock from '../../../assets/mockdata/mockorganisations'
 
-export class OrganisationScreen extends Component<any> {
+class OrganisationScreen extends Component<any> {
     render() {
         return (
             <View>
-                <OrganisationView organisation={organisationMock} />
+                <OrganisationView organisation={organisationMock} close={this.props.navigation.goBack} />
             </View>
         )
     }
 }
+
+export const OrganisationDetailScreenMapped = withMappedNavigationProps()(OrganisationScreen);
