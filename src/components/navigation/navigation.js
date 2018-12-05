@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { ViewMyProfile } from '../../screens/myProfile/view/viewMyProfile.screen';
 import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen';
+
 import { DiscoverStackNavigator, ListStackNavigator } from './discover.stackView';
 import { MyEventList } from '../../screens/myEventList/myEventList.screen';
 import { EditEventForm } from '../event/edit.event.form';
