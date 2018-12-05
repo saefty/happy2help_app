@@ -1,12 +1,14 @@
 import { MapScreen } from "../../screens/map/map.screen";
 import { EventDetailModalNavigationMapped } from "../event/eventDetailModal";
+import { OrganisationDetailScreenMapped } from "../../screens/organisation/organisation.screen";
 import { ListView } from "../../screens/listView/listView.screen";
 import { createStackNavigator } from 'react-navigation';
 
 export const DiscoverStackNavigator = createStackNavigator(
     {
         View: MapScreen,
-        DetailedEventView: EventDetailModalNavigationMapped
+        DetailedEventView: EventDetailModalNavigationMapped,
+        DetailedOrganisationView: OrganisationDetailScreenMapped
     },
     {
         headerMode: 'none',
@@ -28,6 +30,7 @@ export const ListStackNavigator = createStackNavigator(
     {
         View: ListView,
         DetailedEventView: EventDetailModalNavigationMapped,
+        DetailedOrganisationView: OrganisationDetailScreenMapped
     },
     {
         headerMode: 'none',
