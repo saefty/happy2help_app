@@ -39,10 +39,9 @@ class EditEventForm extends Component<Props, State> {
         this.state = { validationSchema: EventSchema, address: '' };
     }
 
-    // values.eventName: string; values.description: string; values.location.geometry.location.lat/lng: ;
     onSubmit = (values, actions) => {
         actions.setSubmitting(true);
-        
+
         let name = values.eventName;
         let { lat, lng } = values.location.geometry.location;
         let { start, end } = this.getStartEnd();
