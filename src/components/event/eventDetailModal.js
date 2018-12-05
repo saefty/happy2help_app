@@ -15,7 +15,7 @@ type Props = {
 }
 
 const JOB_QUERY = gql`
-    query event($id: Int!) {
+    query event($id: ID!) {
         event(id: $id) {
             jobSet {
                 id
