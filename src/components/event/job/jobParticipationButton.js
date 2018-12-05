@@ -8,7 +8,6 @@ import { withNamespaces, i18n } from 'react-i18next';
 
 type Props = {
     participation: Participation,
-    participate: (participation: Participation) => void,
     apply: (participation: Participation) => any,
     cancel: (participation: Participation) => any,
     t: i18n.t
@@ -37,7 +36,6 @@ class _JobParticipationButton extends Component<Props, State> {
     getTriggerFunction() {
         const nextState = getNextParticipationActionAsHelper(this.props.participation);
         switch(nextState) {
-            case 'Participated': return async () => await this.props.participate(this.props.participation);
             case 'Applied': return async () => await this.props.apply(this.props.participation);
             case 'Canceled': return async () => await this.props.cancel(this.props.participation);
         }
@@ -55,7 +53,7 @@ class _JobParticipationButton extends Component<Props, State> {
             mode='contained' 
             dark={true} 
             onPress={this.trigger} 
-            disabled={this.state.triggered && this.canBePressed()} >
+            disabled={this.state.triggered || !this.canBePressed()} >
               {this.props.t(getNextParticipationActionAsHelper(this.props.participation))}
           </Button>
       )
