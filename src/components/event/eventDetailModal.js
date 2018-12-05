@@ -44,6 +44,10 @@ export class EventDetailModal extends Component<Props> {
         super(props);
     }
 
+    openEventOrganisationScreen = () => {
+        this.props.navigation.navigate('DetailedOrganisationView')
+    }
+
     renderCreator = () => {
         return (
             <Paragraph>
@@ -54,9 +58,11 @@ export class EventDetailModal extends Component<Props> {
 
     renderOrganization = () => {
         return (
-            <Paragraph>
-                Organization: {this.props.event.organisation.name}
-            </Paragraph>
+            <View>
+                <Button onPress={this.openEventOrganisationScreen} mode='contained' icon='group'>
+                    {this.props.event.organisation.name}
+                </Button>
+            </View>
         )
     }
 
@@ -64,17 +70,17 @@ export class EventDetailModal extends Component<Props> {
         let heading = ''
         let component = <Paragraph></Paragraph>;
         if(this.props.event.organisation) {
-            heading = 'Organization'
+            heading = 'Organization:'
             component = this.renderOrganization();
         }
         else if(this.props.event.creator) {
-            heading = 'User'
+            heading = 'User:'
             component = this.renderCreator();
         }
         return (
-            <View>
-                <Subheading>{heading}</Subheading>
-                {component}
+            <View style={{flexDirection: 'row'}}>
+                <Subheading style={{flex: 0, marginTop: 5}}>{heading}</Subheading>
+                <View style={{flex: 0, marginLeft: 20}}>{component}</View>
             </View>
         )
     }

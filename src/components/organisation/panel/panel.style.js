@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container   : {
-        backgroundColor: '#fff',
+        backgroundColor: '#F4F9FE',
         margin:10,
         overflow:'hidden'
     },
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     title       : {
         flex    : 1,
         padding : 10,
-        color   :'#2a2f43',
+        color   :'#2A2F43',
         fontWeight:'bold',
         fontSize: 20
     },
