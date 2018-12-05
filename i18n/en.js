@@ -35,6 +35,12 @@ export default {
         createTitle: 'Create event'
 
     },
+    Organisation: {
+        description: 'About Us',
+        currentEvents: 'Current Events',
+        members: 'Members',
+        editOrganisation: 'Edit Organisation',
+    },
     Navigation: {
         profile: 'Profile',
         map: 'Map',
