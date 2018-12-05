@@ -8,10 +8,10 @@ export const H2HTheme = {
     dark: true,
     roundness: 4,
     colors: {
-        primary: '#008FB8',
+        primary: primaryColor,
         accent: color(primaryColor).darken(.5).string(),
         background: '#f6f6f6',
-        surface: '#ffffff',
+        surface: '#fafafa',
         error: '#B00020',
         text: '#000000',
         disabled: color('#000000')

@@ -19,7 +19,7 @@ type State = {
     validationSchema: Yup.Schema,
 }
 
-class EditEventForm extends Component<Props, State> {
+class _EditEventForm extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         const EventSchema = Yup.object().shape({
@@ -107,4 +107,4 @@ class EditEventForm extends Component<Props, State> {
     }
 }
 
-export const EditEventFormNamespaced = withNamespaces(['Event', 'errors'])(EditEventForm);
+export const EditEventForm = withNamespaces(['Event', 'errors'])(_EditEventForm);
