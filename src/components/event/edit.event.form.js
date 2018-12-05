@@ -1,23 +1,28 @@
 // @flow
-import type EventObject from '../../models/event.model';
+import type { EventObject } from '../../models/event.model';
 import React, { Component } from 'react';
 import { View, StyleSheet, TextInput as NativeTextInput } from 'react-native';
 import { Button, Text, TextInput, HelperText, Subheading, Headline, Appbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { withNamespaces } from 'react-i18next';
+import { withNamespaces, i18n } from 'react-i18next';
 import { GooglePlacesInput } from '../location/location.input';
 import { styles } from './edit.event.style';
+import { graphql, compose } from 'react-apollo';
+import { mutations } from './edit.event.mutations';
 
 type Props = {
     event?: EventObject,
     t: i18n.t,
+    updateEventMutation: graphql.mutate,
+    createEventMutation: graphql.mutate,
 }
 
 type State = {
     validationSchema: Yup.Schema,
 }
+
 
 class EditEventForm extends Component<Props, State> {
     constructor(props: Props) {
@@ -34,11 +39,51 @@ class EditEventForm extends Component<Props, State> {
         this.state = { validationSchema: EventSchema, address: '' };
     }
 
+    // values.eventName: string; values.description: string; values.location.geometry.location.lat/lng: ;
     onSubmit = (values, actions) => {
-        console.log(values)
-        actions.setSubmitting(false);
+        actions.setSubmitting(true);
+        
+        let name = values.eventName;
+        let { lat, lng } = values.location.geometry.location;
+        let { start, end } = this.getStartEnd();
+        let locationName = values.location.formatted_address;
+        let description = values.description;
+
+        if(!this.props.event) {
+            this.props.createEventMutation({ variables: { 
+                name: name,
+                description: description,
+                locationLon: lng,
+                locationLat: lat,
+                locationName: locationName,
+                start: start,
+                end: end,
+            } });
+            actions.setSubmitting(false);
+            return;
+        } else {
+            this.props.updateEventMutation({variables: {
+                id: this.props.event.id,
+                name: name || this.props.event.name, 
+                description: description || this.props.event.description,
+                locationLon: lng || this.props.event.location.longitude,
+                locationLat: lat || this.props.event.location.latitude,
+                locationName: locationName || this.props.event.location.name,
+                start: start,
+                end: end,
+            } });
+            actions.setSubmitting(false);
+            return;
+        }   
+        
+
     }
 
+    getStartEnd() {
+        let start = "2018-11-30T11:40:21+00:00";
+        let end = "2019-11-30T11:40:21+00:00";
+        return { start , end };
+    }
     getInitialFormValues = () => {
         return this.props.event || {}
     }
@@ -46,7 +91,7 @@ class EditEventForm extends Component<Props, State> {
     render() {
         return (
             <KeyboardAwareScrollView>
-                <Appbar.Header style={styles.appbar}>
+                <Appbar.Header style={styles.container}>
                     <Appbar.Action icon="close" onPress={() => this.props.navigation.goBack()} />
                     <Appbar.Content title={this.props.t(!this.props.event ? 'createTitle' : 'editTitle')} />
                     <Appbar.Action icon="check"/>
@@ -97,7 +142,6 @@ class EditEventForm extends Component<Props, State> {
                                 >
                                     {this.props.t('create')}
                                 </Button>
-
                             </View>
                         )}
                     </Formik>
@@ -107,4 +151,6 @@ class EditEventForm extends Component<Props, State> {
     }
 }
 
-export const EditEventFormNamespaced = withNamespaces(['Event', 'errors'])(EditEventForm);
+export const EditEventFormNamespaced = compose(
+    graphql(mutations.CREATE_EVENT, { name: 'createEventMutation' }),
+)(withNamespaces(['Event', 'errors'])(EditEventForm));

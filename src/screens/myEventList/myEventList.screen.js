@@ -69,7 +69,8 @@ class MyEventListComponent extends Component<Props, State> {
                             </View>
                             
                             <EventFAB
-                            addEvent={() => {}}/>
+                            addEvent={() => this.props.navigation.navigate('Edit')}
+                            />
                         </View>
                     }
                 </MyEventDataProvider>
