@@ -8,8 +8,8 @@ export const mutations = {
             $locationLon: Float!,
             $locationLat: Float!,
             $locationName: String!
-            $start: String!,
-            $end: String! 
+            $start: DateTime!,
+            $end: DateTime! 
             ) {
                 createEvent(
                     name: $name,
@@ -19,7 +19,11 @@ export const mutations = {
                     locationName: $locationName,
                     start: $start,
                     end: $end
-                )
+                ) {
+                    event {
+                        id
+                    }
+                }
             }
     `,
     UPDATE_EVENT:  gql`

@@ -23,6 +23,7 @@ type State = {
     validationSchema: Yup.Schema,
 }
 
+let test = "";
 
 class EditEventForm extends Component<Props, State> {
     constructor(props: Props) {
@@ -47,7 +48,9 @@ class EditEventForm extends Component<Props, State> {
         let { start, end } = this.getStartEnd();
         let locationName = values.location.formatted_address;
         let description = values.description;
-
+        test = "lat: " + lat + "\nlng: " + lng + "\nlocName: " + locationName + "\n start" + start + " end " + end;
+        
+        
         if(!this.props.event) {
             this.props.createEventMutation({ variables: { 
                 name: name,
@@ -57,7 +60,8 @@ class EditEventForm extends Component<Props, State> {
                 locationName: locationName,
                 start: start,
                 end: end,
-            } });
+            }});
+
             actions.setSubmitting(false);
             return;
         } else {
@@ -71,11 +75,10 @@ class EditEventForm extends Component<Props, State> {
                 start: start,
                 end: end,
             } });
+
             actions.setSubmitting(false);
             return;
         }   
-        
-
     }
 
     getStartEnd() {
@@ -141,6 +144,7 @@ class EditEventForm extends Component<Props, State> {
                                 >
                                     {this.props.t('create')}
                                 </Button>
+                                <Text>{test}</Text>
                             </View>
                         )}
                     </Formik>
