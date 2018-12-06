@@ -60,7 +60,6 @@ class EditProfileComponent extends Component<Props, State> {
     //functions to save changes in the db:
 
     saveLocationInDb = async location => {
-        console.log(location);
         let response = await this.props.createLocationMutation({ variables: { longitude: location.longitude, latitude: location.latitude, name: location.name } });
         this.props.updateUserLocationMutation({ variables: { locationId: response.data.createLocation.location.id } });
     };
@@ -98,7 +97,6 @@ class EditProfileComponent extends Component<Props, State> {
     };
 
     onSubmit = async (values, actions) => {
-        console.log(values);
         await this.saveChanges(values);
         this.props.navigation.goBack();
     }

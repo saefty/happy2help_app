@@ -58,7 +58,6 @@ class AddSkillDialogComponent extends Component<Props, State> {
         return (
             <Formik validationSchema={this.state.validationSchema} initialValues={this.initialValues} onSubmit={this.onSubmit}>
                 {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => {
-                    console.warn(errors);                    
                     return (
                         <View>
                             <AddSkillChip onPress={this._showDialog} />
@@ -78,8 +77,7 @@ class AddSkillDialogComponent extends Component<Props, State> {
                                     </Dialog.Content>
                                     <Dialog.Actions>
                                         <Button
-                                            onPress={() => {
-                                                // Warum setFieldValue? Weil immer wieder der geliche Dialog benutzt wird das warder Bug wo der geliche skill noch einmal erzeugt wird
+                                            onPress={() => {                                               
                                                 this._hideDialog();
                                                 setFieldValue('skillName', '');
                                             }}
