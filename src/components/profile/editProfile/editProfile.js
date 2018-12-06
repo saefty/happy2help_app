@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { TextInput } from '../../utils/TextinputWithIcon/textInput';
+// import { TextInput } from '../../utils/TextinputWithIcon/textInput';
 import { styles } from './editProfileStyle';
 import { Appbar } from 'react-native-paper';
 import { ProfilePicture } from '../profilePicture/profilePicture';
@@ -14,9 +14,10 @@ import { clone } from './../../../helpers/clone';
 
 import { mutations } from './editProfileMutations';
 
-import { graphql, Mutation, compose } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import { withNavigation } from 'react-navigation';
-
+import { Formik } from 'formik';
+import { GooglePlacesInput } from '../../location/location.input';
 
 type Props = {
     t: i18n.t,
@@ -58,32 +59,33 @@ class EditProfileComponent extends Component<Props, State> {
 
     //functions to save changes in the db:
 
-    saveLocationInDb = async (locationName) => {
-        let response = await this.props.createLocationMutation({ variables: { longitude: 123.123, latitude: 123.123, name: locationName } });
+    saveLocationInDb = async location => {
+        console.log(location);
+        let response = await this.props.createLocationMutation({ variables: { longitude: location.longitude, latitude: location.latitude, name: location.name } });
         this.props.updateUserLocationMutation({ variables: { locationId: response.data.createLocation.location.id } });
     };
 
-    createSkillsInDb = (skills) => {
+    createSkillsInDb = skills => {
         for (const skill of skills) {
             this.props.createSkillMutation({ variables: { name: skill.name } });
         }
     };
 
-    deleteSkillsInDb = (skillsToDeleteIds) => {
+    deleteSkillsInDb = skillsToDeleteIds => {
         for (const skillId of skillsToDeleteIds) {
             this.props.deleteSkillMutation({ variables: { skillId: skillId } });
         }
     };
 
-    saveChanges = async () => {
+    saveChanges = async (values) => {
         const oldLocation = this.props.user.profile.location;
-        const newLocation = this.state.user.profile.location;
-        if (!oldLocation || oldLocation.name != newLocation.name) {
-            this.saveLocationInDb(newLocation.name);
+        const newLocation = values.location;
+        if ((!oldLocation && newLocation)  || (newLocation && oldLocation.name != newLocation.name)) {
+            this.saveLocationInDb(newLocation);
         }
 
         const oldSkills = this.props.user.skills;
-        const newSkills = this.state.user.skills;
+        const newSkills = values.skills;
 
         const oldSkillIds = oldSkills.map(skill => skill.id);
         const newSkillIds = newSkills.map(skill => skill.id);
@@ -95,31 +97,69 @@ class EditProfileComponent extends Component<Props, State> {
         this.createSkillsInDb(skillsToCreate);
     };
 
+    onSubmit = async (values, actions) => {
+        console.log(values);
+        await this.saveChanges(values);
+        this.props.navigation.goBack();
+    }
+
+    initialValues = () => {
+        return {
+            location: this.props.user.profile.location ? this.props.user.profile.location : undefined,
+            skills: clone(this.props.user.skills)
+        }
+    }
+
+    
+
     render() {
         return (
             <KeyboardAwareScrollView>
-                <Appbar.Header style={styles.appbar}>
-                    <Appbar.Action icon="close" onPress={() => {this.props.navigation.goBack()}} />
-                    <Appbar.Content title={this.props.t('editProfile')} />
-                    <Appbar.Action
-                        icon="check"
-                        onPress={async () => {
-                            await this.saveChanges();
-                            this.props.navigation.goBack();
-                        }}
-                    />
-                </Appbar.Header>
+                <Formik initialValues={this.initialValues()} onSubmit={this.onSubmit}>
+                    {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
+                        <View>
+                            <Appbar.Header style={styles.appbar}>
+                                <Appbar.Action
+                                    icon="close"
+                                    onPress={() => {
+                                        this.props.navigation.goBack();
+                                    }}
+                                />
+                                <Appbar.Content title={this.props.t('editProfile')} />
+                                <Appbar.Action
+                                    icon="check"
+                                    onPress={handleSubmit}
+                                />
+                            </Appbar.Header>
 
-                <View style={{ alignItems: 'center' }}>
-                    <ProfilePicture style={styles.profilePicture} {...this.props} />
-                </View>
-                <TextInput
-                    iconName="place"
-                    label="Location"
-                    value={this.props.user.profile.location ? this.props.user.profile.location.name : ''}
-                    update={this.updateLocationName}
-                />
-                <SkillList skillObjects={this.state.user.skills} editable={true} addSkill={this.addSkill} deleteSkill={this.deleteSkill} />
+                            <View style={{ alignItems: 'center' }}>
+                                <ProfilePicture style={styles.profilePicture} {...this.props} />
+                            </View>
+                            <GooglePlacesInput
+                                onChangeValue={v => {
+                                    setFieldValue('location', {name: v.formatted_address, longitude:v.geometry.location.lng, latitude: v.geometry.location.lat});
+                                    handleChange('location');
+                                }}
+                                // initialValue={'hello'}
+                                label={this.props.t('locationSearch')}
+                                error={errors.location}
+                            />
+                            <SkillList 
+                                skillObjects={values.skills} 
+                                editable={true} 
+                                addSkill={(skill: SkillObject) => {
+                                    let skills = clone(values.skills)
+                                    skills.push(skill)
+                                    setFieldValue('skills', skills)
+                                }} 
+                                deleteSkill={(skillToDelete: SkillObject) => {
+                                    let skills = clone(values.skills)
+                                    skills = skills.filter(skill => skill.id != skillToDelete.id);
+                                    setFieldValue('skills', skills)
+                                }} />
+                        </View>
+                    )}
+                </Formik>
             </KeyboardAwareScrollView>
         );
     }
