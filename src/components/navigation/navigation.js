@@ -10,7 +10,7 @@ import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen
 
 import { DiscoverStackNavigator, ListStackNavigator } from './discover.stackView';
 import { MyEventList } from '../../screens/myEventList/myEventList.screen';
-import { EditEventForm } from '../event/edit.event.form';
+import { EditEventFormNamespaced } from '../event/edit.event.form';
 
 //Navigation
 const ProfileStackNavigator = createStackNavigator(
@@ -29,7 +29,7 @@ const ProfileStackNavigator = createStackNavigator(
 const MyEventsStackNavigator = createStackNavigator(
     {
         View: MyEventList,
-        Edit: EditEventForm,
+        Edit: EditEventFormNamespaced,
     },
     {
         headerMode: 'none',
