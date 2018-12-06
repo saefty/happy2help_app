@@ -45,7 +45,9 @@ export class EventDetailModal extends Component<Props> {
     }
 
     openEventOrganisationScreen = () => {
-        this.props.navigation.navigate('DetailedOrganisationView')
+        this.props.navigation.navigate('DetailedOrganisationView', {
+            organisation: this.props.event.organisation
+        })
     }
 
     renderCreator = () => {

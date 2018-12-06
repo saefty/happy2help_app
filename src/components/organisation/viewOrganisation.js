@@ -10,10 +10,11 @@ import OrganisationHeader from './organisationHeader';
 import Panel from './panel/panel';
 import { ListView } from '../../screens/listView/listView.screen';
 import { styles } from './viewOrganisation.style';
+import type { OrganisationObject } from '../../models/organisation.model'
 
 type Props = {
     t: i18n.t,
-    organisation: Object,
+    organisation: OrganisationObject,
     close: () => void
 };
 

@@ -152,4 +152,4 @@ class _EditEventForm extends Component<Props, State> {
 export const EditEventFormNamespaced = compose(
     graphql(mutations.CREATE_EVENT, { name: 'createEventMutation' }),
     graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation' })
-)(withNamespaces(['Event', 'errors'])(EditEventForm));
+)(withNamespaces(['Event', 'errors'])(_EditEventForm));

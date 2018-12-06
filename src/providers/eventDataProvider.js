@@ -19,9 +19,17 @@ const GET_EVENTS = gql`
                 name
             }
             organisation {
-                name
                 id
+                name
                 description
+                members {
+                    id
+                    username
+                }
+                admin {
+                    id
+                    username
+                }
             }
         }
     }
