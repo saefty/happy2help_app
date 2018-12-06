@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
         margin: 30,
         height: 2,
     },
-    panelContainer: {
+    accordionContainer: {
         paddingTop: 15,
         width: 96 + '%',
         height: 100+'%'

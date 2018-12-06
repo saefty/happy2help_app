@@ -26,9 +26,10 @@ const GET_EVENTS = gql`
                     id
                     username
                 }
-                admin {
+                eventSet {
                     id
-                    username
+                    name
+                    description
                 }
             }
         }
