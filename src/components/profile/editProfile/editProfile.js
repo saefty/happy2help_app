@@ -103,7 +103,7 @@ class EditProfileComponent extends Component<Props, State> {
         this.props.navigation.goBack();
     }
 
-    initialValues = () => {
+    get initialValues() {
         return {
             location: this.props.user.profile.location ? this.props.user.profile.location : undefined,
             skills: clone(this.props.user.skills)
@@ -115,7 +115,7 @@ class EditProfileComponent extends Component<Props, State> {
     render() {
         return (
             <KeyboardAwareScrollView>
-                <Formik initialValues={this.initialValues()} onSubmit={this.onSubmit}>
+                <Formik initialValues={this.initialValues} onSubmit={this.onSubmit}>
                     {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
                         <View>
                             <Appbar.Header style={styles.appbar}>
@@ -129,6 +129,7 @@ class EditProfileComponent extends Component<Props, State> {
                                 <Appbar.Action
                                     icon="check"
                                     onPress={handleSubmit}
+                                    
                                 />
                             </Appbar.Header>
 
@@ -140,7 +141,7 @@ class EditProfileComponent extends Component<Props, State> {
                                     setFieldValue('location', {name: v.formatted_address, longitude:v.geometry.location.lng, latitude: v.geometry.location.lat});
                                     handleChange('location');
                                 }}
-                                // initialValue={'hello'}
+                                initialValue={{formatted_address: values.location.name}}
                                 label={this.props.t('locationSearch')}
                                 error={errors.location}
                             />

@@ -2,6 +2,10 @@ export default {
     common: {
         title: 'Deutsch',
         welcome: 'Welcome to Happy to Help',
+        cancel: 'cancel',
+        ok: 'ok',
+
+
     },
     errors: {
         toShort: 'Too short!',
