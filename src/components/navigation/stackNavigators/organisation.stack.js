@@ -6,7 +6,7 @@ import React from 'react';
 import { ViewMyProfile } from '../../../screens/myProfile/view/viewMyProfile.screen';
 import { EditMyProfile } from '../../../screens/myProfile/edit/editMyProfile.screen';
 
-export const ProfileStackNavigator = createStackNavigator(
+export const OrganisationStackNavigator = createStackNavigator(
     {
         View: ViewMyProfile,
         Edit: EditMyProfile,
@@ -14,8 +14,8 @@ export const ProfileStackNavigator = createStackNavigator(
     {
         navigationOptions:  ({navigation})=>{
             let navigationOptions = {};
-            navigationOptions.drawerLabel = 'Mein Profil';
-            navigationOptions.drawerIcon = <Icon name={'account-circle'} size={24} />
+            navigationOptions.drawerLabel = 'Meine Organisation';
+            navigationOptions.drawerIcon = <Icon name={'group'} size={24} />
             return navigationOptions;
         },
         headerMode: 'none',

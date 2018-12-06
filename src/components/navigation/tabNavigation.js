@@ -15,9 +15,12 @@ export const TabNavigator = createMaterialBottomTabNavigator(
     {
         initialRouteName: 'List',
         labeled: false,
-        shifting: false,
-        navigationOptions: {
-            drawerLabel: 'Entdecke Events',
+        shifting: false,      
+        navigationOptions:  ({navigation})=>{
+            let navigationOptions = {};
+            navigationOptions.drawerLabel = 'Entdecke Events';
+            navigationOptions.drawerIcon = <Icon name={'explore'} size={24} />
+            return navigationOptions;
         },
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ tintColor }: any) => {

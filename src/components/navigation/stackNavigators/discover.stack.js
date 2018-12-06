@@ -14,7 +14,8 @@ export const DiscoverStackNavigator = createStackNavigator(
         headerMode: 'none',
         navigationOptions:  ({navigation})=>{
             let { routeName } = navigation.state.routes[navigation.state.index];
-            let navigationOptions = {};            
+            let navigationOptions = {};  
+                      
             if (routeName === 'DetailedEventView') {
                 navigationOptions.tabBarVisible = false;
             }
