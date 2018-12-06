@@ -5,47 +5,8 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { ViewMyProfile } from '../../screens/myProfile/view/viewMyProfile.screen';
-import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen';
+import { DiscoverStackNavigator, ListStackNavigator, ProfileStackNavigator, MyEventsStackNavigator } from './stack.navigations';
 
-import { DiscoverStackNavigator, ListStackNavigator } from './discover.stackView';
-import { MyEventList } from '../../screens/myEventList/myEventList.screen';
-import { EditEventFormNamespaced } from '../event/edit.event.form';
-
-//Navigation
-const ProfileStackNavigator = createStackNavigator(
-    {
-        View: ViewMyProfile,
-        Edit: EditMyProfile,
-    },
-    {
-        headerMode: 'none',
-    },
-    {
-        initialRouteName: 'View',
-    }
-);
-
-const MyEventsStackNavigator = createStackNavigator(
-    {
-        View: MyEventList,
-        Edit: EditEventFormNamespaced,
-    },
-    {
-        headerMode: 'none',
-        navigationOptions:  ({navigation})=>{
-            let { routeName } = navigation.state.routes[navigation.state.index];
-            let navigationOptions = {};
-            if (routeName === 'Edit') {
-                navigationOptions.tabBarVisible = false;
-            }
-            return navigationOptions;
-        }
-    },
-    {
-        initialRouteName: 'View',
-    }
-);
 const TabNavigator = createMaterialBottomTabNavigator(
     {
         Profile: ProfileStackNavigator,
@@ -58,7 +19,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
         labeled: true,
         shifting: false,
         defaultNavigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ tintColor }: any) => {// eslint-disable-line
+            tabBarIcon: ({ tintColor }: any) => {
+                // eslint-disable-line
                 const { routeName } = navigation.state;
                 let iconName;
                 switch (routeName) {
@@ -73,7 +35,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
                         break;
                     case 'MyEvents':
                         iconName = 'event-available';
-                }               
+                }
                 return <Icon name={iconName} size={25} color={tintColor} />;
             },
         }),
