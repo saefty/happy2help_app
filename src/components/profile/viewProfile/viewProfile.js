@@ -16,8 +16,7 @@ type Props = {
     user: UserObject,
 };
 
-class ProfileView extends Component<Props> {    
-
+class ProfileView extends Component<Props> {
     constructor(props) {
         super(props);
     }
@@ -26,6 +25,7 @@ class ProfileView extends Component<Props> {
         return (
             <View>
                 <Appbar.Header style={styles.appbar}>
+                    <Appbar.Action icon="menu" onPress={() => this.props.navigation.openDrawer()} />
                     <Appbar.Content title="" />
                     <Appbar.Action icon="edit" onPress={() => this.props.navigation.navigate('Edit')} />
                     <Appbar.Action icon="more-vert" />

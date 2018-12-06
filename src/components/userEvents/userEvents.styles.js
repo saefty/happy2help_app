@@ -4,16 +4,16 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-        alignContent: "center",
-        height: "100%",
-        backgroundColor: "#eee",
+        alignContent: 'center',
+        height: '100%',
+        backgroundColor: '#eee',
     },
     header: {
-        backgroundColor: "#008FB8", 
-        justifyContent: "center",
+        backgroundColor: '#008FB8',
+        justifyContent: 'center',
     },
     title: {
-        color: "#fff",
+        color: '#fff',
         fontSize: 25,
         marginLeft: 5,
         marginBottom: 2,
@@ -21,19 +21,16 @@ const styles = StyleSheet.create({
     card: {
         margin: 5,
     },
-    eventScreen: {
-        
+    eventScreen: {},
+    list: {
+        height: '50%',
     },
-    list : {
-        height: "50%",
-    },
-    fab : {
-        position: "absolute",
-
+    fab: {
+        position: 'absolute',
     },
     scroll: {
-        height: "85%",
-    }
+        height: '85%',
+    },
 });
 
 export default styles;

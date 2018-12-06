@@ -1,7 +1,7 @@
-import { MapScreen } from "../../screens/map/map.screen";
-import { EventDetailModalNavigationMapped } from "../event/eventDetailModal";
-import { OrganisationDetailScreenMapped } from "../../screens/organisation/organisation.screen";
-import { ListView } from "../../screens/listView/listView.screen";
+import { MapScreen } from "../../../screens/map/map.screen";
+import { EventDetailModalNavigationMapped } from "../../event/eventDetailModal";
+import { OrganisationDetailScreenMapped } from "../../../screens/organisation/organisation.screen";
+import { ListView } from "../../../screens/listView/listView.screen";
 import { createStackNavigator } from 'react-navigation';
 
 export const DiscoverStackNavigator = createStackNavigator(

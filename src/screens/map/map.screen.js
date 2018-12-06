@@ -11,9 +11,11 @@ import { DefaultStyles } from '../../../config/style';
 //import { i18n } from 'react-i18next';
 
 import { Map } from '../../components/map/map';
-import { Portal } from 'react-native-paper';
+import { Portal, Appbar } from 'react-native-paper';
 import { EventDetailModal } from '../../components/event/eventDetailModal';
 import { EventDataProvider } from '../../providers/eventDataProvider';
+import { withNavigation } from 'react-navigation';
+
 
 type Props = {
     events: Array<EventObject>
@@ -24,7 +26,7 @@ type State = {
     userRegion: Region
 }
 
-export class MapScreen extends Component<Props, State> {
+export class _MapScreen extends Component<Props, State> {
     state = {
         event: undefined,
         visible: false,
@@ -49,6 +51,11 @@ export class MapScreen extends Component<Props, State> {
     render() {
         return (
             <View>
+                 <Appbar.Header>
+                    <Appbar.Action icon="menu" onPress={() => this.props.navigation.openDrawer()} />
+                    <Appbar.Content title="" />
+                    <Appbar.Action icon="search" />
+                </Appbar.Header>
                 <EventDataProvider pollInterval={undefined}>
                     {(events) => {
                         return  <Map events={events} onEventTouch={this.openEventModal} initialRegion={this.state.userRegion} setUserViewPoint={this.setUserViewPoint}/>
@@ -58,3 +65,5 @@ export class MapScreen extends Component<Props, State> {
         )
     }
 }
+
+export const MapScreen = withNavigation(_MapScreen);
