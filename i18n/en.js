@@ -35,6 +35,12 @@ export default {
         createTitle: 'Create event'
 
     },
+    Organisation: {
+        description: 'About Us',
+        currentEvents: 'Current Events',
+        members: 'Members',
+        editOrganisation: 'Edit Organisation',
+    },
     Navigation: {
         profile: 'Profile',
         map: 'Map',
@@ -42,10 +48,17 @@ export default {
         chat: 'Chat',
     },
     Job: {
+        description: 'Description: ',
+        positions: 'Positions',
         participated: "You participated.",
         applied: "You applied.",
         declined: "You were declined.",
         accepted: "You were accepted.",
         canceled: "The job was canceled.",
     },
+    JobParticipationButton: {
+        'Participated': 'Participated',
+        'Applied': 'Apply',
+        'Canceled': 'Cancel application'
+    }
 };

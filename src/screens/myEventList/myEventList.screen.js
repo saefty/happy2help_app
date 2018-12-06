@@ -12,6 +12,7 @@ import type { EventObject } from '../../models/event.model';
 import { H2HTheme } from '../../../themes/default.theme';
 import { EventDetailModal } from '../../components/event/eventDetailModal';
 import { withNamespaces, i18n } from 'react-i18next';
+import { participationTypes } from '../../models/participation.model';
 
 
 type Props = {
@@ -65,12 +66,11 @@ class MyEventListComponent extends Component<Props, State> {
                             <View style={styles.list}>
                                 <Headline>{this.props.t("myJobs")}</Headline>
                                 <UserJobList
-                                    participationSet={user.participationSet} />
+                                    participationSet={user.participationSet.filter(x => x.state !== participationTypes.Canceled)} />
                             </View>
                             
                             <EventFAB
-                            addEvent={() => this.props.navigation.navigate('Edit')}
-                            />
+                            addEvent={() => this.props.navigation.navigate('Edit')}/>
                         </View>
                     }
                 </MyEventDataProvider>

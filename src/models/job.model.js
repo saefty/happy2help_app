@@ -1,10 +1,11 @@
 // @flow
-import type { UserObject } from './user.model.js';
+import type { Participation } from './participation.model.js';
 
 export type Job = {
     id: number,
     name: string,
     description: string,
     totalPositions: number,
-    participationSet: Array<UserObject>
+    participationSet: Array<Participation>,
+    currentUsersParticipation: Participation
 }

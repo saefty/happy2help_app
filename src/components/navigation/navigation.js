@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import { View, Text } from 'react-native';
 
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -8,10 +7,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { ViewMyProfile } from '../../screens/myProfile/view/viewMyProfile.screen';
 import { EditMyProfile } from '../../screens/myProfile/edit/editMyProfile.screen';
-import { MapScreen } from '../../screens/map/map.screen';
-import { ListView } from '../../screens/listView/listView.screen';
+
+import { DiscoverStackNavigator, ListStackNavigator } from './discover.stackView';
 import { MyEventList } from '../../screens/myEventList/myEventList.screen';
-import { EditEventFormNamespaced } from '../event/edit.event.form';
+import { EditEventForm } from '../event/edit.event.form';
 
 //Navigation
 const ProfileStackNavigator = createStackNavigator(
@@ -30,7 +29,7 @@ const ProfileStackNavigator = createStackNavigator(
 const MyEventsStackNavigator = createStackNavigator(
     {
         View: MyEventList,
-        Edit: EditEventFormNamespaced,
+        Edit: EditEventForm,
     },
     {
         headerMode: 'none',
@@ -50,8 +49,8 @@ const MyEventsStackNavigator = createStackNavigator(
 const TabNavigator = createMaterialBottomTabNavigator(
     {
         Profile: ProfileStackNavigator,
-        Discover: MapScreen,
-        List: ListView,
+        Discover: DiscoverStackNavigator,
+        List: ListStackNavigator,
         MyEvents: MyEventsStackNavigator,
     },
     {
