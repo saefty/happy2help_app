@@ -13,9 +13,13 @@ export const ProfileStackNavigator = createStackNavigator(
     },
     {
         navigationOptions:  ({navigation})=>{
+            let { routeName } = navigation.state.routes[navigation.state.index];
             let navigationOptions = {};
             navigationOptions.drawerLabel = 'Mein Profil';
             navigationOptions.drawerIcon = <Icon name={'account-circle'} size={24} />
+            if (routeName !== 'View') {
+                navigationOptions.tabBarVisible = false;
+            }
             return navigationOptions;
         },
         headerMode: 'none',

@@ -4,17 +4,19 @@ import * as React from 'react';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { DiscoverStackNavigator, ListStackNavigator } from './stackNavigators/discover.stack';
+import { DiscoverStackNavigator } from './stackNavigators/discover.stack';
 import { ProfileStackNavigator } from './stackNavigators/profile.stack';
+import { MyEventsStackNavigator } from './stackNavigators/myEvents.stack';
+
 
 export const TabNavigator = createMaterialBottomTabNavigator(
     {
-        Map: DiscoverStackNavigator,
-        List: ListStackNavigator,
+        Discover: DiscoverStackNavigator,
+        MyEvents: MyEventsStackNavigator,
     },
     {
-        initialRouteName: 'List',
-        labeled: false,
+        initialRouteName: 'Discover',
+        labeled: true,
         shifting: false,      
         navigationOptions:  ({navigation})=>{
             let navigationOptions = {};
@@ -31,8 +33,8 @@ export const TabNavigator = createMaterialBottomTabNavigator(
                     case 'Profile':
                         iconName = 'person';
                         break;
-                    case 'Map':
-                        iconName = 'map';
+                    case 'Discover':
+                        iconName = 'explore';
                         break;
                     case 'List':
                         iconName = 'list';

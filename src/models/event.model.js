@@ -14,5 +14,7 @@ export type EventObject = {
         id: string
     },
     jobSet: Array<Job>,
+    start: DateTime,
+    end: DateTime,
     location: LocationObject 
 }

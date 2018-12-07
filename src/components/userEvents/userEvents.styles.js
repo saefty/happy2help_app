@@ -28,9 +28,6 @@ const styles = StyleSheet.create({
     fab: {
         position: 'absolute',
     },
-    scroll: {
-        height: '85%',
-    },
 });
 
 export default styles;
