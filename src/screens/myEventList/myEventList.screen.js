@@ -13,6 +13,8 @@ import { H2HTheme } from '../../../themes/default.theme';
 import { EventDetailModal } from '../../components/event/eventDetailModal';
 import { withNamespaces, i18n } from 'react-i18next';
 import { participationTypes } from '../../models/participation.model';
+import { SegmentedControl } from '../../components/utils/SegmentedControl';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type Props = {
     t: i18n.t,
@@ -20,11 +22,14 @@ type Props = {
 
 type State = {
     event?: EventObject,
-    visible: boolean,
+    selectedIndex: number,
 };
 class MyEventListComponent extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
+        this.state = {
+            selectedIndex: 0,
+        };
     }
 
     openEventModal = (event: EventObject) => {
@@ -33,30 +38,46 @@ class MyEventListComponent extends Component<Props, State> {
         });
     };
 
+    setIndex = index => this.setState({ selectedIndex: index });
+
     // This component is wrapped in its own provider as the FAB Button in this screen would cause issues
     // Look at https://github.com/callstack/react-native-paper/issues/420
     render() {
         return (
             <Provider theme={H2HTheme}>
-                <View>
-                    <MyEventDataProvider>
-                        {user => (
-                            <View style={styles.eventScreen}>
-                                <View style={styles.list}>
-                                    <Headline>{this.props.t('myEvents')}</Headline>
-                                    <UserEventList events={user.eventSet} onEventTouch={this.openEventModal} />
-                                </View>
-
-                                <View style={styles.list}>
-                                    <Headline>{this.props.t('myJobs')}</Headline>
-                                    <UserJobList participationSet={user.participationSet.filter(x => x.state !== participationTypes.Canceled)} />
-                                </View>
-
-                                <EventFAB addEvent={() => this.props.navigation.navigate('Edit')} />
-                            </View>
-                        )}
-                    </MyEventDataProvider>
+                <View
+                    style={{
+                        width: '50%',
+                        alignSelf: 'center',
+                        marginTop: 20,
+                    }}
+                >
+                    <SegmentedControl values={['Jobs', 'Events']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
                 </View>
+                <KeyboardAwareScrollView>
+                    <MyEventDataProvider>
+                        {user => {
+                            if (this.state.selectedIndex === 1) {
+                                return (
+                                    <View>
+                                        <Headline>{this.props.t('myEvents')}</Headline>
+                                        <UserEventList events={user.eventSet} onEventTouch={this.openEventModal} />
+                                        <Portal>
+                                            <EventFAB addEvent={() => this.props.navigation.navigate('Edit')} />
+                                        </Portal>
+                                    </View>
+                                );
+                            } else {
+                                return (
+                                    <View>
+                                        <Headline>{this.props.t('myJobs')}</Headline>
+                                        <UserJobList participationSet={user.participationSet.filter(x => x.state !== participationTypes.Canceled)} />
+                                    </View>
+                                );
+                            }
+                        }}
+                    </MyEventDataProvider>
+                </KeyboardAwareScrollView>
             </Provider>
         );
     }

@@ -72,8 +72,20 @@ export const createApolloConfiguration = async () => {
         }),
     ];
 
+    const defaultOptions = {
+        watchQuery: {
+            fetchPolicy: 'network-only',
+            errorPolicy: 'ignore',
+        },
+        query: {
+            fetchPolicy: 'network-only',
+            errorPolicy: 'all',
+        },
+    };
+
     return {
         cache,
         link: ApolloLink.from(Links),
+        defaultOptions,
     };
 };
