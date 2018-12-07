@@ -23,15 +23,6 @@ const GET_EVENTS = gql`
                 id
                 description
             }
-            jobSet {
-                id
-                name
-                description
-                totalPositions	
-                participationSet {
-                    id
-                }
-            }
         }
     }
 `;
@@ -52,6 +43,7 @@ export class EventDataProvider extends Component<Props> {
             <View>
                 <Query query={GET_EVENTS} pollInterval={this.props.pollInterval}>
                 {({ loading, error, data }) => {
+                        console.log(loading, error, data)
                         if (loading) return null;
                         if (error) {
                             console.warn(`ApolloError! ${error.message}`);

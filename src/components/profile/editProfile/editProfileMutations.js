@@ -12,9 +12,10 @@ export const mutations = {
     `,
 
     UPDATE_USER_LOCATION: gql`
-        mutation updateUserLocation($locationId: Int!) {
+        mutation updateUserLocation($locationId: ID!) {
             updateUser(locationId: $locationId) {
                 user {
+                    id
                     username
                 }
             }

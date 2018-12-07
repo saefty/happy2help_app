@@ -1,26 +1,29 @@
 // @flow
-import type EventObject from '../../models/event.model';
+import type { EventObject } from '../../models/event.model';
 import React, { Component } from 'react';
 import { View, StyleSheet, TextInput as NativeTextInput } from 'react-native';
-import { Button, Text, TextInput, HelperText, Subheading, Headline } from 'react-native-paper';
+import { Button, Text, TextInput, HelperText, Subheading, Headline, Appbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { withNamespaces } from 'react-i18next';
+import { withNamespaces, i18n } from 'react-i18next';
 import { GooglePlacesInput } from '../location/location.input';
 import { styles } from './edit.event.style';
+import { graphql, compose } from 'react-apollo';
+import { mutations } from './edit.event.mutations';
 
 type Props = {
     event?: EventObject,
     t: i18n.t,
-}
+    updateEventMutation: graphql.mutate,
+    createEventMutation: graphql.mutate,
+};
 
 type State = {
     validationSchema: Yup.Schema,
-}
+};
 
-class EditEventForm extends Component<Props, State> {
-    
+class _EditEventForm extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         const EventSchema = Yup.object().shape({
@@ -32,32 +35,85 @@ class EditEventForm extends Component<Props, State> {
                 .required(this.props.t('errors:required')),
             location: Yup.object().required(this.props.t('errors:required')),
         });
-        this.state = { validationSchema: EventSchema, address: '' };
+        this.state = { validationSchema: EventSchema };
     }
 
-    onSubmit = (values, actions) => {
-        console.log(values)
+    create = event => {
+        return this.props.createEventMutation({
+            variables: {
+                name: event.name,
+                description: event.description,
+                locationLon: event.location.long,
+                locationLat: event.location.lat,
+                locationName: event.location.name,
+                start: event.start,
+                end: event.end,
+            },
+        });
+    };
+
+    update = event => {
+        return this.props.updateEventMutation({
+            variables: {
+                id: this.props.event.id,
+                name: event.name || this.props.event.name,
+                description: event.description || this.props.event.description,
+                locationLon: event.location.long || this.props.event.location.longitude,
+                locationLat: event.location.lat || this.props.event.location.latitude,
+                locationName: event.location.name || this.props.event.location.name,
+                start: event.start,
+                end: event.end,
+            },
+        });
+    };
+
+    onSubmit = async (values, actions) => {
+        actions.setSubmitting(true);
+        const { start, end } = this.getStartEnd();
+        const EVENT = {
+            name: values.eventName,
+            description: values.description,
+            location: {
+                name: values.location.formatted_address,
+                lat: values.location.geometry.location.lat,
+                long: values.location.geometry.location.lng,
+            },
+            start,
+            end,
+        };
+
+        if (!this.props.event) {
+            await this.create(EVENT);
+        } else {
+            await this.update(EVENT);
+        }
         actions.setSubmitting(false);
+        console.log(values);
+        return;
+    };
+
+    getStartEnd() {
+        let start = '2019-11-30T11:40:21+00:00';
+        let end = '2020-11-30T11:40:21+00:00';
+        return { start, end };
     }
 
     getInitialFormValues = () => {
-        return this.props.event || {
-            eventName: '124',
-            description: '12312314124',
-            location: {
-                formatted_address: 'Stav'
-            }
-        }
-    }
+        return this.props.event || {};
+    };
 
     render() {
         return (
             <KeyboardAwareScrollView>
-                <View style={styles.container}>
-                    <Headline>{this.props.t(!this.props.event ? 'createTitle' : 'editTitle')}</Headline>
-                    <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSubmit} initialValues={this.getInitialFormValues()}>
-                        {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
-                            <View>
+                <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSubmit} initialValues={this.getInitialFormValues()}>
+                    {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
+                        <View>
+                            <Appbar.Header style={styles.container}>
+                                <Appbar.Action icon="close" onPress={() => this.props.navigation.goBack()} />
+                                <Appbar.Content title={this.props.t(!this.props.event ? 'createTitle' : 'editTitle')} />
+                                <Appbar.Action icon="check" onPress={handleSubmit} disabled={isSubmitting} />
+                            </Appbar.Header>
+                            <View style={styles.container}>
                                 <TextInput
                                     onChangeText={handleChange('eventName')}
                                     value={values.eventName}
@@ -80,8 +136,8 @@ class EditEventForm extends Component<Props, State> {
                                 </HelperText>
                                 <GooglePlacesInput
                                     onChangeValue={v => {
-                                        setFieldValue('location', v)
-                                        handleChange('location')
+                                        setFieldValue('location', v);
+                                        handleChange('location');
                                     }}
                                     initialValue={values.location}
                                     label={this.props.t('locationSearch')}
@@ -90,24 +146,16 @@ class EditEventForm extends Component<Props, State> {
                                 <HelperText type="error" visible={errors.location}>
                                     <ErrorMessage name="location" />
                                 </HelperText>
-                                <Button
-                                    mode="contained"
-                                    dark={false}
-                                    icon='create'
-                                    disabled={isSubmitting}
-                                    onPress={handleSubmit}
-                                    style={styles.button}
-                                >
-                                    {this.props.t('create')}
-                                </Button>
-
                             </View>
-                        )}
-                    </Formik>
-                </View>
+                        </View>
+                    )}
+                </Formik>
             </KeyboardAwareScrollView>
         );
     }
 }
 
-export const EditEventFormNamespaced = withNamespaces(['Event', 'errors'])(EditEventForm);
+export const EditEventFormNamespaced = compose(
+    graphql(mutations.CREATE_EVENT, { name: 'createEventMutation' }),
+    graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation' })
+)(withNamespaces(['Event', 'errors'])(_EditEventForm));
