@@ -4,14 +4,14 @@
  */
 
 import React, { Component } from 'react';
-import { View,  Dimensions, Image, ImageEditor, Platform } from 'react-native';
+import { View,  Dimensions, Image, ImageEditor, Platform, ImageStore } from 'react-native';
 
 import { styles } from './viewOrganisation.style';
 
 const { height, width } = Dimensions.get('window');
 
 const cropData = {
-    offset: { x: 100, y: 100 },
+    offset: { x: 0, y: 0 },
     size: { width: width, height: 140 },
 };
 
