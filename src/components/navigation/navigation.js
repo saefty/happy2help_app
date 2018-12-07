@@ -11,7 +11,6 @@ const TabNavigator = createMaterialBottomTabNavigator(
     {
         Profile: ProfileStackNavigator,
         Discover: DiscoverStackNavigator,
-        List: ListStackNavigator,
         MyEvents: MyEventsStackNavigator,
     },
     {

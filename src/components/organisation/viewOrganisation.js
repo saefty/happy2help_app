@@ -8,13 +8,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import OrganisationHeader from './organisationHeader';
 import Panel from './panel/panel';
-import { ListView } from '../../screens/listView/listView.screen';
+import { EventDataProvider } from '../../providers/eventDataProvider';
+import { EventList } from '../listview/eventList';
 import { styles } from './viewOrganisation.style';
 
 type Props = {
     t: i18n.t,
     organisation: Object,
-    close: () => void
+    close: () => void,
 };
 
 class _OrganisationView extends Component<Props> {
@@ -26,14 +27,17 @@ class _OrganisationView extends Component<Props> {
         return (
             <View style={{ height: 100 + '%' }}>
                 <Appbar.Header>
-                    <Appbar.BackAction onPress={() => {this.props.close()}}/>
+                    <Appbar.BackAction
+                        onPress={() => {
+                            this.props.close();
+                        }}
+                    />
                     <Appbar.Content title={this.props.organisation.name} subtitle="Organization" />
                     <Appbar.Action icon="edit" />
                     <Appbar.Action icon="more-vert" />
                 </Appbar.Header>
 
                 <ScrollView style={{ width: 100 + '%' }}>
-
                     <View style={styles.container}>
                         <View style={styles.headerContainer}>
                             <OrganisationHeader />
@@ -60,7 +64,11 @@ class _OrganisationView extends Component<Props> {
                                 <Text>{this.props.organisation.description}</Text>
                             </Panel>
                             <Panel title={this.props.t('currentEvents')} initialExpansion={false}>
-                                <ListView />
+                                <EventDataProvider pollInterval={undefined}>
+                                    {events => {
+                                        return <EventList onEventTouch={() => {}} events={events} {...this.props} />;
+                                    }}
+                                </EventDataProvider>
                             </Panel>
                         </View>
                     </View>

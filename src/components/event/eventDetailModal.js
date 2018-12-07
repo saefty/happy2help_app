@@ -55,7 +55,7 @@ export class EventDetailModal extends Component<Props> {
     renderOrganization = () => {
         return (
             <View>
-                <Button onPress={this.openEventOrganisationScreen} mode="contained" icon="group">
+                <Button onPress={this.openEventOrganisationScreen} icon="group">
                     {this.props.event.organisation.name}
                 </Button>
             </View>
