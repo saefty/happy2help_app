@@ -21,16 +21,6 @@ const GET_EVENTS = gql`
             organisation {
                 id
                 name
-                description
-                members {
-                    id
-                    username
-                }
-                eventSet {
-                    id
-                    name
-                    description
-                }
             }
         }
     }

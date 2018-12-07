@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Modal, Card, Title, Button, Paragraph, Text, Divider, Subheading, Appbar } from 'react-native-paper';
 import { JobList } from './job/jobList';
-import { Query } from 'react-apollo';
+import { Query, ApolloConsumer} from 'react-apollo';
 import gql from 'graphql-tag';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { withNamespaces } from 'react-i18next';
@@ -39,15 +39,36 @@ const JOB_QUERY = gql`
     }
 `;
 
+const ORGANISATION_QUERY = gql`
+    query event($id: ID!) {
+        event(id: $id) {
+            organisation {
+                id
+                name
+                description
+                members {
+                    id
+                    username
+                }
+                eventSet {
+                    id
+                    name
+                    description
+                }
+            }
+        }
+    }
+`;
+
 export class EventDetailModal extends Component<Props> {
     constructor(props: Props) {
         super(props);
     }
 
-    openEventOrganisationScreen = () => {
+    openEventOrganisationScreen = (org) => {
         this.props.navigation.navigate('DetailedOrganisationView', {
-            organisation: this.props.event.organisation
-        })
+            organisation: org
+        });
     }
 
     renderCreator = () => {
@@ -57,9 +78,19 @@ export class EventDetailModal extends Component<Props> {
     renderOrganization = () => {
         return (
             <View>
-                <Button onPress={this.openEventOrganisationScreen} mode="contained" icon="group">
-                    {this.props.event.organisation.name}
-                </Button>
+                <ApolloConsumer>
+                    {client => (
+                        <Button onPress={async () => {
+                            const { data } = await client.query({
+                              query: ORGANISATION_QUERY,
+                              variables: { id: this.props.event.id }
+                            });
+                            this.openEventOrganisationScreen(data.event.organisation)}} 
+                            mode="contained" icon="group">
+                            {this.props.event.organisation.name}
+                        </Button>
+                    )}
+                </ApolloConsumer>
             </View>
         );
     };
