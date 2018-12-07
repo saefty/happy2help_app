@@ -15,6 +15,7 @@ export const mutations = {
         mutation updateUserLocation($locationId: ID!) {
             updateUser(locationId: $locationId) {
                 user {
+                    id
                     username
                 }
             }

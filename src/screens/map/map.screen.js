@@ -1,11 +1,7 @@
 // @flow
 import type { EventObject } from '../../models/event.model';
 import React, { Component } from 'react';
-import {
-    View,
-    StyleSheet,
-    Text
-} from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE, Region } from 'react-native-maps';
 import { DefaultStyles } from '../../../config/style';
 //import { i18n } from 'react-i18next';
@@ -16,45 +12,34 @@ import { EventDetailModal } from '../../components/event/eventDetailModal';
 import { EventDataProvider } from '../../providers/eventDataProvider';
 
 type Props = {
-    events: Array<EventObject>
-}
+    events: Array<EventObject>,
+};
 type State = {
     event?: EventObject,
-    visible: boolean,
-    userRegion: Region
-}
+    userRegion: Region,
+};
 
 export class MapScreen extends Component<Props, State> {
     state = {
         event: undefined,
         visible: false,
-        userRegion: Region
-    }
+        userRegion: Region,
+    };
     openEventModal = (event: EventObject) => {
         this.props.navigation.navigate('DetailedEventView', {
-            event: event
-        })
-        //this.setState({event: event, visible: true });
-        //this.forceUpdate();
-    }
-
-    hideModal = () => {
-        this.setState({ visible: false })
-    }
-
-    setUserViewPoint = (region: Region) => {
-        //this.setState({ userRegion: region })
-    }
+            event: event,
+        });
+    };
 
     render() {
         return (
             <View>
                 <EventDataProvider pollInterval={undefined}>
-                    {(events) => {
-                        return  <Map events={events} onEventTouch={this.openEventModal} initialRegion={this.state.userRegion} setUserViewPoint={this.setUserViewPoint}/>
+                    {events => {
+                        return <Map events={events} onEventTouch={this.openEventModal} initialRegion={this.state.userRegion} setUserViewPoint={() => {}} />;
                     }}
                 </EventDataProvider>
             </View>
-        )
+        );
     }
 }

@@ -11,5 +11,7 @@ export type EventObject = {
     description: string,
     organisation?: OrganisationObject,
     jobSet: Array<Job>,
+    start: DateTime,
+    end: DateTime,
     location: LocationObject 
 }
