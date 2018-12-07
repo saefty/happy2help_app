@@ -16,6 +16,7 @@ type Props = {
 type State = {
     visible: boolean,
     skillname: string,
+    validationSchema: any,
 };
 
 class AddSkillDialogComponent extends Component<Props, State> {
@@ -41,7 +42,6 @@ class AddSkillDialogComponent extends Component<Props, State> {
             name: values.skillName,
             approved: false,
             id: uuidv1(),
-            unsaved: true,
         };
         values.skillName = '';
         this.props.addSkill(skill);
