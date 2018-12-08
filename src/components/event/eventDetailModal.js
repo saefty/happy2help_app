@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Modal, Card, Title, Button, Paragraph, Text, Divider, Subheading, Appbar } from 'react-native-paper';
 import { JobList } from './job/jobList';
-import { Query, ApolloConsumer} from 'react-apollo';
+import { Query, ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { withNamespaces } from 'react-i18next';
@@ -65,11 +65,11 @@ export class EventDetailModal extends Component<Props> {
         super(props);
     }
 
-    openEventOrganisationScreen = (org) => {
+    openEventOrganisationScreen = org => {
         this.props.navigation.navigate('DetailedOrganisationView', {
-            organisation: org
+            organisation: org,
         });
-    }
+    };
 
     renderCreator = () => {
         return <Paragraph>Username: {this.props.event.creator.username}</Paragraph>;
@@ -77,21 +77,16 @@ export class EventDetailModal extends Component<Props> {
 
     renderOrganization = () => {
         return (
-            <View>
-                <ApolloConsumer>
-                    {client => (
-                        <Button onPress={async () => {
-                            const { data } = await client.query({
-                              query: ORGANISATION_QUERY,
-                              variables: { id: this.props.event.id }
-                            });
-                            this.openEventOrganisationScreen(data.event.organisation)}} 
-                            mode="contained" icon="group">
+            <Query query={ORGANISATION_QUERY} variables={{ id: this.props.event.id }} cache="no-cache">
+                {({ error, loading, data }) => {
+                    if (error || loading) return <View />;
+                    return (
+                        <Button onPress={() => {this.openEventOrganisationScreen(data.event.organisation)}} icon="group">
                             {this.props.event.organisation.name}
                         </Button>
-                    )}
-                </ApolloConsumer>
-            </View>
+                    );
+                }}
+            </Query>
         );
     };
 
