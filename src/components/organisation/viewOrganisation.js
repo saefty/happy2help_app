@@ -36,7 +36,11 @@ class _OrganisationView extends Component<Props, State> {
         return (
             <View style={{ height: 100 + '%' }}>
                 <Appbar.Header>
-                    <Appbar.BackAction onPress={() => {this.props.close()}}/>
+                    <Appbar.BackAction
+                        onPress={() => {
+                            this.props.close();
+                        }}
+                    />
                     <Appbar.Content title={this.props.organisation.name} subtitle="Organization" />
                     <Appbar.Action icon="edit" />
                     <Appbar.Action icon="more-vert" />

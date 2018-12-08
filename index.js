@@ -25,7 +25,7 @@ type I18nProps = {
 type State = {
     apolloClient: ApolloClient,
     loggedIn: boolean,
-}
+};
 import { requestPermission } from './src/helpers/requestPermission';
 
 export default class AppApollo extends Component<I18nProps, State> {
@@ -40,8 +40,8 @@ export default class AppApollo extends Component<I18nProps, State> {
     }
 
     async componentDidMount() {
-        await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
-        await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION)
+        await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+        await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
 
         const cfg = await createApolloConfiguration();
 
@@ -62,6 +62,7 @@ export default class AppApollo extends Component<I18nProps, State> {
                     JWT @client
                 }
             `,
+            fetchPolicy: 'cache-only',
         });
         const token = result.data.JWT;
         if (token && token !== '') {
@@ -111,10 +112,10 @@ export default class AppApollo extends Component<I18nProps, State> {
         // Clear storages
         await AsyncStorage.clear();
         await this.state.apolloClient.resetStore();
- 
     };
 
-    onLanguageChange(language: any) {        // eslint-disable-line
+    onLanguageChange(language: any) {
+        // eslint-disable-line
         // i18n.changeLanguage(language);
         if (i18n.language === 'de') {
             i18n.changeLanguage('en');
@@ -135,10 +136,7 @@ export default class AppApollo extends Component<I18nProps, State> {
 
         return (
             <PaperProvider theme={H2HTheme}>
-                <ApolloProvider
-                    client={this.state.apolloClient}
-                    screenProps={this.props.t}
-                >
+                <ApolloProvider client={this.state.apolloClient} screenProps={this.props.t}>
                     {path}
                 </ApolloProvider>
             </PaperProvider>
