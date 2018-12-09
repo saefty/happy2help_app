@@ -13,6 +13,7 @@ import gql from 'graphql-tag';
 import { onError } from 'apollo-link-error';
 
 import Config from 'react-native-config';
+import { Sentry } from 'react-native-sentry';
 
 export const createApolloConfiguration = async () => {
     // This is the same cache you pass into new ApolloClient
@@ -29,7 +30,7 @@ export const createApolloConfiguration = async () => {
     await persistCache({
         cache,
         storage: AsyncStorage,
-        trigger: 'background',
+        trigger: 'write',
         maxSize: 1048576 * 100, // 100 MB
         debug: true, // enables console logging
     });
@@ -57,12 +58,17 @@ export const createApolloConfiguration = async () => {
             },
         };
     });
+
     const errorLink = onError(({ graphQLErrors }) => {
-        if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message));
+        if (graphQLErrors)
+            graphQLErrors.map(({ message }) => {
+                Sentry.captureException('GraphQL Error: ', message); // eslint-disable-line
+            });
     });
 
     const serverURI = Config.DEV_SERVER === 'true' ? 'http://localhost:3000/graphql/' : 'https://h2h-dev.taher.io/graphql/';
-    console.log(serverURI);
+    Sentry.captureMessage('URL set to', serverURI); // eslint-disable-line
+
     const Links = [
         errorLink,
         CreateHeaderLink,

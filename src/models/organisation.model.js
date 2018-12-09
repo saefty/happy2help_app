@@ -6,8 +6,8 @@ import type { EventObject } from './event.model.js';
 export type OrganisationObject = {
     id: string,
     name: string,
-    admin: UserObject, 
+    admin: UserObject,
     description: string,
     members: Array<UserObject>,
-    eventSet: Array<EventObject>
-}
+    eventSet: Array<EventObject>,
+};

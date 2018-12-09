@@ -69,14 +69,13 @@ class _OrganisationView extends Component<Props, State> {
                         </View>
 
                         <View style={styles.accordionContainer}>
-
-                            <View style={{ backgroundColor: '#F4F9FE', marginBottom: 15}}>
+                            <View style={{ backgroundColor: '#F4F9FE', marginBottom: 15 }}>
                                 <Accordion title={this.props.t('description')} expansion={true} icon={'description'}>
-                                    <Text style={{paddingBottom: 15}}>{this.props.organisation.description}</Text>
+                                    <Text style={{ paddingBottom: 15 }}>{this.props.organisation.description}</Text>
                                 </Accordion>
                             </View>
 
-                            <View style={{ backgroundColor: '#F4F9FE', marginBottom: 15}}>
+                            <View style={{ backgroundColor: '#F4F9FE', marginBottom: 15 }}>
                                 <Accordion title={this.props.t('currentEvents')} expansion={false} icon={'event'}>
                                     <ListView
                                         dataSource={this.state.events}

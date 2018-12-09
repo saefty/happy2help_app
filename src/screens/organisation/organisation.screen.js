@@ -8,8 +8,8 @@ import { OrganisationView } from '../../components/organisation/viewOrganisation
 import type { OrganisationObject } from '../../models/organisation.model';
 
 type Props = {
-    organisation: OrganisationObject
-}
+    organisation: OrganisationObject,
+};
 
 class OrganisationScreen extends Component<Props> {
     constructor(props: Props) {
@@ -21,7 +21,7 @@ class OrganisationScreen extends Component<Props> {
             <View>
                 <OrganisationView organisation={this.props.organisation} close={this.props.navigation.goBack} />
             </View>
-        )
+        );
     }
 }
 

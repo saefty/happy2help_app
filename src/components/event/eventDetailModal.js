@@ -42,6 +42,7 @@ const JOB_QUERY = gql`
 const ORGANISATION_QUERY = gql`
     query event($id: ID!) {
         event(id: $id) {
+            id
             organisation {
                 id
                 name
@@ -77,11 +78,16 @@ export class EventDetailModal extends Component<Props> {
 
     renderOrganization = () => {
         return (
-            <Query query={ORGANISATION_QUERY} variables={{ id: this.props.event.id }} cache="no-cache">
+            <Query query={ORGANISATION_QUERY} variables={{ id: this.props.event.id }} cache="network-only">
                 {({ error, loading, data }) => {
                     if (error || loading) return <View />;
                     return (
-                        <Button onPress={() => {this.openEventOrganisationScreen(data.event.organisation)}} icon="group">
+                        <Button
+                            onPress={() => {
+                                this.openEventOrganisationScreen(data.event.organisation);
+                            }}
+                            icon="group"
+                        >
                             {this.props.event.organisation.name}
                         </Button>
                     );

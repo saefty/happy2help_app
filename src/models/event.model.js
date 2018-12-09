@@ -7,11 +7,11 @@ import type { OrganisationObject } from './organisation.model.js';
 export type EventObject = {
     id: string,
     name: string,
-    creator: UserObject, 
+    creator: UserObject,
     description: string,
     organisation?: OrganisationObject,
     jobSet: Array<Job>,
     start: DateTime,
     end: DateTime,
-    location: LocationObject 
-}
+    location: LocationObject,
+};
