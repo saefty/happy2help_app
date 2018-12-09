@@ -12,10 +12,10 @@ export const OrganisationStackNavigator = createStackNavigator(
         Edit: EditMyProfile,
     },
     {
-        navigationOptions:  ({navigation})=>{
+        navigationOptions: ({ navigation }) => {
             let navigationOptions = {};
             navigationOptions.drawerLabel = 'Meine Organisation';
-            navigationOptions.drawerIcon = <Icon name={'group'} size={24} />
+            navigationOptions.drawerIcon = <Icon name={'group'} size={24} />;
             return navigationOptions;
         },
         headerMode: 'none',
