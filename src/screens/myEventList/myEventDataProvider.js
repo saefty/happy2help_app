@@ -5,44 +5,44 @@ import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
 
 const GET_EVENTS = gql`
-{
-user {
-        id
-        eventSet {
+    {
+        user {
             id
-            name
-            description
-            organisation {
-                id
-      	        name
-            }
-          jobSet {
-            id
-            name
-            description
-            totalPositions	
-            participationSet {
-            	id
-            }
-          }
-        }
-        participationSet {
-            id
-            state
-            job {
+            eventSet {
                 id
                 name
                 description
+                organisation {
+                    id
+                    name
+                }
+                jobSet {
+                    id
+                    name
+                    description
+                    totalPositions
+                    participationSet {
+                        id
+                    }
+                }
+            }
+            participationSet {
+                id
+                state
+                job {
+                    id
+                    name
+                    description
+                }
             }
         }
-   }
-}
+    }
 `;
 
 type Props = {
     logOut: () => void,
-    query:  graphql.query,
-    children: () => Component<any,any>,
+    query: graphql.query,
+    children: () => Component<any, any>,
 };
 
 export class MyEventDataProvider extends Component<Props> {
@@ -57,7 +57,6 @@ export class MyEventDataProvider extends Component<Props> {
                     {({ loading, error, data }) => {
                         if (loading) return null;
                         if (error) {
-                            console.warn(`Error! ${error.message}`);
                             return null;
                         }
                         return this.props.children(data.user);

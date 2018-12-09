@@ -18,6 +18,9 @@ import gql from 'graphql-tag';
 import SplashScreen from 'react-native-splash-screen';
 import { AuthScreen } from './src/screens/auth.screen';
 import { H2HTheme } from './themes/default.theme';
+import { requestPermission } from './src/helpers/requestPermission';
+import { Sentry } from 'react-native-sentry';
+import { SentryConfig } from './config/sentry';
 
 type I18nProps = {
     t: i18n.t,
@@ -26,7 +29,11 @@ type State = {
     apolloClient: ApolloClient,
     loggedIn: boolean,
 };
-import { requestPermission } from './src/helpers/requestPermission';
+
+Sentry.config(SentryConfig.link, SentryConfig.props);
+if (!global.__DEV__) {
+    Sentry.install();
+}
 
 export default class AppApollo extends Component<I18nProps, State> {
     state = {
