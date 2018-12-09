@@ -30,7 +30,7 @@ export const createApolloConfiguration = async () => {
     await persistCache({
         cache,
         storage: AsyncStorage,
-        trigger: 'write',
+        trigger: 'background',
         maxSize: 1048576 * 100, // 100 MB
         debug: true, // enables console logging
     });
