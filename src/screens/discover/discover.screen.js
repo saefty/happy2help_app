@@ -2,12 +2,7 @@
 import type { EventObject } from '../../models/event.model';
 
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Portal, Headline } from 'react-native-paper';
-import { UserEventList } from '../../components/userEvents/userEventList';
-import { UserJobList } from '../../components/userEvents/userJobList';
-import { EventFAB } from '../../components/userEvents/eventFAB';
-import styles from '../../components/userEvents/userEvents.styles';
+import { View, ScrollView } from 'react-native';
 import { Provider } from 'react-native-paper';
 import { H2HTheme } from '../../../themes/default.theme';
 import { withNamespaces, i18n } from 'react-i18next';
@@ -96,7 +91,11 @@ class _DiscoverScreen extends Component<Props, State> {
                                     />
                                 );
                             } else {
-                                return <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />;
+                                return (
+                                    <ScrollView>
+                                        <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
+                                    </ScrollView>
+                                );
                             }
                         }}
                     </EventDataProvider>

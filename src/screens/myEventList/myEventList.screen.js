@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Portal, Headline } from 'react-native-paper';
+import { Portal, Headline, Appbar } from 'react-native-paper';
 import { UserEventList } from '../../components/userEvents/userEventList';
 import { UserJobList } from '../../components/userEvents/userJobList';
 import { MyEventDataProvider } from './myEventDataProvider';
@@ -13,6 +13,7 @@ import { H2HTheme } from '../../../themes/default.theme';
 import { EventDetailModal } from '../../components/event/eventDetailModal';
 import { withNamespaces, i18n } from 'react-i18next';
 import { participationTypes } from '../../models/participation.model';
+import { withNavigation } from 'react-navigation';
 import { SegmentedControl } from '../../components/utils/SegmentedControl';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -22,9 +23,11 @@ type Props = {
 
 type State = {
     event?: EventObject,
+    visible: boolean,
     selectedIndex: number,
 };
-class MyEventListComponent extends Component<Props, State> {
+
+class _MyEventList extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -45,6 +48,10 @@ class MyEventListComponent extends Component<Props, State> {
     render() {
         return (
             <Provider theme={H2HTheme}>
+                <Appbar.Header>
+                    <Appbar.Action icon="menu" onPress={() => this.props.navigation.openDrawer()} />
+                    <Appbar.Content title="" />
+                </Appbar.Header>
                 <View
                     style={{
                         width: '50%',
@@ -82,4 +89,5 @@ class MyEventListComponent extends Component<Props, State> {
         );
     }
 }
-export const MyEventList = withNamespaces(['Event'])(MyEventListComponent);
+
+export const MyEventList = withNamespaces(['Event'])(withNavigation(_MyEventList));

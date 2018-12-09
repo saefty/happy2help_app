@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { ProfileDataProvider } from '../profileDataProvider';
 import ProfileView from '../../../components/profile/viewProfile/viewProfile';
 
-
 type Props = {
     t: i18n.t,
     logOut: () => void,
@@ -19,7 +18,7 @@ export class ViewMyProfile extends Component<Props> {
         return (
             <View>
                 <ProfileDataProvider>
-                    {user => <ProfileView user={user} {...this.props}/>}
+                    {(user, refetch) => <ProfileView user={user} {...this.props} refetch={refetch} />}
                 </ProfileDataProvider>
             </View>
         );

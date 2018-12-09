@@ -88,7 +88,6 @@ class _EditEventForm extends Component<Props, State> {
             await this.update(EVENT);
         }
         actions.setSubmitting(false);
-        console.log(values);
         return;
     };
 

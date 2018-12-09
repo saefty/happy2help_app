@@ -20,9 +20,7 @@ export const mutations = {
                 start: $start
                 end: $end
             ) {
-                event {
-                    id
-                }
+                id
             }
         }
     `,
@@ -47,9 +45,7 @@ export const mutations = {
                 start: $start
                 end: $end
             ) {
-                event {
-                    id
-                }
+                id
             }
         }
     `,

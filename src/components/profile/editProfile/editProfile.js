@@ -60,7 +60,9 @@ class EditProfileComponent extends Component<Props, State> {
     //functions to save changes in the db:
 
     saveLocationInDb = async location => {
-        let response = await this.props.createLocationMutation({ variables: { longitude: location.longitude, latitude: location.latitude, name: location.name } });
+        let response = await this.props.createLocationMutation({
+            variables: { longitude: location.longitude, latitude: location.latitude, name: location.name },
+        });
         this.props.updateUserLocationMutation({ variables: { locationId: response.data.createLocation.location.id } });
     };
 
@@ -76,10 +78,10 @@ class EditProfileComponent extends Component<Props, State> {
         }
     };
 
-    saveChanges = async (values) => {
+    saveChanges = async values => {
         const oldLocation = this.props.user.profile.location;
         const newLocation = values.location;
-        if ((!oldLocation && newLocation)  || (newLocation && oldLocation.name != newLocation.name)) {
+        if ((!oldLocation && newLocation) || (newLocation && oldLocation.name != newLocation.name)) {
             this.saveLocationInDb(newLocation);
         }
 
@@ -98,17 +100,20 @@ class EditProfileComponent extends Component<Props, State> {
 
     onSubmit = async (values, actions) => {
         await this.saveChanges(values);
+        this.props.navigation.state.params.close();
         this.props.navigation.goBack();
-    }
+    };
+    onClose = () => {
+        this.props.navigation.state.params.close();
+        this.props.navigation.goBack();
+    };
 
     get initialValues() {
         return {
             location: this.props.user.profile.location ? this.props.user.profile.location : undefined,
-            skills: clone(this.props.user.skills)
-        }
+            skills: clone(this.props.user.skills),
+        };
     }
-
-    
 
     render() {
         return (
@@ -117,18 +122,9 @@ class EditProfileComponent extends Component<Props, State> {
                     {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
                         <View>
                             <Appbar.Header style={styles.appbar}>
-                                <Appbar.Action
-                                    icon="close"
-                                    onPress={() => {
-                                        this.props.navigation.goBack();
-                                    }}
-                                />
+                                <Appbar.Action icon="close" onPress={this.onClose} />
                                 <Appbar.Content title={this.props.t('editProfile')} />
-                                <Appbar.Action
-                                    icon="check"
-                                    onPress={handleSubmit}
-                                    
-                                />
+                                <Appbar.Action icon="check" onPress={handleSubmit} />
                             </Appbar.Header>
 
                             <View style={{ alignItems: 'center' }}>
@@ -136,26 +132,31 @@ class EditProfileComponent extends Component<Props, State> {
                             </View>
                             <GooglePlacesInput
                                 onChangeValue={v => {
-                                    setFieldValue('location', {name: v.formatted_address, longitude:v.geometry.location.lng, latitude: v.geometry.location.lat});
+                                    setFieldValue('location', {
+                                        name: v.formatted_address,
+                                        longitude: v.geometry.location.lng,
+                                        latitude: v.geometry.location.lat,
+                                    });
                                     handleChange('location');
                                 }}
-                                initialValue={{formatted_address: values.location.name}}
+                                initialValue={{ formatted_address: values.location.name }}
                                 label={this.props.t('locationSearch')}
                                 error={errors.location}
                             />
-                            <SkillList 
-                                skillObjects={values.skills} 
-                                editable={true} 
+                            <SkillList
+                                skillObjects={values.skills}
+                                editable={true}
                                 addSkill={(skill: SkillObject) => {
-                                    let skills = clone(values.skills)
-                                    skills.push(skill)
-                                    setFieldValue('skills', skills)
-                                }} 
+                                    let skills = clone(values.skills);
+                                    skills.push(skill);
+                                    setFieldValue('skills', skills);
+                                }}
                                 deleteSkill={(skillToDelete: SkillObject) => {
-                                    let skills = clone(values.skills)
+                                    let skills = clone(values.skills);
                                     skills = skills.filter(skill => skill.id != skillToDelete.id);
-                                    setFieldValue('skills', skills)
-                                }} />
+                                    setFieldValue('skills', skills);
+                                }}
+                            />
                         </View>
                     )}
                 </Formik>
