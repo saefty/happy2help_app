@@ -7,6 +7,7 @@ import { MyEventsStackNavigator } from './../stackNavigators/myEvents.stack';
 import { OrganisationStackNavigator } from './../stackNavigators/organisation.stack';
 
 import { DrawerScreen } from './drawer.screen';
+import { ScanScreen } from '../../../qr.screen';
 
 export const DrawerNavigator = createDrawerNavigator(
     {
@@ -21,6 +22,9 @@ export const DrawerNavigator = createDrawerNavigator(
         },
         Organisation: {
             screen: OrganisationStackNavigator,
+        },
+        Camera: {
+            screen: ScanScreen,
         },
     },
     {
