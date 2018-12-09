@@ -3,6 +3,7 @@ import type { EventObject } from '../../models/event.model';
 import React, { Component } from 'react';
 import { Marker } from 'react-native-maps';
 import { H2HTheme } from '../../../themes/default.theme';
+import color from 'color';
 
 type Props = {
     event: EventObject,
@@ -19,6 +20,14 @@ export class EventMarker extends Component<Props> {
         this.marker = React.createRef();
     }
 
+    pinColor() {
+        if (this.props.event.organisation) {
+            return H2HTheme.colors.primary;
+        } else {
+            return 'yellow';
+        }
+    }
+
     render() {
         return (
             <Marker
@@ -31,7 +40,7 @@ export class EventMarker extends Component<Props> {
                     longitudeDelta: 0.1,
                     latitudeDelta: 0.1,
                 }}
-                pinColor={H2HTheme.colors.primary}
+                pinColor={this.pinColor()}
                 title={this.props.event.name}
                 description={this.props.event.description}
                 tracksViewChanges={false}

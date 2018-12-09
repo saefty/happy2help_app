@@ -25,6 +25,6 @@ export const DrawerNavigator = createDrawerNavigator(
     },
     {
         contentComponent: DrawerScreen,
-        drawerWidth: 300,
+        drawerWidth: 250,
     }
 );
