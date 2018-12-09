@@ -25,27 +25,20 @@ const GET_PROFILE = gql`
 `;
 
 type Props = {
-    t: i18n.t,
-    logOut: () => void,
-    query: graphql.query,
     children: React.PropTypes.node,
 };
 
 export class ProfileDataProvider extends Component<Props> {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <View>
                 <Query query={GET_PROFILE}>
-                    {({ loading, error, data }) => {
+                    {({ loading, error, data, refetch }) => {
                         if (loading) return null;
                         if (error) {
                             return null;
                         }
-                        return this.props.children(data.user);
+                        return this.props.children(data.user, refetch);
                     }}
                 </Query>
             </View>

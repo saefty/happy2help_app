@@ -8,7 +8,7 @@ import { LogoutButton } from './logoutButton/logoutButton';
 import { styles } from './viewProfileStyle';
 import type { UserObject } from '../../../models/user.model';
 import { CreditPoints } from './creditPoints/creditPoints';
-import { withNavigation } from 'react-navigation';
+import { withNavigation, i18n } from 'react-navigation';
 
 type Props = {
     t: i18n.t,
@@ -21,13 +21,24 @@ class ProfileView extends Component<Props> {
         super(props);
     }
 
+    closeEditScreen = () => {
+        this.props.refetch();
+    };
+
     render() {
         return (
             <View>
                 <Appbar.Header style={styles.appbar}>
                     <Appbar.Action icon="menu" onPress={() => this.props.navigation.openDrawer()} />
                     <Appbar.Content title="" />
-                    <Appbar.Action icon="edit" onPress={() => this.props.navigation.navigate('Edit')} />
+                    <Appbar.Action
+                        icon="edit"
+                        onPress={() =>
+                            this.props.navigation.navigate('Edit', {
+                                close: this.closeEditScreen,
+                            })
+                        }
+                    />
                     <Appbar.Action icon="more-vert" />
                 </Appbar.Header>
                 <View>
