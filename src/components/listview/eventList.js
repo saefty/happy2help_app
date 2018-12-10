@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { Event } from './event';
 
 import type { EventObject } from '../../models/event.model';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from '../userEvents/userEvents.styles';
 
 
@@ -23,21 +22,17 @@ export class EventList extends Component<Props> {
     render() {
         return (
             <View>
-                <KeyboardAwareScrollView>
-                  
-                    {this.props.events.map(event => (
-                        <Event
-                            key={event.id}
-                            event={event}
-                            onEventTouch={this.props.onEventTouch}
-                            descriptionMaxLength={MAX_DESCRIPTION_LENGTH}
-                            style={styles.card}
-                            showCreatorName={true}
-                        />
-                    ))}
-                </KeyboardAwareScrollView>
+                {this.props.events.map(event => (
+                    <Event
+                        key={event.id}
+                        event={event}
+                        onEventTouch={this.props.onEventTouch}
+                        descriptionMaxLength={MAX_DESCRIPTION_LENGTH}
+                        style={styles.card}
+                        showCreatorName={true}
+                    />
+                ))}
             </View>
         );
     }
 }
-

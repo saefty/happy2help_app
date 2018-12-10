@@ -3,11 +3,6 @@ import type { EventObject } from '../../models/event.model';
 
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Portal, Headline } from 'react-native-paper';
-import { UserEventList } from '../../components/userEvents/userEventList';
-import { UserJobList } from '../../components/userEvents/userJobList';
-import { EventFAB } from '../../components/userEvents/eventFAB';
-import styles from '../../components/userEvents/userEvents.styles';
 import { Provider } from 'react-native-paper';
 import { H2HTheme } from '../../../themes/default.theme';
 import { withNamespaces, i18n } from 'react-i18next';
@@ -17,6 +12,8 @@ import { Map } from '../../components/map/map';
 import { EventList } from './../../components/listview/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
 import { segmentStyle } from './segmented.style';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SortAccordion } from '../../components/listview/sort.events.accordion';
 
 type Props = {
     t: i18n.t,
@@ -58,6 +55,11 @@ class _DiscoverScreen extends Component<Props, State> {
                 longitudeDelta: 0.15,
             },
         });
+        openEventModal = (event: EventObject) => {
+            this.props.navigation.navigate('DetailedEventView', {
+                event: event,
+            });
+        };
     }
 
     openEventModal = (event: EventObject) => {
@@ -67,8 +69,9 @@ class _DiscoverScreen extends Component<Props, State> {
     };
 
     getStyleForSegmentControl = () => {
-        if (this.state.selectedIndex === 1) return {};
-        return segmentStyle.map;
+        if (this.state.selectedIndex === 0) return segmentStyle.map;
+        if (this.state.selectedIndex === 1) return segmentStyle.list;
+        return {};
     };
 
     setIndex = index => this.setState({ selectedIndex: index });
@@ -76,7 +79,7 @@ class _DiscoverScreen extends Component<Props, State> {
     render() {
         return (
             <Provider theme={H2HTheme}>
-                <View style={[segmentStyle.list, this.getStyleForSegmentControl()]}>
+                <View style={[segmentStyle.all, this.getStyleForSegmentControl()]}>
                     <SegmentedControl values={['Map', 'List']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
                 </View>
                 <View>
@@ -96,7 +99,14 @@ class _DiscoverScreen extends Component<Props, State> {
                                     />
                                 );
                             } else {
-                                return <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />;
+                                return (
+                                    <View>
+                                        <SortAccordion />
+                                        <KeyboardAwareScrollView>
+                                            <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
+                                        </KeyboardAwareScrollView>
+                                    </View>
+                                );
                             }
                         }}
                     </EventDataProvider>
