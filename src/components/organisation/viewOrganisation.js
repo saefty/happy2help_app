@@ -1,20 +1,24 @@
 /* @flow */
+import type { OrganisationObject } from '../../models/organisation.model';
 
 import React, { Component } from 'react';
 import { View, ScrollView, ListView } from 'react-native';
-import { Appbar, Text, Divider, List } from 'react-native-paper';
+import { Appbar, Text, Divider, List, Button, TouchableRipple, IconButton } from 'react-native-paper';
 import { withNamespaces } from 'react-i18next';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import OrganisationHeader from './organisationHeader';
-import Accordion from './accordion/accordion';
+import Accordion from '../accordion/accordion';
 import { styles } from './viewOrganisation.style';
-import type { OrganisationObject } from '../../models/organisation.model';
+import { H2HTheme } from '../../../themes/default.theme';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 type Props = {
     t: i18n.t,
     organisation: OrganisationObject,
-    close: () => void,
+    openOrga?: () => void,
+    showEvents?: boolean,
+    showImage?: boolean,
 };
 
 type State = {
@@ -22,6 +26,10 @@ type State = {
 };
 
 class _OrganisationView extends Component<Props, State> {
+    static defaultProps = {
+        showEvents: true,
+        showImage: true,
+    };
     constructor(props: Props) {
         super(props);
 
@@ -33,65 +41,64 @@ class _OrganisationView extends Component<Props, State> {
     }
 
     render() {
-        return (
-            <View style={{ height: 100 + '%' }}>
-                <Appbar.Header>
-                    <Appbar.BackAction
-                        onPress={() => {
-                            this.props.close();
-                        }}
+        const header = this.props.showImage ? (
+            <View style={styles.headerContainer}>
+                <OrganisationHeader />
+            </View>
+        ) : null;
+        const currentEvents = this.props.showEvents ? (
+            <View style={{ backgroundColor: '#F4F9FE', marginBottom: 15 }}>
+                <Accordion title={this.props.t('currentEvents')} expansion={false} icon={'event'}>
+                    <ListView
+                        dataSource={this.state.events}
+                        renderRow={rowData => (
+                            <List.Item
+                                title={`${rowData.name}`}
+                                description={`${rowData.description}`}
+                                left={props => <List.Icon {...props} icon="chevron-right" />}
+                            />
+                        )}
                     />
-                    <Appbar.Content title={this.props.organisation.name} subtitle="Organization" />
-                    <Appbar.Action icon="edit" />
-                    <Appbar.Action icon="more-vert" />
-                </Appbar.Header>
+                </Accordion>
+            </View>
+        ) : null;
 
-                <ScrollView style={{ width: 100 + '%' }}>
-                    <View style={styles.container}>
-                        <View style={styles.headerContainer}>
-                            <OrganisationHeader />
+        const orgaText = this.props.openOrga ? (
+            <TouchableRipple onPress={this.props.openOrga}>
+                <Text style={[styles.nameText, { color: H2HTheme.colors.primary }]}>
+                    {this.props.organisation.name} <Icon name="info-outline" size={20} />
+                </Text>
+            </TouchableRipple>
+        ) : (
+            <Text style={styles.nameText}>{this.props.organisation.name}</Text>
+        );
+        return (
+            <View>
+                <View style={styles.container}>
+                    {header}
+                    <View style={styles.titleBar}>
+                        <View style={styles.nameContainer}>{orgaText}</View>
+                        <View style={styles.iconContainer}>
+                            <FontAwesome5 name={'users'} size={25} />
                         </View>
-
-                        <View style={styles.titleBar}>
-                            <View style={styles.nameContainer}>
-                                <Text style={styles.nameText}>{this.props.organisation.name}</Text>
-                            </View>
-                            <View style={styles.iconContainer}>
-                                <FontAwesome5 name={'users'} size={25} />
-                            </View>
-                            <View style={styles.memberContainer}>
-                                <Text style={styles.nameText}>{this.props.organisation.members.length}</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.dividerContainer}>
-                            <Divider style={styles.divider} />
-                        </View>
-
-                        <View style={styles.accordionContainer}>
-                            <View style={{ backgroundColor: '#F4F9FE', marginBottom: 15 }}>
-                                <Accordion title={this.props.t('description')} expansion={true} icon={'description'}>
-                                    <Text style={{ paddingBottom: 15 }}>{this.props.organisation.description}</Text>
-                                </Accordion>
-                            </View>
-
-                            <View style={{ backgroundColor: '#F4F9FE', marginBottom: 15 }}>
-                                <Accordion title={this.props.t('currentEvents')} expansion={false} icon={'event'}>
-                                    <ListView
-                                        dataSource={this.state.events}
-                                        renderRow={rowData => (
-                                            <List.Item
-                                                title={`${rowData.name}`}
-                                                description={`${rowData.description}`}
-                                                left={props => <List.Icon {...props} icon="chevron-right" />}
-                                            />
-                                        )}
-                                    />
-                                </Accordion>
-                            </View>
+                        <View style={styles.memberContainer}>
+                            <Text style={styles.nameText}>{this.props.organisation.members.length}</Text>
                         </View>
                     </View>
-                </ScrollView>
+
+                    <View style={styles.dividerContainer}>
+                        <Divider style={styles.divider} />
+                    </View>
+
+                    <View style={styles.accordionContainer}>
+                        <View style={{ backgroundColor: '#F4F9FE', marginBottom: 15 }}>
+                            <Accordion title={this.props.t('description')} expansion={true} icon={'description'}>
+                                <Text style={{ paddingBottom: 15 }}>{this.props.organisation.description}</Text>
+                            </Accordion>
+                        </View>
+                        {currentEvents}
+                    </View>
+                </View>
             </View>
         );
     }
