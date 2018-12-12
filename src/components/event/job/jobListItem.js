@@ -24,7 +24,7 @@ class _JobListItem extends Component<Props> {
     renderIcon = () => {
         const { job } = this.props;
         const icon = job.totalPositions <= this.jobParticipationCount() ? 'check' : 'work';
-        return <Icon name={icon} size={35} />;
+        return <Icon name={icon} size={25} />;
     };
 
     jobParticipationCount = () => {

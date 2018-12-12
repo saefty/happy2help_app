@@ -5,7 +5,6 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         alignContent: 'center',
-        height: '100%',
         backgroundColor: '#eee',
     },
     header: {

@@ -8,6 +8,7 @@ import { DefaultStyles } from '../../../config/style';
 import { EventMarker } from './eventMarker';
 import ClusteredMapView from 'react-native-maps-super-cluster';
 import { MapStyle as styles } from './map.style';
+import { Sentry } from 'react-native-sentry';
 
 type Props = {
     events?: Array<EventObject>,
@@ -45,7 +46,6 @@ export class Map extends PureComponent<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        this.map = React.createRef();
     }
 
     watchPosition = (position: any) => {

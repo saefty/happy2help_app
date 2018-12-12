@@ -60,7 +60,6 @@ class SignInForm extends Component<Props, State> {
             this.setState({
                 signInError: this.props.t('invalidCredentials'),
             });
-            console.log(e);
         }
     };
 

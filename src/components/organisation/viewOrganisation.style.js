@@ -6,8 +6,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        height: 100+'%',
-        width: 100+'%'
+        width: 100 + '%',
     },
     headerContainer: {
         alignItems: 'center',
@@ -41,7 +40,7 @@ export const styles = StyleSheet.create({
     },
     titleBar: {
         flexDirection: 'row',
-        height: 25
+        height: 25,
     },
     nameContainer: {
         flex: 10,
@@ -50,15 +49,15 @@ export const styles = StyleSheet.create({
     nameText: {
         margin: 10,
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     iconContainer: {
         flex: 0,
         paddingTop: 11,
-        fontSize: 60
+        fontSize: 60,
     },
     memberContainer: {
-        flex: 0
+        flex: 0,
     },
     dividerContainer: {
         width: 100 + '%',
@@ -69,9 +68,8 @@ export const styles = StyleSheet.create({
         margin: 30,
         height: 2,
     },
-    panelContainer: {
+    accordionContainer: {
         paddingTop: 15,
         width: 96 + '%',
-        height: 100+'%'
-    }
+    },
 });

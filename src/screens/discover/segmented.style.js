@@ -4,7 +4,7 @@ import { H2HTheme } from '../../../themes/default.theme';
 export const segmentStyle = StyleSheet.create({
     list: {
         width: '100%',
-        alignSelf: 'center',
+        alignSelf: 'center'
     },
 
     tabsContainerStyle: {
@@ -31,4 +31,5 @@ export const segmentStyle = StyleSheet.create({
     activeTabTextStyle: {
         color: H2HTheme.colors.primary,
     },
+
 });

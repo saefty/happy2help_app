@@ -2,7 +2,7 @@
 import type { EventObject } from '../../models/event.model';
 
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Surface } from 'react-native-paper';
 import { Provider } from 'react-native-paper';
 import { H2HTheme } from '../../../themes/default.theme';
@@ -14,6 +14,7 @@ import { Map } from '../../components/map/map';
 import { EventList } from './../../components/listview/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
 import { segmentStyle } from './segmented.style';
+import { SortAccordion } from '../../components/listview/sort.events.accordion';
 
 type Props = {
     t: i18n.t,
@@ -55,17 +56,17 @@ class _DiscoverScreen extends Component<Props, State> {
                 longitudeDelta: 0.15,
             },
         });
+        openEventModal = (event: EventObject) => {
+            this.props.navigation.navigate('DetailedEventView', {
+                event: event,
+            });
+        };
     }
 
     openEventModal = (event: EventObject) => {
         this.props.navigation.navigate('DetailedEventView', {
             event: event,
         });
-    };
-
-    getStyleForSegmentControl = () => {
-        // if (this.state.selectedIndex === 1) return {};
-        // return segmentStyle.map;
     };
 
     setIndex = index => this.setState({ selectedIndex: index });
@@ -75,7 +76,7 @@ class _DiscoverScreen extends Component<Props, State> {
             <Provider theme={H2HTheme}>
                 <Surface style={{ elevation: 6 }}>
                     <DiscoverAppbar />
-                    <View style={[segmentStyle.list, this.getStyleForSegmentControl()]}>
+                    <View style={[segmentStyle.list]}>
                         <SegmentedControl
                             values={['KARTE', 'LISTE']}
                             borderRadius={0}
@@ -106,7 +107,12 @@ class _DiscoverScreen extends Component<Props, State> {
                                     />
                                 );
                             } else {
-                                return <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />;
+                                return (
+                                    <ScrollView>
+                                        <SortAccordion />
+                                        <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
+                                    </ScrollView>
+                                );
                             }
                         }}
                     </EventDataProvider>
