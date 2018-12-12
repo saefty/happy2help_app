@@ -64,5 +64,11 @@ export default {
         'Participated': 'Participated',
         'Applied': 'Apply',
         'Canceled': 'Cancel application'
-    }
+    },
+    Sort: {
+        ascending: "ascending",
+        descending: "descending",
+        alphabetic: "alphabetic",
+        byDate: "by date",
+    },
 };
