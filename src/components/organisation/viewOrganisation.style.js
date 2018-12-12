@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        height: 100 + '%',
         width: 100 + '%',
     },
     headerContainer: {
@@ -72,6 +71,5 @@ export const styles = StyleSheet.create({
     accordionContainer: {
         paddingTop: 15,
         width: 96 + '%',
-        height: 100 + '%',
     },
 });

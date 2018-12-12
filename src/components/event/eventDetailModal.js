@@ -9,6 +9,9 @@ import gql from 'graphql-tag';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { withNamespaces } from 'react-i18next';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Accordion from '../accordion/accordion';
+import { OrganisationView } from '../organisation/viewOrganisation';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type Props = {
     event: EventObject,
@@ -73,7 +76,7 @@ export class EventDetailModal extends Component<Props> {
     };
 
     renderCreator = () => {
-        return <Paragraph>Username: {this.props.event.creator.username}</Paragraph>;
+        return <Text>{this.props.event.creator.username}</Text>;
     };
 
     renderOrganization = () => {
@@ -82,14 +85,18 @@ export class EventDetailModal extends Component<Props> {
                 {({ error, loading, data }) => {
                     if (error || loading) return <View />;
                     return (
-                        <Button
-                            onPress={() => {
-                                this.openEventOrganisationScreen(data.event.organisation);
-                            }}
-                            icon="group"
-                        >
-                            {this.props.event.organisation.name}
-                        </Button>
+                        <View>
+                            <View />
+                            <OrganisationView
+                                organisation={data.event.organisation}
+                                showImage={false}
+                                showEvents={false}
+                                openOrga={() => {
+                                    this.openEventOrganisationScreen(data.event.organisation);
+                                }}
+                            />
+                            <Divider />
+                        </View>
                     );
                 }}
             </Query>
@@ -100,16 +107,15 @@ export class EventDetailModal extends Component<Props> {
         let heading = '';
         let component = <Paragraph />;
         if (this.props.event.organisation) {
-            heading = 'Organization:';
             component = this.renderOrganization();
         } else if (this.props.event.creator) {
             heading = 'User:';
             component = this.renderCreator();
         }
         return (
-            <View style={{ flexDirection: 'row' }}>
+            <View>
                 <Subheading style={{ flex: 0, marginTop: 5 }}>{heading}</Subheading>
-                <View style={{ flex: 0, marginLeft: 20 }}>{component}</View>
+                <View style={{ flex: 0, marginLeft: 0 }}>{component}</View>
             </View>
         );
     };
@@ -118,35 +124,29 @@ export class EventDetailModal extends Component<Props> {
         if (!this.props.event) return <Text />;
         return (
             <View>
-                <Appbar.Header>
-                    <Appbar.Action icon="close" onPress={() => this.props.navigation.navigate('View')} />
-                    <Appbar.Content title={this.props.event.name} />
-                </Appbar.Header>
-                <KeyboardAwareScrollView>
-                    <Card>
-                        <Card.Content>
-                            <Title>
-                                {this.props.event.name} - {this.props.event.location ? this.props.event.location.name : ''}
-                            </Title>
-                            <Paragraph>{this.props.event.description}</Paragraph>
-                            <Divider />
-                            <Subheading
-                                style={{
-                                    marginTop: 25,
-                                }}
-                            >
-                                Jobs
-                            </Subheading>
-                            <Query query={JOB_QUERY} variables={{ id: this.props.event.id }} cache="no-cache">
-                                {({ error, loading, data, refetch }) => {
-                                    if (error || loading) return <View />;
-                                    return <JobList jobs={data.event.jobSet} refetch={refetch} />;
-                                }}
-                            </Query>
-                            {this.renderOwner()}
-                        </Card.Content>
-                    </Card>
-                </KeyboardAwareScrollView>
+                <ScrollView>
+                    <Appbar.Header>
+                        <Appbar.Action icon="close" onPress={() => this.props.navigation.navigate('View')} />
+                        <Appbar.Content title={this.props.event.name} />
+                    </Appbar.Header>
+                    <View style={{ margin: 14 }}>
+                        <Title>
+                            {this.props.event.name} - {this.props.event.location ? this.props.event.location.name : ''}
+                        </Title>
+                        <Paragraph>{this.props.event.description}</Paragraph>
+                        <Query query={JOB_QUERY} variables={{ id: this.props.event.id }} cache="no-cache">
+                            {({ error, loading, data, refetch }) => {
+                                if (error || loading) return <View />;
+                                return (
+                                    <Accordion title="Jobs" icon="work" expansion={true}>
+                                        <JobList jobs={data.event.jobSet} refetch={refetch} />
+                                    </Accordion>
+                                );
+                            }}
+                        </Query>
+                        {this.renderOwner()}
+                    </View>
+                </ScrollView>
             </View>
         );
     }
