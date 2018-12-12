@@ -12,6 +12,7 @@ import { Map } from '../../components/map/map';
 import { EventList } from './../../components/listview/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
 import { segmentStyle } from './segmented.style';
+import { SortAccordion } from '../../components/listview/sort.events.accordion';
 
 type Props = {
     t: i18n.t,
@@ -53,6 +54,11 @@ class _DiscoverScreen extends Component<Props, State> {
                 longitudeDelta: 0.15,
             },
         });
+        openEventModal = (event: EventObject) => {
+            this.props.navigation.navigate('DetailedEventView', {
+                event: event,
+            });
+        };
     }
 
     openEventModal = (event: EventObject) => {
@@ -62,8 +68,9 @@ class _DiscoverScreen extends Component<Props, State> {
     };
 
     getStyleForSegmentControl = () => {
-        if (this.state.selectedIndex === 1) return {};
-        return segmentStyle.map;
+        if (this.state.selectedIndex === 0) return segmentStyle.map;
+        if (this.state.selectedIndex === 1) return segmentStyle.list;
+        return {};
     };
 
     setIndex = index => this.setState({ selectedIndex: index });
@@ -71,7 +78,7 @@ class _DiscoverScreen extends Component<Props, State> {
     render() {
         return (
             <Provider theme={H2HTheme}>
-                <View style={[segmentStyle.list, this.getStyleForSegmentControl()]}>
+                <View style={[segmentStyle.all, this.getStyleForSegmentControl()]}>
                     <SegmentedControl values={['Map', 'List']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
                 </View>
                 <View>
@@ -93,6 +100,7 @@ class _DiscoverScreen extends Component<Props, State> {
                             } else {
                                 return (
                                     <ScrollView>
+                                        <SortAccordion />
                                         <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
                                     </ScrollView>
                                 );

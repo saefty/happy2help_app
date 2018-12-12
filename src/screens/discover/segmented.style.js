@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 export const segmentStyle = StyleSheet.create({
-    list: {
+    all: {
         width: '50%',
         alignSelf: 'center',
         marginTop: 15,
@@ -10,5 +10,8 @@ export const segmentStyle = StyleSheet.create({
     map: {
         position: 'absolute',
         zIndex: 1000,
+    },
+    list: {
+
     },
 });
