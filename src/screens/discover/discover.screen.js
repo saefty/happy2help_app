@@ -3,15 +3,12 @@ import type { EventObject } from '../../models/event.model';
 
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Portal, Headline } from 'react-native-paper';
-import { UserEventList } from '../../components/userEvents/userEventList';
-import { UserJobList } from '../../components/userEvents/userJobList';
-import { EventFAB } from '../../components/userEvents/eventFAB';
-import styles from '../../components/userEvents/userEvents.styles';
+import { Surface } from 'react-native-paper';
 import { Provider } from 'react-native-paper';
 import { H2HTheme } from '../../../themes/default.theme';
 import { withNamespaces, i18n } from 'react-i18next';
 
+import { DiscoverAppbar } from './../../components/discover/discoverAppbar';
 import { SegmentedControl } from '../../components/utils/SegmentedControl';
 import { Map } from '../../components/map/map';
 import { EventList } from './../../components/listview/eventList';
@@ -32,7 +29,7 @@ class _DiscoverScreen extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            selectedIndex: 0,
+            selectedIndex: 1,
             userRegion: {
                 latitude: 0,
                 longitude: 0,
@@ -67,8 +64,8 @@ class _DiscoverScreen extends Component<Props, State> {
     };
 
     getStyleForSegmentControl = () => {
-        if (this.state.selectedIndex === 1) return {};
-        return segmentStyle.map;
+        // if (this.state.selectedIndex === 1) return {};
+        // return segmentStyle.map;
     };
 
     setIndex = index => this.setState({ selectedIndex: index });
@@ -76,9 +73,65 @@ class _DiscoverScreen extends Component<Props, State> {
     render() {
         return (
             <Provider theme={H2HTheme}>
-                <View style={[segmentStyle.list, this.getStyleForSegmentControl()]}>
-                    <SegmentedControl values={['Map', 'List']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
-                </View>
+                <Surface style={{ elevation: 6 }}>
+                    <DiscoverAppbar />
+                    <View style={[segmentStyle.list, this.getStyleForSegmentControl()]}>
+                        <SegmentedControl
+                            values={['KARTE', 'LISTE']}
+                            borderRadius={0}
+                            tabsContainerStyle={segmentStyle.tabsContainerStyle}
+                            tabStyle={segmentStyle.tabStyle}
+                            activeTabStyle={segmentStyle.activeTabStyle}
+                            tabTextStyle={segmentStyle.tabTextStyle}
+                            activeTabTextStyle={segmentStyle.activeTabTextStyle}
+                            selectedIndex={this.state.selectedIndex}
+                            onTabPress={this.setIndex}
+                        />
+                    </View>
+                </Surface>
+
+                {/* <Surface style={{ elevation: 4 }}>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            width: '100%',
+                            height: 56,
+                            alignSelf: 'center',
+                            backgroundColor: 'white',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <IconButton
+                            icon={() => <IconMat name="menu" size={24} color={H2HTheme.colors.primary} />}
+                            onPress={() => this.props.navigation.openDrawer()}
+                            style={{ alignSelf: 'center', left: 4 }}
+                        />
+                        <View style={{ flexDirection: 'row', alignSelf: 'center', height: 42, width: '70%' }}>
+                            <IconMat name="search" size={24} color={H2HTheme.colors.primary} style={{ alignSelf: 'center' }} />
+                            <TextInput placeholder={'Events suchen'} returnKeyType={'search'} style={{ fontSize: 18, height: 40, top: 5 }} />
+                        </View>
+
+                        <IconButton
+                            icon={() => <IconMatCom name="filter" size={24} color={H2HTheme.colors.primary} />}
+                            onPress={() => this.props.navigation.openDrawer()}
+                            style={{ alignSelf: 'center', right: 4 }}
+                        />
+                    </View>
+                    <View style={[segmentStyle.list, this.getStyleForSegmentControl()]}>
+                        <SegmentedControl
+                            values={['KARTE', 'LISTE']}
+                            borderRadius={0}
+                            tabsContainerStyle={{ height: 50, backgroundColor: H2HTheme.colors.primary }}
+                            tabStyle={{ backgroundColor: 'white', borderWidth: 0, borderColor: 'transparent' }}
+                            activeTabStyle={{ backgroundColor: 'white', marginBottom: 4 }}
+                            tabTextStyle={{ fontWeight: 'bold', color: 'black' }}
+                            activeTabTextStyle={{ color: 'black' }}
+                            selectedIndex={this.state.selectedIndex}
+                            onTabPress={this.setIndex}
+                        />
+                    </View>
+                </Surface> */}
+
                 <View>
                     <EventDataProvider pollInterval={undefined}>
                         {events => {

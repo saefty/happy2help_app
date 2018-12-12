@@ -1,13 +1,66 @@
 import { StyleSheet } from 'react-native';
+import { H2HTheme } from '../../../themes/default.theme';
 
 export const segmentStyle = StyleSheet.create({
     list: {
-        width: '50%',
+        width: '100%',
         alignSelf: 'center',
-        marginTop: 20,
     },
-    map: {
-        position: 'absolute',
-        zIndex: 1000,
+
+    tabsContainerStyle: {
+        height: 50,
+        backgroundColor: H2HTheme.colors.primary,
     },
+
+    tabStyle: {
+        backgroundColor: 'white',
+        borderWidth: 0,
+        borderColor: 'transparent',
+    },
+
+    activeTabStyle: {
+        backgroundColor: 'white',
+        marginBottom: 4,
+    },
+
+    tabTextStyle: {
+        fontWeight: 'bold',
+        color: H2HTheme.colors.primary,
+    },
+
+    activeTabTextStyle: {
+        color: H2HTheme.colors.primary,
+    },
+
+    // white: {
+    //     tabsContainerStyle: {
+    //         height: 50,
+    //         backgroundColor: H2HTheme.colors.primary,
+    //     },
+
+    //     tabStyle: {
+    //         backgroundColor: 'white',
+    //         borderWidth: 0,
+    //         borderColor: 'transparent',
+    //     },
+
+    //     activeTabStyle: {
+    //         backgroundColor: 'white',
+    //         marginBottom: 4,
+    //     },
+
+    //     tabTextStyle: {
+    //         fontWeight: 'bold',
+    //         color: 'black',
+    //     },
+
+    //     activeTabTextStyle: {
+    //         color: 'black',
+    //     },
+    // },
+
+    // map: {
+    //     position: 'absolute',
+    //     zIndex: 1000,
+    // },
 });

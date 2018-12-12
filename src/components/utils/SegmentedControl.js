@@ -13,6 +13,7 @@ export const SegmentedControl = (props: any) => {
                 color: H2HTheme.colors.primary,
             }}
             {...props}
+
         />
     );
 };
