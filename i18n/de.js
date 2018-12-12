@@ -61,5 +61,11 @@ export default {
         'Participated': 'Teilgenommen',
         'Applied': 'Bewerben',
         'Canceled': 'Bewerbung zurückziehen'
-    }
+    },
+    Sort: {
+        ascending: "aufsteigend",
+        descending: "absteigend",
+        alphabetic: "alphabetisch",
+        byDate: "nach Datum",
+    },
 };
