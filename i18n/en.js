@@ -40,7 +40,13 @@ export default {
 
     },
     Organisation: {
-        description: 'About Us',
+        about: 'About Us',
+        description: 'Description',
+        name: 'Name of the organisation',
+        new: 'New organisation',
+        creationSubtitle: 'Create a new profile for an organisation',
+        updateSubtitle: 'Update your organisation profile',
+        creationSuccess: 'Successfully created a profile for: ',
         currentEvents: 'Current Events',
         members: 'Members',
         editOrganisation: 'Edit Organisation',

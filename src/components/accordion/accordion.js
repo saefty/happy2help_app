@@ -37,7 +37,7 @@ export default class Accordion extends Component<Props, State> {
                 title={<Text style={{ fontWeight: 'bold', fontSize: 18 }}>{this.props.title}</Text>}
                 left={props => <List.Icon {...props} icon={this.props.icon} />}
             >
-                <View style={{ paddingLeft: indentation }}>{this.props.children}</View>
+                <View style={{ paddingLeft: indentation, paddingRight: indentation }}>{this.props.children}</View>
             </List.Accordion>
         );
     }

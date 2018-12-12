@@ -37,7 +37,13 @@ export default {
         createTitle: 'Event erstellen'
     },
     Organisation: {
-        description: 'Über uns',
+        about: 'Über uns',
+        description: 'Beschreibung',
+        name: 'Organisationsname',
+        new: 'Neue Organisation',
+        creationSubtitle: 'Erstelle hier ein neues Organisationsprofil',
+        updateSubtitle: 'Update hier das Profil deiner Organisation',
+        creationSuccess: 'Profil wurde erfolgreich erstellt für: ',
         currentEvents: 'Aktuelle Events',
         members: 'Mitglieder',
         editOrganisation: 'Organisation bearbeiten',
