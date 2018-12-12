@@ -41,7 +41,7 @@ export class SortAccordion extends Component<Props, State> {
                         <View style={styles.radioButton}>
                             <RadioButton
                                 value={asc}
-                                status={this.state.order === { asc } ? 'checked' : 'unchecked'}
+                                status={this.state.order === asc ? 'checked' : 'unchecked'}
                                 onPress={() => this.setState({ order: asc })}
                             />
                             <Text>{asc}</Text>
