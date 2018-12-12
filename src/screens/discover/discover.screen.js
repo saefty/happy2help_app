@@ -3,15 +3,18 @@ import type { EventObject } from '../../models/event.model';
 
 import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
+import { Surface } from 'react-native-paper';
 import { Provider } from 'react-native-paper';
 import { H2HTheme } from '../../../themes/default.theme';
 import { withNamespaces, i18n } from 'react-i18next';
 
+import { DiscoverAppbar } from './../../components/discover/discoverAppbar';
 import { SegmentedControl } from '../../components/utils/SegmentedControl';
 import { Map } from '../../components/map/map';
 import { EventList } from './../../components/listview/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
 import { segmentStyle } from './segmented.style';
+import { SortAccordion } from '../../components/listview/sort.events.accordion';
 
 type Props = {
     t: i18n.t,
@@ -21,19 +24,23 @@ type State = {
     event?: EventObject,
     selectedIndex: number,
     userRegion: any,
+    sorting: string,
+    descending: boolean,
 };
 
 class _DiscoverScreen extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            selectedIndex: 0,
+            selectedIndex: 1,
             userRegion: {
                 latitude: 0,
                 longitude: 0,
                 latitudeDelta: 1,
                 longitudeDelta: 1,
             },
+            sorting: "alphabetic",
+            descending: false,
         };
     }
 
@@ -53,6 +60,11 @@ class _DiscoverScreen extends Component<Props, State> {
                 longitudeDelta: 0.15,
             },
         });
+        openEventModal = (event: EventObject) => {
+            this.props.navigation.navigate('DetailedEventView', {
+                event: event,
+            });
+        };
     }
 
     openEventModal = (event: EventObject) => {
@@ -61,19 +73,27 @@ class _DiscoverScreen extends Component<Props, State> {
         });
     };
 
-    getStyleForSegmentControl = () => {
-        if (this.state.selectedIndex === 1) return {};
-        return segmentStyle.map;
-    };
-
     setIndex = index => this.setState({ selectedIndex: index });
 
     render() {
         return (
             <Provider theme={H2HTheme}>
-                <View style={[segmentStyle.list, this.getStyleForSegmentControl()]}>
-                    <SegmentedControl values={['Map', 'List']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
-                </View>
+                <Surface style={{ elevation: 6 }}>
+                    <DiscoverAppbar />
+                    <View style={[segmentStyle.list]}>
+                        <SegmentedControl
+                            values={['KARTE', 'LISTE']}
+                            borderRadius={0}
+                            tabsContainerStyle={segmentStyle.tabsContainerStyle}
+                            tabStyle={segmentStyle.tabStyle}
+                            activeTabStyle={segmentStyle.activeTabStyle}
+                            tabTextStyle={segmentStyle.tabTextStyle}
+                            activeTabTextStyle={segmentStyle.activeTabTextStyle}
+                            selectedIndex={this.state.selectedIndex}
+                            onTabPress={this.setIndex}
+                        />
+                    </View>
+                </Surface>   
                 <View>
                     <EventDataProvider pollInterval={undefined}>
                         {events => {
@@ -93,6 +113,19 @@ class _DiscoverScreen extends Component<Props, State> {
                             } else {
                                 return (
                                     <ScrollView>
+                                        <SortAccordion 
+                                        sorting={this.state.sorting} 
+                                        descending={this.state.descending}
+                                        changeSort={(sort: string) => {
+                                            this.setState({
+                                                sorting: sort,
+                                            })
+                                        }}
+                                        changeDescending={(desc: boolean) => {
+                                            this.setState({
+                                                descending: desc,
+                                            })
+                                        }}/>
                                         <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
                                     </ScrollView>
                                 );

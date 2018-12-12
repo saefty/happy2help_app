@@ -29,7 +29,7 @@ export default class Accordion extends Component<Props, State> {
         });
 
     render() {
-        let indentation = this.props.children.type.displayName === 'withTheme(Text)' ? 28 : 0;
+        let indentation = 28;
         return (
             <List.Accordion
                 expanded={this.state.expanded}
@@ -37,7 +37,7 @@ export default class Accordion extends Component<Props, State> {
                 title={<Text style={{ fontWeight: 'bold', fontSize: 18 }}>{this.props.title}</Text>}
                 left={props => <List.Icon {...props} icon={this.props.icon} />}
             >
-                <View style={{ paddingLeft: indentation }}>{this.props.children}</View>
+                <View style={{ paddingLeft: indentation, paddingRight: indentation }}>{this.props.children}</View>
             </List.Accordion>
         );
     }
