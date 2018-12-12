@@ -104,9 +104,6 @@ class _DiscoverScreen extends Component<Props, State> {
                             } else {
                                 return (
                                     <ScrollView>
-<<<<<<< HEAD
-                                        <SortAccordion />
-=======
                                         <SortAccordion 
                                         sorting={this.state.sorting} 
                                         descending={this.state.descending}
@@ -120,7 +117,6 @@ class _DiscoverScreen extends Component<Props, State> {
                                                 descending: desc,
                                             })
                                         }}/>
->>>>>>> list-sort-button
                                         <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
                                     </ScrollView>
                                 );
