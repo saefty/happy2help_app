@@ -1,57 +1,75 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View } from 'react-native';
-import { List, RadioButton, Text, Button } from 'react-native-paper';
+import { List, RadioButton, Text } from 'react-native-paper';
 import styles from './accordion.styles';
+import { withNamespaces, i18n } from 'react-i18next';
 
-type Props = {};
-type State = {
+type Props = {
+    t: i18n.t,
     sorting: string,
-    order: string,
+    descending: boolean,
+    changeSort: (sorting: string) => any,
+    changeDescending: (descending: boolean) => any,
 };
 
-const desc = 'descending';
-const asc = 'ascending';
-
-export class SortAccordion extends Component<Props, State> {
+class SortAccordionComponent extends PureComponent<Props> {
     constructor(props: Props) {
         super(props);
-        this.state = {
-            sorting: 'alphabetic',
-            order: desc,
-        };
+    }
+
+    get title(): string {
+        let title = this.props.t(this.props.sorting) + ' (';
+        title += this.props.descending === true ? this.props.t('descending') : this.props.t('ascending');
+        title += ')';
+        return title;
+    }
+    get desc() : string {
+        return this.props.descending ? 'checked' : 'unchecked';
+    }
+
+    get asc() : string {
+        return this.props.descending ? 'unchecked' : 'checked';
     }
 
     render() {
         return (
             <List.Section>
-                <List.Accordion title={this.state.sorting + ' (' + this.state.order + ')'}>
-                    <List.Item style={styles.item} title={'alphabetic'} onPress={() => this.setState(() => ({ sorting: 'alphabetic' }))} />
-                    <List.Item style={styles.item} title={'by Date'} onPress={() => this.setState(() => ({ sorting: 'by Date' }))} />
+                <List.Accordion title={this.title}>
+                    <List.Item
+                        style={styles.item}
+                        title={this.props.t('alphabetic')}
+                        onPress={() => this.props.changeSort('alphabetic')}
+                    />
+                    <List.Item
+                        style={styles.item}
+                        title={this.props.t('byDate')}
+                        onPress={() => this.props.changeSort('byDate')}
+                    />
+
                     <View style={styles.radioContainer}>
                         <View style={styles.radioButton}>
                             <RadioButton
-                                value={desc}
-                                status={this.state.order === desc ? 'checked' : 'unchecked'}
-                                onPress={() => this.setState({ order: desc })}
+                                value={this.props.t('ascending')}
+                                status={this.asc}
+                                onPress={() => this.props.changeDescending(false)}
                             />
-                            <Text>{desc}</Text>
+                            <Text>{this.props.t('ascending')}</Text>
                         </View>
                         <View style={styles.radioButton}>
                             <RadioButton
-                                value={asc}
-                                status={this.state.order === { asc } ? 'checked' : 'unchecked'}
-                                onPress={() => this.setState({ order: asc })}
+                                value={this.props.t('descending')}
+                                status={this.desc}
+                                onPress={() => this.props.changeDescending(true)}
                             />
-                            <Text>{asc}</Text>
+                            <Text>{this.props.t('descending')}</Text>
                         </View>
-                        <Button mode="outlined" onPress={() => {}}>
-                            GO
-                        </Button>
                     </View>
                 </List.Accordion>
             </List.Section>
         );
     }
 }
+
+export const SortAccordion = withNamespaces(['Sort'])(SortAccordionComponent);

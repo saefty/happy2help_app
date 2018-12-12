@@ -22,6 +22,8 @@ type State = {
     event?: EventObject,
     selectedIndex: number,
     userRegion: any,
+    sorting: string,
+    descending: boolean,
 };
 
 class _DiscoverScreen extends Component<Props, State> {
@@ -35,6 +37,8 @@ class _DiscoverScreen extends Component<Props, State> {
                 latitudeDelta: 1,
                 longitudeDelta: 1,
             },
+            sorting: "alphabetic",
+            descending: false,
         };
     }
 
@@ -100,7 +104,19 @@ class _DiscoverScreen extends Component<Props, State> {
                             } else {
                                 return (
                                     <ScrollView>
-                                        <SortAccordion />
+                                        <SortAccordion 
+                                        sorting={this.state.sorting} 
+                                        descending={this.state.descending}
+                                        changeSort={(sort: string) => {
+                                            this.setState({
+                                                sorting: sort,
+                                            })
+                                        }}
+                                        changeDescending={(desc: boolean) => {
+                                            this.setState({
+                                                descending: desc,
+                                            })
+                                        }}/>
                                         <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
                                     </ScrollView>
                                 );
