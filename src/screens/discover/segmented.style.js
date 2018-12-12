@@ -31,36 +31,4 @@ export const segmentStyle = StyleSheet.create({
     activeTabTextStyle: {
         color: H2HTheme.colors.primary,
     },
-
-    // white: {
-    //     tabsContainerStyle: {
-    //         height: 50,
-    //         backgroundColor: H2HTheme.colors.primary,
-    //     },
-
-    //     tabStyle: {
-    //         backgroundColor: 'white',
-    //         borderWidth: 0,
-    //         borderColor: 'transparent',
-    //     },
-
-    //     activeTabStyle: {
-    //         backgroundColor: 'white',
-    //         marginBottom: 4,
-    //     },
-
-    //     tabTextStyle: {
-    //         fontWeight: 'bold',
-    //         color: 'black',
-    //     },
-
-    //     activeTabTextStyle: {
-    //         color: 'black',
-    //     },
-    // },
-
-    // map: {
-    //     position: 'absolute',
-    //     zIndex: 1000,
-    // },
 });

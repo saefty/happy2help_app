@@ -88,50 +88,7 @@ class _DiscoverScreen extends Component<Props, State> {
                             onTabPress={this.setIndex}
                         />
                     </View>
-                </Surface>
-
-                {/* <Surface style={{ elevation: 4 }}>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            width: '100%',
-                            height: 56,
-                            alignSelf: 'center',
-                            backgroundColor: 'white',
-                            justifyContent: 'space-between',
-                        }}
-                    >
-                        <IconButton
-                            icon={() => <IconMat name="menu" size={24} color={H2HTheme.colors.primary} />}
-                            onPress={() => this.props.navigation.openDrawer()}
-                            style={{ alignSelf: 'center', left: 4 }}
-                        />
-                        <View style={{ flexDirection: 'row', alignSelf: 'center', height: 42, width: '70%' }}>
-                            <IconMat name="search" size={24} color={H2HTheme.colors.primary} style={{ alignSelf: 'center' }} />
-                            <TextInput placeholder={'Events suchen'} returnKeyType={'search'} style={{ fontSize: 18, height: 40, top: 5 }} />
-                        </View>
-
-                        <IconButton
-                            icon={() => <IconMatCom name="filter" size={24} color={H2HTheme.colors.primary} />}
-                            onPress={() => this.props.navigation.openDrawer()}
-                            style={{ alignSelf: 'center', right: 4 }}
-                        />
-                    </View>
-                    <View style={[segmentStyle.list, this.getStyleForSegmentControl()]}>
-                        <SegmentedControl
-                            values={['KARTE', 'LISTE']}
-                            borderRadius={0}
-                            tabsContainerStyle={{ height: 50, backgroundColor: H2HTheme.colors.primary }}
-                            tabStyle={{ backgroundColor: 'white', borderWidth: 0, borderColor: 'transparent' }}
-                            activeTabStyle={{ backgroundColor: 'white', marginBottom: 4 }}
-                            tabTextStyle={{ fontWeight: 'bold', color: 'black' }}
-                            activeTabTextStyle={{ color: 'black' }}
-                            selectedIndex={this.state.selectedIndex}
-                            onTabPress={this.setIndex}
-                        />
-                    </View>
-                </Surface> */}
-
+                </Surface>   
                 <View>
                     <EventDataProvider pollInterval={undefined}>
                         {events => {
