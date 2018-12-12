@@ -180,6 +180,8 @@ dependencies {
     implementation "com.facebook.react:react-native:+"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'  // From node_modules
 
+    compile project(':react-native-linear-gradient')
+
     androidTestImplementation(project(path: ":detox"))
     androidTestImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
