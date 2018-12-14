@@ -14,5 +14,7 @@ export const styles = StyleSheet.create({
         margin: 20,
         borderWidth: 8,
         borderColor: 'white',
-    }
+    },
+    title: { margin: 5 },
+
 });

@@ -50,7 +50,19 @@ class _JobParticipationButton extends Component<Props, State> {
 
     render() {
         return (
-            <Button dark={true} onPress={this.trigger} disabled={this.state.triggered || !this.canBePressed()}>
+            <Button
+                icon={getNextParticipationActionAsHelper(this.props.participation) === 'Canceled' ? 'clear' : 'check'}
+                dark={true}
+                loading={this.state.triggered || !this.canBePressed()}
+                mode="contained"
+                onPress={() => {
+                    if (!(this.state.triggered || !this.canBePressed())) {
+                        this.trigger();
+                    }
+                }}
+
+                // disabled={this.state.triggered || !this.canBePressed()}
+            >
                 {this.props.t(getNextParticipationActionAsHelper(this.props.participation))}
             </Button>
         );

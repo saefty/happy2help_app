@@ -9,6 +9,7 @@ import { JobParticipationButton } from './jobParticipationButton';
 import { participationTypes } from '../../../models/participation.model';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconEntypo from 'react-native-vector-icons/Entypo';
+import { SkillList } from './../../profile/skillList/skillList';
 
 import { styles } from './jobListItem.style';
 import { withNamespaces, i18n } from 'react-i18next';
@@ -25,6 +26,17 @@ class _JobListItem extends Component<Props> {
         const { job } = this.props;
         const icon = job.totalPositions <= this.jobParticipationCount() ? 'check' : 'work';
         return <Icon name={icon} size={25} />;
+    };
+
+    getMockSkills = () => {
+        return [
+            {
+                name: 'Führerschein',
+            },
+            {
+                name: 'Hygiene Karte',
+            },
+        ];
     };
 
     jobParticipationCount = () => {
@@ -46,13 +58,14 @@ class _JobListItem extends Component<Props> {
         if (job.totalPositions !== null && job.totalPositions <= this.jobParticipationCount()) return;
         return (
             <View>
-                <View style={styles.row}>
+                <View style={styles.row, styles.positions}>
+                    <Text style={styles.boldText}>{this.props.t('positions')}: </Text>
                     <Text>
-                        {this.props.t('positions')}: {this.jobParticipationCount()}/{this.totalPositions()}
+                        {this.jobParticipationCount()}/{this.totalPositions()}
                     </Text>
                 </View>
-                <View style={styles.row}>
-                    <JobParticipationButton
+                <View style={styles.button}>
+                    <JobParticipationButton 
                         participation={job.currentUsersParticipation}
                         apply={async (participation: Participation) => this.props.createParticipation(job, participation)}
                         cancel={async (participation: Participation) => this.props.updateParticipation(job, participation)}
@@ -71,11 +84,15 @@ class _JobListItem extends Component<Props> {
                     <Subheading style={styles.heading}>{job.name}</Subheading>
                 </View>
                 <Paragraph style={styles.row}>
-                    {this.props.t('description')}
+                    <Text style={styles.boldText}>{this.props.t('description')}</Text>
                     {job.description}
                 </Paragraph>
+                <View style={styles.skillContainer}>
+                    <Text style={styles.boldText}>Benötigte Fähigkeiten:</Text>
+                    <SkillList skillObjects={this.getMockSkills()} />
+                </View>
                 <View>{this.renderPositionsText()}</View>
-                <Divider />
+                <Divider style={styles.divider} />
             </View>
         );
     }
