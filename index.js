@@ -72,7 +72,7 @@ export default class AppApollo extends Component<I18nProps, State> {
         if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
             console.log('App has come to the foreground!');
             SplashScreen.hide();
-        } else {
+        } else if (this.state.appState === 'active' && nextAppState.match(/inactive|background/)) {
             SplashScreen.show();
         }
         this.setState({ appState: nextAppState });
