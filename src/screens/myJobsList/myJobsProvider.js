@@ -1,29 +1,29 @@
 // @flow
 import { Component } from 'react';
+import * as React from 'react';
 import { View } from 'react-native';
 import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
-import * as React from 'react';
 
-const GET_EVENTS = gql`
+const GET_JOBS = gql`
     {
         user {
             id
-            eventSet {
+            participationSet {
                 id
-                name
-                description
-                organisation {
-                    id
-                    name
-                }
-                jobSet {
+                state
+                job {
                     id
                     name
                     description
-                    totalPositions
-                    participationSet {
+                    event {
                         id
+                        name
+                        description
+                        organisation {
+                            id
+                            name
+                        }
                     }
                 }
             }
@@ -32,12 +32,10 @@ const GET_EVENTS = gql`
 `;
 
 type Props = {
-    logOut: () => void,
-    query: graphql.query,
     children: () => React.Node,
 };
 
-export class MyEventDataProvider extends Component<Props> {
+export class MyJobsDataProvider extends Component<Props> {
     constructor(props: Props) {
         super(props);
     }
@@ -45,12 +43,10 @@ export class MyEventDataProvider extends Component<Props> {
     render() {
         return (
             <View>
-                <Query query={GET_EVENTS}>
+                <Query query={GET_JOBS}>
                     {({ loading, error, data }) => {
-                        if (loading) return null;
-                        if (error) {
-                            return null;
-                        }
+                        if (loading || error) return null;
+
                         return this.props.children(data.user);
                     }}
                 </Query>

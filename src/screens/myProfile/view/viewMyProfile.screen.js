@@ -18,7 +18,8 @@ export class ViewMyProfile extends Component<Props> {
         return (
             <View>
                 <ProfileDataProvider>
-                    {(user, refetch) => <ProfileView user={user} {...this.props} refetch={refetch} />}
+                    {(user, refetch) => 
+                    <ProfileView user={user} {...this.props} refetch={refetch} />}
                 </ProfileDataProvider>
             </View>
         );
