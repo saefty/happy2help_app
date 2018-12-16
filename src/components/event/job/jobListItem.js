@@ -31,9 +31,11 @@ class _JobListItem extends Component<Props> {
     getMockSkills = () => {
         return [
             {
+                id: 1,
                 name: 'Führerschein',
             },
             {
+                id: 2,
                 name: 'Hygiene Karte',
             },
         ];
@@ -41,7 +43,7 @@ class _JobListItem extends Component<Props> {
 
     jobParticipationCount = () => {
         const { job } = this.props;
-        return job.participationSet.filter(x => x.state === participationTypes.Accepted).length;
+        return job.participationSet.filter(x => x.state !== participationTypes.Accepted).length;
     };
 
     totalPositions = () => {
@@ -58,14 +60,14 @@ class _JobListItem extends Component<Props> {
         if (job.totalPositions !== null && job.totalPositions <= this.jobParticipationCount()) return;
         return (
             <View>
-                <View style={styles.row, styles.positions}>
+                <View style={(styles.row, styles.positions)}>
                     <Text style={styles.boldText}>{this.props.t('positions')}: </Text>
                     <Text>
                         {this.jobParticipationCount()}/{this.totalPositions()}
                     </Text>
                 </View>
                 <View style={styles.button}>
-                    <JobParticipationButton 
+                    <JobParticipationButton
                         participation={job.currentUsersParticipation}
                         apply={async (participation: Participation) => this.props.createParticipation(job, participation)}
                         cancel={async (participation: Participation) => this.props.updateParticipation(job, participation)}

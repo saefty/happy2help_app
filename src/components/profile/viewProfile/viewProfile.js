@@ -31,7 +31,7 @@ class ProfileView extends Component<Props> {
         return (
             <View>
                 <Appbar.Header style={styles.appbar}>
-                    <Appbar.Action icon="menu" onPress={() => this.props.navigation.openDrawer()} />
+                    <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.navigate('Discover')} />
                     <Appbar.Content title="" />
                     <Appbar.Action
                         icon="edit"

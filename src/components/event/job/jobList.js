@@ -18,11 +18,10 @@ type Props = {
 };
 
 class _JobList extends Component<Props> {
-    constructor(props: Props) {       
+    constructor(props: Props) {
         super(props);
     }
 
-   
     createParticipation = async (job: Job, participation: Participation) => {
         if (job.currentUsersParticipation) {
             await this.updateParticipation(job, participation, true);
@@ -33,7 +32,6 @@ class _JobList extends Component<Props> {
                 },
             });
         }
-        await this.props.refetch();
     };
 
     updateParticipation = async (job: Job, participation: Participation, apply?: boolean) => {
@@ -43,7 +41,6 @@ class _JobList extends Component<Props> {
                 state: apply ? participationTypes.Applied : participationTypes.Canceled,
             },
         });
-        await this.props.refetch();
     };
 
     renderJob = ({ item: job }) => {

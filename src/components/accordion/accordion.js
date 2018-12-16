@@ -1,6 +1,7 @@
 /* @flow */
 
-import React, { Component } from 'react';
+import { Component } from 'react';
+import * as React from 'react';
 import { Text, View } from 'react-native';
 import { List } from 'react-native-paper';
 
@@ -8,7 +9,7 @@ type Props = {
     title: string,
     icon: string,
     expansion: boolean,
-    children: React.PropTypes.node,
+    children: () => React.Node,
 };
 
 type State = {
