@@ -51,11 +51,10 @@ export default {
     Job: {
         description: 'Beschreibung: ',
         positions: 'Stellen',
-        participated: "Du hast teilgenommen.",
-        applied: "Du bist angemeldet.",
-        declined: "Du wurdest abgelehnt.",
-        accepted: "Du wurdest akzeptiert.",
-        canceled: "Die Teilnahme wurde abgebrochen.",
+        participated: 'Du hast an dem Event teilgenommen.',
+        applied: 'Du hast dich beworben. Warte auf die Rückmeldung des Eventerstellers.',
+        declined: 'Du wurdest abgelehnt.',
+        accepted: 'Du wurdest angenommen.',
     },
     JobParticipationButton: {
         'Participated': 'Teilgenommen',

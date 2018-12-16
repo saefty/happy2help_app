@@ -21,13 +21,14 @@ import { H2HTheme } from './themes/default.theme';
 import { requestPermission } from './src/helpers/requestPermission';
 import { Sentry } from 'react-native-sentry';
 import { SentryConfig } from './config/sentry';
-
+import { AppState } from 'react-native';
 type I18nProps = {
     t: i18n.t,
 };
 type State = {
     apolloClient: ApolloClient,
     loggedIn: boolean,
+    appState: AppState.AppStateStatic,
 };
 
 Sentry.config(SentryConfig.link, SentryConfig.props);
@@ -38,7 +39,8 @@ if (!global.__DEV__) {
 export default class AppApollo extends Component<I18nProps, State> {
     state = {
         apolloClient: {},
-        loggedIn: true, // Be optimistic and hope the user is logged in
+        loggedIn: false, // Be optimistic and hope the user is logged in
+        appState: AppState.currentState,
     };
 
     constructor(props: I18nProps) {
@@ -47,6 +49,7 @@ export default class AppApollo extends Component<I18nProps, State> {
     }
 
     async componentDidMount() {
+        AppState.addEventListener('change', this._handleAppStateChange);
         await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
         await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
 
@@ -60,6 +63,20 @@ export default class AppApollo extends Component<I18nProps, State> {
         });
         SplashScreen.hide();
     }
+
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this._handleAppStateChange);
+    }
+
+    _handleAppStateChange = nextAppState => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+            console.log('App has come to the foreground!');
+            SplashScreen.hide();
+        } else {
+            SplashScreen.show();
+        }
+        this.setState({ appState: nextAppState });
+    };
 
     verifyLogin = async (): Promise<boolean> => {
         // Get JWT

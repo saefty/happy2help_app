@@ -47,6 +47,10 @@ export class Event extends Component<Props> {
     }
 
     get createdBy() {
-        return this.props.event.organisation ? this.props.event.organisation.name : this.props.showCreatorName ? this.props.event.creator.username : 'private';
+        return this.props.event.organisation
+            ? this.props.event.organisation.name
+            : this.props.showCreatorName
+            ? this.props.event.creator.username
+            : 'private';
     }
 }

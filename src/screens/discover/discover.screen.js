@@ -22,7 +22,6 @@ type Props = {
 
 type State = {
     event?: EventObject,
-    selectedIndex: number,
     userRegion: any,
     sorting: string,
     descending: boolean,
@@ -32,14 +31,13 @@ class _DiscoverScreen extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            selectedIndex: 1,
             userRegion: {
                 latitude: 0,
                 longitude: 0,
                 latitudeDelta: 1,
                 longitudeDelta: 1,
             },
-            sorting: "alphabetic",
+            sorting: 'alphabetic',
             descending: false,
         };
     }
@@ -50,7 +48,7 @@ class _DiscoverScreen extends Component<Props, State> {
         });
     };
 
-    async componentWillMount() {
+    async componentDidMount() {
         const position = await this.getPosition();
         this.setState({
             userRegion: {
@@ -60,11 +58,6 @@ class _DiscoverScreen extends Component<Props, State> {
                 longitudeDelta: 0.15,
             },
         });
-        openEventModal = (event: EventObject) => {
-            this.props.navigation.navigate('DetailedEventView', {
-                event: event,
-            });
-        };
     }
 
     openEventModal = (event: EventObject) => {
@@ -93,7 +86,7 @@ class _DiscoverScreen extends Component<Props, State> {
                             onTabPress={this.setIndex}
                         />
                     </View>
-                </Surface>   
+                </Surface>
                 <View>
                     <EventDataProvider pollInterval={undefined}>
                         {events => {
@@ -113,19 +106,20 @@ class _DiscoverScreen extends Component<Props, State> {
                             } else {
                                 return (
                                     <ScrollView>
-                                        <SortAccordion 
-                                        sorting={this.state.sorting} 
-                                        descending={this.state.descending}
-                                        changeSort={(sort: string) => {
-                                            this.setState({
-                                                sorting: sort,
-                                            })
-                                        }}
-                                        changeDescending={(desc: boolean) => {
-                                            this.setState({
-                                                descending: desc,
-                                            })
-                                        }}/>
+                                        <SortAccordion
+                                            sorting={this.state.sorting}
+                                            descending={this.state.descending}
+                                            changeSort={(sort: string) => {
+                                                this.setState({
+                                                    sorting: sort,
+                                                });
+                                            }}
+                                            changeDescending={(desc: boolean) => {
+                                                this.setState({
+                                                    descending: desc,
+                                                });
+                                            }}
+                                        />
                                         <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
                                     </ScrollView>
                                 );
