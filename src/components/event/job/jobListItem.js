@@ -77,6 +77,20 @@ class _JobListItem extends Component<Props> {
         );
     };
 
+    renderSkills = () => {
+        let skillSet = this.props.job.requiresskillSet;
+        if (skillSet === undefined || skillSet.length == 0) {
+            return;
+        }
+        let skills = skillSet.map(skill => skill.skill);
+        return (
+            <View style={styles.skillContainer}>
+                <Text style={styles.boldText}>Benötigte Fähigkeiten:</Text>
+                <SkillList skillObjects={skills} />
+            </View>
+        );
+    };
+
     render() {
         const { job } = this.props;
         return (
@@ -89,10 +103,7 @@ class _JobListItem extends Component<Props> {
                     <Text style={styles.boldText}>{this.props.t('description')}</Text>
                     {job.description}
                 </Paragraph>
-                <View style={styles.skillContainer}>
-                    <Text style={styles.boldText}>Benötigte Fähigkeiten:</Text>
-                    <SkillList skillObjects={this.getMockSkills()} />
-                </View>
+                {this.renderSkills()}
                 <View>{this.renderPositionsText()}</View>
                 <Divider style={styles.divider} />
             </View>

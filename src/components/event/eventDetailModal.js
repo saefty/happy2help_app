@@ -33,6 +33,12 @@ const JOB_QUERY = gql`
                         id
                     }
                 }
+                requiresskillSet {
+                    skill {
+                        id
+                        name
+                    }
+                }
                 participationSet {
                     id
                     state
