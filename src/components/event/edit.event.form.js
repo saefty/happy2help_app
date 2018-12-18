@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TextInput as NativeTextInput } from 'react-native';
 import { Button, Text, TextInput, HelperText, Subheading, Headline, Appbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { withNamespaces, i18n } from 'react-i18next';
@@ -157,4 +158,4 @@ class _EditEventForm extends Component<Props, State> {
 export const EditEventFormNamespaced = compose(
     graphql(mutations.CREATE_EVENT, { name: 'createEventMutation' }),
     graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation' })
-)(withNamespaces(['Event', 'errors'])(_EditEventForm));
+)(withNamespaces(['Event', 'errors'])(withMappedNavigationProps()(_EditEventForm)));

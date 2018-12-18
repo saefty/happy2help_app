@@ -128,6 +128,7 @@ export class EventDetailModal extends Component<Props> {
                     <Appbar.Header>
                         <Appbar.Action icon="close" onPress={() => this.props.navigation.navigate('View')} />
                         <Appbar.Content title={this.props.event.name} />
+                        <Appbar.Action icon="edit" onPress={() => this.props.navigation.navigate('Edit', {event: this.props.event})}/>
                     </Appbar.Header>
                     <View style={{ margin: 14 }}>
                         <Title>
