@@ -51,7 +51,7 @@ class _JobParticipationButton extends Component<Props, State> {
     render() {
         return (
             <Button
-                loading={this.state.triggered || !this.canBePressed()}
+                loading={this.state.triggered}
                 disabled={this.state.triggered || !this.canBePressed()}
                 mode="contained"
                 onPress={() => {
