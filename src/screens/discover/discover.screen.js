@@ -3,6 +3,7 @@ import type { EventObject } from '../../models/event.model';
 
 import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
+import { NavigationEvents } from 'react-navigation';
 import { Surface } from 'react-native-paper';
 import { Provider } from 'react-native-paper';
 import { H2HTheme } from '../../../themes/default.theme';
@@ -58,6 +59,8 @@ class _DiscoverScreen extends Component<Props, State> {
                 longitudeDelta: 0.15,
             },
         });
+
+        this.props.navigation.addListener("willFocus", payload =>  { console.log("SCREEN FOCUS", payload) })
     }
 
     openEventModal = (event: EventObject) => {
@@ -88,6 +91,11 @@ class _DiscoverScreen extends Component<Props, State> {
                     </View>
                 </Surface>
                 <View>
+                <NavigationEvents
+                    onWillFocus={payload => {
+                    console.log("will focus", payload);
+                    }}
+                />
                     <EventDataProvider pollInterval={undefined}>
                         {events => {
                             if (this.state.selectedIndex === 0) {
