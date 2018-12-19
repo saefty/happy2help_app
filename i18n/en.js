@@ -31,7 +31,7 @@ export default {
     Event: {
         myEvents: 'My Events',
         myJobs: 'My Jobs',
-        eventName: 'Event name',
+        name: 'Event name',
         description: 'Description',
         locationSearch: 'Location search',
         create: 'Publish',

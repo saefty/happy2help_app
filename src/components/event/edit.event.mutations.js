@@ -26,26 +26,24 @@ export const mutations = {
     `,
     UPDATE_EVENT: gql`
         mutation updateEvent(
-            $id: String!
+            $eventId: ID!
             $name: String
             $description: String
-            $locationLon: Float
-            $locationLat: Float
-            $locationName: String
-            $start: String
-            $end: String
+            $start: DateTime
+            $end: DateTime
         ) {
             updateEvent(
-                id: $id
+                eventId: $eventId
                 name: $name
                 description: $description
-                locationLon: $locationLon
-                locationLat: $locationLat
-                locationName: $locationName
                 start: $start
                 end: $end
             ) {
                 id
+                name
+                description
+                start
+                end
             }
         }
     `,

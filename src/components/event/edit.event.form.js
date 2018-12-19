@@ -28,7 +28,7 @@ class _EditEventForm extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         const EventSchema = Yup.object().shape({
-            eventName: Yup.string()
+            name: Yup.string()
                 .min(5, this.props.t('errors:toShort'))
                 .required(this.props.t('errors:required')),
             description: Yup.string()
@@ -56,12 +56,9 @@ class _EditEventForm extends Component<Props, State> {
     update = event => {
         return this.props.updateEventMutation({
             variables: {
-                id: this.props.event.id,
+                eventId: this.props.event.id,
                 name: event.name || this.props.event.name,
                 description: event.description || this.props.event.description,
-                locationLon: event.location.long || this.props.event.location.longitude,
-                locationLat: event.location.lat || this.props.event.location.latitude,
-                locationName: event.location.name || this.props.event.location.name,
                 start: event.start,
                 end: event.end,
             },
@@ -71,19 +68,19 @@ class _EditEventForm extends Component<Props, State> {
     onSubmit = async (values, actions) => {
         actions.setSubmitting(true);
         const { start, end } = this.getStartEnd();
-        const EVENT = {
-            name: values.eventName,
+        let EVENT = {
+            name: values.name,
             description: values.description,
-            location: {
-                name: values.location.formatted_address,
-                lat: values.location.geometry.location.lat,
-                long: values.location.geometry.location.lng,
-            },
             start,
             end,
         };
 
         if (!this.props.event) {
+            EVENT.location: {
+                name: values.location.formatted_address,
+                lat: values.location.geometry.location.lat,
+                long: values.location.geometry.location.lng,
+            },
             await this.create(EVENT);
         } else {
             await this.update(EVENT);
@@ -108,20 +105,20 @@ class _EditEventForm extends Component<Props, State> {
                 <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSubmit} initialValues={this.getInitialFormValues()}>
                     {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
                         <View>
-                            <Appbar.Header style={styles.container}>
+                            <Appbar.Header>
                                 <Appbar.Action icon="close" onPress={() => this.props.navigation.goBack()} />
                                 <Appbar.Content title={this.props.t(!this.props.event ? 'createTitle' : 'editTitle')} />
                                 <Appbar.Action icon="check" onPress={handleSubmit} disabled={isSubmitting} />
                             </Appbar.Header>
                             <View style={styles.container}>
                                 <TextInput
-                                    onChangeText={handleChange('eventName')}
-                                    value={values.eventName}
-                                    label={this.props.t('eventName')}
-                                    error={errors.eventName}
+                                    onChangeText={handleChange('name')}
+                                    value={values.name}
+                                    label={this.props.t('name')}
+                                    error={errors.name}
                                 />
-                                <HelperText type="error" visible={errors.eventName}>
-                                    <ErrorMessage name="eventName" />
+                                <HelperText type="error" visible={errors.name}>
+                                    <ErrorMessage name="name" />
                                 </HelperText>
                                 <TextInput
                                     onChangeText={handleChange('description')}
