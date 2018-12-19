@@ -23,15 +23,19 @@ export const styles = StyleSheet.create({
         color: 'white',
         fontSize: 25,
         top: -10,
+        fontWeight:'bold'
     },
-    location: { fontSize: 15 },
+    location: {
+        fontSize: 15,
+        fontStyle: 'italic'
+        },
     nameAndLocationContainer: { margin: 10 },
     profilePicture: {
         width: 110,
         height: 110,
         borderRadius: 150,
         margin: 10,
-        borderWidth: 8,
+        borderWidth: 4,
         borderColor: 'white',
     },
 });
