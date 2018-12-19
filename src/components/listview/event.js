@@ -32,9 +32,9 @@ export class Event extends Component<Props> {
             <Card style={[this.props.style, this.orgaEventStyle()]} onPress={() => this.props.onEventTouch(this.props.event)}>
                 <Card.Cover source={{ uri: 'https://picsum.photos/200/300/?random' }} />
                 <Card.Content>
-                    <Title>{this.props.event.name}</Title>
+                    <Title style = {styles.title}>{this.props.event.name}</Title>
                     <Paragraph>{this.formattedDescription}</Paragraph>
-                    <Paragraph>{this.createdBy}</Paragraph>
+                    <Paragraph style={styles.creator}>{this.createdBy}</Paragraph>
                 </Card.Content>
             </Card>
         );
