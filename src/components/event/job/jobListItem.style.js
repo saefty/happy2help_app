@@ -1,20 +1,37 @@
 import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     container: {
-        marginBottom: 30,
-        flex: 1, 
-        flexDirection: 'column'
+        flex: 1,
+        flexDirection: 'column',
     },
     heading: {
-        marginLeft: 10
+        // marginLeft: 10,
     },
     row: {
         width: '100%',
-        flex: 1, 
-        flexDirection: 'row'
+        flex: 1,
+        flexDirection: 'row',
     },
     posApplyButton: {
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+    },
+    divider: {
+        backgroundColor: '#cccccc',
+        marginBottom: 10,
+        marginTop: 10,
+        height: 2,
+    },
+    boldText: {
+        fontWeight: 'bold',
+    },
+    skillContainer: {
+        marginTop: 10,
+    },
+    positions: {
+        marginBottom: 10
+    },
+    button: {
+       
     }
-})
+});
