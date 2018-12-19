@@ -10,13 +10,25 @@ export const styles = StyleSheet.create({
             .alpha(0.2)
             .rgb()
             .string(),
-        borderWidth: 5,
+        borderWidth: 3,
     },
     highLightStyle: {
         borderColor: color(H2HTheme.colors.primary)
             .darken(0.25)
             .rgb()
             .string(),
-        borderWidth: 5,
+        borderWidth: 3,
+        borderRadius:10,
+    },
+
+    title:{
+        marginTop:10,
+        color: '#008fb8',
+        fontSize: 20,
+        fontWeight:'bold',
+    },
+
+    creator: {
+        fontStyle: 'italic'
     },
 });

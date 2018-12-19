@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
       borderWidth: 4,
       borderColor: 'steelblue',
       borderStyle: 'solid',
-      borderRadius: 4,
+      borderRadius: 0,
     },
     titleContainer: {
       backgroundColor: 'steelblue',
