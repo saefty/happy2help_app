@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
             .rgb()
             .string(),
         borderWidth: 3,
+        borderRadius: 10,
     },
     highLightStyle: {
         borderColor: color(H2HTheme.colors.primary)
