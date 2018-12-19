@@ -47,15 +47,15 @@ class _UserJobList extends Component<Props> {
     renderJob = ({ item: job }) => {
         if (job.currentUsersParticipation !== null && job.currentUsersParticipation.state == 5) return;
         return (
-            <Card style={{margin:10}}>
+            <Card style={{ margin: 10 }}>
                 <Card.Content>
                     <JobListItem
-                    job={job}
-                    updateParticipation={this.updateParticipation}
-                    createParticipation={this.createParticipation}
-                    {...this.props}
+                        job={job}
+                        updateParticipation={this.updateParticipation}
+                        createParticipation={this.createParticipation}
+                        startDate={job.event.start}
                     />
-                 </Card.Content>
+                </Card.Content>
             </Card>
         );
     };
@@ -75,4 +75,3 @@ export const UserJobList = compose(
     graphql(CREATE_PARTICIPATION, { name: 'createParticipation' }),
     graphql(UPDATE_PARTICIPATION, { name: 'updateParticipation' })
 )(_UserJobList);
-

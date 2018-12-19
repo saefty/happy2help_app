@@ -3,7 +3,7 @@ import type { Job } from '../../../models/job.model';
 import type { Participation } from '../../../models/participation.model';
 
 import React, { Component } from 'react';
-import { Text, Paragraph, Subheading, Divider } from 'react-native-paper';
+import { Text, Paragraph, Subheading } from 'react-native-paper';
 import { View } from 'react-native';
 import { JobParticipationButton } from './jobParticipationButton';
 import { participationTypes } from '../../../models/participation.model';
@@ -90,7 +90,7 @@ class _JobListItem extends Component<Props> {
         if (skillSet === undefined || skillSet.length == 0) {
             return;
         }
-        if (this.jobParticipationCount() == 0) return; //if there are no openpositions fon
+        if (this.jobParticipationCount() == 0) return; //if there are no openpositions
         let skills = skillSet.map(skill => skill.skill);
         return (
             <View style={styles.skillContainer}>
@@ -103,7 +103,7 @@ class _JobListItem extends Component<Props> {
     renderParticipationState = () => {
         const currentUsersParticipation = this.props.job.currentUsersParticipation;
         if (currentUsersParticipation === undefined) return;
-        if (currentUsersParticipation.state == 5) return; //show nothing if user canceled
+        if (currentUsersParticipation.state == participationTypes.Canceled) return; //show nothing if user canceled
         return <ParticipationState style={{ marginTop: 10 }} participationState={currentUsersParticipation.state} />;
     };
 
@@ -145,7 +145,6 @@ class _JobListItem extends Component<Props> {
                 </View>
             );
         }
-        return <View />;
     }
 }
 

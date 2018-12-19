@@ -31,6 +31,7 @@ const GET_JOBS = gql`
                         state
                     }              
                     event {
+                        start
                         id
                         name
                         description

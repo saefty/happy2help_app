@@ -54,7 +54,7 @@ class _JobList extends Component<Props> {
                         job={job}
                         updateParticipation={this.updateParticipation}
                         createParticipation={this.createParticipation}
-                        {...this.props}
+                        startDate={this.props.startDate}
                     />
                 </Card.Content>
             </Card>
