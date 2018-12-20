@@ -21,7 +21,7 @@ export class MyEventDataProvider extends Component<Props> {
         return (
             <View>
                 <Query query={MY_EVENTS}>
-                    {({ loading, error, data }) => {
+                    {({ loading, error, data, refetch }) => {
                         if (loading) return null;
                         if (error) {
                             return null;

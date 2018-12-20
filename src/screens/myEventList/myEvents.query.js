@@ -19,6 +19,10 @@ export const MY_EVENTS = gql`
                     totalPositions
                     participationSet {
                         id
+                        state
+                        user {
+                            id
+                        }
                     }
                 }
                 location {
