@@ -38,7 +38,6 @@ class _DiscoverScreen extends Component<Props, State> {
                 latitudeDelta: 1,
                 longitudeDelta: 1,
             },
-            key: Math.random(),
             sorting: 'alphabetic',
             descending: false,
         };

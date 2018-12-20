@@ -18,7 +18,7 @@ class App extends Component<Props> {
                     logOut: this.props.logOut,
                 }}
             />
-            <FlashMessage position="top" />
+            <FlashMessage duration={900} />
             </View>
             //new react navigation tab navigator
         );
