@@ -23,7 +23,6 @@ type Props = {
 
 type State = {
     event?: EventObject,
-    key?: number,
     userRegion: any,
     sorting: string,
     descending: boolean,
@@ -61,12 +60,8 @@ class _DiscoverScreen extends Component<Props, State> {
                 longitudeDelta: 0.15,
             },
         });
-
-        // forcing render update for EventDataProvider (refetch) when this screen is navigated to
-        this.props.navigation.addListener("willFocus", () =>  { 
-            this.setState({ key: Math.random()});
-        })
     }
+
     openEventModal = (event: EventObject) => {
         this.props.navigation.navigate('DetailedEventView', {
             event: event,
@@ -96,9 +91,10 @@ class _DiscoverScreen extends Component<Props, State> {
                 </Surface>
                 <View>
                     <EventDataProvider key={this.state.key} pollInterval={undefined}>
-                        {events => {
+                        {(events, refetch) => {
+                            let result;
                             if (this.state.selectedIndex === 0) {
-                                return (
+                                result = (
                                     <Map
                                         events={events}
                                         onEventTouch={this.openEventModal}
@@ -111,7 +107,7 @@ class _DiscoverScreen extends Component<Props, State> {
                                     />
                                 );
                             } else {
-                                return (
+                                result = (
                                     <ScrollView>
                                         <SortAccordion
                                             sorting={this.state.sorting}
@@ -131,6 +127,16 @@ class _DiscoverScreen extends Component<Props, State> {
                                     </ScrollView>
                                 );
                             }
+                            return (
+                                <View>
+                                    <NavigationEvents
+                                        onWillFocus={() => {
+                                            refetch();
+                                        }}
+                                    />
+                                    {result}
+                                </View>
+                            );
                         }}
                     </EventDataProvider>
                 </View>

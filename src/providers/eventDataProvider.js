@@ -31,7 +31,7 @@ const GET_EVENTS = gql`
 type Props = {
     pollInterval?: number,
     key?: number,
-    children: () => React.Node,
+    children: (data: any, refetch: () => any) => React.Node,
 };
 
 export class EventDataProvider extends Component<Props> {
@@ -43,9 +43,9 @@ export class EventDataProvider extends Component<Props> {
         return (
             <View>
                 <Query query={GET_EVENTS} pollInterval={this.props.pollInterval}>
-                    {({ loading, error, data }) => {
+                    {({ loading, error, data, refetch }) => {
                         if (loading || error) return null;
-                        return this.props.children(data.events);
+                        return this.props.children(data.events, refetch);
                     }}
                 </Query>
             </View>
