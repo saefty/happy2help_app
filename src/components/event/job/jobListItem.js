@@ -23,11 +23,7 @@ type Props = {
     startDate: Date,
 };
 
-class _JobListItem extends Component<Props> {
-    // renderIcon = () => {
-    //     const icon = this.isFull() ? 'check' : 'work';
-    //     return <Icon name={icon} size={25} />;
-    // };
+class _JobListItem extends Component<Props> {    
 
     isFull = () => {
         const job = this.props.job;
@@ -102,7 +98,7 @@ class _JobListItem extends Component<Props> {
 
     renderParticipationState = () => {
         const currentUsersParticipation = this.props.job.currentUsersParticipation;
-        if (currentUsersParticipation === undefined) return;
+        if (currentUsersParticipation === null) return;
         if (currentUsersParticipation.state == participationTypes.Canceled) return; //show nothing if user canceled
         return <ParticipationState style={{ marginTop: 10 }} participationState={currentUsersParticipation.state} />;
     };
