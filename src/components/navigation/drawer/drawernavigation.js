@@ -46,7 +46,7 @@ export const DrawerNavigator = createDrawerNavigator(
         },
     },
     {
-        initialRouteName: 'MyEvents',
+        initialRouteName: 'BrowseEvents',
         contentComponent: DrawerScreen,
         drawerWidth: 250,
     }
