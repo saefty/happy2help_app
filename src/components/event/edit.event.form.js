@@ -13,6 +13,8 @@ import { GooglePlacesInput } from '../location/location.input';
 import { styles } from './edit.event.style';
 import { graphql, compose } from 'react-apollo';
 import { mutations } from './edit.event.mutations';
+import { GET_EVENTS } from '../../providers/getEvents.query';
+import { MY_EVENTS } from '../../screens/myEventList/myEvents.query'
 
 type Props = {
     event?: EventObject,
@@ -144,14 +146,10 @@ class _EditEventForm extends Component<Props, State> {
                                 </HelperText>
                                 <GooglePlacesInput
                                     onChangeValue={v => {
-                                        setFieldValue('location', {
-                                            name: v.formatted_address,
-                                            longitude: v.geometry.location.lng,
-                                            latitude: v.geometry.location.lat,
-                                        });
-                                        handleChange('location');
+                                            setFieldValue('location', v);
+                                            handleChange('location');
                                     }}
-                                    initialValue={{ formatted_address: values.location.name }}
+                                    initialValue={{ formatted_address: values.location ? values.location.name : undefined }}
                                     label={this.props.t('locationSearch')}
                                     error={errors.location}
                                 />
@@ -168,6 +166,12 @@ class _EditEventForm extends Component<Props, State> {
 }
 
 export const EditEventFormNamespaced = compose(
-    graphql(mutations.CREATE_EVENT, { name: 'createEventMutation' }),
-    graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation' })
+    graphql(mutations.CREATE_EVENT, { name: 'createEventMutation', options: () => ({
+        refetchQueries: [{ query: GET_EVENTS }, { query: MY_EVENTS }],
+      }) 
+    }),
+    graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation', options: () => ({
+        refetchQueries: [{ query: GET_EVENTS }, { query: MY_EVENTS }],
+      }) 
+    })
 )(withNamespaces(['Event', 'errors'])(withMappedNavigationProps()(_EditEventForm)));
