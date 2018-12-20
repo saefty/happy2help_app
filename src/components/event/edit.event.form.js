@@ -107,7 +107,7 @@ class _EditEventForm extends Component<Props, State> {
                 <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSubmit} initialValues={this.getInitialFormValues()}>
                     {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
                         <View>
-                            <Appbar.Header style={styles.container}>
+                            <Appbar.Header>
                                 <Appbar.Action icon="close" onPress={() => this.props.navigation.goBack()} />
                                 <Appbar.Content title={this.props.t(!this.props.event ? 'createTitle' : 'editTitle')} />
                                 <Appbar.Action icon="check" onPress={handleSubmit} disabled={isSubmitting} />

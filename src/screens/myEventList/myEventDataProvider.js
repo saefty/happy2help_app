@@ -24,6 +24,10 @@ const GET_EVENTS = gql`
                     totalPositions
                     participationSet {
                         id
+                        state
+                        user {
+                            id
+                        }
                     }
                 }
             }
@@ -34,7 +38,7 @@ const GET_EVENTS = gql`
 type Props = {
     logOut: () => void,
     query: graphql.query,
-    children: () => React.Node,
+    children: (user: any, refetch: () => void) => React.Node,
 };
 
 export class MyEventDataProvider extends Component<Props> {
@@ -46,12 +50,12 @@ export class MyEventDataProvider extends Component<Props> {
         return (
             <View>
                 <Query query={GET_EVENTS}>
-                    {({ loading, error, data }) => {
+                    {({ loading, error, data, refetch }) => {
                         if (loading) return null;
                         if (error) {
                             return null;
                         }
-                        return this.props.children(data.user);
+                        return this.props.children(data.user, refetch);
                     }}
                 </Query>
             </View>

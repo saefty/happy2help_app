@@ -11,21 +11,29 @@ import { OrganisationStackNavigator } from './../stackNavigators/organisation.st
 import { EditOrganisationScreen } from '../../../screens/organisation/editOrganisation.screen';
 
 import { DrawerScreen } from './drawer.screen';
-import { ScanScreen } from '../../../qr.screen';
+import { MyQRScreen } from '../../../screens/myQR.screen';
 
 export const DrawerNavigator = createDrawerNavigator(
     {
-        BrowseEvents: {
-            screen: TabNavigator,
-        },
         Profile: {
             screen: ProfileStackNavigator,
+        },
+        BrowseEvents: {
+            screen: TabNavigator,
         },
         MyEvents: {
             screen: MyEventsStackNavigator,
         },
         Organisation: {
             screen: OrganisationStackNavigator,
+        },
+        MyQRCode: {
+            screen: MyQRScreen,
+            navigationOptions: () => {
+                return {
+                    drawerLabel: () => null,
+                };
+            },
         },
         EditOrganisation: {
             screen: EditOrganisationScreen,
@@ -36,11 +44,9 @@ export const DrawerNavigator = createDrawerNavigator(
                 return navigationOptions;
             },
         },
-        Camera: {
-            screen: ScanScreen,
-        },
     },
     {
+        initialRouteName: 'MyEvents',
         contentComponent: DrawerScreen,
         drawerWidth: 250,
     }

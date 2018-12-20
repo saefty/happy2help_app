@@ -4,7 +4,6 @@ export default {
         welcome: 'Willkommen bei Happy to Help',
         cancel: 'abbrechen',
         ok: 'ok',
-
     },
     errors: {
         toShort: 'Zu kurz!',
@@ -34,7 +33,7 @@ export default {
         locationSearch: 'Standortsuche',
         create: 'Veröffentlichen',
         editTitle: 'Event bearbeiten',
-        createTitle: 'Event erstellen'
+        createTitle: 'Event erstellen',
     },
     Organisation: {
         about: 'Über uns',
@@ -57,14 +56,18 @@ export default {
         accepted: 'Du wurdest angenommen.',
     },
     JobParticipationButton: {
-        'Participated': 'Teilgenommen',
-        'Applied': 'Bewerben',
-        'Canceled': 'Bewerbung zurückziehen'
+        Participated: 'Teilgenommen',
+        Applied: 'Bewerben',
+        Canceled: 'Bewerbung zurückziehen',
     },
     Sort: {
-        ascending: "aufsteigend",
-        descending: "absteigend",
-        alphabetic: "alphabetisch",
-        byDate: "nach Datum",
+        ascending: 'aufsteigend',
+        descending: 'absteigend',
+        alphabetic: 'alphabetisch',
+        byDate: 'nach Datum',
+    },
+    FlashMessages: {
+        checkedIn: 'Nutzer nimmt jetzt teil!',
+        declined: 'Nutzer wurde abgelehnt!',
     },
 };

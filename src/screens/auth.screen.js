@@ -9,8 +9,8 @@ type Props = {
     logOut: () => Promise<void>,
 };
 type State = {
-    signUp: boolean
-}
+    signUp: boolean,
+};
 export class AuthScreen extends Component<Props, State> {
     state = {
         signUp: true,
@@ -23,19 +23,9 @@ export class AuthScreen extends Component<Props, State> {
         if (this.state.signUp) {
             form = <SignUpFormGQL setSignUp={this.setSignUp} />;
         } else {
-            form = <SignInFormGQL logIn={this.props.logIn} setSignUp={this.setSignUp}/>;
+            form = <SignInFormGQL logIn={this.props.logIn} setSignUp={this.setSignUp} />;
         }
-        return (
-            <View
-                style={
-                    this.state.signUp
-                        ? style.containerSignUp
-                        : style.containerSignIn
-                }
-            >
-                {form}
-            </View>
-        );
+        return <View style={this.state.signUp ? style.containerSignUp : style.containerSignIn}>{form}</View>;
     }
 }
 
