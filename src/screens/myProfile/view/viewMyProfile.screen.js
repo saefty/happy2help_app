@@ -21,7 +21,7 @@ export class ViewMyProfile extends Component<Props> {
                 <ProfileDataProvider>
                     {(user, refetch) => (
                         <View>
-                            <Appbar.Header style={styles.appbar}>
+                            <Appbar.Header>
                                 <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.navigate('Discover')} />
                                 <Appbar.Content title="" />
                                 <Appbar.Action
