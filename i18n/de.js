@@ -34,7 +34,9 @@ export default {
         locationSearch: 'Standortsuche',
         create: 'Veröffentlichen',
         editTitle: 'Event bearbeiten',
-        createTitle: 'Event erstellen'
+        createTitle: 'Event erstellen',
+        creationSuccess: "Event wurde erfolgreich erstellt: ",
+        editSuccess: "Event wurde erfolgreich bearbeitet: ",
     },
     Organisation: {
         about: 'Über uns',

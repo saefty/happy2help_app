@@ -30,6 +30,7 @@ const GET_EVENTS = gql`
 
 type Props = {
     pollInterval?: number,
+    key?: number,
     children: () => React.Node,
 };
 

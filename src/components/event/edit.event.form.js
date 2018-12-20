@@ -7,6 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { showMessage } from "react-native-flash-message";
 import { withNamespaces, i18n } from 'react-i18next';
 import { GooglePlacesInput } from '../location/location.input';
 import { styles } from './edit.event.style';
@@ -75,8 +76,10 @@ class _EditEventForm extends Component<Props, State> {
             end,
         };
 
+        let successMessage = 'creationSuccess';
+
         if (!this.props.event) {
-            EVENT.location: {
+            EVENT.location = {
                 name: values.location.formatted_address,
                 lat: values.location.geometry.location.lat,
                 long: values.location.geometry.location.lng,
@@ -84,8 +87,16 @@ class _EditEventForm extends Component<Props, State> {
             await this.create(EVENT);
         } else {
             await this.update(EVENT);
+            successMessage = 'editSuccess';
         }
+
         actions.setSubmitting(false);
+        this.props.navigation.goBack();
+        showMessage({
+            message: this.props.t(successMessage) + values.name,
+            type: "success",
+            icon: 'auto',
+          });
         return;
     };
 
@@ -133,10 +144,14 @@ class _EditEventForm extends Component<Props, State> {
                                 </HelperText>
                                 <GooglePlacesInput
                                     onChangeValue={v => {
-                                        setFieldValue('location', v);
+                                        setFieldValue('location', {
+                                            name: v.formatted_address,
+                                            longitude: v.geometry.location.lng,
+                                            latitude: v.geometry.location.lat,
+                                        });
                                         handleChange('location');
                                     }}
-                                    initialValue={values.location}
+                                    initialValue={{ formatted_address: values.location.name }}
                                     label={this.props.t('locationSearch')}
                                     error={errors.location}
                                 />

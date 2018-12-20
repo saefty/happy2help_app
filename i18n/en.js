@@ -36,7 +36,9 @@ export default {
         locationSearch: 'Location search',
         create: 'Publish',
         editTitle: 'Edit event',
-        createTitle: 'Create event'
+        createTitle: 'Create event',
+        creationSuccess: "Successfully created the event:  ",
+        editSuccess: "Successfully updated the event: ",
 
     },
     Organisation: {

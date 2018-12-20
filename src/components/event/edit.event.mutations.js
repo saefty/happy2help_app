@@ -40,10 +40,6 @@ export const mutations = {
                 end: $end
             ) {
                 id
-                name
-                description
-                start
-                end
             }
         }
     `,
