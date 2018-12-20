@@ -32,6 +32,18 @@ class _MyEventList extends Component<Props, State> {
         });
     };
 
+    onEventEdit = (event: EventObject) => {
+        this.props.navigation.navigate('Edit', {
+            event: event,
+        });
+    };
+
+    onEventParticipation = (event: EventObject, refetch: () => void) => {
+        this.props.navigation.navigate('Participations', {
+            screenProps: { event, refetch },
+        });
+    };
+
     // This component is wrapped in its own provider as the FAB Button in this screen would cause issues
     // Look at https://github.com/callstack/react-native-paper/issues/420
     render() {
@@ -43,11 +55,18 @@ class _MyEventList extends Component<Props, State> {
                 </Appbar.Header>
                 <KeyboardAwareScrollView>
                     <MyEventDataProvider>
-                        {user => {
+                        {(user, refetch) => {
                             return (
                                 <View>
                                     <Headline>{}</Headline>
-                                    <UserEventList events={user.eventSet} onEventTouch={this.openEventModal} />
+                                    <UserEventList
+                                        events={user.eventSet}
+                                        onEventTouch={this.openEventModal}
+                                        onEventEdit={this.onEventEdit}
+                                        onEventParticipation={event => {
+                                            this.onEventParticipation(event, refetch);
+                                        }}
+                                    />
                                     <Portal>
                                         <EventFAB addEvent={() => this.props.navigation.navigate('Edit')} />
                                     </Portal>

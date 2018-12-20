@@ -23,33 +23,15 @@ class ProfileView extends Component<Props> {
         super(props);
     }
 
-    closeEditScreen = () => {
-        this.props.refetch();
-    };
-
     render() {
         return (
             <View>
-                <Appbar.Header style={styles.appbar}>
-                    <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.navigate('Discover')} />
-                    <Appbar.Content title="" />
-                    <Appbar.Action
-                        icon="edit"
-                        onPress={() =>
-                            this.props.navigation.navigate('Edit', {
-                                close: this.closeEditScreen,
-                            })
-                        }
-                    />
-                    <Appbar.Action icon="more-vert" />
-                </Appbar.Header>
                 <View>
                     <Header userName={this.props.user.username} location={this.props.user.profile.location} />
                     <CreditPoints creditPoints={this.props.user.profile.creditPoints} />
                     <Title style={styles.title}>{this.props.t('skills')}</Title>
                     <SkillList skillObjects={this.props.user.skills} />
                 </View>
-                <LogoutButton logOut={this.props.screenProps.logOut} />
             </View>
         );
     }

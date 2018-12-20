@@ -1,42 +1,44 @@
 // @flow
-import React, { Component } from "react";
-import { View } from "react-native";
+import React, { Component } from 'react';
+import { View } from 'react-native';
 import type { EventObject } from '../../models/event.model';
 import { Event } from '../listview/event';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './userEvents.styles';
 
-
 type Props = {
-  events: Array<EventObject>,
-  onEventTouch: (event: EventObject) => void,
-}
+    events: Array<EventObject>,
+    onEventTouch: (event: EventObject) => void,
+    onEventEdit: (event: EventObject) => void,
+    onEventParticipation: (event: EventObject) => void,
+};
 
 const MAX_DESCRIPTION_LENGTH = 50;
-
+/**
+ * List of events that are created by that user
+ */
 export class UserEventList extends Component<Props> {
+    constructor(props: Props) {
+        super(props);
+    }
 
-  constructor(props: Props) {
-    super(props);
-  }
-
-  render() {
-      return (
-        <View style={styles.scroll}>
-          <KeyboardAwareScrollView>
-            {
-              this.props.events.map((event) => 
-              <Event 
-              key={event.id} 
-              event={event}
-              style={styles.card}
-              showCreatorName={false}
-              onEventTouch={this.props.onEventTouch}
-              descriptionMaxLength={MAX_DESCRIPTION_LENGTH}
-              />)
-            }
-          </KeyboardAwareScrollView>
-        </View>
-      );
-  }
+    render() {
+        return (
+            <View>
+                {this.props.events.map(event => (
+                    <Event
+                        controls={{
+                            view: this.props.onEventTouch,
+                            edit: this.props.onEventEdit,
+                            participations: this.props.onEventParticipation,
+                        }}
+                        key={event.id}
+                        event={event}
+                        style={styles.card}
+                        showCreatorName={false}
+                        descriptionMaxLength={MAX_DESCRIPTION_LENGTH}
+                    />
+                ))}
+            </View>
+        );
+    }
 }
