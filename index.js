@@ -21,7 +21,8 @@ import { H2HTheme } from './themes/default.theme';
 import { requestPermission } from './src/helpers/requestPermission';
 import { Sentry } from 'react-native-sentry';
 import { SentryConfig } from './config/sentry';
-import { AppState } from 'react-native';
+import { AppState, Platform } from 'react-native';
+
 type I18nProps = {
     t: i18n.t,
 };
@@ -49,9 +50,11 @@ export default class AppApollo extends Component<I18nProps, State> {
     }
 
     async componentDidMount() {
+        if (Platform.OS !== 'ios') {
+            await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+            await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
+        }
         AppState.addEventListener('change', this._handleAppStateChange);
-        await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-        await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
 
         const cfg = await createApolloConfiguration();
 
@@ -70,7 +73,6 @@ export default class AppApollo extends Component<I18nProps, State> {
 
     _handleAppStateChange = nextAppState => {
         if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-            console.log('App has come to the foreground!');
             SplashScreen.hide();
         } else if (this.state.appState === 'active' && nextAppState.match(/inactive|background/)) {
             SplashScreen.show();

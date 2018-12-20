@@ -11,12 +11,27 @@ const GET_JOBS = gql`
             id
             participationSet {
                 id
-                state
-                job {
+                job {  
                     id
                     name
                     description
+                    totalPositions
+                    currentUsersParticipation {
+                        id
+                        state                    
+                    }
+                    requiresskillSet {
+                        skill {
+                            id
+                            name
+                        }
+                    }
+                    participationSet {
+                        id
+                        state
+                    }              
                     event {
+                        start
                         id
                         name
                         description
@@ -24,7 +39,7 @@ const GET_JOBS = gql`
                             id
                             name
                         }
-                    }
+                    }                   
                 }
             }
         }

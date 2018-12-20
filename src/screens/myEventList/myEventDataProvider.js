@@ -9,7 +9,7 @@ import { MY_EVENTS } from './myEvents.query'
 type Props = {
     logOut: () => void,
     query: graphql.query,
-    children: () => React.Node,
+    children: (user: any, refetch: () => void) => React.Node,
 };
 
 export class MyEventDataProvider extends Component<Props> {
@@ -26,7 +26,7 @@ export class MyEventDataProvider extends Component<Props> {
                         if (error) {
                             return null;
                         }
-                        return this.props.children(data.user);
+                        return this.props.children(data.user, refetch);
                     }}
                 </Query>
             </View>

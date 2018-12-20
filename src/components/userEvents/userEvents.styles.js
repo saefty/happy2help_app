@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         backgroundColor: '#eee',
     },
-    
+
     header: {
         backgroundColor: '#008FB8',
         justifyContent: 'center',

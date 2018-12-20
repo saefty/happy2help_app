@@ -29,7 +29,6 @@ class SkillListComponent extends Component<Props> {
 
         return (
             <View style={styles.container}>
-                <Title style={styles.title}>{this.props.t('skills')}</Title>
                 <View style={styles.chipBox}>
                     {Render_Skills}
                     {this.props.addSkill ? <AddSkillDialog addSkill={this.props.addSkill} /> : null}

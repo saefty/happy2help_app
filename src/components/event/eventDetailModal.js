@@ -21,6 +21,7 @@ const JOB_QUERY = gql`
     query event($id: ID!) {
         event(id: $id) {
             id
+            start
             jobSet {
                 id
                 name
@@ -28,9 +29,15 @@ const JOB_QUERY = gql`
                 totalPositions
                 currentUsersParticipation {
                     id
-                    state
+                    state 
                     job {
                         id
+                    }                   
+                }
+                requiresskillSet {
+                    skill {
+                        id
+                        name
                     }
                 }
                 participationSet {
@@ -46,6 +53,7 @@ const ORGANISATION_QUERY = gql`
     query event($id: ID!) {
         event(id: $id) {
             id
+            start
             organisation {
                 id
                 name
@@ -140,7 +148,7 @@ export class EventDetailModal extends Component<Props> {
                                 if (error || loading) return <View />;
                                 return (
                                     <Accordion title="Jobs" icon="work" expansion={true}>
-                                        <JobList jobs={data.event.jobSet} refetch={refetch} />
+                                        <JobList jobs={data.event.jobSet} startDate={data.event.start} refetch={refetch} />
                                     </Accordion>
                                 );
                             }}

@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
         flexWrap: 'wrap',
         alignItems: 'flex-start',
     },
-    title: { margin: 5 },
     container: { margin: 10 }
 
 });
