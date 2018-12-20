@@ -1,8 +1,9 @@
 // @flow
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { View } from 'react-native';
 import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
+import * as React from 'react';
 
 const GET_EVENTS = gql`
     {
@@ -23,16 +24,11 @@ const GET_EVENTS = gql`
                     totalPositions
                     participationSet {
                         id
+                        state
+                        user {
+                            id
+                        }
                     }
-                }
-            }
-            participationSet {
-                id
-                state
-                job {
-                    id
-                    name
-                    description
                 }
             }
         }
@@ -42,7 +38,7 @@ const GET_EVENTS = gql`
 type Props = {
     logOut: () => void,
     query: graphql.query,
-    children: () => Component<any, any>,
+    children: (user: any, refetch: () => void) => React.Node,
 };
 
 export class MyEventDataProvider extends Component<Props> {
@@ -54,12 +50,12 @@ export class MyEventDataProvider extends Component<Props> {
         return (
             <View>
                 <Query query={GET_EVENTS}>
-                    {({ loading, error, data }) => {
+                    {({ loading, error, data, refetch }) => {
                         if (loading) return null;
                         if (error) {
                             return null;
                         }
-                        return this.props.children(data.user);
+                        return this.props.children(data.user, refetch);
                     }}
                 </Query>
             </View>

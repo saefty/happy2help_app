@@ -1,5 +1,7 @@
 // @flow
-import React, { Component } from 'react';
+import { Component } from 'react';
+import * as React from 'react';
+
 import { View } from 'react-native';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
@@ -28,7 +30,7 @@ const GET_EVENTS = gql`
 
 type Props = {
     pollInterval?: number,
-    children: React.PropTypes.node,
+    children: () => React.Node,
 };
 
 export class EventDataProvider extends Component<Props> {

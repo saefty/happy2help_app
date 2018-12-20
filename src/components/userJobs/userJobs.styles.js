@@ -3,11 +3,16 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+    card: {
+        marginLeft: 10,
+        marginRight:10,
+        marginBottom: 10,
+    },
+    
     container: {
         alignContent: 'center',
         backgroundColor: '#eee',
     },
-
     header: {
         backgroundColor: '#008FB8',
         justifyContent: 'center',
@@ -26,10 +31,6 @@ const styles = StyleSheet.create({
 
     fab: {
         position: 'absolute',
-    },
-
-    card: {
-        margin: 10,
     },
 });
 

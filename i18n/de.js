@@ -4,7 +4,6 @@ export default {
         welcome: 'Willkommen bei Happy to Help',
         cancel: 'abbrechen',
         ok: 'ok',
-
     },
     errors: {
         toShort: 'Zu kurz!',
@@ -34,7 +33,7 @@ export default {
         locationSearch: 'Standortsuche',
         create: 'Veröffentlichen',
         editTitle: 'Event bearbeiten',
-        createTitle: 'Event erstellen'
+        createTitle: 'Event erstellen',
     },
     Organisation: {
         about: 'Über uns',
@@ -51,21 +50,24 @@ export default {
     Job: {
         description: 'Beschreibung: ',
         positions: 'Stellen',
-        participated: "Du hast teilgenommen.",
-        applied: "Du bist angemeldet.",
-        declined: "Du wurdest abgelehnt.",
-        accepted: "Du wurdest akzeptiert.",
-        canceled: "Die Teilnahme wurde abgebrochen.",
+        participated: 'Du hast an dem Event teilgenommen.',
+        applied: 'Du hast dich beworben. Warte auf die Rückmeldung des Eventerstellers.',
+        declined: 'Du wurdest abgelehnt.',
+        accepted: 'Du wurdest angenommen.',
     },
     JobParticipationButton: {
-        'Participated': 'Teilgenommen',
-        'Applied': 'Bewerben',
-        'Canceled': 'Bewerbung zurückziehen'
+        Participated: 'Teilgenommen',
+        Applied: 'Bewerben',
+        Canceled: 'Bewerbung zurückziehen',
     },
     Sort: {
-        ascending: "aufsteigend",
-        descending: "absteigend",
-        alphabetic: "alphabetisch",
-        byDate: "nach Datum",
+        ascending: 'aufsteigend',
+        descending: 'absteigend',
+        alphabetic: 'alphabetisch',
+        byDate: 'nach Datum',
+    },
+    FlashMessages: {
+        checkedIn: 'Nutzer nimmt jetzt teil!',
+        declined: 'Nutzer wurde abgelehnt!',
     },
 };

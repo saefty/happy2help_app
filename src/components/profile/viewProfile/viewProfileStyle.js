@@ -8,4 +8,6 @@ export const styles = StyleSheet.create({
     appbar: {
         elevation: 0,
     },
+    title: { margin: 5 },
+
 });

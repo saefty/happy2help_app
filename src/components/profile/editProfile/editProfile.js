@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 // import { TextInput } from '../../utils/TextinputWithIcon/textInput';
 import { styles } from './editProfileStyle';
-import { Appbar } from 'react-native-paper';
+import { Appbar, Title } from 'react-native-paper';
 import { ProfilePicture } from '../profilePicture/profilePicture';
 import { SkillList } from '../skillList/skillList';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -143,6 +143,7 @@ class EditProfileComponent extends Component<Props, State> {
                                 label={this.props.t('locationSearch')}
                                 error={errors.location}
                             />
+                            <Title style={styles.title}>{this.props.t('skills')}</Title>
                             <SkillList
                                 skillObjects={values.skills}
                                 editable={true}

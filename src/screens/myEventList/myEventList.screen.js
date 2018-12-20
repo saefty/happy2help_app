@@ -3,18 +3,13 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Portal, Headline, Appbar } from 'react-native-paper';
 import { UserEventList } from '../../components/userEvents/userEventList';
-import { UserJobList } from '../../components/userEvents/userJobList';
 import { MyEventDataProvider } from './myEventDataProvider';
 import { EventFAB } from '../../components/userEvents/eventFAB';
-import styles from '../../components/userEvents/userEvents.styles';
 import { Provider } from 'react-native-paper';
 import type { EventObject } from '../../models/event.model';
 import { H2HTheme } from '../../../themes/default.theme';
-import { EventDetailModal } from '../../components/event/eventDetailModal';
 import { withNamespaces, i18n } from 'react-i18next';
-import { participationTypes } from '../../models/participation.model';
 import { withNavigation } from 'react-navigation';
-import { SegmentedControl } from '../../components/utils/SegmentedControl';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type Props = {
@@ -24,15 +19,11 @@ type Props = {
 type State = {
     event?: EventObject,
     visible: boolean,
-    selectedIndex: number,
 };
 
 class _MyEventList extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        this.state = {
-            selectedIndex: 0,
-        };
     }
 
     openEventModal = (event: EventObject) => {
@@ -41,7 +32,17 @@ class _MyEventList extends Component<Props, State> {
         });
     };
 
-    setIndex = index => this.setState({ selectedIndex: index });
+    onEventEdit = (event: EventObject) => {
+        this.props.navigation.navigate('Edit', {
+            event: event,
+        });
+    };
+
+    onEventParticipation = (event: EventObject, refetch: () => void) => {
+        this.props.navigation.navigate('Participations', {
+            screenProps: { event, refetch },
+        });
+    };
 
     // This component is wrapped in its own provider as the FAB Button in this screen would cause issues
     // Look at https://github.com/callstack/react-native-paper/issues/420
@@ -49,39 +50,28 @@ class _MyEventList extends Component<Props, State> {
         return (
             <Provider theme={H2HTheme}>
                 <Appbar.Header>
-                    <Appbar.Action icon="menu" onPress={() => this.props.navigation.openDrawer()} />
-                    <Appbar.Content title="" />
+                    <Appbar.BackAction onPress={() => this.props.navigation.navigate('Discover')} />
+                    <Appbar.Content title={this.props.t('myEvents')} />
                 </Appbar.Header>
-                <View
-                    style={{
-                        width: '50%',
-                        alignSelf: 'center',
-                        marginTop: 20,
-                    }}
-                >
-                    <SegmentedControl values={['Jobs', 'Events']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
-                </View>
                 <KeyboardAwareScrollView>
                     <MyEventDataProvider>
-                        {user => {
-                            if (this.state.selectedIndex === 1) {
-                                return (
-                                    <View>
-                                        <Headline>{this.props.t('myEvents')}</Headline>
-                                        <UserEventList events={user.eventSet} onEventTouch={this.openEventModal} />
-                                        <Portal>
-                                            <EventFAB addEvent={() => this.props.navigation.navigate('Edit')} />
-                                        </Portal>
-                                    </View>
-                                );
-                            } else {
-                                return (
-                                    <View>
-                                        <Headline>{this.props.t('myJobs')}</Headline>
-                                        <UserJobList participationSet={user.participationSet.filter(x => x.state !== participationTypes.Canceled)} />
-                                    </View>
-                                );
-                            }
+                        {(user, refetch) => {
+                            return (
+                                <View>
+                                    <Headline>{}</Headline>
+                                    <UserEventList
+                                        events={user.eventSet}
+                                        onEventTouch={this.openEventModal}
+                                        onEventEdit={this.onEventEdit}
+                                        onEventParticipation={event => {
+                                            this.onEventParticipation(event, refetch);
+                                        }}
+                                    />
+                                    <Portal>
+                                        <EventFAB addEvent={() => this.props.navigation.navigate('Edit')} />
+                                    </Portal>
+                                </View>
+                            );
                         }}
                     </MyEventDataProvider>
                 </KeyboardAwareScrollView>

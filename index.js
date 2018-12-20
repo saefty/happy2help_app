@@ -21,6 +21,7 @@ import { H2HTheme } from './themes/default.theme';
 import { requestPermission } from './src/helpers/requestPermission';
 import { Sentry } from 'react-native-sentry';
 import { SentryConfig } from './config/sentry';
+import { AppState, Platform } from 'react-native';
 
 type I18nProps = {
     t: i18n.t,
@@ -28,6 +29,7 @@ type I18nProps = {
 type State = {
     apolloClient: ApolloClient,
     loggedIn: boolean,
+    appState: AppState.AppStateStatic,
 };
 
 Sentry.config(SentryConfig.link, SentryConfig.props);
@@ -38,7 +40,8 @@ if (!global.__DEV__) {
 export default class AppApollo extends Component<I18nProps, State> {
     state = {
         apolloClient: {},
-        loggedIn: true, // Be optimistic and hope the user is logged in
+        loggedIn: false, // Be optimistic and hope the user is logged in
+        appState: AppState.currentState,
     };
 
     constructor(props: I18nProps) {
@@ -47,8 +50,11 @@ export default class AppApollo extends Component<I18nProps, State> {
     }
 
     async componentDidMount() {
-        await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-        await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
+        if (Platform.OS !== 'ios') {
+            await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+            await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION);
+        }
+        AppState.addEventListener('change', this._handleAppStateChange);
 
         const cfg = await createApolloConfiguration();
 
@@ -60,6 +66,19 @@ export default class AppApollo extends Component<I18nProps, State> {
         });
         SplashScreen.hide();
     }
+
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this._handleAppStateChange);
+    }
+
+    _handleAppStateChange = nextAppState => {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+            SplashScreen.hide();
+        } else if (this.state.appState === 'active' && nextAppState.match(/inactive|background/)) {
+            SplashScreen.show();
+        }
+        this.setState({ appState: nextAppState });
+    };
 
     verifyLogin = async (): Promise<boolean> => {
         // Get JWT
