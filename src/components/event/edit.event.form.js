@@ -4,13 +4,17 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TextInput as NativeTextInput } from 'react-native';
 import { Button, Text, TextInput, HelperText, Subheading, Headline, Appbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { showMessage } from "react-native-flash-message";
 import { withNamespaces, i18n } from 'react-i18next';
 import { GooglePlacesInput } from '../location/location.input';
 import { styles } from './edit.event.style';
 import { graphql, compose } from 'react-apollo';
 import { mutations } from './edit.event.mutations';
+import { GET_EVENTS } from '../../providers/getEvents.query';
+import { MY_EVENTS } from '../../screens/myEventList/myEvents.query'
 
 type Props = {
     event?: EventObject,
@@ -27,7 +31,7 @@ class _EditEventForm extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         const EventSchema = Yup.object().shape({
-            eventName: Yup.string()
+            name: Yup.string()
                 .min(5, this.props.t('errors:toShort'))
                 .required(this.props.t('errors:required')),
             description: Yup.string()
@@ -55,12 +59,9 @@ class _EditEventForm extends Component<Props, State> {
     update = event => {
         return this.props.updateEventMutation({
             variables: {
-                id: this.props.event.id,
+                eventId: this.props.event.id,
                 name: event.name || this.props.event.name,
                 description: event.description || this.props.event.description,
-                locationLon: event.location.long || this.props.event.location.longitude,
-                locationLat: event.location.lat || this.props.event.location.latitude,
-                locationName: event.location.name || this.props.event.location.name,
                 start: event.start,
                 end: event.end,
             },
@@ -70,24 +71,34 @@ class _EditEventForm extends Component<Props, State> {
     onSubmit = async (values, actions) => {
         actions.setSubmitting(true);
         const { start, end } = this.getStartEnd();
-        const EVENT = {
-            name: values.eventName,
+        let EVENT = {
+            name: values.name,
             description: values.description,
-            location: {
-                name: values.location.formatted_address,
-                lat: values.location.geometry.location.lat,
-                long: values.location.geometry.location.lng,
-            },
             start,
             end,
         };
 
+        let successMessage = 'creationSuccess';
+
         if (!this.props.event) {
+            EVENT.location = {
+                name: values.location.formatted_address,
+                lat: values.location.geometry.location.lat,
+                long: values.location.geometry.location.lng,
+            },
             await this.create(EVENT);
         } else {
             await this.update(EVENT);
+            successMessage = 'editSuccess';
         }
+
         actions.setSubmitting(false);
+        this.props.navigation.goBack();
+        showMessage({
+            message: this.props.t(successMessage) + values.name,
+            type: "success",
+            icon: 'auto',
+          });
         return;
     };
 
@@ -114,13 +125,13 @@ class _EditEventForm extends Component<Props, State> {
                             </Appbar.Header>
                             <View style={styles.container}>
                                 <TextInput
-                                    onChangeText={handleChange('eventName')}
-                                    value={values.eventName}
-                                    label={this.props.t('eventName')}
-                                    error={errors.eventName}
+                                    onChangeText={handleChange('name')}
+                                    value={values.name}
+                                    label={this.props.t('name')}
+                                    error={errors.name}
                                 />
-                                <HelperText type="error" visible={errors.eventName}>
-                                    <ErrorMessage name="eventName" />
+                                <HelperText type="error" visible={errors.name}>
+                                    <ErrorMessage name="name" />
                                 </HelperText>
                                 <TextInput
                                     onChangeText={handleChange('description')}
@@ -135,10 +146,10 @@ class _EditEventForm extends Component<Props, State> {
                                 </HelperText>
                                 <GooglePlacesInput
                                     onChangeValue={v => {
-                                        setFieldValue('location', v);
-                                        handleChange('location');
+                                            setFieldValue('location', v);
+                                            handleChange('location');
                                     }}
-                                    initialValue={values.location}
+                                    initialValue={{ formatted_address: values.location ? values.location.name : undefined }}
                                     label={this.props.t('locationSearch')}
                                     error={errors.location}
                                 />
@@ -155,6 +166,12 @@ class _EditEventForm extends Component<Props, State> {
 }
 
 export const EditEventFormNamespaced = compose(
-    graphql(mutations.CREATE_EVENT, { name: 'createEventMutation' }),
-    graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation' })
-)(withNamespaces(['Event', 'errors'])(_EditEventForm));
+    graphql(mutations.CREATE_EVENT, { name: 'createEventMutation', options: () => ({
+        refetchQueries: [{ query: GET_EVENTS }, { query: MY_EVENTS }],
+      }) 
+    }),
+    graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation', options: () => ({
+        refetchQueries: [{ query: GET_EVENTS }, { query: MY_EVENTS }],
+      }) 
+    })
+)(withNamespaces(['Event', 'errors'])(withMappedNavigationProps()(_EditEventForm)));

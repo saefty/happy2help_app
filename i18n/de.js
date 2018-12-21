@@ -28,12 +28,14 @@ export default {
     Event: {
         myEvents: 'Meine Events',
         myJobs: 'Meine Jobs',
-        eventName: 'Veranstaltungsname',
+        name: 'Veranstaltungsname',
         description: 'Beschreibung',
         locationSearch: 'Standortsuche',
         create: 'Veröffentlichen',
         editTitle: 'Event bearbeiten',
         createTitle: 'Event erstellen',
+        creationSuccess: "Event wurde erfolgreich erstellt: ",
+        editSuccess: "Event wurde erfolgreich bearbeitet: ",
     },
     Organisation: {
         about: 'Über uns',
