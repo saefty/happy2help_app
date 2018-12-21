@@ -14,7 +14,9 @@ export const styles = StyleSheet.create({
     },
     headerTextContainer: {
         flex: 1,
-        left: -20,
+        left: 0,
+       // marginTop: 25,
+        top:0,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
@@ -22,16 +24,28 @@ export const styles = StyleSheet.create({
     userName: {
         color: 'white',
         fontSize: 25,
-        top: -10,
+        top: -15,
+        fontWeight:'bold'
     },
-    location: { fontSize: 15 },
-    nameAndLocationContainer: { margin: 10 },
+    location: {
+        fontSize: 15,
+        fontStyle: 'italic',
+        width: 230,
+        position: 'absolute',
+        top:20,
+        //left: 124,
+        },
+    nameAndLocationContainer: {
+        margin: 10,
+        //marginTop: 10,
+//        width: 200
+    },
     profilePicture: {
         width: 110,
         height: 110,
         borderRadius: 150,
         margin: 10,
-        borderWidth: 8,
+        borderWidth: 4,
         borderColor: 'white',
     },
 });
