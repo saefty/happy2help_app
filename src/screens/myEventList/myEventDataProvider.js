@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
 import * as React from 'react';
-import { MY_EVENTS } from './myEvents.query'
+import { MY_EVENTS } from './myEvents.query';
 
 type Props = {
     logOut: () => void,

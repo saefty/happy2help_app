@@ -22,6 +22,12 @@ export const MY_EVENTS = gql`
                         state
                         user {
                             id
+                            username
+                        }
+                        job {
+                            id
+                            name
+                            description
                         }
                     }
                 }

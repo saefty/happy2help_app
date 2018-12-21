@@ -4,7 +4,7 @@ import type { Participation } from '../../../models/participation.model';
 import { StyleSheet, View } from 'react-native';
 import { Mutation } from 'react-apollo';
 import { Button } from 'react-native-paper';
-import { UPDATE_PARTICIPATION } from '../../../components/event/participation.mutation';
+import { UPDATE_PARTICIPATION } from '../participations/participation.mutation';
 
 // TODO: ADD i18n
 export const JobCheckInDeclineButton = (props: any) => {

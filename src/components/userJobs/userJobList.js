@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { Card } from 'react-native-paper';
 import { compose, graphql } from 'react-apollo';
-import { CREATE_PARTICIPATION, UPDATE_PARTICIPATION } from './../event/participation.mutation';
+import { CREATE_PARTICIPATION, UPDATE_PARTICIPATION } from './../event/participations/participation.mutation';
 import { participationTypes } from '../../models/participation.model';
 import { JobListItem } from './../event/job/jobListItem';
 
