@@ -2,8 +2,7 @@
 import type { EventObject } from '../../models/event.model';
 
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
-import { NavigationEvents } from 'react-navigation';
+import { View, ScrollView, Platform, Animated } from 'react-native';
 import { Surface } from 'react-native-paper';
 import { Provider } from 'react-native-paper';
 import { H2HTheme } from '../../../themes/default.theme';
@@ -16,6 +15,10 @@ import { EventList } from './../../components/listview/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
 import { segmentStyle } from './segmented.style';
 import { SortAccordion } from '../../components/listview/sort.events.accordion';
+
+const APPBAR_SEG_HEIGHT = 130;
+const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
+const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
 type Props = {
     t: i18n.t,
@@ -31,7 +34,25 @@ type State = {
 class _DiscoverScreen extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
+
+        const scrollAnim = new Animated.Value(0);
+        const offsetAnim = new Animated.Value(0);
+
         this.state = {
+            scrollAnim: scrollAnim,
+            offsetAnim: offsetAnim,
+            clampedScroll: Animated.diffClamp(
+                Animated.add(
+                    scrollAnim.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [0, 1],
+                        extrapolateLeft: 'clamp',
+                    }),
+                    offsetAnim
+                ),
+                0,
+                APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT
+            ),
             userRegion: {
                 latitude: 0,
                 longitude: 0,
@@ -43,6 +64,10 @@ class _DiscoverScreen extends Component<Props, State> {
         };
     }
 
+    _clampedScrollValue = 0;
+    _offsetValue = 0;
+    _scrollValue = 0;
+
     getPosition = () => {
         return new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -50,6 +75,16 @@ class _DiscoverScreen extends Component<Props, State> {
     };
 
     async componentDidMount() {
+        // listeners for scroll values, relevant for half-hidden appbar
+        this.state.scrollAnim.addListener(({ value }) => {
+            const diff = value - this._scrollValue;
+            this._scrollValue = value;
+            this._clampedScrollValue = Math.min(Math.max(this._clampedScrollValue + diff, 0), APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT);
+        });
+        this.state.offsetAnim.addListener(({ value }) => {
+            this._offsetValue = value;
+        });
+
         const position = await this.getPosition();
         this.setState({
             userRegion: {
@@ -61,6 +96,32 @@ class _DiscoverScreen extends Component<Props, State> {
         });
     }
 
+    componentWillUnmount() {
+        this.state.scrollAnim.removeAllListeners();
+        this.state.offsetAnim.removeAllListeners();
+    }
+
+    _onScrollEndDrag = () => {
+        this._scrollEndTimer = setTimeout(this._onMomentumScrollEnd, 250);
+    };
+
+    _onMomentumScrollBegin = () => {
+        clearTimeout(this._scrollEndTimer);
+    };
+
+    _onMomentumScrollEnd = () => {
+        const toValue =
+            this._scrollValue > APPBAR_SEG_HEIGHT && this._clampedScrollValue > (APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT) / 2
+                ? this._offsetValue + APPBAR_SEG_HEIGHT
+                : this._offsetValue - APPBAR_SEG_HEIGHT;
+
+        Animated.timing(this.state.offsetAnim, {
+            toValue,
+            duration: 350,
+            useNativeDriver: true,
+        }).start();
+    };
+
     openEventModal = (event: EventObject) => {
         this.props.navigation.navigate('DetailedEventView', {
             event: event,
@@ -70,24 +131,16 @@ class _DiscoverScreen extends Component<Props, State> {
     setIndex = index => this.setState({ selectedIndex: index });
 
     render() {
+        const { clampedScroll } = this.state;
+
+        const appbarTranslate = clampedScroll.interpolate({
+            inputRange: [0, APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT],
+            outputRange: [0, -(APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT)],
+            extrapolate: 'clamp',
+        });
+
         return (
-            <Provider theme={H2HTheme}>
-                <Surface style={{ elevation: 6 }}>
-                    <DiscoverAppbar />
-                    <View style={[segmentStyle.list]}>
-                        <SegmentedControl
-                            values={['KARTE', 'LISTE']}
-                            borderRadius={0}
-                            tabsContainerStyle={segmentStyle.tabsContainerStyle}
-                            tabStyle={segmentStyle.tabStyle}
-                            activeTabStyle={segmentStyle.activeTabStyle}
-                            tabTextStyle={segmentStyle.tabTextStyle}
-                            activeTabTextStyle={segmentStyle.activeTabTextStyle}
-                            selectedIndex={this.state.selectedIndex}
-                            onTabPress={this.setIndex}
-                        />
-                    </View>
-                </Surface>
+            <Provider theme={H2HTheme} style={{ flex: 1 }}>
                 <View>
                     <EventDataProvider pollInterval={undefined}>
                         {events => {
@@ -106,7 +159,16 @@ class _DiscoverScreen extends Component<Props, State> {
                                 );
                             } else {
                                 return (
-                                    <ScrollView>
+                                    <AnimatedScrollView
+                                        style={{ paddingTop: 110 }}
+                                        scrollEventThrottle={1}
+                                        onMomentumScrollBegin={this._onMomentumScrollBegin}
+                                        onMomentumScrollEnd={this._onMomentumScrollEnd}
+                                        onScrollEndDrag={this._onScrollEndDrag}
+                                        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollAnim } } }], {
+                                            useNativeDriver: true,
+                                        })}
+                                    >
                                         <SortAccordion
                                             sorting={this.state.sorting}
                                             descending={this.state.descending}
@@ -122,12 +184,30 @@ class _DiscoverScreen extends Component<Props, State> {
                                             }}
                                         />
                                         <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
-                                    </ScrollView>
+                                    </AnimatedScrollView>
                                 );
                             }
                         }}
                     </EventDataProvider>
                 </View>
+                <Animated.View style={[{ position: 'absolute' }, { transform: [{ translateY: appbarTranslate }] }]}>
+                    <Surface style={{ elevation: 6 }}>
+                        <DiscoverAppbar />
+                        <View style={[segmentStyle.list]}>
+                            <SegmentedControl
+                                values={['KARTE', 'LISTE']}
+                                borderRadius={0}
+                                tabsContainerStyle={segmentStyle.tabsContainerStyle}
+                                tabStyle={segmentStyle.tabStyle}
+                                activeTabStyle={segmentStyle.activeTabStyle}
+                                tabTextStyle={segmentStyle.tabTextStyle}
+                                activeTabTextStyle={segmentStyle.activeTabTextStyle}
+                                selectedIndex={this.state.selectedIndex}
+                                onTabPress={this.setIndex}
+                            />
+                        </View>
+                    </Surface>
+                </Animated.View>
             </Provider>
         );
     }
