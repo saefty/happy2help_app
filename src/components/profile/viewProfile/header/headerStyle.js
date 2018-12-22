@@ -16,9 +16,9 @@ export const styles = StyleSheet.create({
     headerTextContainer: {
         flex: 1,
         left: 0,
-        // marginTop: 25,
-        top: 0,
-        justifyContent: 'center',
+       // marginTop: 25,
+        top:0,
+        justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'row',
     },
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     location: {
         fontSize: 15,
         fontStyle: 'italic',
-        width: 230,
+        width: '99%',
         position: 'absolute',
         top: 20,
         //left: 124,
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     nameAndLocationContainer: {
         margin: 10,
         //marginTop: 10,
-        //        width: 200
+        width: '100%'
     },
     profilePicture: {
         width: 110,
@@ -48,5 +48,6 @@ export const styles = StyleSheet.create({
         margin: 10,
         borderWidth: 4,
         borderColor: 'white',
+        justifyContent: 'flex-start',
     },
 });
