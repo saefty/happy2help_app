@@ -1,4 +1,4 @@
-import { H2HTheme } from '../../../themes/default.theme';
+import { H2HTheme } from '../../../../themes/default.theme';
 import { StyleSheet } from 'react-native';
 
 export const DiscoverAppbarStyle = StyleSheet.create({

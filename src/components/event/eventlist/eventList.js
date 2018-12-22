@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Event } from './event';
 
-import type { EventObject } from '../../models/event.model';
-import styles from '../userEvents/userEvents.styles';
+import type { EventObject } from '../../../models/event.model';
 
 type Props = {
     events: Array<EventObject>,
@@ -27,7 +26,6 @@ export class EventList extends Component<Props> {
                         event={event}
                         onEventTouch={this.props.onEventTouch}
                         descriptionMaxLength={MAX_DESCRIPTION_LENGTH}
-                        style={styles.card}
                         showCreatorName={true}
                     />
                 ))}

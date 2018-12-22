@@ -1,5 +1,5 @@
-import { H2HTheme } from '../../../themes/default.theme';
 import { StyleSheet } from 'react-native';
+import { secondaryColor } from '../../../../themes/colors';
 
 export const MapStyle = StyleSheet.create({
     mapContainer: {
@@ -8,7 +8,7 @@ export const MapStyle = StyleSheet.create({
         position: 'absolute',
     },
     map: {
-        flex: 1
+        flex: 1,
     },
     logOut: {
         position: 'absolute',
@@ -16,7 +16,7 @@ export const MapStyle = StyleSheet.create({
         width: '100%',
     },
     clusterStyle: {
-        backgroundColor: H2HTheme.colors.accent,
+        backgroundColor: secondaryColor,
         width: 30,
         height: 30,
         borderRadius: 30,
@@ -24,7 +24,7 @@ export const MapStyle = StyleSheet.create({
     },
     clusterStyleText: {
         color: 'white',
-        textAlignVertical: "center",
-        textAlign: "center",
-    }
+        textAlignVertical: 'center',
+        textAlign: 'center',
+    },
 });

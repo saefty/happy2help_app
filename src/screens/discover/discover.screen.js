@@ -8,13 +8,13 @@ import { Provider } from 'react-native-paper';
 import { H2HTheme } from '../../../themes/default.theme';
 import { withNamespaces, i18n } from 'react-i18next';
 
-import { DiscoverAppbar } from './../../components/discover/discoverAppbar';
+import { DiscoverAppbar } from './../../components/discover/appbar/discoverAppbar';
 import { SegmentedControl } from '../../components/utils/SegmentedControl';
-import { Map } from '../../components/map/map';
-import { EventList } from './../../components/listview/eventList';
+import { Map } from '../../components/discover/map/map';
+import { EventList } from './../../components/event/eventlist/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
 import { segmentStyle } from './segmented.style';
-import { SortAccordion } from '../../components/listview/sort.events.accordion';
+import { SortAccordion } from '../../components/event/eventlist/sort.events.accordion';
 
 const APPBAR_SEG_HEIGHT = 130;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });

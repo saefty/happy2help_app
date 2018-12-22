@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { primaryStatusBar } from '../../../../themes/colors';
+import { primaryStatusBar, statusColors, neutralColors } from '../../../../themes/colors';
 
-const green = '#4a4';
-const red = '#a44';
 export const styles = StyleSheet.create({
     accept: {
         justifyContent: 'center',
@@ -14,14 +12,14 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     alreadyAccepted: {
-        backgroundColor: '#bbb',
+        backgroundColor: neutralColors.light,
         justifyContent: 'center',
         alignItems: 'center',
         width: '50%',
         borderRadius: 0,
     },
     buttonText: {
-        color: '#fff',
+        color: neutralColors.background,
         fontSize: 15,
     },
     buttonContainer: {
@@ -43,9 +41,9 @@ export const styles = StyleSheet.create({
         color: primaryStatusBar,
     },
     textAccepted: {
-        color: green,
+        color: statusColors.success,
     },
     textElse: {
-        color: red,
+        color: statusColors.alert,
     },
 });

@@ -12,6 +12,7 @@ import Accordion from '../accordion/accordion';
 import { styles } from './viewOrganisation.style';
 import { H2HTheme } from '../../../themes/default.theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { primaryColor, neutralColors } from '../../../themes/colors';
 
 type Props = {
     t: i18n.t,
@@ -47,7 +48,7 @@ class _OrganisationView extends Component<Props, State> {
             </View>
         ) : null;
         const currentEvents = this.props.showEvents ? (
-            <View style={{ backgroundColor: '#F4F9FE', marginBottom: 15 }}>
+            <View style={{ backgroundColor: neutralColors.surface, marginBottom: 15 }}>
                 <Accordion title={this.props.t('currentEvents')} expansion={false} icon={'event'}>
                     <ListView
                         dataSource={this.state.events}
@@ -87,7 +88,7 @@ class _OrganisationView extends Component<Props, State> {
                     </View>
 
                     <View style={styles.accordionContainer}>
-                        <View style={{ backgroundColor: '#F4F9FE', marginBottom: 15 }}>
+                        <View style={{ backgroundColor: neutralColors.surface, marginBottom: 15 }}>
                             <Accordion title={this.props.t('about')} expansion={true} icon={'description'}>
                                 <Text style={{ paddingBottom: 15 }}>{this.props.organisation.description}</Text>
                             </Accordion>

@@ -1,10 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import gql from 'graphql-tag';
-import { withApollo } from 'react-apollo';
+import { withApollo, Query } from 'react-apollo';
 import { Appbar } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 import ProfileView from '../../../components/profile/viewProfile/viewProfile';
@@ -13,6 +13,9 @@ import { H2HTheme } from '../../../../themes/default.theme';
 import { showMessage } from 'react-native-flash-message';
 import { JobCheckInDeclineButton } from '../../../components/event/job/jobCheckInDeclineButton';
 import { withNamespaces } from 'react-i18next';
+import { PARTICIPATION_LIST_QUERY } from './participationList.screen';
+import { primaryColor, neutralColors } from '../../../../themes/colors';
+import { participationTypes } from '../../../models/participation.model';
 
 const VERIFY_QUERY = gql`
     query qrCheckToken($token: String!) {
@@ -38,18 +41,8 @@ export class ScanScreen_ extends Component<any, any> {
     state = {
         isRender: true,
         u: undefined,
-        event: undefined,
     };
-    constructor(props: any) {
-        super(props);
-        // We need to set the event as a state since the navigation will never pass the updated prop to this screen.
 
-        this.state = {
-            isRender: true,
-            u: undefined,
-            event: this.props.screenProps.event,
-        };
-    }
     scrollView: ScrollView = React.createRef();
 
     componentDidMount() {
@@ -61,39 +54,45 @@ export class ScanScreen_ extends Component<any, any> {
         });
     }
 
-    onSuccess = async (e: { data: string }) => {
+    onSuccess = async (e: { data: string }, event: any) => {
         const rsp = await this.props.client.query({
             query: VERIFY_QUERY,
             variables: { token: e.data },
         });
-        await this.setState({ u: rsp.data.qrCheckToken }, () => {});
+        const user = rsp.data.qrCheckToken;
+        if (rsp.errors) {
+            showMessage({
+                message: 'QR Code is invalid',
+                type: 'danger',
+                icon: 'auto',
+            });
+            return;
+        }
+        if (!this._participationForUser(event, user)) {
+            showMessage({
+                message: 'User is not accepted for this event.',
+                type: 'danger',
+                icon: 'auto',
+            });
+            return;
+        }
+
+        await this.setState({ u: user }, () => {});
         await this.forceUpdate(() => {});
         setTimeout(() => {
             this.scrollView.scrollToEnd({ animated: true });
         }, 150);
     };
 
-    get participationForUser() {
-        const participations = [].concat.apply([], this.state.event.jobSet.map(job => job.participationSet));
-
-        return participations.filter(p => p.user.id === this.state.u.id)[0];
-    }
-
-    async newEvent() {
-        return (await this.props.screenProps.refetch()).data.user.eventSet.filter(e => e.id === this.state.event.id)[0];
-    }
-
-    checkInParticipation = async (mutate: gql.mutate) => {
+    checkInParticipation = async (mutate: gql.mutate, data: any) => {
         await mutate({
             variables: {
-                participationId: this.participationForUser.id,
+                participationId: this._participationForUser(data).id,
                 state: 1,
             },
         });
 
-        const newEvent = await this.newEvent();
-
-        this.setState({ u: undefined, event: newEvent });
+        this.setState({ u: undefined });
         showMessage({
             message: this.props.t('checkedIn'),
             type: 'success',
@@ -101,17 +100,15 @@ export class ScanScreen_ extends Component<any, any> {
         });
     };
 
-    decline = async (mutate: gql.mutate) => {
+    decline = async (mutate: gql.mutate, data: any) => {
         await mutate({
             variables: {
-                participationId: this.participationForUser.id,
+                participationId: this._participationForUser(data).id,
                 state: 3,
             },
         });
 
-        const newEvent = await this.newEvent();
-
-        this.setState({ u: undefined, event: newEvent });
+        this.setState({ u: undefined });
         showMessage({
             message: this.props.t('declined'),
             type: 'danger',
@@ -119,58 +116,80 @@ export class ScanScreen_ extends Component<any, any> {
         });
     };
 
-    get topContent() {
+    _participationForUser = (event: any, user?: any) => {
+        const curUser = user || this.state.u;
+        const participations = [].concat.apply([], event.jobSet.map(job => job.participationSet));
+
+        const participation = participations.filter(p => p.user.id === curUser.id)[0];
+        if (!participation) return;
+        if (participation.state !== participationTypes.Canceled) return participation;
+    };
+
+    topContent = (data: any) => {
+        if (!data || !this.state.u) return;
+        const p = this._participationForUser(data);
+        if (!p) return;
         return (
             this.state.u && (
                 <JobCheckInDeclineButton
-                    participation={this.participationForUser}
-                    decline={mutate => this.decline(mutate)}
-                    checkin={mutate => this.checkInParticipation(mutate)}
+                    participation={p}
+                    decline={mutate => this.decline(mutate, data)}
+                    checkin={mutate => this.checkInParticipation(mutate, data)}
                 />
             )
         );
-    }
+    };
 
-    get bottomContent() {
+    bottomContent = () => {
         return (
             this.state.u && (
                 <View
                     style={{
-                        backgroundColor: H2HTheme.colors.surface,
+                        backgroundColor: neutralColors.surface,
                     }}
                 >
                     <ProfileView user={this.state.u} />
                 </View>
             )
         );
-    }
+    };
 
     render() {
         if (!this.state.isRender) return null;
         return (
             <View style={{ flex: 1 }}>
-                <Appbar.Header>
+                <Appbar.Header style={{ elevation: 0 }}>
                     <Appbar.BackAction onPress={() => this.props.navigation.dispatch(NavigationActions.back())} />
+                    <Appbar.Content title={this.props.screenProps.event.name} />
                 </Appbar.Header>
-                <ScrollView ref={ref => (this.scrollView = ref)}>
-                    <View>
-                        <QRCodeScanner
-                            reactivateTimeout={1000}
-                            showMarker={true}
-                            onRead={this.onSuccess}
-                            reactivate={true}
-                            topContent={this.topContent}
-                            topViewStyle={{
-                                top: 350,
-                                zIndex: 10,
-                            }}
-                            bottomViewStyle={{
-                                top: 10,
-                            }}
-                            bottomContent={this.bottomContent}
-                        />
-                    </View>
-                </ScrollView>
+                <Query query={PARTICIPATION_LIST_QUERY} variables={{ id: this.props.screenProps.event.id }}>
+                    {({ error, loading, data }) => {
+                        if (error || loading) return null;
+                        return (
+                            <ScrollView ref={ref => (this.scrollView = ref)}>
+                                <View>
+                                    <QRCodeScanner
+                                        reactivateTimeout={1000}
+                                        showMarker={true}
+                                        onRead={qr => {
+                                            this.onSuccess(qr, data.event);
+                                        }}
+                                        reactivate={true}
+                                        topContent={this.topContent(data.event)}
+                                        topViewStyle={{
+                                            top: 350,
+                                            zIndex: 10,
+                                        }}
+                                        bottomViewStyle={{
+                                            top: 10,
+                                        }}
+                                        bottomContent={this.bottomContent()}
+                                    />
+                                </View>
+                            </ScrollView>
+                        );
+                    }}
+                </Query>
             </View>
         );
     }
