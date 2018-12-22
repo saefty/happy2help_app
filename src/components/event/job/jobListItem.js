@@ -23,8 +23,7 @@ type Props = {
     startDate: Date,
 };
 
-class _JobListItem extends Component<Props> {    
-
+class _JobListItem extends Component<Props> {
     isFull = () => {
         const job = this.props.job;
         if (job.totalPositions === null) return false;
@@ -33,11 +32,11 @@ class _JobListItem extends Component<Props> {
 
     jobParticipationCount = () => {
         const job = this.props.job;
-        return job.participationSet.filter(x => x.state !== participationTypes.Accepted).length;
+        return job.participationSet.filter(x => x.state === participationTypes.Accepted).length;
     };
 
     totalPositions = () => {
-        const  job  = this.props.job;
+        const job = this.props.job;
         if (job.totalPositions === null) {
             return <IconEntypo name="infinity" />;
         } else {
@@ -50,8 +49,7 @@ class _JobListItem extends Component<Props> {
             <View style={(styles.row, styles.positions)}>
                 <Text style={styles.boldText}>{this.props.t('positions')}: </Text>
                 <Text>
-                    {this.jobParticipationCount()}/
-                    {this.totalPositions()}
+                    {this.jobParticipationCount()}/{this.totalPositions()}
                 </Text>
             </View>
         );

@@ -63,7 +63,7 @@ class EditProfileComponent extends Component<Props, State> {
         let response = await this.props.createLocationMutation({
             variables: { longitude: location.longitude, latitude: location.latitude, name: location.name },
         });
-        this.props.updateUserLocationMutation({ variables: { locationId: response.data.createLocation.location.id } });
+        this.props.updateUserLocationMutation({ variables: { locationId: response.data.createLocation.id } });
     };
 
     createSkillsInDb = skills => {
@@ -139,7 +139,7 @@ class EditProfileComponent extends Component<Props, State> {
                                     });
                                     handleChange('location');
                                 }}
-                                initialValue={{ formatted_address: values.location.name }}
+                                initialValue={{ formatted_address: values.location ? values.location.name : '' }}
                                 label={this.props.t('locationSearch')}
                                 error={errors.location}
                             />
