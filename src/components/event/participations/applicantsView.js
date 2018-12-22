@@ -4,13 +4,11 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import type { EventObject } from '../../../models/event.model';
 import { ApplicantList } from './applicantList';
-import { styles } from './applicantView.style';
 import { graphql, compose } from 'react-apollo';
 import * as mutations from './participation.mutation';
 
 type Props = {
     event: EventObject,
-    refetch: () => EventObject,
     updateParticipation: graphql.mutate,
 };
 
@@ -36,9 +34,6 @@ class _ApplicantsView extends Component<Props> {
     render() {
         return (
             <View>
-                <View style={styles.headerContainer}>
-                    <Text style={styles.headerText}>{this.props.event.name}</Text>
-                </View>
                 {this.props.event.jobSet.map(job => (
                     <ApplicantList key={job.id} title={job.name} participationSet={job.participationSet} handleChange={this.handleChange} />
                 ))}

@@ -135,14 +135,15 @@ var styles = StyleSheet.create({
         marginBottom: 15,
     },
     button: {
-        backgroundColor: '#ffffff',
+        backgroundColor: Colors.neutralColors.background,
     },
     signUp: {
-        borderColor: '#ffffff',
+        borderColor: Colors.neutralColors.background,
+        borderWidth: 1,
         marginTop: 10,
     },
     signUpText: {
-        color: '#ffffff',
+        color: Colors.neutralColors.background,
     },
 });
 

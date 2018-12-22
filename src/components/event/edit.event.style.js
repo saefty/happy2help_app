@@ -1,5 +1,6 @@
 // @flow
 import { StyleSheet } from 'react-native';
+import { neutralColors } from '../../../themes/colors';
 
 export const styles = StyleSheet.create({
     container: {
@@ -17,6 +18,6 @@ export const styles = StyleSheet.create({
     },
     button: {
         zIndex: -1,
-        backgroundColor: '#ffffff',
+        backgroundColor: neutralColors.background,
     },
 });

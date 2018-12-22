@@ -1,14 +1,13 @@
 // @flow
-import type { EventObject } from '../../models/event.model';
+import type { EventObject } from '../../../models/event.model';
 import React, { PureComponent } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE, Region } from 'react-native-maps';
-import { DefaultStyles } from '../../../config/style';
+import { View, Text } from 'react-native';
+import { Marker, PROVIDER_GOOGLE, Region } from 'react-native-maps';
+import { DefaultStyles } from '../../../../config/style';
 //import { i18n } from 'react-i18next';
 import { EventMarker } from './eventMarker';
 import ClusteredMapView from 'react-native-maps-super-cluster';
 import { MapStyle as styles } from './map.style';
-import { Sentry } from 'react-native-sentry';
 
 type Props = {
     events?: Array<EventObject>,
@@ -125,7 +124,12 @@ export class Map extends PureComponent<Props, State> {
                     onRegionChange={this.props.setUserViewPoint}
                     renderCluster={this.renderCluster}
                     renderMarker={event => (
-                        <EventMarker onEventTouch={event => this.props.onEventTouch(event)} key={`event${event.id}`} tracksViewChanges={false} event={event} />
+                        <EventMarker
+                            onEventTouch={event => this.props.onEventTouch(event)}
+                            key={`event${event.id}`}
+                            tracksViewChanges={false}
+                            event={event}
+                        />
                     )}
                 />
             </View>

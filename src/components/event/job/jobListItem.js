@@ -98,7 +98,7 @@ class _JobListItem extends Component<Props> {
 
     renderParticipationState = () => {
         const currentUsersParticipation = this.props.job.currentUsersParticipation;
-        if (currentUsersParticipation === null) return;
+        if (!currentUsersParticipation) return;
         if (currentUsersParticipation.state == participationTypes.Canceled) return; //show nothing if user canceled
         return <ParticipationState style={{ marginTop: 10 }} participationState={currentUsersParticipation.state} />;
     };

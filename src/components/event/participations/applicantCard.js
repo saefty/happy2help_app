@@ -7,6 +7,7 @@ import type { UserObject } from '../../../models/user.model';
 import type { ParticipationEnum } from '../../../models/participation.model';
 import { getParticipationType, participationTypes } from '../../../models/participation.model';
 import { styles } from './applicantCard.style';
+import { statusColors } from '../../../../themes/colors';
 
 type Props = {
     id: number,
@@ -20,9 +21,12 @@ export class ApplicantCard extends Component<Props> {
         super(props);
     }
     renderAcceptButton() {
-        let buttonStyle = this.props.state === participationTypes.Applied ? styles.accept : styles.alreadyAccepted;
         return (
-            <Button mode="outlined" color="green" onPress={() => this.props.handleChange(this.props.id, participationTypes.Accepted)}>
+            <Button
+                mode="outlined"
+                color={statusColors.success}
+                onPress={() => this.props.handleChange(this.props.id, participationTypes.Accepted)}
+            >
                 ACCEPT
             </Button>
         );
@@ -30,7 +34,11 @@ export class ApplicantCard extends Component<Props> {
 
     renderDeclineButton() {
         return (
-            <Button mode="outlined" color="red" onPress={() => this.props.handleChange(this.props.id, participationTypes.Declined)}>
+            <Button
+                mode="outlined"
+                color={statusColors.alert}
+                onPress={() => this.props.handleChange(this.props.id, participationTypes.Declined)}
+            >
                 DECLINE
             </Button>
         );

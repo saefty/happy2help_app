@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { neutralColors } from '../../../../themes/colors';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -17,7 +18,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     divider: {
-        backgroundColor: '#cccccc',
+        backgroundColor: neutralColors.light,
         marginBottom: 10,
         marginTop: 10,
         height: 2,
@@ -29,9 +30,7 @@ export const styles = StyleSheet.create({
         marginTop: 10,
     },
     positions: {
-        marginBottom: 10
+        marginBottom: 10,
     },
-    button: {
-       
-    }
+    button: {},
 });
