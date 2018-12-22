@@ -1,13 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import {  Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 
 import { withNamespaces, i18n } from 'react-i18next';
 import styles from './participationState.styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { primaryColor } from './../../../../themes/colors';
+import { primaryColor, statusColors, neutralColors } from './../../../../themes/colors';
 
 type Props = {
     participationState: number,
@@ -33,9 +33,9 @@ class ParticipationState_ extends Component<Props> {
     get MainColor(): string {
         let state = this.props.participationState;
         if (state === 2) return primaryColor;
-        if (state === 3) return '#e82222'; //red 
-        if (state === 4) return '#25c435'; //green
-        if (state === 1) return 'grey'
+        if (state === 3) return statusColors.alert; //red
+        if (state === 4) return statusColors.success; //green
+        if (state === 1) return neutralColors.medium;
 
         return '';
     }
@@ -43,22 +43,18 @@ class ParticipationState_ extends Component<Props> {
     get IconName(): string {
         let state = this.props.participationState;
         if (state === 2) return 'hourglass-empty';
-        if (state === 3) return 'clear'; 
-        if (state === 4) return 'done'; 
-        if (state === 1) return 'done-all'
+        if (state === 3) return 'clear';
+        if (state === 4) return 'done';
+        if (state === 1) return 'done-all';
         return '';
     }
 
-  
-
     render() {
         return (
-            <View style={[styles.container, this.props.style]}> 
+            <View style={[styles.container, this.props.style]}>
                 <Icon name={this.IconName} size={24} color={this.MainColor} />
-                <Text style={{color: this.MainColor, marginRight:10, marginLeft:10}}>
-                    {this.StateString}
-                </Text>
-            </View>          
+                <Text style={{ color: this.MainColor, marginRight: 10, marginLeft: 10 }}>{this.StateString}</Text>
+            </View>
         );
     }
 }

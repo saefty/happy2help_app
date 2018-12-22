@@ -5,28 +5,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-
-const GET_EVENTS = gql`
-    {
-        events {
-            id
-            name
-            description
-            creator {
-                username
-            }
-            location {
-                latitude
-                longitude
-                name
-            }
-            organisation {
-                id
-                name
-            }
-        }
-    }
-`;
+import { GET_EVENTS } from './getEvents.query';
 
 type Props = {
     pollInterval?: number,

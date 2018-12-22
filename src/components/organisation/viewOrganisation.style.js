@@ -1,6 +1,7 @@
 /* @flow */
 
 import { StyleSheet } from 'react-native';
+import { neutralColors } from '../../../themes/colors';
 
 export const styles = StyleSheet.create({
     container: {
@@ -64,7 +65,7 @@ export const styles = StyleSheet.create({
         height: 30,
     },
     divider: {
-        backgroundColor: '#cccccc',
+        backgroundColor: neutralColors.dark,
         margin: 30,
         height: 2,
     },

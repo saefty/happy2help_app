@@ -24,11 +24,6 @@ type Props = {
 };
 
 class _JobListItem extends Component<Props> {
-    // renderIcon = () => {
-    //     const icon = this.isFull() ? 'check' : 'work';
-    //     return <Icon name={icon} size={25} />;
-    // };
-
     isFull = () => {
         const job = this.props.job;
         if (job.totalPositions === null) return false;
@@ -37,11 +32,11 @@ class _JobListItem extends Component<Props> {
 
     jobParticipationCount = () => {
         const job = this.props.job;
-        return job.participationSet.filter(x => x.state !== participationTypes.Accepted).length;
+        return job.participationSet.filter(x => x.state === participationTypes.Accepted).length;
     };
 
     totalPositions = () => {
-        const  job  = this.props.job;
+        const job = this.props.job;
         if (job.totalPositions === null) {
             return <IconEntypo name="infinity" />;
         } else {
@@ -54,8 +49,7 @@ class _JobListItem extends Component<Props> {
             <View style={(styles.row, styles.positions)}>
                 <Text style={styles.boldText}>{this.props.t('positions')}: </Text>
                 <Text>
-                    {this.jobParticipationCount()}/
-                    {this.totalPositions()}
+                    {this.jobParticipationCount()}/{this.totalPositions()}
                 </Text>
             </View>
         );
@@ -102,7 +96,7 @@ class _JobListItem extends Component<Props> {
 
     renderParticipationState = () => {
         const currentUsersParticipation = this.props.job.currentUsersParticipation;
-        if (currentUsersParticipation === undefined) return;
+        if (!currentUsersParticipation) return;
         if (currentUsersParticipation.state == participationTypes.Canceled) return; //show nothing if user canceled
         return <ParticipationState style={{ marginTop: 10 }} participationState={currentUsersParticipation.state} />;
     };

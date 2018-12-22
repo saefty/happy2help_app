@@ -26,7 +26,7 @@ class App extends Component<Props> {
             >
                 <View style={{ flex: 1 }}>
                     <AppContainer />
-                    <FlashMessage position="top" />
+                    <FlashMessage duration={900} />
                 </View>
             </LogOutProvider.Provider>
         );

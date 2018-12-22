@@ -4,9 +4,21 @@ import color from 'color';
 import { primaryColor } from './colors';
 import { DefaultTheme } from 'react-native-paper';
 
+import { Platform } from 'react-native';
+
+const isIOS = Platform.OS === 'ios';
+
+const fonts = {
+    regular: isIOS ? 'Helvetica Neue' : 'Roboto',
+    medium: isIOS ? 'HelveticaNeue-Medium' : 'Roboto',
+    light: isIOS ? 'HelveticaNeue-Light' : 'Roboto',
+    thin: isIOS ? 'HelveticaNeue-Thin' : 'Roboto',
+};
+
+export default fonts;
 export const H2HTheme = {
     dark: false,
-    roundness: 4,
+    roundness: 3,
     colors: {
         primary: primaryColor,
         accent: color(primaryColor)
@@ -28,5 +40,5 @@ export const H2HTheme = {
             .rgb()
             .string(),
     },
-    fonts: DefaultTheme.fonts,
+    fonts,
 };

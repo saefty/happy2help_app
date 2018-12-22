@@ -4,36 +4,7 @@ import { View } from 'react-native';
 import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
 import * as React from 'react';
-
-const GET_EVENTS = gql`
-    {
-        user {
-            id
-            eventSet {
-                id
-                name
-                description
-                organisation {
-                    id
-                    name
-                }
-                jobSet {
-                    id
-                    name
-                    description
-                    totalPositions
-                    participationSet {
-                        id
-                        state
-                        user {
-                            id
-                        }
-                    }
-                }
-            }
-        }
-    }
-`;
+import { MY_EVENTS } from './myEvents.query';
 
 type Props = {
     logOut: () => void,
@@ -49,7 +20,7 @@ export class MyEventDataProvider extends Component<Props> {
     render() {
         return (
             <View>
-                <Query query={GET_EVENTS}>
+                <Query query={MY_EVENTS}>
                     {({ loading, error, data, refetch }) => {
                         if (loading) return null;
                         if (error) {

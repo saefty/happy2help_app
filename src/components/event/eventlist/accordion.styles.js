@@ -1,6 +1,7 @@
 /* @flow */
 
 import { StyleSheet } from 'react-native';
+import { neutralColors } from '../../../../themes/colors';
 
 const styles = StyleSheet.create({
     item: {
@@ -8,17 +9,17 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginBottom: 5,
         borderWidth: 1,
-        borderColor: '#cecece',
+        borderColor: neutralColors.dark,
     },
-    radioContainer: { 
+    radioContainer: {
         flexDirection: 'row',
-        justifyContent: "space-around",
+        justifyContent: 'space-around',
     },
     radioButton: {
         flexDirection: 'row',
-        justifyContent: "space-between",
-        alignItems: "center",
-    }
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
 });
 
 export default styles;

@@ -1,12 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    View,
-    Image,
-    TextInput as NativeTextInput,
-    StatusBar,
-} from 'react-native';
+import { StyleSheet, View, Image, TextInput as NativeTextInput, StatusBar } from 'react-native';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Formik, ErrorMessage } from 'formik';
@@ -20,9 +14,8 @@ import * as Colors from '../../../themes/colors';
 const REGISTER = gql`
     mutation Register($username: String!, $password: String!, $email: String!) {
         createUser(username: $username, password: $password, email: $email) {
-            user {
-                id      
-            }
+            id
+            username
         }
     }
 `;
@@ -35,7 +28,7 @@ type Props = {
 
 type State = {
     validationSchema: Yup.Schema,
-}
+};
 
 class SignUpForm extends Component<Props, State> {
     constructor(props) {
@@ -75,24 +68,11 @@ class SignUpForm extends Component<Props, State> {
                 <StatusBar backgroundColor={Colors.primaryStatusBar} />
                 <View style={styles.container}>
                     <View style={styles.bannerWrapper}>
-                        <Image
-                            resizeMode="contain"
-                            style={styles.banner}
-                            source={require('../../../assets/images/logo_app1.png')}
-                        />
+                        <Image resizeMode="contain" style={styles.banner} source={require('../../../assets/images/logo_app1.png')} />
                     </View>
 
-                    <Formik
-                        validationSchema={this.state.validationSchema}
-                        onSubmit={this.onSignUp}
-                    >
-                        {({
-                            errors,
-                            handleChange,
-                            handleSubmit,
-                            isSubmitting,
-                            values,
-                        }) => (
+                    <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSignUp}>
+                        {({ errors, handleChange, handleSubmit, isSubmitting, values }) => (
                             <View>
                                 <TextInput
                                     onChangeText={handleChange('userName')}
@@ -100,10 +80,7 @@ class SignUpForm extends Component<Props, State> {
                                     label={this.props.t('userName')}
                                     error={errors.userName}
                                 />
-                                <HelperText
-                                    type="error"
-                                    visible={errors.userName}
-                                >
+                                <HelperText type="error" visible={errors.userName}>
                                     <ErrorMessage name="userName" />
                                 </HelperText>
 
@@ -122,29 +99,15 @@ class SignUpForm extends Component<Props, State> {
                                     value={values.password}
                                     label={this.props.t('password')}
                                     error={errors.password}
-                                    render={props => (
-                                        <NativeTextInput
-                                            secureTextEntry={true}
-                                            {...props}
-                                        />
-                                    )}
+                                    render={props => <NativeTextInput secureTextEntry={true} {...props} />}
                                 />
-                                <HelperText
-                                    type="error"
-                                    visible={errors.password}
-                                >
+                                <HelperText type="error" visible={errors.password}>
                                     <ErrorMessage name="password" />
                                 </HelperText>
 
                                 <Button
                                     mode="contained"
-                                    icon={({ size, color }) => (
-                                        <Icon
-                                            size={size}
-                                            color={color}
-                                            name="adduser"
-                                        />
-                                    )}
+                                    icon={({ size, color }) => <Icon size={size} color={color} name="adduser" />}
                                     disabled={isSubmitting}
                                     onPress={handleSubmit}
                                 >
@@ -153,11 +116,7 @@ class SignUpForm extends Component<Props, State> {
                             </View>
                         )}
                     </Formik>
-                    <Button
-                        mode="outlined"
-                        style={styles.signIn}
-                        onPress={() => this.props.setSignUp(false)}
-                    >
+                    <Button mode="outlined" style={styles.signIn} onPress={() => this.props.setSignUp(false)}>
                         {this.props.t('signIn')}
                     </Button>
                 </View>

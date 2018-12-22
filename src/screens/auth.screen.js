@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SignInFormGQL } from '../components/auth/signIn.form';
 import { SignUpFormGQL } from '../components/auth/signUp.form';
+import { primaryColor } from '../../themes/colors';
 
 type Props = {
     logIn: (jwtToken: string) => Promise<void>,
@@ -31,7 +32,7 @@ export class AuthScreen extends Component<Props, State> {
 
 const style = StyleSheet.create({
     containerSignIn: {
-        backgroundColor: '#008FB8',
+        backgroundColor: primaryColor,
         height: '100%',
         width: '100%',
     },

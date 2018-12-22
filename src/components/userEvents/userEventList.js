@@ -2,8 +2,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import type { EventObject } from '../../models/event.model';
-import { Event } from '../listview/event';
-import styles from './userEvents.styles';
+import { Event } from '../event/eventlist/event';
 
 type Props = {
     events: Array<EventObject>,
@@ -33,7 +32,6 @@ export class UserEventList extends Component<Props> {
                         }}
                         key={event.id}
                         event={event}
-                        style={styles.card}
                         showCreatorName={false}
                         descriptionMaxLength={MAX_DESCRIPTION_LENGTH}
                     />

@@ -1,18 +1,14 @@
 // @flow
 import React, { Component } from 'react';
 import { Card, Title, Paragraph } from 'react-native-paper';
-import type { EventObject } from '../../models/event.model';
+import type { EventObject } from '../../../models/event.model';
 import type { ControlsType } from './eventControls/eventControlBar';
-import { H2HTheme } from '../../../themes/default.theme';
-import color from 'color';
 import { styles } from './event.styles.js';
 import { EventControlBar } from './eventControls/eventControlBar';
-import { View } from 'react-native';
 
 type Props = {
     event: EventObject,
     descriptionMaxLength: number,
-    style: any,
     showCreatorName: boolean,
     onEventTouch?: (event: EventObject) => void,
     controls?: ControlsType,
@@ -58,7 +54,7 @@ export class Event extends Component<Props> {
         }
         const onPress = !this.props.controls ? () => this.props.onEventTouch(this.props.event) : () => {};
         return (
-            <Card style={[this.props.style, this.orgaEventStyle()]} onPress={() => this.props.onEventTouch(this.props.event)}>
+            <Card style={[styles.card, this.orgaEventStyle()]} onPress={onPress}>
                 <Card.Cover source={{ uri: 'https://picsum.photos/200/300/?random' }} />
                 <Card.Content>
                     <Title style={styles.title}>{this.props.event.name}</Title>

@@ -31,12 +31,14 @@ export default {
     Event: {
         myEvents: 'My Events',
         myJobs: 'My Jobs',
-        eventName: 'Event name',
+        name: 'Event name',
         description: 'Description',
         locationSearch: 'Location search',
         create: 'Publish',
         editTitle: 'Edit event',
-        createTitle: 'Create event'
+        createTitle: 'Create event',
+        creationSuccess: "Successfully created the event:  ",
+        editSuccess: "Successfully updated the event: ",
 
     },
     Organisation: {
