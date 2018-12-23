@@ -24,6 +24,7 @@ type Props = {
 type State = {
     event?: EventObject,
     userRegion: any,
+    userLocation: any,
     sorting: string,
     descending: boolean,
     scrollAnim: Animated.Value,
@@ -62,6 +63,10 @@ class _DiscoverScreen extends Component<Props, State> {
                 latitudeDelta: 1,
                 longitudeDelta: 1,
             },
+            userLocation: {
+                latitude: 0,
+                longitude: 0,
+            },
             sorting: '',
             descending: false,
             searchQuery: '',
@@ -97,6 +102,10 @@ class _DiscoverScreen extends Component<Props, State> {
                 longitude: position.coords.longitude,
                 latitudeDelta: 0.15,
                 longitudeDelta: 0.15,
+            },
+            userLocation: {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
             },
         });
     }
