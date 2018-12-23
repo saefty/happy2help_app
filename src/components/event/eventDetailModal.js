@@ -12,6 +12,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Accordion from '../accordion/accordion';
 import { OrganisationView } from '../organisation/viewOrganisation';
 import { ScrollView } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = {
     event: EventObject,
@@ -29,10 +30,10 @@ const JOB_QUERY = gql`
                 totalPositions
                 currentUsersParticipation {
                     id
-                    state 
+                    state
                     job {
                         id
-                    }                   
+                    }
                 }
                 requiresskillSet {
                     skill {
@@ -130,18 +131,25 @@ export class EventDetailModal extends Component<Props> {
 
     render() {
         if (!this.props.event) return <Text />;
+        const distance = this.props.event.location.distance && (
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Icon name="map" size={25} />
+                <Subheading>{this.props.event.location.distance.toFixed(4)}km</Subheading>
+            </View>
+        );
         return (
             <View>
                 <ScrollView>
                     <Appbar.Header>
                         <Appbar.Action icon="close" onPress={() => this.props.navigation.navigate('View')} />
                         <Appbar.Content title={this.props.event.name} />
-                        <Appbar.Action icon="edit" onPress={() => this.props.navigation.navigate('Edit', {event: this.props.event})}/>
+                        <Appbar.Action icon="edit" onPress={() => this.props.navigation.navigate('Edit', { event: this.props.event })} />
                     </Appbar.Header>
                     <View style={{ margin: 14 }}>
                         <Title>
                             {this.props.event.name} - {this.props.event.location ? this.props.event.location.name : ''}
                         </Title>
+                        {distance}
                         <Paragraph>{this.props.event.description}</Paragraph>
                         <Query query={JOB_QUERY} variables={{ id: this.props.event.id }} cache="no-cache">
                             {({ error, loading, data, refetch }) => {

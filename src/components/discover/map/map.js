@@ -107,9 +107,8 @@ export class Map extends PureComponent<Props, State> {
                     cache={true}
                     style={[styles.map]}
                     showsUserLocation={true}
-                    showsMyLocationButton={true}
+                    showsMyLocationButton={false}
                     showsPointsOfInterest={false}
-                    toolbarEnabled={true}
                     showsBuildings={false}
                     showsIndoors={false}
                     data={this.props.events}
