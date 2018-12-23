@@ -70,11 +70,23 @@ export default {
         Canceled: 'Cancel application',
     },
     Sort: {
+        ascending: 'ascending',
+        descending: 'descending',
+        alphabetic: 'alphabetic',
+        byDate: 'by date',
         sort: 'sorting',
         ascending: 'ascending',
         descending: 'descending',
         name: 'by name',
         start: 'by date',
         distance: 'by distance',
+    },
+    FlashMessages: {
+        checkedIn: 'User is now participating!',
+        declined: 'User was declined!',
+    },
+    QR: {
+        your: 'Your QR Code',
+        info: 'Let an event creator scan your code. You will be checked in.',
     },
 };
