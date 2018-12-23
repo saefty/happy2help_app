@@ -198,8 +198,8 @@ class _DiscoverScreen extends Component<Props, State> {
     get queryParams() {
         const params = {
             distanceTo: {
-                latitude: this.state.userRegion.latitude,
-                longitude: this.state.userRegion.longitude,
+                latitude: this.state.userLocation.latitude,
+                longitude: this.state.userLocation.longitude,
             },
             search: this.state.searchQuery,
             sorting: {},
