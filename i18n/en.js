@@ -4,8 +4,6 @@ export default {
         welcome: 'Welcome to Happy to Help',
         cancel: 'cancel',
         ok: 'ok',
-
-
     },
     errors: {
         toShort: 'Too short!',
@@ -26,7 +24,6 @@ export default {
         logOut: 'Log out',
         creditPoints: 'Credit Points',
         skills: 'Skills',
-
     },
     Event: {
         myEvents: 'My Events',
@@ -37,9 +34,8 @@ export default {
         create: 'Publish',
         editTitle: 'Edit event',
         createTitle: 'Create event',
-        creationSuccess: "Successfully created the event:  ",
-        editSuccess: "Successfully updated the event: ",
-
+        creationSuccess: 'Successfully created the event:  ',
+        editSuccess: 'Successfully updated the event: ',
     },
     Organisation: {
         about: 'About Us',
@@ -62,21 +58,35 @@ export default {
     Job: {
         description: 'Description: ',
         positions: 'Positions',
-        participated: "You participated.",
-        applied: "You applied.",
-        declined: "You were declined.",
-        accepted: "You were accepted.",
-        canceled: "The job was canceled.",
+        participated: 'You participated.',
+        applied: 'You applied.',
+        declined: 'You were declined.',
+        accepted: 'You were accepted.',
+        canceled: 'The job was canceled.',
     },
     JobParticipationButton: {
-        'Participated': 'Participated',
-        'Applied': 'Apply',
-        'Canceled': 'Cancel application'
+        Participated: 'Participated',
+        Applied: 'Apply',
+        Canceled: 'Cancel application',
     },
     Sort: {
-        ascending: "ascending",
-        descending: "descending",
-        alphabetic: "alphabetic",
-        byDate: "by date",
+        ascending: 'ascending',
+        descending: 'descending',
+        alphabetic: 'alphabetic',
+        byDate: 'by date',
+        sort: 'sorting',
+        ascending: 'ascending',
+        descending: 'descending',
+        name: 'by name',
+        start: 'by date',
+        distance: 'by distance',
+    },
+    FlashMessages: {
+        checkedIn: 'User is now participating!',
+        declined: 'User was declined!',
+    },
+    QR: {
+        your: 'Your QR Code',
+        info: 'Let an event creator scan your code. You will be checked in.',
     },
 };

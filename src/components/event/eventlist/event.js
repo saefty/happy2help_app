@@ -1,10 +1,12 @@
 // @flow
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import type { EventObject } from '../../../models/event.model';
 import type { ControlsType } from './eventControls/eventControlBar';
 import { styles } from './event.styles.js';
 import { EventControlBar } from './eventControls/eventControlBar';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = {
     event: EventObject,
@@ -53,6 +55,12 @@ export class Event extends Component<Props> {
             );
         }
         const onPress = !this.props.controls ? () => this.props.onEventTouch(this.props.event) : () => {};
+        const distance = this.props.event.location.distance && (
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Icon name="map" size={22} />
+                <Paragraph>{this.props.event.location.distance.toFixed(4)}km</Paragraph>
+            </View>
+        );
         return (
             <Card style={[styles.card, this.orgaEventStyle()]} onPress={onPress}>
                 <Card.Cover source={{ uri: 'https://picsum.photos/200/300/?random' }} />
@@ -60,6 +68,7 @@ export class Event extends Component<Props> {
                     <Title style={styles.title}>{this.props.event.name}</Title>
                     <Paragraph>{this.formattedDescription}</Paragraph>
                     <Paragraph style={styles.creator}>{this.createdBy}</Paragraph>
+                    {distance}
                 </Card.Content>
                 {controlBar}
             </Card>

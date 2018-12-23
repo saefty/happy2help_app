@@ -34,8 +34,8 @@ export default {
         create: 'Veröffentlichen',
         editTitle: 'Event bearbeiten',
         createTitle: 'Event erstellen',
-        creationSuccess: "Event wurde erfolgreich erstellt: ",
-        editSuccess: "Event wurde erfolgreich bearbeitet: ",
+        creationSuccess: 'Event wurde erfolgreich erstellt: ',
+        editSuccess: 'Event wurde erfolgreich bearbeitet: ',
     },
     Organisation: {
         about: 'Über uns',
@@ -63,13 +63,19 @@ export default {
         Canceled: 'Bewerbung zurückziehen',
     },
     Sort: {
+        sort: 'Sortierung',
         ascending: 'aufsteigend',
         descending: 'absteigend',
-        alphabetic: 'alphabetisch',
-        byDate: 'nach Datum',
+        name: 'nach Titel',
+        start: 'nach Datum',
+        distance: 'nach Entfernung',
     },
     FlashMessages: {
         checkedIn: 'Nutzer nimmt jetzt teil!',
         declined: 'Nutzer wurde abgelehnt!',
+    },
+    QR: {
+        your: 'Dein QR Code',
+        info: 'Lass deinen QR Code vom Eventveranstalter scannen, um dich für das Event einzuchecken!',
     },
 };

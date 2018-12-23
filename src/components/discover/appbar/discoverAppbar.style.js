@@ -7,7 +7,7 @@ export const DiscoverAppbarStyle = StyleSheet.create({
         width: '100%',
         height: 56,
         alignSelf: 'center',
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
         justifyContent: 'space-between',
     },
 
