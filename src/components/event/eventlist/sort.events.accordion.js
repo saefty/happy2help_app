@@ -20,16 +20,17 @@ class SortAccordionComponent extends PureComponent<Props> {
     }
 
     get title(): string {
+        if (!this.props.t(this.props.sorting)) return this.props.t('sort');
         let title = this.props.t(this.props.sorting) + ' (';
         title += this.props.descending === true ? this.props.t('descending') : this.props.t('ascending');
         title += ')';
         return title;
     }
-    get desc() : string {
+    get desc(): string {
         return this.props.descending ? 'checked' : 'unchecked';
     }
 
-    get asc() : string {
+    get asc(): string {
         return this.props.descending ? 'unchecked' : 'checked';
     }
 
@@ -37,16 +38,9 @@ class SortAccordionComponent extends PureComponent<Props> {
         return (
             <List.Section>
                 <List.Accordion title={this.title}>
-                    <List.Item
-                        style={styles.item}
-                        title={this.props.t('alphabetic')}
-                        onPress={() => this.props.changeSort('alphabetic')}
-                    />
-                    <List.Item
-                        style={styles.item}
-                        title={this.props.t('byDate')}
-                        onPress={() => this.props.changeSort('byDate')}
-                    />
+                    <List.Item style={styles.item} title={this.props.t('name')} onPress={() => this.props.changeSort('name')} />
+                    <List.Item style={styles.item} title={this.props.t('start')} onPress={() => this.props.changeSort('start')} />
+                    <List.Item style={styles.item} title={this.props.t('distance')} onPress={() => this.props.changeSort('distance')} />
 
                     <View style={styles.radioContainer}>
                         <View style={styles.radioButton}>

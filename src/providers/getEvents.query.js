@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 export const GET_EVENTS = gql`
-    {
-        events {
+    query events($search: String, $sorting: SortInputType, $distanceTo: LocationInputType) {
+        events(search: $search, sorting: $sorting) {
             id
             name
             description
@@ -13,6 +13,7 @@ export const GET_EVENTS = gql`
                 latitude
                 longitude
                 name
+                distance(to: $distanceTo)
             }
             organisation {
                 id
