@@ -74,4 +74,8 @@ export default {
         checkedIn: 'Nutzer nimmt jetzt teil!',
         declined: 'Nutzer wurde abgelehnt!',
     },
+    QR: {
+        your: 'Dein QR Code',
+        info: 'Lass deinen QR Code vom Eventveranstalter scannen, um dich für das Event einzuchecken!',
+    },
 };
