@@ -161,33 +161,32 @@ class _DiscoverScreen extends Component<Props, State> {
 
     renderList = (events: any) => {
         return (
-            <View style={{ flex: 1 }}>
-                <AnimatedScrollView
-                    scrollEventThrottle={1}
-                    onMomentumScrollBegin={this._onMomentumScrollBegin}
-                    onMomentumScrollEnd={this._onMomentumScrollEnd}
-                    onScrollEndDrag={this._onScrollEndDrag}
-                    onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollAnim } } }], {
-                        useNativeDriver: false,
-                    })}
-                >
-                    <SortAccordion
-                        sorting={this.state.sorting}
-                        descending={this.state.descending}
-                        changeSort={(sort: string) => {
-                            this.setState({
-                                sorting: sort,
-                            });
-                        }}
-                        changeDescending={(desc: boolean) => {
-                            this.setState({
-                                descending: desc,
-                            });
-                        }}
-                    />
-                    <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
-                </AnimatedScrollView>
-            </View>
+            <AnimatedScrollView
+                scrollEventThrottle={1}
+                onMomentumScrollBegin={this._onMomentumScrollBegin}
+                onMomentumScrollEnd={this._onMomentumScrollEnd}
+                onScrollEndDrag={this._onScrollEndDrag}
+                onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollAnim } } }], {
+                    useNativeDriver: false,
+                })}
+            >
+                <View style= {{height: 110}}></View>
+                <SortAccordion
+                    sorting={this.state.sorting}
+                    descending={this.state.descending}
+                    changeSort={(sort: string) => {
+                        this.setState({
+                            sorting: sort,
+                        });
+                    }}
+                    changeDescending={(desc: boolean) => {
+                        this.setState({
+                            descending: desc,
+                        });
+                    }}
+                />
+                <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
+            </AnimatedScrollView>
         );
     };
 
@@ -234,7 +233,7 @@ class _DiscoverScreen extends Component<Props, State> {
                 <Animated.View
                     style={[
                         {
-                            position: this.state.selectedIndex === 0 ? 'absolute' : 'absolute',
+                            position: 'absolute',
                             backgroundColor: `rgba(255,255,255,${this.state.selectedIndex === 0 ? 0.6 : 1})`,
                             elevation: 6,
                             zIndex: 666,
@@ -248,19 +247,15 @@ class _DiscoverScreen extends Component<Props, State> {
                         <SegmentedControl values={['KARTE', 'LISTE']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
                     </View>
                 </Animated.View>
-                <View style={{ flex: 1 }}>
-                    <EventDataProvider variables={this.queryParams}>
-                        {events => {
-                            let screen;
-                            if (this.state.selectedIndex === 0) {
-                                screen = this.renderMap(events);
-                            } else {
-                                screen = this.renderList(events);
-                            }
-                            return <Animated.View style={{ flex: 1 }}>{screen}</Animated.View>;
-                        }}
-                    </EventDataProvider>
-                </View>
+                <EventDataProvider variables={this.queryParams}>
+                    {events => {
+                        if (this.state.selectedIndex === 0) {
+                            return this.renderMap(events);
+                        } else {
+                            return this.renderList(events);
+                        }
+                    }}
+                </EventDataProvider>
             </View>
         );
     }
