@@ -9,7 +9,7 @@ type Props = {
     title: string,
     icon: string,
     expansion: boolean,
-    children: () => React.Node,
+    children: (() => React.Node) | React.Node,
 };
 
 type State = {

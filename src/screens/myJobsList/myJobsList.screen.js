@@ -45,8 +45,9 @@ class _MyJobList extends Component<Props, State> {
                 <KeyboardAwareScrollView>
                     <MyJobsDataProvider>
                         {user => {
+                            console.log(user.participationSet.filter(x => x.state !== participationTypes.Canceled));
                             return (
-                                <View>                                   
+                                <View>
                                     <UserJobList
                                         openEventDetails={this.openEventModal}
                                         participationSet={user.participationSet.filter(x => x.state !== participationTypes.Canceled)}

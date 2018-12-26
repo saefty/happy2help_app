@@ -50,7 +50,7 @@ const JOB_QUERY = gql`
     }
 `;
 
-const ORGANISATION_QUERY = gql`
+export const ORGANISATION_QUERY = gql`
     query event($id: ID!) {
         event(id: $id) {
             id

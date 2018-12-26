@@ -1,13 +1,14 @@
 // @flow
 import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
-import { Searchbar, IconButton } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import { H2HTheme } from '../../../../themes/default.theme';
 
 import IconMatCom from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconMat from 'react-native-vector-icons/MaterialIcons';
 import { withNavigation } from 'react-navigation';
 import { DiscoverAppbarStyle } from './discoverAppbar.style';
+import { primaryColor } from '../../../../themes/colors';
 
 type Props = {
     searchQuery: (query: string) => void,
@@ -28,7 +29,7 @@ class _DiscoverAppbar extends Component<Props, State> {
         return (
             <View style={DiscoverAppbarStyle.container}>
                 <IconButton
-                    icon={() => <IconMat name="menu" size={24} color={H2HTheme.colors.primary} />}
+                    icon={() => <IconMat name="menu" size={24} color={primaryColor} />}
                     onPress={() => this.props.navigation.openDrawer()}
                     style={DiscoverAppbarStyle.menuButton}
                 />
