@@ -12,20 +12,26 @@ type Props = {
     organisation?: OrganisationObject,
 };
 /**
- * used for normal mode/ creating organisations
+ * Use for edit organisation in organisation mode
  */
-class _EditOrganisationScreen extends Component<Props> {
+class _EditMyOrganisationScreen extends Component<Props, any> {
     constructor(props: Props) {
         super(props);
+        this.state = {
+            orgaId: undefined,
+        };
     }
 
     render() {
+        const orga = this.props.organisation;
+        console.log(orga);
+
         return (
             <KeyboardAwareScrollView>
-                <EditOrganisationView close={this.props.navigation.goBack} />
+                <EditOrganisationView close={this.props.navigation.goBack} organisation={orga} />
             </KeyboardAwareScrollView>
         );
     }
 }
 
-export const EditOrganisationScreen = withMappedNavigationProps()(_EditOrganisationScreen);
+export const EditMyOrganisationScreen = withMappedNavigationProps()(_EditMyOrganisationScreen);

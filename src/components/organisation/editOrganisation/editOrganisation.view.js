@@ -8,7 +8,7 @@ import { withNamespaces, i18n } from 'react-i18next';
 import { graphql, compose } from 'react-apollo';
 import * as Yup from 'yup';
 import LinearGradient from 'react-native-linear-gradient';
-import { showMessage, hideMessage } from "react-native-flash-message";
+import { showMessage, hideMessage } from 'react-native-flash-message';
 
 import type { OrganisationObject } from '../../../models/organisation.model';
 import { H2HTheme } from './../../../../themes/default.theme';
@@ -63,54 +63,68 @@ class _EditOrganisationView extends Component<Props, State> {
         this.props.close();
         showMessage({
             message: this.props.t('creationSuccess') + values.organisationName,
-            type: "success",
+            type: 'success',
             icon: 'auto',
-          });
+        });
         return;
     };
+
+    get initialValues() {
+        if (!this.props.organisation) return {};
+        const { organisation } = this.props;
+        return {
+            organisationName: organisation.name,
+            organisationDescription: organisation.description,
+        };
+    }
 
     render() {
         return (
             <View>
-                <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSubmit} initialValues={{}}>
+                <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSubmit} initialValues={this.initialValues}>
                     {({ errors, handleChange, handleSubmit, isSubmitting, values }) => (
-                    <View>
-                        <View style={{elevation: 0}}>
-                            <Appbar.Header>
-                                <Appbar.Action icon='close' onPress={() => { this.props.close(); }}/>
-                                <Appbar.Content title={this.props.t('new')} subtitle={this.props.t('creationSubtitle')} />
-                                <Appbar.Action icon="check" onPress={handleSubmit} disabled={isSubmitting}/>
-                            </Appbar.Header>
-                        </View>
-                        
-                        <View style={styles.gradientContainer}>
-                            <LinearGradient colors={[H2HTheme.colors.primary, 'white']}>
-                                <View style={{ height: 160 }}>
-                                    <OrganisationProfilePicture />
-                                </View>
-                            </LinearGradient>
-                        </View>
+                        <View>
+                            <View style={{ elevation: 0 }}>
+                                <Appbar.Header>
+                                    <Appbar.Action
+                                        icon="close"
+                                        onPress={() => {
+                                            this.props.close();
+                                        }}
+                                    />
+                                    <Appbar.Content title={this.props.t('new')} subtitle={this.props.t('creationSubtitle')} />
+                                    <Appbar.Action icon="check" onPress={handleSubmit} disabled={isSubmitting} />
+                                </Appbar.Header>
+                            </View>
+
+                            <View style={styles.gradientContainer}>
+                                <LinearGradient colors={[H2HTheme.colors.primary, 'white']}>
+                                    <View style={{ height: 160 }}>
+                                        <OrganisationProfilePicture />
+                                    </View>
+                                </LinearGradient>
+                            </View>
                             <View style={styles.inputContainer}>
                                 <TextInput
                                     onChangeText={handleChange('organisationName')}
                                     value={values.organisationName}
                                     error={errors.organisationName}
-                                    label={this.props.t('name')} 
+                                    label={this.props.t('name')}
                                 />
                                 <HelperText type="error" visible={errors.organisationName}>
                                     <ErrorMessage name="organisationName" />
                                 </HelperText>
 
-                                <TextInput 
-                                    multiline={true} 
-                                    numberOfLines={10} 
+                                <TextInput
+                                    multiline={true}
+                                    numberOfLines={10}
                                     label={this.props.t('description')}
                                     onChangeText={handleChange('organisationDescription')}
                                     value={values.organisationDescription}
                                     error={errors.organisationDescription}
                                 />
+                            </View>
                         </View>
-                    </View>
                     )}
                 </Formik>
             </View>

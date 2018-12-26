@@ -37,7 +37,7 @@ export class _MyQRScreen extends Component<Props, State> {
                     <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.goBack()} />
                     <Appbar.Content title={this.props.t('your')} />
                 </Appbar.Header>
-                <Query query={QR_QUERY} cache="network-only" pollInterval={150}>
+                <Query query={QR_QUERY} fetchPolicy="network-only" pollInterval={150}>
                     {({ data }) => {
                         if (data.qrGetToken) {
                             return (

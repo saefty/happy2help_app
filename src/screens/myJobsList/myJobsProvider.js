@@ -11,14 +11,14 @@ const GET_JOBS = gql`
             id
             participationSet {
                 id
-                job {  
+                job {
                     id
                     name
                     description
                     totalPositions
                     currentUsersParticipation {
                         id
-                        state                    
+                        state
                     }
                     requiresskillSet {
                         skill {
@@ -29,17 +29,17 @@ const GET_JOBS = gql`
                     participationSet {
                         id
                         state
-                    }              
+                    }
                     event {
-                        start
                         id
+                        start
                         name
                         description
                         organisation {
                             id
                             name
                         }
-                    }                   
+                    }
                 }
             }
         }
@@ -47,7 +47,7 @@ const GET_JOBS = gql`
 `;
 
 type Props = {
-    children: () => React.Node,
+    children: (data: any) => React.Node,
 };
 
 export class MyJobsDataProvider extends Component<Props> {
