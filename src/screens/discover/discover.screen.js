@@ -209,11 +209,13 @@ class _DiscoverScreen extends Component<Props, State> {
     render() {
         const { clampedScroll } = this.state;
 
-        const appbarTranslate = clampedScroll.interpolate({
-            inputRange: [0, APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT],
-            outputRange: [0, -(APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT)],
-            extrapolate: 'clamp',
-        });
+        const appbarTranslate = !this.state.funnelOpen
+            ? clampedScroll.interpolate({
+                  inputRange: [0, APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT],
+                  outputRange: [0, -(APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT)],
+                  extrapolate: 'clamp',
+              })
+            : 0;
 
         return (
             <View style={{ flex: 1 }}>
