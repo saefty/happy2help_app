@@ -30,7 +30,7 @@ class SortAccordionComponent extends PureComponent<Props> {
         return title;
     }
     get desc(): string {
-        return this.props.sorting === 'distance' ? 'cheked' : this.props.descending ? 'checked' : 'unchecked';
+        return this.props.sorting === 'distance' ? 'checked' : this.props.descending ? 'checked' : 'unchecked';
     }
 
     get asc(): string {
