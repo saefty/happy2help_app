@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { ProfileDataProvider } from '../profileDataProvider';
 import ProfileView from '../../../components/profile/viewProfile/viewProfile';
 import { Appbar } from 'react-native-paper';
+import { NavigationEvents } from 'react-navigation';
 
 type Props = {
     t: i18n.t,
@@ -21,7 +22,8 @@ export class ViewMyProfile extends Component<Props> {
                 <ProfileDataProvider>
                     {(user, refetch) => (
                         <View>
-                            <Appbar.Header style={{elevation: 0}}>
+                            <NavigationEvents onWillFocus={() => refetch())} />
+                            <Appbar.Header style={{ elevation: 0 }}>
                                 <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.navigate('Discover')} />
                                 <Appbar.Content title="" />
                                 <Appbar.Action
