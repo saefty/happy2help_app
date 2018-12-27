@@ -13,13 +13,8 @@ import { primaryColor } from '../../../../themes/colors';
 type Props = {
     searchQuery: (query: string) => void,
     openFunnel: () => void,
-    funnelSettings: {
-        open: boolean,
-        sorting: string,
-        descending: boolean,
-        changeSort: (sorting: string) => any,
-        changeDescending: (descending: boolean) => any,
-    },
+    funnelOpen: boolean,
+    updateQuery: (sorting: string, descending: boolean, filter: string) => void,
 };
 
 type State = {
@@ -32,6 +27,11 @@ class _DiscoverAppbar extends Component<Props, State> {
         this.state = {
             search: '',
         };
+    }
+
+    funnelIcon() {
+        if (this.props.funnelOpen === true) return <IconMat name="clear" size={24} color={H2HTheme.colors.primary} />;
+        return <IconMatCom name="filter" size={24} color={H2HTheme.colors.primary} />;
     }
 
     render() {
@@ -54,14 +54,10 @@ class _DiscoverAppbar extends Component<Props, State> {
                             style={{ fontSize: 18, height: 40, top: 5, color: 'black' }}
                         />
                     </View>
-                    <IconButton
-                        icon={() => <IconMatCom name="filter" size={24} color={H2HTheme.colors.primary} />}
-                        onPress={this.props.openFunnel}
-                        style={DiscoverAppbarStyle.filterButton}
-                    />
+                    <IconButton icon={() => this.funnelIcon()} onPress={this.props.openFunnel} style={DiscoverAppbarStyle.filterButton} />
                 </View>
                 <View>
-                    <FunnelDropdown funnelSettings={this.props.funnelSettings} />
+                    <FunnelDropdown open={this.props.funnelOpen} updateQuery={this.props.updateQuery} />
                 </View>
             </View>
         );

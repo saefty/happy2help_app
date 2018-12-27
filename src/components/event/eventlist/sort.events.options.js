@@ -1,0 +1,72 @@
+// @flow
+
+import React, { PureComponent } from 'react';
+import { View } from 'react-native';
+import { List, RadioButton, Text } from 'react-native-paper';
+import styles from './accordion.styles';
+import { withNamespaces, i18n } from 'react-i18next';
+
+type Props = {
+    t: i18n.t,
+    sorting: string,
+    descending: boolean,
+    changeSort: (sorting: string) => any,
+    changeDescending: (descending: boolean) => any,
+};
+
+class SortOptionsComponent extends PureComponent<Props> {
+    constructor(props: Props) {
+        super(props);
+    }
+
+    get title(): string {
+        if (!this.props.t(this.props.sorting)) return this.props.t('sort');
+        let title = this.props.t(this.props.sorting);
+        if (this.props.sorting !== 'distance') {
+            title += ' (';
+            title += this.props.descending === true ? this.props.t('descending') : this.props.t('ascending');
+            title += ')';
+        }
+        return title;
+    }
+    get desc(): string {
+        return this.props.sorting === 'distance' ? 'checked' : this.props.descending ? 'checked' : 'unchecked';
+    }
+
+    get asc(): string {
+        return this.props.sorting === 'distance' ? 'unchecked' : this.props.descending ? 'unchecked' : 'checked';
+    }
+
+    render() {
+        return (
+            <List.Section style={{}} title={this.title}>
+                <List.Item style={styles.item} title={this.props.t('name')} onPress={() => this.props.changeSort('name')} />
+                <List.Item style={styles.item} title={this.props.t('start')} onPress={() => this.props.changeSort('start')} />
+                <List.Item style={styles.item} title={this.props.t('distance')} onPress={() => this.props.changeSort('distance')} />
+
+                <View style={styles.radioContainer}>
+                    <View style={styles.radioButton}>
+                        <RadioButton
+                            value={this.props.t('ascending')}
+                            status={this.asc}
+                            onPress={() => this.props.changeDescending(false)}
+                            disabled={this.props.sorting === 'distance'}
+                        />
+                        <Text>{this.props.t('ascending')}</Text>
+                    </View>
+                    <View style={styles.radioButton}>
+                        <RadioButton
+                            value={this.props.t('descending')}
+                            status={this.desc}
+                            onPress={() => this.props.changeDescending(true)}
+                            disabled={this.props.sorting === 'distance'}
+                        />
+                        <Text>{this.props.t('descending')}</Text>
+                    </View>
+                </View>
+            </List.Section>
+        );
+    }
+}
+
+export const SortOptions = withNamespaces(['Sort'])(SortOptionsComponent);
