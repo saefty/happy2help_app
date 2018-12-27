@@ -22,7 +22,7 @@ export class ViewMyProfile extends Component<Props> {
                 <ProfileDataProvider>
                     {(user, refetch) => (
                         <View>
-                            <NavigationEvents onWillFocus={() => refetch())} />
+                            <NavigationEvents onWillFocus={() => refetch()} />
                             <Appbar.Header style={{ elevation: 0 }}>
                                 <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.navigate('Discover')} />
                                 <Appbar.Content title="" />
