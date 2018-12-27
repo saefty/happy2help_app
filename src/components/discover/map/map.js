@@ -14,6 +14,7 @@ type Props = {
     onEventTouch: (event: EventObject) => void,
     setUserViewPoint: (region: Region) => void,
     initialRegion: Region,
+    onTouch: () => void,
 };
 
 type State = {
@@ -103,6 +104,8 @@ export class Map extends PureComponent<Props, State> {
                     ref={(r: ClusteredMapView) => {
                         this.map = r;
                     }}
+                    onPress={this.props.onTouch}
+                    onLongPress={this.props.onTouch}
                     accessible={true}
                     cache={true}
                     style={[styles.map]}

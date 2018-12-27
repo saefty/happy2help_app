@@ -1,15 +1,14 @@
 // @flow
 import * as React from 'react';
 
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5';
-
 import { DiscoverStackNavigator } from './stackNavigators/discover.stack';
 import { MyJobsStackNavigator } from './stackNavigators/myJobs.stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { createHideableTabBar } from './hidableTabBar';
 
-export const TabNavigator = createMaterialBottomTabNavigator(
+export const TabNavigator = createHideableTabBar(
     {
         Discover: DiscoverStackNavigator,
         MyJobs: MyJobsStackNavigator,
@@ -17,7 +16,9 @@ export const TabNavigator = createMaterialBottomTabNavigator(
     {
         initialRouteName: 'Discover',
         labeled: true,
-        shifting: false,
+        shifting: true,
+        animationEnabled: true,
+        lazy: true,
         navigationOptions: () => {
             let navigationOptions = {};
 

@@ -11,7 +11,8 @@ import { LogoutButton } from '../../profile/viewProfile/logoutButton/logoutButto
 import { LogOutProvider } from '../../../../App';
 import { Query, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Text, TouchableRipple, List, Divider, Drawer } from 'react-native-paper';
+import { Text, List, Divider, Drawer } from 'react-native-paper';
+import { NavigationEvents } from 'react-navigation';
 
 class _DrawerScreen extends React.Component<any, any> {
     state = {
@@ -84,7 +85,7 @@ class _DrawerScreen extends React.Component<any, any> {
                             }
                         `}
                     >
-                        {({ error, loading, data }) => {
+                        {({ error, loading, data, refetch }) => {
                             if (error || loading) return <View />;
                             return (
                                 <List.Accordion
@@ -106,6 +107,7 @@ class _DrawerScreen extends React.Component<any, any> {
                                     }
                                     left={props => <List.Icon {...props} color="#000" icon="group" />}
                                 >
+                                    <NavigationEvents onWillFocus={refetch} />
                                     <List.Item
                                         onPress={() => this.props.navigation.navigate('EditOrganisation')}
                                         left={props => <List.Icon {...props} icon="group-add" />}

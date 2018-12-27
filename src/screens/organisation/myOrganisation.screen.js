@@ -76,10 +76,12 @@ class _MyOrganisationScreen extends Component<Props, any> {
 
                 <ScrollView>
                     <Query query={ORGANISATION_QUERY} variables={{ id: orgaId }}>
-                        {({ error, data, loading }) => {
+                        {({ error, data, loading, refetch }) => {
                             if (error || loading) return <View />;
                             return (
                                 <View>
+                                    <NavigationEvents onWillFocus={refetch} />
+
                                     <Appbar.Header>
                                         <IconButton
                                             icon={() => <IconMat name="menu" size={24} color={'#fff'} />}
