@@ -103,6 +103,7 @@ class EditProfileComponent extends Component<Props, State> {
         this.props.navigation.state.params.close();
         this.props.navigation.goBack();
     };
+
     onClose = () => {
         this.props.navigation.state.params.close();
         this.props.navigation.goBack();
