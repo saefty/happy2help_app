@@ -21,17 +21,20 @@ class SortAccordionComponent extends PureComponent<Props> {
 
     get title(): string {
         if (!this.props.t(this.props.sorting)) return this.props.t('sort');
-        let title = this.props.t(this.props.sorting) + ' (';
-        title += this.props.descending === true ? this.props.t('descending') : this.props.t('ascending');
-        title += ')';
+        let title = this.props.t(this.props.sorting);
+        if (this.props.sorting !== 'distance') {
+            title += ' (';
+            title += this.props.descending === true ? this.props.t('descending') : this.props.t('ascending');
+            title += ')';
+        }
         return title;
     }
     get desc(): string {
-        return this.props.descending ? 'checked' : 'unchecked';
+        return this.props.sorting === 'distance' ? 'cheked' : this.props.descending ? 'checked' : 'unchecked';
     }
 
     get asc(): string {
-        return this.props.descending ? 'unchecked' : 'checked';
+        return this.props.sorting === 'distance' ? 'unchecked' : this.props.descending ? 'unchecked' : 'checked';
     }
 
     render() {
@@ -48,6 +51,7 @@ class SortAccordionComponent extends PureComponent<Props> {
                                 value={this.props.t('ascending')}
                                 status={this.asc}
                                 onPress={() => this.props.changeDescending(false)}
+                                disabled={this.props.sorting === 'distance'}
                             />
                             <Text>{this.props.t('ascending')}</Text>
                         </View>
@@ -56,6 +60,7 @@ class SortAccordionComponent extends PureComponent<Props> {
                                 value={this.props.t('descending')}
                                 status={this.desc}
                                 onPress={() => this.props.changeDescending(true)}
+                                disabled={this.props.sorting === 'distance'}
                             />
                             <Text>{this.props.t('descending')}</Text>
                         </View>
