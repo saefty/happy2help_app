@@ -7,14 +7,14 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { showMessage } from "react-native-flash-message";
+import { showMessage } from 'react-native-flash-message';
 import { withNamespaces, i18n } from 'react-i18next';
 import { GooglePlacesInput } from '../location/location.input';
 import { styles } from './edit.event.style';
 import { graphql, compose } from 'react-apollo';
 import { mutations } from './edit.event.mutations';
 import { GET_EVENTS } from '../../providers/getEvents.query';
-import { MY_EVENTS } from '../../screens/myEventList/myEvents.query'
+import { MY_EVENTS } from '../../screens/myEventList/myEvents.query';
 
 type Props = {
     event?: EventObject,
@@ -81,12 +81,12 @@ class _EditEventForm extends Component<Props, State> {
         let successMessage = 'creationSuccess';
 
         if (!this.props.event) {
-            EVENT.location = {
+            (EVENT.location = {
                 name: values.location.formatted_address,
                 lat: values.location.geometry.location.lat,
                 long: values.location.geometry.location.lng,
-            },
-            await this.create(EVENT);
+            }),
+                await this.create(EVENT);
         } else {
             await this.update(EVENT);
             successMessage = 'editSuccess';
@@ -96,9 +96,9 @@ class _EditEventForm extends Component<Props, State> {
         this.props.navigation.goBack();
         showMessage({
             message: this.props.t(successMessage) + values.name,
-            type: "success",
+            type: 'success',
             icon: 'auto',
-          });
+        });
         return;
     };
 
@@ -146,8 +146,8 @@ class _EditEventForm extends Component<Props, State> {
                                 </HelperText>
                                 <GooglePlacesInput
                                     onChangeValue={v => {
-                                            setFieldValue('location', v);
-                                            handleChange('location');
+                                        setFieldValue('location', v);
+                                        handleChange('location');
                                     }}
                                     initialValue={{ formatted_address: values.location ? values.location.name : undefined }}
                                     label={this.props.t('locationSearch')}
@@ -166,12 +166,6 @@ class _EditEventForm extends Component<Props, State> {
 }
 
 export const EditEventFormNamespaced = compose(
-    graphql(mutations.CREATE_EVENT, { name: 'createEventMutation', options: () => ({
-        refetchQueries: [{ query: GET_EVENTS }, { query: MY_EVENTS }],
-      }) 
-    }),
-    graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation', options: () => ({
-        refetchQueries: [{ query: GET_EVENTS }, { query: MY_EVENTS }],
-      }) 
-    })
+    graphql(mutations.CREATE_EVENT, { name: 'createEventMutation' }),
+    graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation' })
 )(withNamespaces(['Event', 'errors'])(withMappedNavigationProps()(_EditEventForm)));

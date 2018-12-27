@@ -10,7 +10,7 @@ import { secondaryColor } from '../../themes/colors';
 type Props = {
     pollInterval?: number,
     variables: any,
-    children: (events: Array<any>) => React.Node,
+    children: (events: Array<any>, refetch: () => void) => React.Node,
 };
 
 export class EventDataProvider extends Component<Props> {
@@ -20,14 +20,12 @@ export class EventDataProvider extends Component<Props> {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <Query query={GET_EVENTS} pollInterval={this.props.pollInterval} variables={this.props.variables}>
-                    {({ loading, error, data }) => {
-                        if (loading || error) return <ActivityIndicator size={150} color={secondaryColor} />;
-                        return this.props.children(data.events);
-                    }}
-                </Query>
-            </View>
+            <Query query={GET_EVENTS} pollInterval={this.props.pollInterval} variables={this.props.variables}>
+                {({ loading, error, data, refetch }) => {
+                    if (loading || error) return <ActivityIndicator size={150} color={secondaryColor} />;
+                    return this.props.children(data.events, refetch);
+                }}
+            </Query>
         );
     }
 }

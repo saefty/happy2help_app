@@ -30,6 +30,6 @@ export const DiscoverAppbarStyle = StyleSheet.create({
 
     filterButton: {
         alignSelf: 'center',
-        right: 4,
+        right: 10,
     },
 });

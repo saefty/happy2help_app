@@ -35,6 +35,7 @@ class _JobList extends Component<Props> {
                 },
             });
         }
+        await this.props.refetch();
     };
 
     updateParticipation = async (job: Job, participation: Participation, apply?: boolean) => {

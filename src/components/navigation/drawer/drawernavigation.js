@@ -12,6 +12,8 @@ import { EditOrganisationScreen } from '../../../screens/organisation/editOrgani
 
 import { DrawerScreen } from './drawer.screen';
 import { MyQRScreen } from '../../../screens/myQR.screen';
+import { OrganisationTabNavigator } from '../organisation/organisationTabNavigation';
+import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 
 export const DrawerNavigator = createDrawerNavigator(
     {
@@ -38,10 +40,17 @@ export const DrawerNavigator = createDrawerNavigator(
         EditOrganisation: {
             screen: EditOrganisationScreen,
             navigationOptions: () => {
-                let navigationOptions = {};
-                navigationOptions.drawerLabel = 'Neue Organisation';
-                navigationOptions.drawerIcon = <Icon name={'group-add'} size={24} />;
-                return navigationOptions;
+                return {
+                    drawerLabel: () => null,
+                };
+            },
+        },
+        OrganisationModeScreen: {
+            screen: withMappedNavigationProps()(OrganisationTabNavigator),
+            navigationOptions: () => {
+                return {
+                    drawerLabel: () => null,
+                };
             },
         },
     },

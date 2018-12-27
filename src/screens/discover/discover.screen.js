@@ -11,7 +11,7 @@ import { SegmentedControl } from '../../components/utils/SegmentedControl';
 import { Map } from '../../components/discover/map/map';
 import { EventList } from './../../components/event/eventlist/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
-import { SortAccordion } from '../../components/event/eventlist/sort.events.accordion';
+import { NavigationEvents } from 'react-navigation';
 
 const APPBAR_SEG_HEIGHT = 130;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
@@ -27,6 +27,7 @@ type State = {
     userLocation: any,
     sorting: string,
     descending: boolean,
+    funnelOpen: boolean,
     scrollAnim: Animated.Value,
     offsetAnim: Animated.Value,
     clampedScroll: any,
@@ -50,7 +51,7 @@ class _DiscoverScreen extends Component<Props, State> {
                         inputRange: [0, 1],
                         outputRange: [0, 1],
                         extrapolateLeft: 'clamp',
-                        useNativeDriver: false,
+                        useNativeDriver: true,
                     }),
                     offsetAnim
                 ),
@@ -69,6 +70,7 @@ class _DiscoverScreen extends Component<Props, State> {
             },
             sorting: '',
             descending: false,
+            funnelOpen: false,
             searchQuery: '',
         };
     }
@@ -90,6 +92,7 @@ class _DiscoverScreen extends Component<Props, State> {
             const diff = value - this._scrollValue;
             this._scrollValue = value;
             this._clampedScrollValue = Math.min(Math.max(this._clampedScrollValue + diff, 0), APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT);
+            this.props.navigation.dangerouslyGetParent().setParams({ visible: false, animHeight: this.state.clampedScroll });
         });
         this.state.offsetAnim.addListener(({ value }) => {
             this._offsetValue = value;
@@ -142,13 +145,44 @@ class _DiscoverScreen extends Component<Props, State> {
         });
     };
 
-    setIndex = index => this.setState({ selectedIndex: index });
+    setIndex = index => {
+        if (index === this.state.selectedIndex) return;
+        // reshow the bottom tab bar
+        this.resetBars();
+        // If map
+        if (index === 0) this.props.navigation.dangerouslyGetParent().setParams({ navOpacity: 0.6 });
+        else this.props.navigation.dangerouslyGetParent().setParams({ navOpacity: 1 });
+
+        this.setState({ selectedIndex: index });
+    };
+
+    toogleMapTouch = () => {
+        const current = this.props.navigation.dangerouslyGetParent().getParam('visible');
+
+        Animated.timing(this.state.offsetAnim, {
+            toValue: current === true ? APPBAR_SEG_HEIGHT : 0,
+            duration: 100,
+            useNativeDriver: false,
+        }).start();
+
+        this.props.navigation.dangerouslyGetParent().setParams({ visible: current !== undefined && !current });
+    };
+
+    resetBars = () => {
+        Animated.timing(this.state.offsetAnim, {
+            toValue: 0,
+            duration: 100,
+            useNativeDriver: false,
+        }).start();
+        this.props.navigation.dangerouslyGetParent().setParams({ visible: true, animHeight: undefined });
+    };
 
     renderMap = (events: any) => {
         return (
             <Map
                 events={events}
                 onEventTouch={this.openEventModal}
+                onTouch={this.toogleMapTouch}
                 initialRegion={this.state.userRegion}
                 setUserViewPoint={newregion => {
                     this.setState({
@@ -161,33 +195,18 @@ class _DiscoverScreen extends Component<Props, State> {
 
     renderList = (events: any) => {
         return (
-            <View style={{ flex: 1 }}>
-                <AnimatedScrollView
-                    scrollEventThrottle={1}
-                    onMomentumScrollBegin={this._onMomentumScrollBegin}
-                    onMomentumScrollEnd={this._onMomentumScrollEnd}
-                    onScrollEndDrag={this._onScrollEndDrag}
-                    onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollAnim } } }], {
-                        useNativeDriver: false,
-                    })}
-                >
-                    <SortAccordion
-                        sorting={this.state.sorting}
-                        descending={this.state.descending}
-                        changeSort={(sort: string) => {
-                            this.setState({
-                                sorting: sort,
-                            });
-                        }}
-                        changeDescending={(desc: boolean) => {
-                            this.setState({
-                                descending: desc,
-                            });
-                        }}
-                    />
-                    <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
-                </AnimatedScrollView>
-            </View>
+            <AnimatedScrollView
+                scrollEventThrottle={1}
+                onMomentumScrollBegin={this._onMomentumScrollBegin}
+                onMomentumScrollEnd={this._onMomentumScrollEnd}
+                onScrollEndDrag={this._onScrollEndDrag}
+                onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollAnim } } }], {
+                    useNativeDriver: false,
+                })}
+            >
+                <View style={{ height: 110 }} />
+                <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
+            </AnimatedScrollView>
         );
     };
 
@@ -223,18 +242,20 @@ class _DiscoverScreen extends Component<Props, State> {
     render() {
         const { clampedScroll } = this.state;
 
-        const appbarTranslate = clampedScroll.interpolate({
-            inputRange: [0, APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT],
-            outputRange: [0, -(APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT)],
-            extrapolate: 'clamp',
-        });
+        const appbarTranslate = !this.state.funnelOpen
+            ? clampedScroll.interpolate({
+                  inputRange: [0, APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT],
+                  outputRange: [0, -(APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT)],
+                  extrapolate: 'clamp',
+              })
+            : 0;
 
         return (
             <View style={{ flex: 1 }}>
                 <Animated.View
                     style={[
                         {
-                            position: this.state.selectedIndex === 0 ? 'absolute' : 'absolute',
+                            position: 'absolute',
                             backgroundColor: `rgba(255,255,255,${this.state.selectedIndex === 0 ? 0.6 : 1})`,
                             elevation: 6,
                             zIndex: 666,
@@ -244,23 +265,44 @@ class _DiscoverScreen extends Component<Props, State> {
                     ]}
                 >
                     <View>
-                        <DiscoverAppbar searchQuery={this.searchQuery} />
+                        <DiscoverAppbar
+                            searchQuery={this.searchQuery}
+                            openFunnel={() => this.setState({ funnelOpen: !this.state.funnelOpen })}
+                            funnelSettings={{
+                                open: this.state.funnelOpen,
+                                sorting: this.state.sorting,
+                                descending: this.state.descending,
+                                changeSort: (sort: string) => {
+                                    this.setState({
+                                        sorting: sort,
+                                    });
+                                },
+                                changeDescending: (desc: boolean) => {
+                                    this.setState({
+                                        descending: desc,
+                                    });
+                                },
+                            }}
+                        />
                         <SegmentedControl values={['KARTE', 'LISTE']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
                     </View>
                 </Animated.View>
-                <View style={{ flex: 1 }}>
-                    <EventDataProvider variables={this.queryParams}>
-                        {events => {
-                            let screen;
-                            if (this.state.selectedIndex === 0) {
-                                screen = this.renderMap(events);
-                            } else {
-                                screen = this.renderList(events);
-                            }
-                            return <Animated.View style={{ flex: 1 }}>{screen}</Animated.View>;
-                        }}
-                    </EventDataProvider>
-                </View>
+                <EventDataProvider variables={this.queryParams}>
+                    {(events, refetch) => {
+                        let component;
+                        if (this.state.selectedIndex === 0) {
+                            component = this.renderMap(events);
+                        } else {
+                            component = this.renderList(events);
+                        }
+                        return (
+                            <View>
+                                <NavigationEvents onWillFocus={refetch} />
+                                {component}
+                            </View>
+                        );
+                    }}
+                </EventDataProvider>
             </View>
         );
     }

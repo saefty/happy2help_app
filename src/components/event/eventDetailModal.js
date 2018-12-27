@@ -2,17 +2,17 @@
 import type { EventObject } from '../../models/event.model';
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Modal, Card, Title, Button, Paragraph, Text, Divider, Subheading, Appbar } from 'react-native-paper';
+import { Title, Paragraph, Text, Divider, Subheading, Appbar } from 'react-native-paper';
 import { JobList } from './job/jobList';
-import { Query, ApolloConsumer } from 'react-apollo';
+import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { withNamespaces } from 'react-i18next';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Accordion from '../accordion/accordion';
 import { OrganisationView } from '../organisation/viewOrganisation';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { NavigationEvents } from 'react-navigation';
 
 type Props = {
     event: EventObject,
@@ -50,7 +50,7 @@ const JOB_QUERY = gql`
     }
 `;
 
-const ORGANISATION_QUERY = gql`
+export const ORGANISATION_QUERY = gql`
     query event($id: ID!) {
         event(id: $id) {
             id
@@ -151,11 +151,12 @@ export class EventDetailModal extends Component<Props> {
                         </Title>
                         {distance}
                         <Paragraph>{this.props.event.description}</Paragraph>
-                        <Query query={JOB_QUERY} variables={{ id: this.props.event.id }} cache="no-cache">
+                        <Query query={JOB_QUERY} variables={{ id: this.props.event.id }}>
                             {({ error, loading, data, refetch }) => {
                                 if (error || loading) return <View />;
                                 return (
                                     <Accordion title="Jobs" icon="work" expansion={true}>
+                                        <NavigationEvents onWillFocus={refetch} />;
                                         <JobList jobs={data.event.jobSet} startDate={data.event.start} refetch={refetch} />
                                     </Accordion>
                                 );
