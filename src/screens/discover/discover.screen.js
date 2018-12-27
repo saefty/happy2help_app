@@ -11,7 +11,6 @@ import { SegmentedControl } from '../../components/utils/SegmentedControl';
 import { Map } from '../../components/discover/map/map';
 import { EventList } from './../../components/event/eventlist/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
-import { SortAccordion } from '../../components/event/eventlist/sort.events.accordion';
 
 const APPBAR_SEG_HEIGHT = 130;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
@@ -27,6 +26,7 @@ type State = {
     userLocation: any,
     sorting: string,
     descending: boolean,
+    funnelOpen: boolean,
     scrollAnim: Animated.Value,
     offsetAnim: Animated.Value,
     clampedScroll: any,
@@ -69,6 +69,7 @@ class _DiscoverScreen extends Component<Props, State> {
             },
             sorting: '',
             descending: false,
+            funnelOpen: false,
             searchQuery: '',
         };
     }
@@ -170,21 +171,7 @@ class _DiscoverScreen extends Component<Props, State> {
                     useNativeDriver: false,
                 })}
             >
-                <View style= {{height: 110}}></View>
-                <SortAccordion
-                    sorting={this.state.sorting}
-                    descending={this.state.descending}
-                    changeSort={(sort: string) => {
-                        this.setState({
-                            sorting: sort,
-                        });
-                    }}
-                    changeDescending={(desc: boolean) => {
-                        this.setState({
-                            descending: desc,
-                        });
-                    }}
-                />
+                <View style={{ height: 110 }} />
                 <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
             </AnimatedScrollView>
         );
@@ -222,11 +209,13 @@ class _DiscoverScreen extends Component<Props, State> {
     render() {
         const { clampedScroll } = this.state;
 
-        const appbarTranslate = clampedScroll.interpolate({
-            inputRange: [0, APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT],
-            outputRange: [0, -(APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT)],
-            extrapolate: 'clamp',
-        });
+        const appbarTranslate = !this.state.funnelOpen
+            ? clampedScroll.interpolate({
+                  inputRange: [0, APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT],
+                  outputRange: [0, -(APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT)],
+                  extrapolate: 'clamp',
+              })
+            : 0;
 
         return (
             <View style={{ flex: 1 }}>
@@ -243,7 +232,25 @@ class _DiscoverScreen extends Component<Props, State> {
                     ]}
                 >
                     <View>
-                        <DiscoverAppbar searchQuery={this.searchQuery} />
+                        <DiscoverAppbar
+                            searchQuery={this.searchQuery}
+                            openFunnel={() => this.setState({ funnelOpen: !this.state.funnelOpen })}
+                            funnelSettings={{
+                                open: this.state.funnelOpen,
+                                sorting: this.state.sorting,
+                                descending: this.state.descending,
+                                changeSort: (sort: string) => {
+                                    this.setState({
+                                        sorting: sort,
+                                    });
+                                },
+                                changeDescending: (desc: boolean) => {
+                                    this.setState({
+                                        descending: desc,
+                                    });
+                                },
+                            }}
+                        />
                         <SegmentedControl values={['KARTE', 'LISTE']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
                     </View>
                 </Animated.View>
