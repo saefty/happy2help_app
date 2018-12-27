@@ -24,7 +24,6 @@ class _EditMyOrganisationScreen extends Component<Props, any> {
 
     render() {
         const orga = this.props.organisation;
-        console.log(orga);
 
         return (
             <KeyboardAwareScrollView>

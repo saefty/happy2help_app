@@ -12,7 +12,6 @@ import { EditOrganisationScreen } from '../../../screens/organisation/editOrgani
 
 import { DrawerScreen } from './drawer.screen';
 import { MyQRScreen } from '../../../screens/myQR.screen';
-import { DiscoverScreen } from '../../../screens/discover/discover.screen';
 import { OrganisationTabNavigator } from '../organisation/organisationTabNavigation';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 

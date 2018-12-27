@@ -11,6 +11,7 @@ import { SegmentedControl } from '../../components/utils/SegmentedControl';
 import { Map } from '../../components/discover/map/map';
 import { EventList } from './../../components/event/eventlist/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
+import { NavigationEvents } from 'react-navigation';
 
 const APPBAR_SEG_HEIGHT = 130;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
@@ -50,7 +51,7 @@ class _DiscoverScreen extends Component<Props, State> {
                         inputRange: [0, 1],
                         outputRange: [0, 1],
                         extrapolateLeft: 'clamp',
-                        useNativeDriver: false,
+                        useNativeDriver: true,
                     }),
                     offsetAnim
                 ),
@@ -91,6 +92,7 @@ class _DiscoverScreen extends Component<Props, State> {
             const diff = value - this._scrollValue;
             this._scrollValue = value;
             this._clampedScrollValue = Math.min(Math.max(this._clampedScrollValue + diff, 0), APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT);
+            this.props.navigation.dangerouslyGetParent().setParams({ visible: false, animHeight: this.state.clampedScroll });
         });
         this.state.offsetAnim.addListener(({ value }) => {
             this._offsetValue = value;
@@ -143,13 +145,44 @@ class _DiscoverScreen extends Component<Props, State> {
         });
     };
 
-    setIndex = index => this.setState({ selectedIndex: index });
+    setIndex = index => {
+        if (index === this.state.selectedIndex) return;
+        // reshow the bottom tab bar
+        this.resetBars();
+        // If map
+        if (index === 0) this.props.navigation.dangerouslyGetParent().setParams({ navOpacity: 0.6 });
+        else this.props.navigation.dangerouslyGetParent().setParams({ navOpacity: 1 });
+
+        this.setState({ selectedIndex: index });
+    };
+
+    toogleMapTouch = () => {
+        const current = this.props.navigation.dangerouslyGetParent().getParam('visible');
+
+        Animated.timing(this.state.offsetAnim, {
+            toValue: current === true ? APPBAR_SEG_HEIGHT : 0,
+            duration: 100,
+            useNativeDriver: false,
+        }).start();
+
+        this.props.navigation.dangerouslyGetParent().setParams({ visible: current !== undefined && !current });
+    };
+
+    resetBars = () => {
+        Animated.timing(this.state.offsetAnim, {
+            toValue: 0,
+            duration: 100,
+            useNativeDriver: false,
+        }).start();
+        this.props.navigation.dangerouslyGetParent().setParams({ visible: true, animHeight: undefined });
+    };
 
     renderMap = (events: any) => {
         return (
             <Map
                 events={events}
                 onEventTouch={this.openEventModal}
+                onTouch={this.toogleMapTouch}
                 initialRegion={this.state.userRegion}
                 setUserViewPoint={newregion => {
                     this.setState({
@@ -255,12 +288,19 @@ class _DiscoverScreen extends Component<Props, State> {
                     </View>
                 </Animated.View>
                 <EventDataProvider variables={this.queryParams}>
-                    {events => {
+                    {(events, refetch) => {
+                        let component;
                         if (this.state.selectedIndex === 0) {
-                            return this.renderMap(events);
+                            component = this.renderMap(events);
                         } else {
-                            return this.renderList(events);
+                            component = this.renderList(events);
                         }
+                        return (
+                            <View>
+                                <NavigationEvents onWillFocus={refetch} />
+                                {component}
+                            </View>
+                        );
                     }}
                 </EventDataProvider>
             </View>
