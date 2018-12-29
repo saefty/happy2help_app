@@ -6,7 +6,6 @@ import { styles } from './skillChipStyle';
 import type { SkillObject } from './../../../../models/skill.model';
 
 type Props = {
-    t: i18n.t,
     skillObject: SkillObject,
     deleteChip?: skill => mixed,
 };

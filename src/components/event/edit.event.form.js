@@ -1,7 +1,7 @@
 // @flow
 import type { EventObject } from '../../models/event.model';
 import React, { Component } from 'react';
-import { View, StyleSheet, TextInput as NativeTextInput } from 'react-native';
+import { View, StyleSheet, TextInput as NativeTextInput, ScrollView } from 'react-native';
 import { Button, Text, TextInput, HelperText, Subheading, Headline, Appbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
@@ -15,6 +15,9 @@ import { graphql, compose } from 'react-apollo';
 import { mutations } from './edit.event.mutations';
 import { GET_EVENTS } from '../../providers/getEvents.query';
 import { MY_EVENTS } from '../../screens/myEventList/myEvents.query';
+import { EditJobList } from './job/edit.job.list';
+import { clone } from '../../helpers/clone';
+import uuid from 'uuid/v4';
 
 type Props = {
     event?: EventObject,
@@ -28,6 +31,7 @@ type State = {
 };
 
 class _EditEventForm extends Component<Props, State> {
+    scrollView: ScrollView;
     constructor(props: Props) {
         super(props);
         const EventSchema = Yup.object().shape({
@@ -114,7 +118,7 @@ class _EditEventForm extends Component<Props, State> {
 
     render() {
         return (
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView ref={(ref: ScrollView) => (this.scrollView = ref)}>
                 <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSubmit} initialValues={this.getInitialFormValues()}>
                     {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
                         <View>
@@ -145,6 +149,9 @@ class _EditEventForm extends Component<Props, State> {
                                     <ErrorMessage name="description" />
                                 </HelperText>
                                 <GooglePlacesInput
+                                    onTextChange={() => {
+                                        this.scrollView.scrollToEnd();
+                                    }}
                                     onChangeValue={v => {
                                         setFieldValue('location', v);
                                         handleChange('location');
@@ -156,6 +163,27 @@ class _EditEventForm extends Component<Props, State> {
                                 <HelperText type="error" visible={errors.location}>
                                     <ErrorMessage name="location" />
                                 </HelperText>
+                                <Headline>Jobs</Headline>
+                                <EditJobList
+                                    jobs={values.jobs || []}
+                                    saveNew={job => {
+                                        let jobs = clone(values.jobs || []);
+                                        job.id = uuid();
+                                        jobs.push(job);
+                                        setFieldValue('jobs', jobs);
+                                        handleChange('jobs');
+                                    }}
+                                    update={updateJob => {
+                                        let jobs = clone(values.jobs);
+                                        jobs = jobs.map(job => (job.id === updateJob.id ? updateJob : job));
+                                        setFieldValue('jobs', jobs);
+                                    }}
+                                    delete={jobToDelete => {
+                                        let jobs = clone(values.jobs);
+                                        jobs = jobs.filter(job => job.id != jobToDelete.id);
+                                        setFieldValue('jobs', jobs);
+                                    }}
+                                />
                             </View>
                         </View>
                     )}

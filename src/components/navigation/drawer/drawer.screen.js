@@ -2,16 +2,17 @@
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 import { DrawerItems, SafeAreaView } from 'react-navigation';
+import { ImageProvider } from '../../image/imageProvider';
 import { ProfilePicture } from './../../profile/profilePicture/profilePicture';
 import { styles } from './../../profile/viewProfile/header/headerStyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { H2HTheme } from '../../../../themes/default.theme';
-import { qrStyle } from './qr.style';
+import { DrawerStyle } from './drawer.style';
 import { LogoutButton } from '../../profile/viewProfile/logoutButton/logoutButton';
 import { LogOutProvider } from '../../../../App';
 import { Query, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Text, List, Divider, Drawer } from 'react-native-paper';
+import { Text, List, Divider, Drawer, Surface } from 'react-native-paper';
 import { NavigationEvents } from 'react-navigation';
 
 class _DrawerScreen extends React.Component<any, any> {
@@ -54,89 +55,108 @@ class _DrawerScreen extends React.Component<any, any> {
     render() {
         const { props } = this;
         return (
-            <ScrollView>
-                <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-                    <ProfilePicture style={styles.profilePicture} />
-                    <Icon
-                        style={qrStyle}
-                        color={H2HTheme.colors.primary}
-                        onPress={() => {
-                            props.navigation.navigate('MyQRCode');
-                        }}
-                        name="qrcode-scan"
-                        size={60}
-                    />
-                    <DrawerItems {...props} />
-                    <Divider
-                        style={{
-                            height: 3,
-                        }}
-                    />
-                    <Query
-                        query={gql`
-                            query {
-                                user {
-                                    id
-                                    organisationSet {
+            <View style={{ flex: 1 }}>
+                <ScrollView>
+                    <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+                        <ImageProvider>
+                            {(image, refetch) => {
+                                if (this.props.navigation.state.isDrawerOpen) refetch();
+                                return <ProfilePicture style={styles.profilePicture} src={image ? image.url : ''} />;
+                            }}
+                        </ImageProvider>
+                        <Icon
+                            style={DrawerStyle.qrStyle}
+                            color={H2HTheme.colors.primary}
+                            onPress={() => {
+                                props.navigation.navigate('MyQRCode');
+                            }}
+                            name="qrcode-scan"
+                            size={60}
+                        />
+                        <DrawerItems {...props} />
+                        <Divider
+                            style={{
+                                height: 3,
+                            }}
+                        />
+                        <Query
+                            query={gql`
+                                query {
+                                    user {
                                         id
-                                        name
+                                        organisationSet {
+                                            id
+                                            name
+                                        }
                                     }
                                 }
-                            }
-                        `}
-                    >
-                        {({ error, loading, data, refetch }) => {
-                            if (error || loading) return <View />;
-                            return (
-                                <List.Accordion
-                                    style={{
-                                        marginTop: 0,
-                                        padding: 0,
-                                    }}
-                                    expanded={this.state.extended}
-                                    onPress={this.toggleOrgaList}
-                                    title={
-                                        <Text
-                                            style={{
-                                                fontSize: 14,
-                                                fontWeight: 'bold',
-                                            }}
-                                        >
-                                            Organisationen
-                                        </Text>
-                                    }
-                                    left={props => <List.Icon {...props} color="#000" icon="group" />}
-                                >
-                                    <NavigationEvents onWillFocus={refetch} />
-                                    <List.Item
-                                        onPress={() => this.props.navigation.navigate('EditOrganisation')}
-                                        left={props => <List.Icon {...props} icon="group-add" />}
-                                        title={<Text style={{ fontSize: 14 }}>Neue Organisationen</Text>}
-                                    />
-                                    {data.user.organisationSet.map(orga => {
-                                        return (
-                                            <List.Section key={orga.id}>
-                                                <Drawer.Item
-                                                    onPress={async () => {
-                                                        this.setState({ activeOrga: orga.id });
-                                                        await this.setORGA(orga.id);
-                                                        this.props.navigation.navigate('OrganisationModeScreen');
-                                                    }}
-                                                    label={orga.name}
-                                                    active={
-                                                        this.state.activeOrga === orga.id && props.activeItemKey === 'OrganisationScreen'
-                                                    }
-                                                />
-                                            </List.Section>
-                                        );
-                                    })}
-                                </List.Accordion>
-                            );
+                            `}
+                        >
+                            {({ error, loading, data, refetch }) => {
+                                if (this.props.navigation.state.isDrawerOpen) refetch();
+                                if (error || loading) return <View />;
+                                return (
+                                    <List.Accordion
+                                        style={{
+                                            marginTop: 0,
+                                            padding: 0,
+                                        }}
+                                        expanded={this.state.extended}
+                                        onPress={this.toggleOrgaList}
+                                        title={
+                                            <Text
+                                                style={{
+                                                    fontSize: 14,
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Organisationen
+                                            </Text>
+                                        }
+                                        left={props => <List.Icon {...props} color="#000" icon="group" />}
+                                    >
+                                        <List.Item
+                                            onPress={() => this.props.navigation.navigate('EditOrganisation')}
+                                            left={props => <List.Icon {...props} icon="group-add" />}
+                                            title={<Text style={{ fontSize: 14 }}>Neue Organisationen</Text>}
+                                        />
+
+                                        {data.user.organisationSet.map(orga => {
+                                            return (
+                                                <List.Section key={orga.id}>
+                                                    <Drawer.Item
+                                                        onPress={async () => {
+                                                            this.setState({ activeOrga: orga.id });
+                                                            await this.setORGA(orga.id);
+                                                            this.props.navigation.navigate('OrganisationModeScreen');
+                                                        }}
+                                                        label={orga.name}
+                                                        active={
+                                                            this.state.activeOrga === orga.id &&
+                                                            props.activeItemKey === 'OrganisationScreen'
+                                                        }
+                                                    />
+                                                </List.Section>
+                                            );
+                                        })}
+                                    </List.Accordion>
+                                );
+                            }}
+                        </Query>
+                    </SafeAreaView>
+                    <View style={DrawerStyle.logoutButton} />
+                </ScrollView>
+                <View style={DrawerStyle.logoutContainer}>
+                    <Divider
+                        style={{
+                            height: 2,
                         }}
-                    </Query>
-                    <LogOutProvider.Consumer>{value => <LogoutButton logOut={value.logOut} />}</LogOutProvider.Consumer>
-                </SafeAreaView>
-            </ScrollView>
+                    />
+                    <LogOutProvider.Consumer>
+                        {value => <LogoutButton style={DrawerStyle.logoutButton} logOut={value.logOut} />}
+                    </LogOutProvider.Consumer>
+                </View>
+            </View>
         );
     }
 }

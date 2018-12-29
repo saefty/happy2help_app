@@ -3,23 +3,23 @@ import { Component } from 'react';
 import * as React from 'react';
 import { View } from 'react-native';
 import { Query } from 'react-apollo';
-import { GET_PROFILE } from './getProfile.mutation'
+import { GET_USER_IMG } from './image.query'
 
 type Props = {
     children: () => React.Node,
 };
 
-export class ProfileDataProvider extends Component<Props> {
+export class ImageProvider extends Component<Props> {
     render() {
         return (
             <View>
-                <Query query={GET_PROFILE}>
+                <Query query={GET_USER_IMG}>
                     {({ loading, error, data, refetch }) => {
                         if (loading) return null;
                         if (error) {
                             return null;
                         }
-                        return this.props.children(data.user, refetch);
+                        return this.props.children(data.user.image, refetch);
                     }}
                 </Query>
             </View>

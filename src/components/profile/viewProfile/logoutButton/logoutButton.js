@@ -9,6 +9,7 @@ import { withNamespaces, i18n } from 'react-i18next';
 type Props = {
     t: i18n.t,
     logOut: () => void,
+    style?: any,
 };
 
 class LogoutButtonComponent extends Component<Props> {
@@ -19,7 +20,7 @@ class LogoutButtonComponent extends Component<Props> {
     render() {
         return (
             <View>
-                <Button onPress={this.props.logOut} style={styles.logoutButton} mode="contained">
+                <Button onPress={this.props.logOut} style={[styles.logoutButton, this.props.style]} mode="text">
                     {this.props.t('logOut')}
                 </Button>
             </View>
