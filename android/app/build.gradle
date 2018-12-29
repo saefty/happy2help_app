@@ -178,6 +178,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-text-input-mask')
     implementation project(':react-native-image-crop-picker')
     implementation "com.google.android.gms:play-services-base:+"
     implementation "com.google.android.gms:play-services-maps:+"

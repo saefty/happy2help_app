@@ -3,6 +3,7 @@ package io.taher.h2h;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.RNTextInputMask.RNTextInputMaskPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import org.reactnative.camera.RNCameraPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -35,6 +36,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNTextInputMaskPackage(),
             new PickerPackage(),
             new RNCameraPackage(),
             new RNGestureHandlerPackage(),

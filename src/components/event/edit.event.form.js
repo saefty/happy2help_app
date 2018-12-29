@@ -15,6 +15,9 @@ import { graphql, compose } from 'react-apollo';
 import { mutations } from './edit.event.mutations';
 import { GET_EVENTS } from '../../providers/getEvents.query';
 import { MY_EVENTS } from '../../screens/myEventList/myEvents.query';
+import { EditJobList } from './job/edit.job.list';
+import { clone } from '../../helpers/clone';
+import uuid from 'uuid/v4';
 
 type Props = {
     event?: EventObject,
@@ -160,6 +163,27 @@ class _EditEventForm extends Component<Props, State> {
                                 <HelperText type="error" visible={errors.location}>
                                     <ErrorMessage name="location" />
                                 </HelperText>
+                                <Headline>Jobs</Headline>
+                                <EditJobList
+                                    jobs={values.jobs || []}
+                                    saveNew={job => {
+                                        let jobs = clone(values.jobs || []);
+                                        job.id = uuid();
+                                        jobs.push(job);
+                                        setFieldValue('jobs', jobs);
+                                        handleChange('jobs');
+                                    }}
+                                    update={updateJob => {
+                                        let jobs = clone(values.jobs);
+                                        jobs = jobs.map(job => (job.id === updateJob.id ? updateJob : job));
+                                        setFieldValue('jobs', jobs);
+                                    }}
+                                    delete={jobToDelete => {
+                                        let jobs = clone(values.jobs);
+                                        jobs = jobs.filter(job => job.id != jobToDelete.id);
+                                        setFieldValue('jobs', jobs);
+                                    }}
+                                />
                             </View>
                         </View>
                     )}
