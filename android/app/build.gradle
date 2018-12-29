@@ -149,6 +149,17 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    flavorDimensions "version"
+    productFlavors {
+        dev {
+            applicationId 'io.taher.h2hdev'
+        }
+        beta {
+            applicationId 'io.taher.h2h'
+        }
+    }
+
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
