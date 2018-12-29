@@ -11,10 +11,13 @@ export class ProfilePicture extends Component<Props> {
     constructor(props) {
         super(props);
     }
+
     render() {
+        const DEFAULT = require('./../../../../assets/images/profile/baseline_person_black_48.png');
+
         return (
             <View>
-                <Image source={require('./../../../../assets/images/profile/baseline_person_black_48.png')} style={this.props.style} />
+                <Image source={this.props.src !== '' ? {uri: this.props.src} : DEFAULT} style={this.props.style} />
             </View>
         );
     }

@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 import { DrawerItems, SafeAreaView } from 'react-navigation';
+import { ImageProvider } from '../../image/imageProvider';
 import { ProfilePicture } from './../../profile/profilePicture/profilePicture';
 import { styles } from './../../profile/viewProfile/header/headerStyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -57,7 +58,12 @@ class _DrawerScreen extends React.Component<any, any> {
             <View style={{ flex: 1 }}>
                 <ScrollView>
                     <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-                        <ProfilePicture style={styles.profilePicture} />
+                        <ImageProvider>
+                            {(image, refetch) => {
+                                if (this.props.navigation.state.isDrawerOpen) refetch();
+                                return <ProfilePicture style={styles.profilePicture} src={image ? image.url : ''} />;
+                            }}
+                        </ImageProvider>
                         <Icon
                             style={DrawerStyle.qrStyle}
                             color={H2HTheme.colors.primary}

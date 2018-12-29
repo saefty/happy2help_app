@@ -24,6 +24,7 @@ export default {
         logOut: 'Log out',
         creditPoints: 'Credit Points',
         skills: 'Skills',
+        editSuccess: 'Your profile was updated successfully!'
     },
     Event: {
         myEvents: 'My Events',
@@ -75,8 +76,6 @@ export default {
         alphabetic: 'alphabetic',
         byDate: 'by date',
         sort: 'sorting',
-        ascending: 'ascending',
-        descending: 'descending',
         name: 'by name',
         start: 'by date',
         distance: 'by distance',
@@ -88,5 +87,12 @@ export default {
     QR: {
         your: 'Your QR Code',
         info: 'Let an event creator scan your code. You will be checked in.',
+    },
+    Image: {
+        add: 'Add a photo!',
+        take: 'Take a photo',
+        gallery: 'Upload from gallery',
+        remove: 'Remove photo',
+        deleteSuccess: 'Profile picture was removed successfully!'
     },
 };
