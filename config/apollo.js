@@ -11,6 +11,7 @@ import { AsyncStorage } from 'react-native';
 import { persistCache } from 'apollo-cache-persist';
 import gql from 'graphql-tag';
 import { onError } from 'apollo-link-error';
+import { createUploadLink } from 'apollo-upload-client'
 
 import Config from 'react-native-config';
 import { Sentry } from 'react-native-sentry';
@@ -68,14 +69,13 @@ export const createApolloConfiguration = async () => {
 
     const serverURI = Config.DEV_SERVER === 'true' ? 'http://localhost:3000/graphql/' : 'https://h2h-dev.taher.io/graphql/';
     Sentry.captureMessage('URL set to', serverURI); // eslint-disable-line
+    const uploadLink = createUploadLink({ uri: serverURI });
 
     const Links = [
         errorLink,
         CreateHeaderLink,
         stateLink,
-        new HttpLink({
-            uri: serverURI,
-        }),
+        uploadLink,
     ];
 
     const defaultOptions = {};
