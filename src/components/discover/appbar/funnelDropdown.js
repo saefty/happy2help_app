@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { SortOptions } from '../../event/eventlist/sort.events.options';
+import { FilterOptions } from '../../event/eventlist/filter.events.options';
 import { Divider, Text, IconButton } from 'react-native-paper';
 import IconMat from 'react-native-vector-icons/MaterialIcons';
 import { H2HTheme } from '../../../../themes/default.theme';
@@ -39,11 +40,8 @@ export class FunnelDropdown extends Component<Props, State> {
                         changeSort={(sorting: string) => this.setState({ sorting: sorting })}
                         changeDescending={(descending: boolean) => this.setState({ descending: descending })}
                     />
-                    <Divider />
-                    <View style={{ backgroundColor: '#55a' }}>
-                        <Text style={{ fontSize: 20 }}>Filter Options</Text>
-                    </View>
-                    <Divider />
+
+                    <FilterOptions />
 
                     <IconButton
                         icon={() => <IconMat name="done" size={36} color={H2HTheme.colors.primary} />}

@@ -70,16 +70,13 @@ export default {
         Canceled: 'Cancel application',
     },
     Sort: {
-        ascending: 'ascending',
-        descending: 'descending',
-        alphabetic: 'alphabetic',
-        byDate: 'by date',
-        sort: 'sorting',
+        sort: 'Sorting',
         ascending: 'ascending',
         descending: 'descending',
         name: 'by name',
         start: 'by date',
         distance: 'by distance',
+        filter: 'filter',
     },
     FlashMessages: {
         checkedIn: 'User is now participating!',

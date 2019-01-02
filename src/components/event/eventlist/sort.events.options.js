@@ -2,9 +2,10 @@
 
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
-import { List, RadioButton, Text } from 'react-native-paper';
-import styles from './accordion.styles';
+import { RadioButton, Text, Title } from 'react-native-paper';
+import styles from './sort.styles';
 import { withNamespaces, i18n } from 'react-i18next';
+import { filterColors } from '../../../../themes/colors';
 
 type Props = {
     t: i18n.t,
@@ -39,32 +40,67 @@ class SortOptionsComponent extends PureComponent<Props> {
 
     render() {
         return (
-            <List.Section style={{}} title={this.title}>
-                <List.Item style={styles.item} title={this.props.t('name')} onPress={() => this.props.changeSort('name')} />
-                <List.Item style={styles.item} title={this.props.t('start')} onPress={() => this.props.changeSort('start')} />
-                <List.Item style={styles.item} title={this.props.t('distance')} onPress={() => this.props.changeSort('distance')} />
-
+            <View>
+                <View style={styles.titleContainer}>
+                    <Title style={styles.title}>{this.title}</Title>
+                </View>
                 <View style={styles.radioContainer}>
                     <View style={styles.radioButton}>
                         <RadioButton
                             value={this.props.t('ascending')}
+                            color={filterColors.active}
                             status={this.asc}
                             onPress={() => this.props.changeDescending(false)}
                             disabled={this.props.sorting === 'distance'}
                         />
-                        <Text>{this.props.t('ascending')}</Text>
+                        <Text onPress={() => this.props.changeDescending(false)}>{this.props.t('ascending')}</Text>
                     </View>
                     <View style={styles.radioButton}>
                         <RadioButton
                             value={this.props.t('descending')}
+                            color={filterColors.active}
                             status={this.desc}
                             onPress={() => this.props.changeDescending(true)}
                             disabled={this.props.sorting === 'distance'}
                         />
-                        <Text>{this.props.t('descending')}</Text>
+                        <Text onPress={() => this.props.changeDescending(true)}>{this.props.t('descending')}</Text>
                     </View>
                 </View>
-            </List.Section>
+                <View style={styles.optionList}>
+                    <View
+                        style={[
+                            styles.optionView,
+                            { borderColor: this.props.sorting === 'name' ? filterColors.active : filterColors.inactive },
+                        ]}
+                    >
+                        <Text style={styles.optionText} onPress={() => this.props.changeSort('name')}>
+                            {this.props.t('name')}
+                        </Text>
+                    </View>
+
+                    <View
+                        style={[
+                            styles.optionView,
+                            { borderColor: this.props.sorting === 'start' ? filterColors.active : filterColors.inactive },
+                        ]}
+                    >
+                        <Text style={styles.optionText} onPress={() => this.props.changeSort('start')}>
+                            {this.props.t('start')}
+                        </Text>
+                    </View>
+
+                    <View
+                        style={[
+                            styles.optionView,
+                            { borderColor: this.props.sorting === 'distance' ? filterColors.active : filterColors.inactive },
+                        ]}
+                    >
+                        <Text style={styles.optionText} onPress={() => this.props.changeSort('distance')}>
+                            {this.props.t('distance')}
+                        </Text>
+                    </View>
+                </View>
+            </View>
         );
     }
 }

@@ -16,6 +16,11 @@ export const statusColors = {
     lighten2: 0.2,
 };
 
+export const filterColors = {
+    active: '#48b',
+    inactive: '#eee',
+};
+
 export const neutralColors = {
     background: '#ffffff',
     surface: '#f9f9f9',
