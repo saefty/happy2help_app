@@ -8,28 +8,13 @@ export const MY_EVENTS = gql`
                 id
                 name
                 description
+                image {
+                    id
+                    url
+                }
                 organisation {
                     id
                     name
-                }
-                jobSet {
-                    id
-                    name
-                    description
-                    totalPositions
-                    participationSet {
-                        id
-                        state
-                        user {
-                            id
-                            username
-                        }
-                        job {
-                            id
-                            name
-                            description
-                        }
-                    }
                 }
                 location {
                     latitude

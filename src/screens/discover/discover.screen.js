@@ -26,13 +26,15 @@ type State = {
     event?: EventObject,
     userRegion: any,
     userLocation: any,
-    sorting: string,
-    descending: boolean,
     funnelOpen: boolean,
     scrollAnim: Animated.Value,
     offsetAnim: Animated.Value,
     clampedScroll: any,
     selectedIndex: number,
+    sorting: string,
+    descending: boolean,
+    filter: string,
+    searchQuery: string,
 };
 
 class _DiscoverScreen extends Component<Props, State> {
@@ -69,9 +71,10 @@ class _DiscoverScreen extends Component<Props, State> {
                 latitude: 0,
                 longitude: 0,
             },
+            funnelOpen: false,
             sorting: '',
             descending: false,
-            funnelOpen: false,
+            filter: '',
             searchQuery: '',
         };
     }
@@ -269,20 +272,13 @@ class _DiscoverScreen extends Component<Props, State> {
                         <DiscoverAppbar
                             searchQuery={this.searchQuery}
                             openFunnel={() => this.setState({ funnelOpen: !this.state.funnelOpen })}
-                            funnelSettings={{
-                                open: this.state.funnelOpen,
-                                sorting: this.state.sorting,
-                                descending: this.state.descending,
-                                changeSort: (sort: string) => {
-                                    this.setState({
-                                        sorting: sort,
-                                    });
-                                },
-                                changeDescending: (desc: boolean) => {
-                                    this.setState({
-                                        descending: desc,
-                                    });
-                                },
+                            funnelOpen={this.state.funnelOpen}
+                            updateQuery={(sorting: string, descending: boolean, filter: string) => {
+                                this.setState({
+                                    sorting: sorting,
+                                    descending: descending,
+                                    filter: filter,
+                                });
                             }}
                         />
                         <SegmentedControl values={['KARTE', 'LISTE']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />

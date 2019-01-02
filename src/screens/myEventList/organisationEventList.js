@@ -41,7 +41,7 @@ class _OrganisationEventList extends Component<Props, State> {
     };
 
     onEventEdit = (event: EventObject) => {
-        this.props.navigation.navigate('Edit', {
+        this.props.navigation.navigate('EditEvent', {
             event: event,
         });
     };
@@ -89,6 +89,7 @@ class _OrganisationEventList extends Component<Props, State> {
                 <KeyboardAwareScrollView>
                     <OrganisationEventDataProvider id={orgaId}>
                         {(organisation, refetch) => {
+                            <NavigationEvents onWillFocus={refetch} />;
                             return (
                                 <View>
                                     <Headline>{}</Headline>
@@ -101,7 +102,13 @@ class _OrganisationEventList extends Component<Props, State> {
                                         }}
                                     />
                                     <Portal>
-                                        <EventFAB addEvent={() => this.props.navigation.navigate('EditEvent')} />
+                                        <EventFAB
+                                            addEvent={() =>
+                                                this.props.navigation.navigate('EditEvent', {
+                                                    orgaId: orgaId,
+                                                })
+                                            }
+                                        />
                                     </Portal>
                                 </View>
                             );

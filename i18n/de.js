@@ -70,6 +70,7 @@ export default {
         name: 'nach Titel',
         start: 'nach Datum',
         distance: 'nach Entfernung',
+        filter: 'Filter'
     },
     FlashMessages: {
         checkedIn: 'Nutzer nimmt jetzt teil!',

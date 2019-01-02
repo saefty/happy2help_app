@@ -1,6 +1,6 @@
 // @flow
 import { StyleSheet } from 'react-native';
-import { neutralColors } from '../../../themes/colors';
+import { neutralColors, primaryColor } from '../../../themes/colors';
 
 export const styles = StyleSheet.create({
     container: {
@@ -20,4 +20,28 @@ export const styles = StyleSheet.create({
         zIndex: -1,
         backgroundColor: neutralColors.background,
     },
+    imgContainer: {
+        flex: 1,
+        height: 128,
+        overflow: 'hidden',
+        alignItems: 'center',
+    },
+    imgButton: {
+        position: 'absolute',
+        top: 60,
+        right: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 60,
+        height: 60,
+        backgroundColor: primaryColor,
+        borderRadius: 60,
+        bottom: 0,
+    },
+    eventImage: {
+        flex: 1,
+        alignSelf: 'stretch',
+        width: undefined,
+        height: undefined,
+    }
 });

@@ -1,15 +1,23 @@
-/* @flow */
-
+// @flow
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
+import { Image, View, StyleSheet } from 'react-native';
 
-import { styles } from './viewOrganisation.style';
+type Props = {
+    src?: string,
+    style: StyleSheet,
+};
 
-export default class OrganisationProfilePicture extends Component<any,any> {
+export class OrganisationProfilePicture extends Component<Props> {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
+        const DEFAULT = require('../../../assets/images/profile/profile_mult.png');
+
         return (
-            <View style={styles.container}>
-                <Image style={styles.profilePicture} source={require('./../../../assets/images/profile/profile_mult.png')} />
+            <View>
+                <Image source={this.props.src !== '' ? {uri: this.props.src} : DEFAULT} style={this.props.style} />
             </View>
         );
     }

@@ -11,7 +11,7 @@ import { AsyncStorage } from 'react-native';
 import { persistCache } from 'apollo-cache-persist';
 import gql from 'graphql-tag';
 import { onError } from 'apollo-link-error';
-import { createUploadLink } from 'apollo-upload-client'
+import { createUploadLink } from 'apollo-upload-client';
 
 import Config from 'react-native-config';
 import { Sentry } from 'react-native-sentry';
@@ -62,8 +62,8 @@ export const createApolloConfiguration = async () => {
 
     const errorLink = onError(({ graphQLErrors }) => {
         if (graphQLErrors)
-            graphQLErrors.map(({ message }) => {
-                Sentry.captureException('GraphQL Error: ', message); // eslint-disable-line
+            graphQLErrors.map(error => {
+                Sentry.captureException('GraphQL Error: ', error); // eslint-disable-line
             });
     });
 
@@ -71,12 +71,7 @@ export const createApolloConfiguration = async () => {
     Sentry.captureMessage('URL set to', serverURI); // eslint-disable-line
     const uploadLink = createUploadLink({ uri: serverURI });
 
-    const Links = [
-        errorLink,
-        CreateHeaderLink,
-        stateLink,
-        uploadLink,
-    ];
+    const Links = [errorLink, CreateHeaderLink, stateLink, uploadLink];
 
     const defaultOptions = {};
 

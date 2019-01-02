@@ -71,14 +71,13 @@ export default {
         Canceled: 'Cancel application',
     },
     Sort: {
+        sort: 'Sorting',
         ascending: 'ascending',
         descending: 'descending',
-        alphabetic: 'alphabetic',
-        byDate: 'by date',
-        sort: 'sorting',
         name: 'by name',
         start: 'by date',
         distance: 'by distance',
+        filter: 'filter',
     },
     FlashMessages: {
         checkedIn: 'User is now participating!',
