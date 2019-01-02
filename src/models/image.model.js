@@ -10,5 +10,5 @@ export type ImageObject  = {
     url: string,
     user?: UserObject,
     organisation?: OrganisationObject,
-    event?: EventObjects,
+    event?: EventObject,
 }

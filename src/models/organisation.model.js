@@ -2,6 +2,7 @@
 
 import type { UserObject } from './user.model.js';
 import type { EventObject } from './event.model.js';
+import type { ImageObject } from './location.model';
 
 export type OrganisationObject = {
     id: string,
@@ -10,4 +11,5 @@ export type OrganisationObject = {
     description: string,
     members: Array<UserObject>,
     eventSet: Array<EventObject>,
+    image: ImageObject,
 };

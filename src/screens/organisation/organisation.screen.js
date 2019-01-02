@@ -28,7 +28,7 @@ class OrganisationScreen extends Component<Props> {
                                 this.props.navigation.goBack();
                             }}
                         />
-                        <Appbar.Content title={this.props.organisation.name} subtitle="Organization" />
+                        <Appbar.Content title={this.props.organisation.name} subtitle="Organisation" />
                         <Appbar.Action icon="edit" />
                         <Appbar.Action icon="more-vert" />
                     </Appbar.Header>

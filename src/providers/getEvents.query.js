@@ -6,6 +6,10 @@ export const GET_EVENTS = gql`
             id
             name
             description
+            image {
+                id
+                url
+            }
             creator {
                 username
             }

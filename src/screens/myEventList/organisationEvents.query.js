@@ -8,6 +8,10 @@ export const ORGANISATION_EVENTS = gql`
                 id
                 name
                 description
+                image {
+                    id
+                    url
+                }
                 organisation {
                     id
                     name

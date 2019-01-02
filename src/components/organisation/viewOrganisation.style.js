@@ -9,10 +9,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         width: 100 + '%',
     },
-    headerContainer: {
+    profilePicContainer: {
         alignItems: 'center',
-        width: 100 + '%',
-        height: 140,
     },
     imageContainer: {
         position: 'absolute',
@@ -20,23 +18,20 @@ export const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-    },
-    profileContainer: {
-        justifyContent: 'center',
+        flex: 1,
+        height: 128,
+        overflow: 'hidden',
         alignItems: 'center',
-        margin: 5,
-    },
-    headerImage: {
-        position: 'absolute',
-        width: 100 + '%',
-        height: 140,
     },
     profilePicture: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
         width: 110,
         height: 110,
         borderRadius: 150,
         margin: 10,
-        borderWidth: 8,
+        borderWidth: 4,
         borderColor: 'white',
     },
     titleBar: {
@@ -73,4 +68,16 @@ export const styles = StyleSheet.create({
         paddingTop: 15,
         width: 96 + '%',
     },
+    imgContainer: {
+        flex: 1,
+        height: 128,
+        overflow: 'hidden',
+        alignItems: 'center',
+    },
+    eventImage: {
+        flex: 1,
+        alignSelf: 'stretch',
+        width: undefined,
+        height: undefined,
+    }
 });

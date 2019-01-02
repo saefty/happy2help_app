@@ -1,8 +1,9 @@
 // @flow
 import type { EventObject } from '../../models/event.model';
 import React, { Component } from 'react';
-import { View, StyleSheet, TextInput as NativeTextInput, ScrollView } from 'react-native';
-import { Button, Text, TextInput, HelperText, Subheading, Headline, Appbar } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, TextInput as NativeTextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { TextInput, HelperText, Headline, Appbar } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { Formik, ErrorMessage } from 'formik';
@@ -13,27 +14,42 @@ import { GooglePlacesInput } from '../location/location.input';
 import { styles } from './edit.event.style';
 import { graphql, compose } from 'react-apollo';
 import { mutations } from './edit.event.mutations';
+import { EventImage } from './event.image';
+import { ImagePicker } from '../image/imagePicker';
+import { Picker } from '../image/pickerOptions';
+import { uploadMutations } from '../image/upload.mutations';
+import { ReactNativeFile } from 'apollo-upload-client';
 import { GET_EVENTS } from '../../providers/getEvents.query';
-import { MY_EVENTS } from '../../screens/myEventList/myEvents.query';
 import { EditJobList } from './job/edit.job.list';
 import { clone } from '../../helpers/clone';
 import uuid from 'uuid/v4';
 
 type Props = {
     event?: EventObject,
+    orgaId?: ID,
     t: i18n.t,
     updateEventMutation: graphql.mutate,
     createEventMutation: graphql.mutate,
+    uploadImageMutation: graphql.mutate,
+    deleteImageMutation: graphql.mutate,
 };
 
 type State = {
     validationSchema: Yup.Schema,
+    pickedImage: string,
+    modalVisible: boolean,
 };
 
 class _EditEventForm extends Component<Props, State> {
     scrollView: ScrollView;
     constructor(props: Props) {
         super(props);
+
+        let initialImg = '';
+        if (this.props.event) {
+            initialImg = this.props.event.image ? this.props.event.image.url : '';
+        }
+
         const EventSchema = Yup.object().shape({
             name: Yup.string()
                 .min(5, this.props.t('errors:toShort'))
@@ -43,20 +59,67 @@ class _EditEventForm extends Component<Props, State> {
                 .required(this.props.t('errors:required')),
             location: Yup.object().required(this.props.t('errors:required')),
         });
-        this.state = { validationSchema: EventSchema };
+
+        this.state = {
+            validationSchema: EventSchema,
+            pickedImage: initialImg,
+            modalVisible: false,
+        };
     }
 
+    showModal = () => this.setState({ modalVisible: true });
+    hideModal = () => this.setState({ modalVisible: false });
+
+    takeImage = async () => {
+        let img = await Picker.eventCamera();
+        this.setState({ pickedImage: img });
+        this.hideModal();
+    };
+
+    pickImage = async () => {
+        let img = await Picker.eventGallery();
+        this.setState({ pickedImage: img });
+        this.hideModal();
+    };
+
+    saveImage = async id => {
+        let fileImg = new ReactNativeFile({
+            uri: this.state.pickedImage,
+            name: id + '.jpg',
+            type: 'image/jpg',
+        });
+        await this.props.uploadImageMutation({ variables: { image: fileImg, eventId: id } });
+        await Picker.clean();
+    };
+
+    deleteImage = () => {
+        if (this.props.event && this.props.event.image) {
+            this.props.deleteImageMutation({ variables: { imageId: this.props.event.image.id } });
+            showMessage({
+                message: this.props.t('Image:deleteSuccess'),
+                type: 'success',
+                icon: 'auto',
+            });
+        }
+        this.setState({ pickedImage: '' });
+        this.hideModal();
+    };
+
     create = event => {
+        let variables = {
+            name: event.name,
+            description: event.description,
+            locationLon: event.location.long,
+            locationLat: event.location.lat,
+            locationName: event.location.name,
+            start: event.start,
+            end: event.end,
+        };
+        if (this.props.orgaId) {
+            variables.organisationId = this.props.orgaId;
+        }
         return this.props.createEventMutation({
-            variables: {
-                name: event.name,
-                description: event.description,
-                locationLon: event.location.long,
-                locationLat: event.location.lat,
-                locationName: event.location.name,
-                start: event.start,
-                end: event.end,
-            },
+            variables: variables,
         });
     };
 
@@ -83,6 +146,7 @@ class _EditEventForm extends Component<Props, State> {
         };
 
         let successMessage = 'creationSuccess';
+        let created;
 
         if (!this.props.event) {
             (EVENT.location = {
@@ -90,9 +154,15 @@ class _EditEventForm extends Component<Props, State> {
                 lat: values.location.geometry.location.lat,
                 long: values.location.geometry.location.lng,
             }),
-                await this.create(EVENT);
+                (created = await this.create(EVENT));
+            if (this.state.pickedImage !== '') {
+                await this.saveImage(created.data.createEvent.id);
+            }
         } else {
             await this.update(EVENT);
+            if (this.state.pickedImage !== '') {
+                await this.saveImage(values.id);
+            }
             successMessage = 'editSuccess';
         }
 
@@ -127,6 +197,22 @@ class _EditEventForm extends Component<Props, State> {
                                 <Appbar.Content title={this.props.t(!this.props.event ? 'createTitle' : 'editTitle')} />
                                 <Appbar.Action icon="check" onPress={handleSubmit} disabled={isSubmitting} />
                             </Appbar.Header>
+
+                            <ImagePicker
+                                visible={this.state.modalVisible}
+                                hideModal={this.hideModal}
+                                takeImage={this.takeImage}
+                                pickImage={this.pickImage}
+                                deleteImage={this.deleteImage}
+                            />
+
+                            <View style={styles.imgContainer}>
+                                <EventImage src={this.state.pickedImage} style={styles.eventImage} grayscale={true} resizeMode={'cover'} />
+                                <TouchableOpacity style={styles.imgButton} onPress={this.showModal}>
+                                    <Icon name={'photo-camera'} size={30} color="#fff" />
+                                </TouchableOpacity>
+                            </View>
+
                             <View style={styles.container}>
                                 <TextInput
                                     onChangeText={handleChange('name')}
@@ -195,5 +281,11 @@ class _EditEventForm extends Component<Props, State> {
 
 export const EditEventFormNamespaced = compose(
     graphql(mutations.CREATE_EVENT, { name: 'createEventMutation' }),
-    graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation' })
+    graphql(mutations.UPDATE_EVENT, { name: 'updateEventMutation' }),
+    graphql(uploadMutations.UPLOAD_EVENT_IMG, {
+        name: 'uploadImageMutation',
+    }),
+    graphql(uploadMutations.DELETE_IMG, {
+        name: 'deleteImageMutation',
+    })
 )(withNamespaces(['Event', 'errors'])(withMappedNavigationProps()(_EditEventForm)));
