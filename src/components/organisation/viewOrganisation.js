@@ -42,11 +42,15 @@ class _OrganisationView extends Component<Props, State> {
     }
 
     render() {
-        const header = this.props.showImage ? (
-            <View style={styles.headerContainer}>
-                <OrganisationHeader />
-            </View>
-        ) : null;
+        let header = null;
+        if (this.props.showImage) {
+            // set header image to last event image
+            let length = this.state.events.getRowCount();
+            let headerImg = length > 0 && this.state.events._dataBlob.s1[length - 1].image ? this.state.events._dataBlob.s1[0].image.url : '';
+            let profileImg = this.props.organisation.image ? this.props.organisation.image.url : '';
+            header = <OrganisationHeader headerImg={headerImg}  profileImg={profileImg}/>;
+        }
+
         const currentEvents = this.props.showEvents ? (
             <View style={{ backgroundColor: neutralColors.surface, marginBottom: 15 }}>
                 <Accordion title={this.props.t('currentEvents')} expansion={false} icon={'event'}>

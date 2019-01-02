@@ -1,10 +1,11 @@
 // @flow
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import type { EventObject } from '../../../models/event.model';
 import type { ControlsType } from './eventControls/eventControlBar';
 import { styles } from './event.styles.js';
+import { EventImage } from '../event.image.js';
 import { EventControlBar } from './eventControls/eventControlBar';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -63,7 +64,9 @@ export class Event extends Component<Props> {
         );
         return (
             <Card style={[styles.card, this.orgaEventStyle()]} onPress={onPress}>
-                <Card.Cover source={{ uri: 'https://picsum.photos/200/300/?random' }} />
+                <View style={styles.coverContainer}>
+                    <EventImage style={styles.cover} src={this.props.event.image ? this.props.event.image.url : ''} resizeMode={'cover'} />
+                </View>
                 <Card.Content>
                     <Title style={styles.title}>{this.props.event.name}</Title>
                     <Paragraph>{this.formattedDescription}</Paragraph>

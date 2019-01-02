@@ -22,6 +22,26 @@ export const Picker = {
         });
         return img.path;
     },
+    eventGallery: async () => {
+        let img = await ImagePicker.openPicker({
+            width: 1024,
+            height: 256,
+            cropping: true,
+            cropperActiveWidgetColor: primaryColor,
+            cropperToolbarColor: primaryColor,
+        });
+        return img.path;
+    },
+    eventCamera: async () => {
+        let img = await ImagePicker.openCamera({
+            width: 1024,
+            height: 256,
+            cropping: true,
+            cropperActiveWidgetColor: primaryColor,
+            cropperToolbarColor: primaryColor,
+        });
+        return img.path;
+    },
     clean: async () => {
         try {
             await ImagePicker.clean();

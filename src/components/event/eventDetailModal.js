@@ -59,6 +59,10 @@ export const ORGANISATION_QUERY = gql`
                 id
                 name
                 description
+                image {
+                    id
+                    url
+                }
                 members {
                     id
                     username
@@ -67,6 +71,9 @@ export const ORGANISATION_QUERY = gql`
                     id
                     name
                     description
+                    image {
+                        url
+                    }
                 }
             }
         }

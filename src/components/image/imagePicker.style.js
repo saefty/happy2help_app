@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     },
     modalOptions: {
         flex: 0,
-        padding: 15,
+        padding: 10,
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',

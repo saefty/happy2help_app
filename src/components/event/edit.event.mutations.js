@@ -10,6 +10,7 @@ export const mutations = {
             $locationName: String!
             $start: DateTime!
             $end: DateTime!
+            $organisationId: ID
         ) {
             createEvent(
                 name: $name
@@ -19,6 +20,7 @@ export const mutations = {
                 locationName: $locationName
                 start: $start
                 end: $end
+                organisationId: $organisationId
             ) {
                 id
             }

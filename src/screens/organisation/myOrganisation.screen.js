@@ -22,6 +22,10 @@ const ORGANISATION_QUERY = gql`
             id
             name
             description
+            image {
+                id
+                url
+            }
             members {
                 id
                 username
@@ -30,6 +34,9 @@ const ORGANISATION_QUERY = gql`
                 id
                 name
                 description
+                image {
+                    url
+                }
             }
         }
     }
@@ -91,7 +98,7 @@ class _MyOrganisationScreen extends Component<Props, any> {
                                                 left: 4,
                                             }}
                                         />
-                                        <Appbar.Content title={data.organisation.name} subtitle="Organization" />
+                                        <Appbar.Content title={data.organisation.name} subtitle="Organisation" />
                                         <Appbar.Action
                                             icon="edit"
                                             onPress={() => {
