@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Portal, Headline, Appbar } from 'react-native-paper';
 import { UserEventList } from '../../components/userEvents/userEventList';
 import { MyEventDataProvider } from './myEventDataProvider';
@@ -10,7 +10,6 @@ import type { EventObject } from '../../models/event.model';
 import { H2HTheme } from '../../../themes/default.theme';
 import { withNamespaces, i18n } from 'react-i18next';
 import { withNavigation } from 'react-navigation';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type Props = {
     t: i18n.t,
@@ -53,7 +52,7 @@ class _MyEventList extends Component<Props, State> {
                     <Appbar.BackAction onPress={() => this.props.navigation.navigate('Discover')} />
                     <Appbar.Content title={this.props.t('myEvents')} />
                 </Appbar.Header>
-                <KeyboardAwareScrollView>
+                <ScrollView>
                     <MyEventDataProvider>
                         {(user, refetch) => {
                             return (
@@ -74,7 +73,7 @@ class _MyEventList extends Component<Props, State> {
                             );
                         }}
                     </MyEventDataProvider>
-                </KeyboardAwareScrollView>
+                </ScrollView>
             </Provider>
         );
     }

@@ -113,6 +113,8 @@ android {
         applicationId "io.taher.h2h"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        multiDexEnabled = true
+        vectorDrawables.useSupportLibrary = true
         versionCode rootProject.ext.version
         versionName "0.0.2"
         ndk {
@@ -149,6 +151,7 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -165,6 +168,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-text-input-mask')
+    implementation project(':react-native-image-crop-picker')
     implementation "com.google.android.gms:play-services-base:+"
     implementation "com.google.android.gms:play-services-maps:+"
     implementation project(':react-native-camera')

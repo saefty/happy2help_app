@@ -95,7 +95,6 @@ export class EventDetailModal extends Component<Props> {
                     if (error || loading) return <View />;
                     return (
                         <View>
-                            <View />
                             <OrganisationView
                                 organisation={data.event.organisation}
                                 showImage={false}
@@ -156,7 +155,7 @@ export class EventDetailModal extends Component<Props> {
                                 if (error || loading) return <View />;
                                 return (
                                     <Accordion title="Jobs" icon="work" expansion={true}>
-                                        <NavigationEvents onWillFocus={refetch} />;
+                                        <NavigationEvents onWillFocus={refetch} />
                                         <JobList jobs={data.event.jobSet} startDate={data.event.start} refetch={refetch} />
                                     </Accordion>
                                 );

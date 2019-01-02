@@ -3,7 +3,7 @@ import type { EventObject } from '../../models/event.model';
 
 import React, { Component } from 'react';
 import { View, ScrollView, Platform, Animated, ActivityIndicator } from 'react-native';
-import { Provider, Surface } from 'react-native-paper';
+import { Provider, Surface, Text } from 'react-native-paper';
 import { withNamespaces, i18n } from 'react-i18next';
 
 import { DiscoverAppbar } from './../../components/discover/appbar/discoverAppbar';
@@ -12,6 +12,7 @@ import { Map } from '../../components/discover/map/map';
 import { EventList } from './../../components/event/eventlist/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
 import { NavigationEvents } from 'react-navigation';
+import { EditJobList } from '../../components/event/job/edit.job.list';
 
 const APPBAR_SEG_HEIGHT = 130;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });

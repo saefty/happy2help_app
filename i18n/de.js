@@ -24,6 +24,7 @@ export default {
         logOut: 'Abmelden',
         skills: 'Fähigkeiten',
         creditPoints: 'Helfer Punkte',
+        editSuccess: 'Profil wurde erfolgreich bearbeitet!'
     },
     Event: {
         myEvents: 'Meine Events',
@@ -78,5 +79,12 @@ export default {
     QR: {
         your: 'Dein QR Code',
         info: 'Lass deinen QR Code vom Eventveranstalter scannen, um dich für das Event einzuchecken!',
+    },
+    Image: {
+        add: 'Füge ein Foto hinzu!',
+        take: 'Foto schießen',
+        gallery: 'Aus der Gallerie auswählen',
+        remove: 'Foto löschen',
+        deleteSuccess: 'Dein Foto wurde erfolgreich entfernt!'
     },
 };
