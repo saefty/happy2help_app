@@ -10,7 +10,7 @@ type Props = {
     t: i18n.t,
 };
 
-class FilterOptionsComponent extends Component<Props> {
+class _FilterOptions extends Component<Props> {
     constructor(props: Props) {
         super(props);
     }
@@ -28,4 +28,4 @@ class FilterOptionsComponent extends Component<Props> {
     }
 }
 
-export const FilterOptions = withNamespaces(['Sort'])(FilterOptionsComponent);
+export const FilterOptions = withNamespaces(['Sort'])(_FilterOptions);

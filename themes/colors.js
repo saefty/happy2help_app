@@ -16,15 +16,15 @@ export const statusColors = {
     lighten2: 0.2,
 };
 
-export const filterColors = {
-    active: '#48b',
-    inactive: '#eee',
-};
-
 export const neutralColors = {
     background: '#ffffff',
     surface: '#f9f9f9',
     light: '#ccd7df',
     medium: '#b0bac4',
     dark: '#89929c',
+};
+
+export const filterColors = {
+    active: color(primaryColor).darken(0.3).rgb().string(),
+    inactive: neutralColors.medium,
 };

@@ -15,7 +15,7 @@ type Props = {
     changeDescending: (descending: boolean) => any,
 };
 
-class SortOptionsComponent extends PureComponent<Props> {
+class _SortOption extends PureComponent<Props> {
     constructor(props: Props) {
         super(props);
     }
@@ -105,4 +105,4 @@ class SortOptionsComponent extends PureComponent<Props> {
     }
 }
 
-export const SortOptions = withNamespaces(['Sort'])(SortOptionsComponent);
+export const SortOptions = withNamespaces(['Sort'])(_SortOption);
