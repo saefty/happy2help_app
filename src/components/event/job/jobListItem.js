@@ -32,12 +32,13 @@ class _JobListItem extends Component<Props> {
 
     jobParticipationCount = () => {
         const job = this.props.job;
+        if (!job.participationSet) return 0;
         return job.participationSet.filter(x => x.state === participationTypes.Accepted).length;
     };
 
     totalPositions = () => {
         const job = this.props.job;
-        if (job.totalPositions === null) {
+        if (!job.totalPositions) {
             return <IconEntypo name="infinity" />;
         } else {
             return <Text>{job.totalPositions}</Text>;
@@ -62,7 +63,7 @@ class _JobListItem extends Component<Props> {
         if (new Date() > new Date(this.props.startDate)) return;
         //if user participated or got declined don't show
         if (
-            currentUsersParticipation !== null &&
+            currentUsersParticipation &&
             (currentUsersParticipation.state == participationTypes.Declined ||
                 currentUsersParticipation.state == participationTypes.Participated)
         ) {
@@ -81,10 +82,9 @@ class _JobListItem extends Component<Props> {
 
     renderSkills = () => {
         const skillSet = this.props.job.requiresskillSet;
-        if (skillSet === undefined || skillSet.length == 0) {
+        if (!skillSet || skillSet.length == 0) {
             return;
         }
-        if (this.jobParticipationCount() == 0) return; //if there are no openpositions
         let skills = skillSet.map(skill => skill.skill);
         return (
             <View style={styles.skillContainer}>
@@ -105,7 +105,7 @@ class _JobListItem extends Component<Props> {
         const job = this.props.job;
         //if there are no openpositions and the user did not already applied dont show job details
         if (
-            job.totalPositions !== null &&
+            job.totalPositions &&
             this.isFull() &&
             (job.currentUsersParticipation === null || job.currentUsersParticipation.state == participationTypes.Canceled)
         ) {
@@ -134,8 +134,8 @@ class _JobListItem extends Component<Props> {
                     </Paragraph>
                     {this.renderSkills()}
                     <View>{this.renderPositionsText()}</View>
-                    {this.renderJobParticipationButton()}
-                    {this.renderParticipationState()}
+                    {this.props.job.currentUsersParticipation && this.renderJobParticipationButton()}
+                    {this.props.job.currentUsersParticipation && this.renderParticipationState()}
                 </View>
             );
         }

@@ -1,23 +1,28 @@
 // @flow
 import React, { Component } from 'react';
-import { View } from 'react-native';
-// import { TextInput } from '../../utils/TextinputWithIcon/textInput';
-import { styles } from './editProfileStyle';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Picker } from '../../image/pickerOptions';
+import { View, TouchableOpacity } from 'react-native';
+import { ReactNativeFile } from 'apollo-upload-client';
 import { Appbar, Title } from 'react-native-paper';
-import { ProfilePicture } from '../profilePicture/profilePicture';
-import { SkillList } from '../skillList/skillList';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import type { UserObject } from './../../../models/user.model';
-import type { SkillObject } from './../../../models/skill.model';
 import { withNamespaces, i18n } from 'react-i18next';
-import { clone } from './../../../helpers/clone';
-
-import { mutations } from './editProfileMutations';
-
 import { graphql, compose } from 'react-apollo';
 import { withNavigation } from 'react-navigation';
 import { Formik } from 'formik';
 import { GooglePlacesInput } from '../../location/location.input';
+import { showMessage } from 'react-native-flash-message';
+
+import { clone } from './../../../helpers/clone';
+import { styles } from './editProfileStyle';
+import { ProfilePicture } from '../profilePicture/profilePicture';
+import { ImagePicker } from '../../image/imagePicker';
+import { SkillList } from '../skillList/skillList';
+import type { UserObject } from './../../../models/user.model';
+import type { SkillObject } from './../../../models/skill.model';
+import { mutations } from './editProfileMutations';
+import { uploadMutations } from '../../image/upload.mutations';
+import { GET_PROFILE } from '../../../screens/myProfile/getProfile.mutation';
 
 type Props = {
     t: i18n.t,
@@ -27,34 +32,40 @@ type Props = {
     updateUserLocationMutation: graphql.mutate,
     createSkillMutation: graphql.mutate,
     deleteSkillMutation: graphql.mutate,
+    uploadImageMutation: graphql.mutate,
+    deleteImageMutation: graphql.mutate,
 };
 
 type State = {
-    user: UserObject,
+    pickedImage: string,
+    modalVisible: boolean,
 };
 
 class EditProfileComponent extends Component<Props, State> {
     constructor(props) {
         super(props);
-        this.state = { user: clone(props.user) };
+
+        let initialImg = this.props.user.image ? this.props.user.image.url : '';
+
+        this.state = {
+            pickedImage: initialImg,
+            modalVisible: false,
+        };
     }
 
-    addSkill = (skill: SkillObject) => {
-        let user = this.state.user;
-        user.skills.push(skill);
-        this.setState({ user: user });
+    showModal = () => this.setState({ modalVisible: true });
+    hideModal = () => this.setState({ modalVisible: false });
+
+    takeImage = async () => {
+        let img = await Picker.userCamera();
+        this.setState({ pickedImage: img });
+        this.hideModal();
     };
 
-    deleteSkill = (skillToDelete: SkillObject) => {
-        let user = this.state.user;
-        user.skills = user.skills.filter(skill => skill.id != skillToDelete.id);
-        this.setState({ user: user });
-    };
-
-    updateLocationName = locationname => {
-        let user = this.state.user;
-        user.profile.location.name = locationname;
-        this.setState({ user: user });
+    pickImage = async () => {
+        let img = await Picker.userGallery();
+        this.setState({ pickedImage: img });
+        this.hideModal();
     };
 
     //functions to save changes in the db:
@@ -78,6 +89,29 @@ class EditProfileComponent extends Component<Props, State> {
         }
     };
 
+    saveImage = async () => {
+        let fileImg = new ReactNativeFile({
+            uri: this.state.pickedImage,
+            name: this.props.user.username + '.jpg',
+            type: 'image/jpg',
+        });
+        await this.props.uploadImageMutation({ variables: { image: fileImg } });
+        await Picker.clean();
+    };
+
+    deleteImage = () => {
+        if (this.props.user.image) {
+            this.props.deleteImageMutation({ variables: { imageId: this.props.user.image.id } });
+            showMessage({
+                message: this.props.t('Image:deleteSuccess'),
+                type: 'success',
+                icon: 'auto',
+            });
+        }
+        this.setState({ pickedImage: '' });
+        this.hideModal();
+    };
+
     saveChanges = async values => {
         const oldLocation = this.props.user.profile.location;
         const newLocation = values.location;
@@ -96,6 +130,16 @@ class EditProfileComponent extends Component<Props, State> {
 
         this.deleteSkillsInDb(skillsToDeleteIds);
         this.createSkillsInDb(skillsToCreate);
+
+        if (this.state.pickedImage !== '') {
+            this.saveImage();
+        }
+
+        showMessage({
+            message: this.props.t('editSuccess'),
+            type: 'success',
+            icon: 'auto',
+        });
     };
 
     onSubmit = async (values, actions) => {
@@ -103,6 +147,7 @@ class EditProfileComponent extends Component<Props, State> {
         this.props.navigation.state.params.close();
         this.props.navigation.goBack();
     };
+
     onClose = () => {
         this.props.navigation.state.params.close();
         this.props.navigation.goBack();
@@ -127,9 +172,27 @@ class EditProfileComponent extends Component<Props, State> {
                                 <Appbar.Action icon="check" onPress={handleSubmit} />
                             </Appbar.Header>
 
-                            <View style={{ alignItems: 'center' }}>
-                                <ProfilePicture style={styles.profilePicture} {...this.props} />
+                            <ImagePicker
+                                visible={this.state.modalVisible}
+                                hideModal={this.hideModal}
+                                takeImage={this.takeImage}
+                                pickImage={this.pickImage}
+                                deleteImage={this.deleteImage}
+                            />
+
+                            <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                                <View style={{ flex: 1 }} />
+                                <ProfilePicture
+                                    style={styles.profilePicture}
+                                    src={this.state.pickedImage}
+                                />
+                                <View style={{ flex: 1, paddingBottom: 35 }}>
+                                    <TouchableOpacity style={styles.circularButton} onPress={this.showModal}>
+                                        <Icon name={'photo-camera'} size={30} color="#fff" />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
+
                             <GooglePlacesInput
                                 onChangeValue={v => {
                                     setFieldValue('location', {
@@ -170,5 +233,17 @@ export const EditProfile = compose(
     graphql(mutations.CREATE_LOCATION, { name: 'createLocationMutation' }),
     graphql(mutations.UPDATE_USER_LOCATION, { name: 'updateUserLocationMutation' }),
     graphql(mutations.CREATE_SKILL, { name: 'createSkillMutation' }),
-    graphql(mutations.DELETE_SKILL, { name: 'deleteSkillMutation' })
+    graphql(mutations.DELETE_SKILL, { name: 'deleteSkillMutation' }),
+    graphql(uploadMutations.UPLOAD_USER_IMG, {
+        name: 'uploadImageMutation',
+        options: () => ({
+            refetchQueries: [{ query: GET_PROFILE }],
+        }),
+    }),
+    graphql(uploadMutations.DELETE_IMG, {
+        name: 'deleteImageMutation',
+        options: () => ({
+            refetchQueries: [{ query: GET_PROFILE }],
+        }),
+    })
 )(withNavigation(withNamespaces(['User'])(EditProfileComponent)));

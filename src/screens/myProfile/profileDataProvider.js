@@ -2,28 +2,8 @@
 import { Component } from 'react';
 import * as React from 'react';
 import { View } from 'react-native';
-import gql from 'graphql-tag';
-import { Query, graphql } from 'react-apollo';
-
-const GET_PROFILE = gql`
-    {
-        user {
-            id
-            username
-            profile {
-                location {
-                    name
-                }
-                creditPoints
-            }
-            skills {
-                id
-                name
-                approved
-            }
-        }
-    }
-`;
+import { Query } from 'react-apollo';
+import { GET_PROFILE } from './getProfile.mutation'
 
 type Props = {
     children: () => React.Node,

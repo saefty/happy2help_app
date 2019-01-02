@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TabNavigator } from '../tabNavigation';
 import { ProfileStackNavigator } from './../stackNavigators/profile.stack';
 import { MyEventsStackNavigator } from './../stackNavigators/myEvents.stack';
-import { OrganisationStackNavigator } from './../stackNavigators/organisation.stack';
 import { EditOrganisationScreen } from '../../../screens/organisation/editOrganisation.screen';
 
 import { DrawerScreen } from './drawer.screen';
@@ -25,9 +24,6 @@ export const DrawerNavigator = createDrawerNavigator(
         },
         MyEvents: {
             screen: MyEventsStackNavigator,
-        },
-        Organisation: {
-            screen: OrganisationStackNavigator,
         },
         MyQRCode: {
             screen: MyQRScreen,

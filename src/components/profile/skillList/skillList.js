@@ -19,13 +19,15 @@ type Props = {
 class SkillListComponent extends Component<Props> {
     constructor(props) {
         super(props);
-       
     }
 
     render() {
-        let Render_Skills = this.props.skillObjects.map(skill => (
-            <SkillChip key={skill.id} skillObject={skill} deleteChip={this.props.deleteSkill ? this.props.deleteSkill : null} />
-        ));
+        let Render_Skills = this.props.skillObjects.map(
+            skill =>
+                skill && (
+                    <SkillChip key={skill.id} skillObject={skill} deleteChip={this.props.deleteSkill ? this.props.deleteSkill : null} />
+                )
+        );
 
         return (
             <View style={styles.container}>
