@@ -38,6 +38,7 @@
     "graphql-tag": "^2.10.0",
     "i18next": "^12.0.0",
     "install": "^0.12.2",
+    "moment": "^2.23.0",
     "react": "16.5.0",
     "react-apollo": "^2.2.3",
     "react-i18next": "^8.1.2",
