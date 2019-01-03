@@ -15,6 +15,9 @@ import type { OrganisationObject } from '../../../models/organisation.model';
 import { H2HTheme } from './../../../../themes/default.theme';
 import { styles } from './editOrganisation.style';
 import { mutations } from './editOrganisation.mutations.js';
+import OrganisationProfilePicture from '../organisationProfilePicture';
+import gql from 'graphql-tag';
+import { USER_ORGAS_QUERY } from '../../navigation/drawer/drawer.screen';
 import { OrganisationProfilePicture } from '../organisationProfilePicture';
 import { Picker } from '../../image/pickerOptions';
 import { uploadMutations } from '../../image/upload.mutations';
@@ -204,6 +207,22 @@ class _EditOrganisationView extends Component<Props, State> {
 }
 
 export const EditOrganisationView = compose(
+    graphql(mutations.CREATE_ORGANISATION, {
+        name: 'createOrganisationMutation',
+        refetchQueries: [
+            {
+                query: USER_ORGAS_QUERY,
+            },
+        ],
+    }),
+    graphql(mutations.UPDATE_ORGANISATION, {
+        name: 'updateOrganisationMutation',
+        refetchQueries: [
+            {
+                query: USER_ORGAS_QUERY,
+            },
+        ],
+    }),
     graphql(mutations.CREATE_ORGANISATION, { name: 'createOrganisationMutation' }),
     graphql(mutations.UPDATE_ORGANISATION, { name: 'updateOrganisationMutation' }),
     graphql(uploadMutations.UPLOAD_ORGA_IMG, {
