@@ -15,6 +15,18 @@ import gql from 'graphql-tag';
 import { Text, List, Divider, Drawer, Surface } from 'react-native-paper';
 import { NavigationEvents } from 'react-navigation';
 
+export const USER_ORGAS_QUERY = gql`
+    query {
+        user {
+            id
+            organisationSet {
+                id
+                name
+            }
+        }
+    }
+`;
+
 class _DrawerScreen extends React.Component<any, any> {
     state = {
         extended: true,
@@ -60,7 +72,6 @@ class _DrawerScreen extends React.Component<any, any> {
                     <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
                         <ImageProvider>
                             {(image, refetch) => {
-                                if (this.props.navigation.state.isDrawerOpen) refetch();
                                 return <ProfilePicture style={styles.profilePicture} src={image ? image.url : ''} />;
                             }}
                         </ImageProvider>
@@ -79,21 +90,8 @@ class _DrawerScreen extends React.Component<any, any> {
                                 height: 3,
                             }}
                         />
-                        <Query
-                            query={gql`
-                                query {
-                                    user {
-                                        id
-                                        organisationSet {
-                                            id
-                                            name
-                                        }
-                                    }
-                                }
-                            `}
-                        >
-                            {({ error, loading, data, refetch }) => {
-                                if (this.props.navigation.state.isDrawerOpen) refetch();
+                        <Query query={USER_ORGAS_QUERY} pollInterval={10000}>
+                            {({ error, loading, data }) => {
                                 if (error || loading) return <View />;
                                 return (
                                     <List.Accordion

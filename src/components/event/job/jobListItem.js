@@ -10,7 +10,7 @@ import { participationTypes } from '../../../models/participation.model';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import { SkillList } from './../../profile/skillList/skillList';
-import { ParticipationState } from './../../userJobs/participationState/participationState';
+import { ParticipationState } from './../../userParticipations/participationState/participationState';
 
 import { styles } from './jobListItem.style';
 import { withNamespaces, i18n } from 'react-i18next';
@@ -134,7 +134,7 @@ class _JobListItem extends Component<Props> {
                     </Paragraph>
                     {this.renderSkills()}
                     <View>{this.renderPositionsText()}</View>
-                    {this.props.job.currentUsersParticipation && this.renderJobParticipationButton()}
+                    {this.renderJobParticipationButton()}
                     {this.props.job.currentUsersParticipation && this.renderParticipationState()}
                 </View>
             );

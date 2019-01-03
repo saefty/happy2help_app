@@ -3,12 +3,13 @@ import type { Job } from '../../models/job.model';
 import type { Participation } from '../../models/participation.model';
 
 import React, { Component } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList } from 'react-native';
 import { Card } from 'react-native-paper';
 import { compose, graphql } from 'react-apollo';
-import { CREATE_PARTICIPATION, UPDATE_PARTICIPATION } from './../event/participations/participation.mutation';
-import { participationTypes } from '../../models/participation.model';
-import { JobListItem } from './../event/job/jobListItem';
+import { CREATE_PARTICIPATION, UPDATE_PARTICIPATION } from '../../event/participations/participation.mutation';
+import { participationTypes } from '../../../models/participation.model';
+import { clone } from '../../../helpers/clone';
+import { UserParticipation } from './../participation/userParticipation';
 
 type Props = {
     jobs: Job[],
@@ -18,10 +19,19 @@ type Props = {
     refetch: () => any,
 };
 
-class _UserJobList extends Component<Props> {
+class _UserParticipationsList extends Component<Props> {
     constructor(props: Props) {
         super(props);
     }
+
+    // sort events by their latest event start date
+    sortJobsByStartDate = jobs => {
+        let sortedJobs = clone(jobs);
+        sortedJobs = sortedJobs.sort((a, b) => {
+            return new Date(a.event.start) - new Date(b.event.start);
+        });
+        return sortedJobs.reverse();
+    };
 
     createParticipation = async (job: Job, participation: Participation) => {
         if (job.currentUsersParticipation) {
@@ -44,16 +54,15 @@ class _UserJobList extends Component<Props> {
         });
     };
 
-    renderJob = ({ item: job }) => {
+    renderParticipation = ({ item: job }) => {
         if (job.currentUsersParticipation !== null && job.currentUsersParticipation.state == 5) return;
         return (
-            <Card style={{ margin: 10 }}>
+            <Card style={{ marginBottom: 12, borderRadius: 0 }}>
                 <Card.Content>
-                    <JobListItem
-                        job={job}
+                    <UserParticipation
                         updateParticipation={this.updateParticipation}
                         createParticipation={this.createParticipation}
-                        startDate={job.event.start}
+                        job={job}
                     />
                 </Card.Content>
             </Card>
@@ -63,15 +72,15 @@ class _UserJobList extends Component<Props> {
     render() {
         return (
             <FlatList
-                data={this.props.participationSet.map(participation => participation.job)}
+                data={this.sortJobsByStartDate(this.props.participationSet.map(participation => participation.job))}
                 keyExtractor={job => job.id}
-                renderItem={this.renderJob}
+                renderItem={this.renderParticipation}
             />
         );
     }
 }
 
-export const UserJobList = compose(
+export const UserParticipationsList = compose(
     graphql(CREATE_PARTICIPATION, { name: 'createParticipation' }),
     graphql(UPDATE_PARTICIPATION, { name: 'updateParticipation' })
-)(_UserJobList);
+)(_UserParticipationsList);
