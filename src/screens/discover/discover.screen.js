@@ -273,6 +273,7 @@ class _DiscoverScreen extends Component<Props, State> {
                             searchQuery={this.searchQuery}
                             openFunnel={() => this.setState({ funnelOpen: !this.state.funnelOpen })}
                             funnelOpen={this.state.funnelOpen}
+                            showSortOptions={this.state.selectedIndex === 1}
                             updateQuery={(sorting: string, descending: boolean, filter: string) => {
                                 this.setState({
                                     sorting: sorting,

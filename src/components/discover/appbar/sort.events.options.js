@@ -20,7 +20,7 @@ class _SortOption extends PureComponent<Props> {
         super(props);
     }
 
-    get title(): string {
+    get sortInfo(): string {
         if (!this.props.t(this.props.sorting)) return this.props.t('sort');
         let title = this.props.t(this.props.sorting);
         if (this.props.sorting !== 'distance') {
@@ -31,18 +31,19 @@ class _SortOption extends PureComponent<Props> {
         return title;
     }
     get desc(): string {
-        return this.props.sorting === 'distance' ? 'checked' : this.props.descending ? 'checked' : 'unchecked';
+        return this.props.sorting === `distance` ? `unchecked` : this.props.descending ? `checked` : `unchecked`;
     }
 
     get asc(): string {
-        return this.props.sorting === 'distance' ? 'unchecked' : this.props.descending ? 'unchecked' : 'checked';
+        return this.props.sorting === `distance` ? `checked` : this.props.descending ? `unchecked` : `checked`;
     }
 
     render() {
         return (
-            <View>
-                <View style={styles.titleContainer}>
-                    <Title style={styles.title}>{this.title}</Title>
+            <View style={styles.sortContainer}>
+                <Title style={styles.title}>{this.props.t('sort')}</Title>
+                <View style={styles.infoContainer}>
+                    <Title style={styles.info}>{this.sortInfo}</Title>
                 </View>
                 <View style={styles.radioContainer}>
                     <View style={styles.radioButton}>

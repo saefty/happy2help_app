@@ -64,13 +64,16 @@ export default {
         Canceled: 'Bewerbung zurückziehen',
     },
     Sort: {
-        sort: 'Sortierung',
+        sort: 'Sortierung:',
         ascending: 'aufsteigend',
         descending: 'absteigend',
         name: 'nach Titel',
         start: 'nach Datum',
         distance: 'nach Entfernung',
-        filter: 'Filter'
+        filter: 'Filter:',
+        showPrivateEvents: 'Von privaten Nutzern erstellte Events anzeigen',
+        on: '(an)',
+        off: '(aus)',
     },
     FlashMessages: {
         checkedIn: 'Nutzer nimmt jetzt teil!',
