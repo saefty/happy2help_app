@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Appbar, Text } from 'react-native-paper';
-import { UserJobList } from '../../components/userJobs/userJobList';
+import { View, ScrollView } from 'react-native';
+import { Appbar } from 'react-native-paper';
+import { UserParticipationsList } from '../../components/userParticipations/participationsList/userParticipationList';
 import { MyJobsDataProvider } from './myJobsProvider';
 import { Provider } from 'react-native-paper';
 import type { EventObject } from '../../models/event.model';
@@ -10,7 +10,9 @@ import { H2HTheme } from '../../../themes/default.theme';
 import { withNamespaces, i18n } from 'react-i18next';
 import { participationTypes } from '../../models/participation.model';
 import { withNavigation } from 'react-navigation';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { styles } from './userParticipationsScreen.styles';
+
+import { NavigationEvents } from 'react-navigation';
 
 type Props = {
     t: i18n.t,
@@ -22,7 +24,7 @@ type State = {
     selectedIndex: number,
 };
 
-class _MyJobList extends Component<Props, State> {
+class _MyParticipations extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
     }
@@ -33,21 +35,20 @@ class _MyJobList extends Component<Props, State> {
         });
     };
 
-    // This component is wrapped in its own provider as the FAB Button in this screen would cause issues
-    // Look at https://github.com/callstack/react-native-paper/issues/420
     render() {
         return (
-            <Provider theme={H2HTheme}>
+            <View style={{ flex: 1 }}>
                 <Appbar.Header style={{ backgroundColor: 'white' }}>
                     <Appbar.Action color={H2HTheme.colors.primary} icon="menu" onPress={() => this.props.navigation.openDrawer()} />
                     <Appbar.Content title={this.props.t('myJobs')} />
                 </Appbar.Header>
-                <KeyboardAwareScrollView>
+                <ScrollView style={styles.scrollView}>
                     <MyJobsDataProvider>
-                        {user => {
+                        {(user, refetch) => {
                             return (
                                 <View>
-                                    <UserJobList
+                                    <NavigationEvents onWillFocus={refetch} />
+                                    <UserParticipationsList
                                         openEventDetails={this.openEventModal}
                                         participationSet={user.participationSet.filter(x => x.state !== participationTypes.Canceled)}
                                     />
@@ -55,10 +56,10 @@ class _MyJobList extends Component<Props, State> {
                             );
                         }}
                     </MyJobsDataProvider>
-                </KeyboardAwareScrollView>
-            </Provider>
+                </ScrollView>
+            </View>
         );
     }
 }
 
-export const MyJobList = withNamespaces(['Event'])(withNavigation(_MyJobList));
+export const MyParticipations = withNamespaces(['Event'])(withNavigation(_MyParticipations));

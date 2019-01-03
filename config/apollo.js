@@ -12,6 +12,7 @@ import { persistCache } from 'apollo-cache-persist';
 import gql from 'graphql-tag';
 import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
+
 import { print } from 'graphql/language/printer';
 import Config from 'react-native-config';
 import { Sentry } from 'react-native-sentry';
@@ -79,7 +80,16 @@ export const createApolloConfiguration = async () => {
     });
     const Links = [consoleLink, errorLink, CreateHeaderLink, stateLink, uploadLink];
 
-    const defaultOptions = {};
+    const defaultOptions = {
+        watchQuery: {
+            fetchPolicy: 'cache-and-network',
+            errorPolicy: 'ignore',
+        },
+        query: {
+            fetchPolicy: 'cache-and-network',
+            errorPolicy: 'all',
+        },
+    };
 
     return {
         cache,

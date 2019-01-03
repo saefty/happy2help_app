@@ -31,13 +31,27 @@ const GET_JOBS = gql`
                         state
                     }
                     event {
-                        id
                         start
+                        id
                         name
                         description
+                        creator {
+                            username
+                            image {
+                                url
+                            }
+                        }
+                        location {
+                            latitude
+                            longitude
+                            name
+                        }
                         organisation {
                             id
                             name
+                            image {
+                                url
+                            }
                         }
                     }
                 }
@@ -57,15 +71,12 @@ export class MyJobsDataProvider extends Component<Props> {
 
     render() {
         return (
-            <View>
-                <Query query={GET_JOBS}>
-                    {({ loading, error, data }) => {
-                        if (loading || error) return null;
-
-                        return this.props.children(data.user);
-                    }}
-                </Query>
-            </View>
+            <Query query={GET_JOBS}>
+                {({ loading, error, data, refetch }) => {
+                    if (loading || error) return null;
+                    return this.props.children(data.user, refetch);
+                }}
+            </Query>
         );
     }
 }
