@@ -61,7 +61,7 @@ const GET_JOBS = gql`
 `;
 
 type Props = {
-    children: (data: any) => React.Node,
+    children: (data: any, refetch: () => void) => React.Node,
 };
 
 export class MyJobsDataProvider extends Component<Props> {
