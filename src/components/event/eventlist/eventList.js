@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Event } from './event';
 
+// !!!!!!!!!!!TO REMOVE JUST FOR TESING!!!!!!!!
+import StartEndDateButtons from '../dates/StartEndDateButtons';
+
 import type { EventObject } from '../../../models/event.model';
 
 type Props = {
@@ -20,6 +23,8 @@ export class EventList extends Component<Props> {
     render() {
         return (
             <View>
+                {/* !!!!!!!!!!!TO REMOVE JUST FOR TESING!!!!!!!! */}
+                <StartEndDateButtons />
                 {this.props.events.map(event => (
                     <Event
                         key={event.id}

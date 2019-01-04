@@ -22,6 +22,7 @@ import { ReactNativeFile } from 'apollo-upload-client';
 import { GET_EVENTS } from '../../providers/getEvents.query';
 import { EditJobList } from './job/edit.job.list';
 import { clone } from '../../helpers/clone';
+import StartEndDateButtons from './dates/StartEndDateButtons';
 import uuid from 'uuid/v4';
 
 type Props = {
@@ -214,6 +215,7 @@ class _EditEventForm extends Component<Props, State> {
                             </View>
 
                             <View style={styles.container}>
+                                <StartEndDateButtons />
                                 <TextInput
                                     onChangeText={handleChange('name')}
                                     value={values.name}
