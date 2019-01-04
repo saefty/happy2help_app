@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
     switchText: {
         fontSize: 12,
     },
+    skillListContainer: {
+    },
+    skillTitle: {
+        fontSize: 10,
+    },
 });
 
 export default styles;

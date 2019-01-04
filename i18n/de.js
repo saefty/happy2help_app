@@ -74,6 +74,7 @@ export default {
         showPrivateEvents: 'Von privaten Nutzern erstellte Events anzeigen',
         on: '(an)',
         off: '(aus)',
+        skills: 'Welche Fähigkeiten sollten für das Event erwünscht sein?',
     },
     FlashMessages: {
         checkedIn: 'Nutzer nimmt jetzt teil!',

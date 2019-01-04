@@ -2,9 +2,11 @@
 
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Title, Switch, Paragraph } from 'react-native-paper';
+import { Title, Switch, Paragraph, Divider } from 'react-native-paper';
 import styles from './filter.styles';
 import { withNamespaces, i18n } from 'react-i18next';
+import { SkillList } from '../../profile/skillList/skillList';
+import type { SkillObject } from '../../../models/skill.model';
 
 type Props = {
     t: i18n.t,
@@ -12,9 +14,16 @@ type Props = {
     handleSwitch: () => void,
 };
 
-class _FilterOptions extends Component<Props> {
+type State = {
+    skills: Array<SkillObject>,
+};
+
+class _FilterOptions extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
+        this.state = {
+            skills: [],
+        };
     }
 
     get title(): string {
@@ -38,6 +47,30 @@ class _FilterOptions extends Component<Props> {
                     </View>
                     <Switch value={this.props.showPrivateEvents} onValueChange={this.props.handleSwitch} />
                 </View>
+
+                <Divider />
+
+                <View style={styles.skillListContainer}>
+                    <Paragraph style={styles.skillTitle}>{this.props.t('skills')}</Paragraph>
+                    <SkillList
+                        skillObjects={this.state.skills}
+                        editable={true}
+                        addSkill={(skill: SkillObject) =>
+                            this.setState({
+                                skills: this.state.skills.concat(skill),
+                            })
+                        }
+                        deleteSkill={(skillToDelete: SkillObject) =>
+                            this.setState({
+                                skills: this.state.skills.filter(s => s.id != skillToDelete.id),
+                            })
+                        }
+                    />
+                </View>
+
+                <Divider />
+
+                
             </View>
         );
     }

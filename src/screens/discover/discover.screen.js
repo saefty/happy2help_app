@@ -242,6 +242,16 @@ class _DiscoverScreen extends Component<Props, State> {
         }
         return params;
     }
+    updateQuery = (sorting: string, descending: boolean, filter: string) => {
+        this.setState({
+            sorting: sorting,
+            descending: descending,
+            filter: filter,
+        });
+        this.setState({
+            funnelOpen: false,
+        });
+    };
 
     render() {
         const { clampedScroll } = this.state;
@@ -274,13 +284,7 @@ class _DiscoverScreen extends Component<Props, State> {
                             openFunnel={() => this.setState({ funnelOpen: !this.state.funnelOpen })}
                             funnelOpen={this.state.funnelOpen}
                             showSortOptions={this.state.selectedIndex === 1}
-                            updateQuery={(sorting: string, descending: boolean, filter: string) => {
-                                this.setState({
-                                    sorting: sorting,
-                                    descending: descending,
-                                    filter: filter,
-                                });
-                            }}
+                            updateQuery={this.updateQuery}
                         />
                         <SegmentedControl values={['KARTE', 'LISTE']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
                     </View>

@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { Divider } from 'react-native-paper';
 import { SortOptions } from './sort.events.options';
 import { FilterOptions } from './filter.events.options';
 import { IconButton } from 'react-native-paper';
@@ -43,6 +44,20 @@ export class FunnelDropdown extends Component<Props, State> {
             );
         return <View />;
     }
+    renderAcceptButton() {
+        return (
+            <IconButton
+                icon={() => <IconMat name="done" size={36} color={H2HTheme.colors.primary} />}
+                onPress={() => {
+                    this.props.updateQuery(this.state.sorting, this.state.descending, this.state.filter);
+                }}
+                style={{
+                    alignSelf: 'center',
+                    right: 10,
+                }}
+            />
+        );
+    }
     render() {
         if (this.props.open === false) return <View />;
         else {
@@ -53,14 +68,7 @@ export class FunnelDropdown extends Component<Props, State> {
                         handleSwitch={() => this.setState({ showPrivateEvents: !this.state.showPrivateEvents })}
                     />
                     {this.renderSortOptions()}
-                    <IconButton
-                        icon={() => <IconMat name="done" size={36} color={H2HTheme.colors.primary} />}
-                        onPress={() => this.props.updateQuery(this.state.sorting, this.state.descending, this.state.filter)}
-                        style={{
-                            alignSelf: 'center',
-                            right: 10,
-                        }}
-                    />
+                    {this.renderAcceptButton()}
                 </View>
             );
         }

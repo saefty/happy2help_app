@@ -58,7 +58,7 @@ class _DiscoverAppbar extends Component<Props, State> {
                     <IconButton icon={() => this.funnelIcon()} onPress={this.props.openFunnel} style={DiscoverAppbarStyle.filterButton} />
                 </View>
                 <View>
-                    <FunnelDropdown showSortOptions={this.props.showSortOptions} open={this.props.funnelOpen} updateQuery={this.props.updateQuery} />
+                    <FunnelDropdown showSortOptions={this.props.showSortOptions} open={this.props.funnelOpen} updateQuery={this.props.updateQuery} closeFunnel={this.props.openFunnel} />
                 </View>
             </View>
         );

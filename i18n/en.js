@@ -81,6 +81,7 @@ export default {
         showPrivateEvents: 'Show Events created by private Users:',
         on: '(on)',
         off: '(off)',
+        skills: 'What skills should the Events require?',
     },
     FlashMessages: {
         checkedIn: 'User is now participating!',
