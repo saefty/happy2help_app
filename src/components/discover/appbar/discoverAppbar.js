@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { H2HTheme } from '../../../../themes/default.theme';
-import { FunnelDropdown } from './funnelDropdown';
+import { FunnelDropdown } from './funnel/funnelDropdown';
 import IconMatCom from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconMat from 'react-native-vector-icons/MaterialIcons';
 import { withNavigation } from 'react-navigation';

@@ -1,10 +1,11 @@
 /* @flow */
 
 import { StyleSheet } from 'react-native';
-import { primaryColor } from '../../../../themes/colors';
+import { primaryColor } from '../../../../../themes/colors';
 
 const styles = StyleSheet.create({
     sortContainer: {
+        marginTop: 10,
         marginLeft: 10,
         marginRight: 10,
     },
@@ -12,37 +13,38 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: primaryColor,
     },
-    infoContainer: {
-        marginBottom: 5,
-    },
-    info: {
-        fontSize: 16,
-        color: primaryColor,
-    },
     optionList: {
         marginTop: 2,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        height: 50,
     },
     optionView: {
-        borderWidth: 2,
-        marginTop: 2,
-        marginBottom: 2,
-        flexDirection: 'row',
+        borderWidth: 1.5,
+        width: 105,
+        height: 50,
+        flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
-        justifyContent: 'flex-start',
     },
     optionText: {
         fontSize: 15,
-        marginLeft: 5,
     },
     radioContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
+        marginLeft: 15,
+        marginRight: 15,
+        height: 50,
+        marginTop: 5,
     },
     radioButton: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        marginRight: 20,
+    },
+    radioButtonText: {
+        fontSize: 15,
     },
 });
 

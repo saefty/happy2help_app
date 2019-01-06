@@ -7,7 +7,7 @@ import { SortOptions } from './sort.events.options';
 import { FilterOptions } from './filter.events.options';
 import { IconButton } from 'react-native-paper';
 import IconMat from 'react-native-vector-icons/MaterialIcons';
-import { H2HTheme } from '../../../../themes/default.theme';
+import { H2HTheme } from '../../../../../themes/default.theme';
 
 type Props = {
     open: boolean,

@@ -1,12 +1,11 @@
 // @flow
-
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Title, Switch, Paragraph, Divider } from 'react-native-paper';
 import styles from './filter.styles';
 import { withNamespaces, i18n } from 'react-i18next';
-import { SkillList } from '../../profile/skillList/skillList';
-import type { SkillObject } from '../../../models/skill.model';
+import type { SkillObject } from '../../../../models/skill.model';
+import { SkillList } from '../../../profile/skillList/skillList';
 
 type Props = {
     t: i18n.t,
@@ -48,29 +47,30 @@ class _FilterOptions extends Component<Props, State> {
                     <Switch value={this.props.showPrivateEvents} onValueChange={this.props.handleSwitch} />
                 </View>
 
-                <Divider />
-
-                <View style={styles.skillListContainer}>
+                <View style={styles.skillTitleContainer}>
                     <Paragraph style={styles.skillTitle}>{this.props.t('skills')}</Paragraph>
+                </View>
+
+                <ScrollView horizontal={true} style={styles.scroll} contentContainerStyle={{ alignItems: 'center' }}>
                     <SkillList
                         skillObjects={this.state.skills}
-                        editable={true}
+                        deleteSkill={(skill: SkillObject) =>
+                            this.setState({
+                                skills: this.state.skills.filter(s => s.id != skill.id),
+                            })
+                        }
                         addSkill={(skill: SkillObject) =>
                             this.setState({
                                 skills: this.state.skills.concat(skill),
                             })
                         }
-                        deleteSkill={(skillToDelete: SkillObject) =>
-                            this.setState({
-                                skills: this.state.skills.filter(s => s.id != skillToDelete.id),
-                            })
-                        }
                     />
+                </ScrollView>
+
+                <View style={styles.datePickerContainer}>
+                    <Paragraph style={{color: '#fff'}}>DATEPICKER 1</Paragraph>
+                    <Paragraph style={{color: '#fff'}}>DATEPICKER 2</Paragraph>
                 </View>
-
-                <Divider />
-
-                
             </View>
         );
     }
