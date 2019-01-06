@@ -3,22 +3,23 @@
 import { Component } from 'react';
 import * as React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Button, Text, Divider } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import { SlimDate } from '../../utils/date/slimDate';
+import { SlimDate } from '../../../utils/date/slimDate';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { neutralColors } from './../../../../themes/colors';
-import { primaryColor } from './../../../../themes/colors';
+import { primaryColor } from '../../../../../themes/colors';
+import { styles } from './dateButton.style';
 import moment from 'moment';
 
 type Props = {
     date: Date,
     style: StyleSheet,
+    updateDate: (date: Date) => void,
+    shouldUpdate: (date: Date) => boolean,
 };
 
 type State = {
     isDateTimePickerVisible: boolean,
-    date: Date,
 };
 
 export default class DateButton extends Component<Props, State> {
@@ -26,7 +27,6 @@ export default class DateButton extends Component<Props, State> {
         super(props);
         this.state = {
             isDateTimePickerVisible: false,
-            date: props.date,
         };
     }
 
@@ -35,7 +35,7 @@ export default class DateButton extends Component<Props, State> {
     hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
     handleDatePicked = date => {
-        this.setState({date: date});
+        this.props.updateDate(date);
         this.hideDateTimePicker();
     };
 
@@ -43,21 +43,22 @@ export default class DateButton extends Component<Props, State> {
         return (
             <View style={this.props.style}>
                 <TouchableOpacity onPress={this.showDateTimePicker}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
-                        <SlimDate accentColor={primaryColor} date={this.state.date} />
+                    <View style={styles.container}>
+                        <SlimDate accentColor={primaryColor} date={this.props.date} />
                         <View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={styles.iconTime}>
                                 <Icon name="today" color="black" />
-                                <Text> {moment(this.state.date).format('DD.MM.YY')}</Text>
+                                <Text> {moment(this.props.date).format('DD.MM.YY')}</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={styles.iconTime}>
                                 <Icon name="access-time" color="black" />
-                                <Text> {moment(this.state.date).format('HH:mm')}</Text>
+                                <Text> {moment(this.props.date).format('HH:mm')}</Text>
                             </View>
                         </View>
                     </View>
                 </TouchableOpacity>
                 <DateTimePicker
+                    date={this.props.date}
                     isVisible={this.state.isDateTimePickerVisible}
                     onConfirm={this.handleDatePicked}
                     onCancel={this.hideDateTimePicker}

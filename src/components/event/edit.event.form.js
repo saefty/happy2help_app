@@ -3,7 +3,7 @@ import type { EventObject } from '../../models/event.model';
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { View, TextInput as NativeTextInput, ScrollView, TouchableOpacity } from 'react-native';
-import { TextInput, HelperText, Headline, Appbar } from 'react-native-paper';
+import { TextInput, HelperText, Headline, Appbar, Text } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { Formik, ErrorMessage } from 'formik';
@@ -22,8 +22,9 @@ import { ReactNativeFile } from 'apollo-upload-client';
 import { GET_EVENTS } from '../../providers/getEvents.query';
 import { EditJobList } from './job/edit.job.list';
 import { clone } from '../../helpers/clone';
-import StartEndDateButtons from './dates/StartEndDateButtons';
+import DateRangeButtons from './dates/DateRangeButtons';
 import uuid from 'uuid/v4';
+import moment from 'moment';
 
 type Props = {
     event?: EventObject,
@@ -59,6 +60,8 @@ class _EditEventForm extends Component<Props, State> {
                 .min(5, this.props.t('errors:toShort'))
                 .required(this.props.t('errors:required')),
             location: Yup.object().required(this.props.t('errors:required')),
+            start: Yup.date().min(new Date(), 'Darf nicht in Vergangenheit liegen'),
+            end: Yup.date().min(Yup.ref('startDate'), 'Darf nicht vor Start Datum'),
         });
 
         this.state = {
@@ -183,9 +186,17 @@ class _EditEventForm extends Component<Props, State> {
         return { start, end };
     }
 
-    getInitialFormValues = () => {
+    getInitialFormValues = errors => {
         return this.props.event || {};
     };
+
+    getDateErrorMessage = errors => {
+        if (errors.start) return errors.start;
+        if (errors.end) return errors.end;
+        return undefined;
+    };
+
+    
 
     render() {
         return (
@@ -215,7 +226,26 @@ class _EditEventForm extends Component<Props, State> {
                             </View>
 
                             <View style={styles.container}>
-                                <StartEndDateButtons />
+                                <DateRangeButtons
+                                    startDate={new Date(values.start)}
+                                    endDate={new Date(values.end)}
+                                    updateStart={(newStartDate: Date) => {
+                                        //if new start ist after end, end is the old diff plus the new start
+                                        if (newStartDate > values.end) {
+                                            const diff = moment(values.start).diff(values.end);
+                                            const newEndDate = moment(newStartDate).add(diff);
+                                            setFieldValue('end', newEndDate);
+                                        }
+                                        setFieldValue('start', newStartDate);
+                                        handleChange('end');
+                                    }}
+                                    updateEnd={(newEndDate: Date) => {
+                                        setFieldValue('end', newEndDate);
+                                        handleChange('end');
+                                    }}
+                                    errorMessage={this.getDateErrorMessage(errors)}
+                                />
+
                                 <TextInput
                                     onChangeText={handleChange('name')}
                                     value={values.name}
