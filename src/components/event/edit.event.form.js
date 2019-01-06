@@ -82,6 +82,11 @@ class _EditEventForm extends Component<Props, State> {
         this.hideModal();
     };
 
+    removePickedImage = () => {
+        this.setState({ pickedImage: '' });
+        this.hideModal();
+    }
+
     saveImage = async id => {
         let fileImg = new ReactNativeFile({
             uri: this.state.pickedImage,
@@ -92,17 +97,10 @@ class _EditEventForm extends Component<Props, State> {
         await Picker.clean();
     };
 
-    deleteImage = () => {
+    deleteImage = async () => {
         if (this.props.event && this.props.event.image) {
-            this.props.deleteImageMutation({ variables: { imageId: this.props.event.image.id } });
-            showMessage({
-                message: this.props.t('Image:deleteSuccess'),
-                type: 'success',
-                icon: 'auto',
-            });
+            await this.props.deleteImageMutation({ variables: { imageId: this.props.event.image.id } });
         }
-        this.setState({ pickedImage: '' });
-        this.hideModal();
     };
 
     create = event => {
@@ -162,6 +160,8 @@ class _EditEventForm extends Component<Props, State> {
             await this.update(EVENT);
             if (this.state.pickedImage !== '') {
                 await this.saveImage(values.id);
+            } else {
+                await this.deleteImage();
             }
             successMessage = 'editSuccess';
         }
@@ -203,7 +203,7 @@ class _EditEventForm extends Component<Props, State> {
                                 hideModal={this.hideModal}
                                 takeImage={this.takeImage}
                                 pickImage={this.pickImage}
-                                deleteImage={this.deleteImage}
+                                deleteImage={this.removePickedImage}
                             />
 
                             <View style={styles.imgContainer}>

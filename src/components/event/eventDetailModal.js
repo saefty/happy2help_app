@@ -72,6 +72,7 @@ export const ORGANISATION_QUERY = gql`
                     name
                     description
                     image {
+                        id
                         url
                     }
                 }
