@@ -61,7 +61,7 @@ class _EditEventForm extends Component<Props, State> {
                 .required(this.props.t('errors:required')),
             location: Yup.object().required(this.props.t('errors:required')),
             start: Yup.date().min(new Date(), 'Darf nicht in Vergangenheit liegen'),
-            end: Yup.date().min(Yup.ref('startDate'), 'Darf nicht vor Start Datum'),
+            end: Yup.date().min(Yup.ref('start'), 'Darf nicht vor Start Datum'),
         });
 
         this.state = {
@@ -186,7 +186,7 @@ class _EditEventForm extends Component<Props, State> {
         return { start, end };
     }
 
-    getInitialFormValues = errors => {
+    getInitialFormValues = () => {
         return this.props.event || {};
     };
 
