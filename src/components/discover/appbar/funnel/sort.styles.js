@@ -18,15 +18,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        height: 50,
     },
     optionView: {
         borderWidth: 1.5,
-        width: 105,
-        height: 50,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        minWidth: 100,
     },
     optionText: {
         fontSize: 15,

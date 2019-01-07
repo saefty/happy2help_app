@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Title } from 'react-native-paper';
 
 import { SkillChip } from './skillChip/skillChip';
 import type { SkillObject } from './../../../models/skill.model';

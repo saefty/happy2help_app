@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Divider } from 'react-native-paper';
 import { SortOptions } from './sort.events.options';
 import { FilterOptions } from './filter.events.options';
 import { IconButton } from 'react-native-paper';

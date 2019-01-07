@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
-import { Title, Switch, Paragraph, Divider } from 'react-native-paper';
+import { View } from 'react-native';
+import { Title, Switch, Paragraph } from 'react-native-paper';
 import styles from './filter.styles';
 import { withNamespaces, i18n } from 'react-i18next';
 import type { SkillObject } from '../../../../models/skill.model';
-import { SkillList } from '../../../profile/skillList/skillList';
+import { HorizontalSkillList } from './funnelElements/horizontalSkillList';
+import { AddSkillDialog } from '../../../profile/skillList/addSkillDialog';
 
 type Props = {
     t: i18n.t,
@@ -29,47 +30,44 @@ class _FilterOptions extends Component<Props, State> {
         return this.props.t('filter');
     }
 
-    get switchInfo(): string {
-        return this.props.t(this.props.showPrivateEvents === true ? 'on' : 'off');
-    }
     render() {
         return (
             <View style={styles.filterContainer}>
-                <View style={styles.titleContainer}>
-                    <Title style={styles.title}>{this.title}</Title>
-                </View>
-                <View style={styles.switchContainer}>
-                    <View style={styles.switchTextContainer}>
-                        <Paragraph style={styles.switchText}>
-                            {this.props.t('showPrivateEvents')} {this.switchInfo}
-                        </Paragraph>
+                <Title style={styles.title}>{this.title}</Title>
+
+                <View style={styles.container}>
+                    <View style={styles.left}>
+                        <Paragraph style={styles.smallText}>{this.props.t('showPrivateEvents')}</Paragraph>
                     </View>
-                    <Switch value={this.props.showPrivateEvents} onValueChange={this.props.handleSwitch} />
+                    <View style={styles.right}>
+                        <Switch value={this.props.showPrivateEvents} onValueChange={this.props.handleSwitch} />
+                    </View>
                 </View>
 
-                <View style={styles.skillTitleContainer}>
-                    <Paragraph style={styles.skillTitle}>{this.props.t('skills')}</Paragraph>
+                <View style={styles.container}>
+                    <View style={styles.left}>
+                        <Paragraph style={styles.smallText}>{this.props.t('skills')}</Paragraph>
+                    </View>
+                    <View style={styles.right}>
+                        <AddSkillDialog addSkill={(skill: SkillObject) => this.setState({ skills: this.state.skills.concat(skill) })} />
+                    </View>
                 </View>
 
-                <ScrollView horizontal={true} style={styles.scroll} contentContainerStyle={{ alignItems: 'center' }}>
-                    <SkillList
-                        skillObjects={this.state.skills}
-                        deleteSkill={(skill: SkillObject) =>
-                            this.setState({
-                                skills: this.state.skills.filter(s => s.id != skill.id),
-                            })
-                        }
-                        addSkill={(skill: SkillObject) =>
-                            this.setState({
-                                skills: this.state.skills.concat(skill),
-                            })
-                        }
-                    />
-                </ScrollView>
-
-                <View style={styles.datePickerContainer}>
-                    <Paragraph style={{color: '#fff'}}>DATEPICKER 1</Paragraph>
-                    <Paragraph style={{color: '#fff'}}>DATEPICKER 2</Paragraph>
+                <HorizontalSkillList
+                    style={styles.scroll}
+                    skills={this.state.skills}
+                    delSkill={(skill: SkillObject) =>
+                        this.setState({
+                            skills: this.state.skills.filter(s => s.id != skill.id),
+                        })
+                    }
+                />
+                <View>
+                    <Paragraph style={styles.smallText}>{this.props.t('datePick')}</Paragraph>
+                    <View style={styles.datePickerContainer}>
+                        <Paragraph style={styles.datePicker}>DATEPICKER 1</Paragraph>
+                        <Paragraph style={styles.datePicker}>DATEPICKER 2</Paragraph>
+                    </View>
                 </View>
             </View>
         );
