@@ -23,6 +23,7 @@ const JOB_QUERY = gql`
         event(id: $id) {
             id
             start
+            end
             jobSet {
                 id
                 name
@@ -55,6 +56,7 @@ export const ORGANISATION_QUERY = gql`
         event(id: $id) {
             id
             start
+            end
             organisation {
                 id
                 name
