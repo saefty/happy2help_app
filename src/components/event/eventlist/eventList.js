@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Event } from './event';
 
+
 import type { EventObject } from '../../../models/event.model';
 
 type Props = {
@@ -19,7 +20,7 @@ export class EventList extends Component<Props> {
 
     render() {
         return (
-            <View>
+            <View>              
                 {this.props.events.map(event => (
                     <Event
                         key={event.id}
