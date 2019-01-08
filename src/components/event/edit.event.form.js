@@ -22,7 +22,7 @@ import { ReactNativeFile } from 'apollo-upload-client';
 import { GET_EVENTS } from '../../providers/getEvents.query';
 import { EditJobList } from './job/edit.job.list';
 import { clone } from '../../helpers/clone';
-import DateRangeButtons from './dates/dateRangeButtons';
+import DateRangeButtons from './dates/DateRangeButtons';
 import uuid from 'uuid/v4';
 import moment from 'moment';
 
