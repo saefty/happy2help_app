@@ -68,6 +68,11 @@ class EditProfileComponent extends Component<Props, State> {
         this.hideModal();
     };
 
+    removePickedImage = () => {
+        this.setState({ pickedImage: '' });
+        this.hideModal();
+    }
+
     //functions to save changes in the db:
 
     saveLocationInDb = async location => {
@@ -99,17 +104,10 @@ class EditProfileComponent extends Component<Props, State> {
         await Picker.clean();
     };
 
-    deleteImage = () => {
+    deleteImage = async () => {
         if (this.props.user.image) {
-            this.props.deleteImageMutation({ variables: { imageId: this.props.user.image.id } });
-            showMessage({
-                message: this.props.t('Image:deleteSuccess'),
-                type: 'success',
-                icon: 'auto',
-            });
+            await this.props.deleteImageMutation({ variables: { imageId: this.props.user.image.id } });
         }
-        this.setState({ pickedImage: '' });
-        this.hideModal();
     };
 
     saveChanges = async values => {
@@ -132,7 +130,9 @@ class EditProfileComponent extends Component<Props, State> {
         this.createSkillsInDb(skillsToCreate);
 
         if (this.state.pickedImage !== '') {
-            this.saveImage();
+            await this.saveImage();
+        } else {
+            await this.deleteImage();
         }
 
         showMessage({
@@ -177,7 +177,7 @@ class EditProfileComponent extends Component<Props, State> {
                                 hideModal={this.hideModal}
                                 takeImage={this.takeImage}
                                 pickImage={this.pickImage}
-                                deleteImage={this.deleteImage}
+                                deleteImage={this.removePickedImage}
                             />
 
                             <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
@@ -186,7 +186,7 @@ class EditProfileComponent extends Component<Props, State> {
                                     style={styles.profilePicture}
                                     src={this.state.pickedImage}
                                 />
-                                <View style={{ flex: 1, paddingBottom: 35 }}>
+                                <View style={{ flex: 1, paddingBottom: 35, marginRight: 20 }}>
                                     <TouchableOpacity style={styles.circularButton} onPress={this.showModal}>
                                         <Icon name={'photo-camera'} size={30} color="#fff" />
                                     </TouchableOpacity>

@@ -39,6 +39,7 @@ export default {
         editSuccess: 'Event wurde erfolgreich bearbeitet: ',
     },
     Organisation: {
+        organization: 'Organisation',
         about: 'Über uns',
         description: 'Beschreibung',
         name: 'Organisationsname',
