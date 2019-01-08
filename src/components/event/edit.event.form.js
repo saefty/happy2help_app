@@ -233,11 +233,9 @@ class _EditEventForm extends Component<Props, State> {
                                             setFieldValue('end', newEndDate);
                                         }
                                         setFieldValue('start', newStartDate);
-                                        handleChange('end');
                                     }}
                                     updateEnd={(newEndDate: Date) => {
                                         setFieldValue('end', newEndDate);
-                                        handleChange('end');
                                     }}
                                     errorMessage={this.getDateErrorMessage(errors)}
                                 />
