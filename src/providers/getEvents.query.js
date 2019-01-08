@@ -3,9 +3,11 @@ import gql from 'graphql-tag';
 export const GET_EVENTS = gql`
     query events($search: String, $sorting: SortInputType, $distanceTo: LocationInputType) {
         events(search: $search, sorting: $sorting) {
+            start
+            end
             id
             name
-            description
+            description           
             image {
                 id
                 url
