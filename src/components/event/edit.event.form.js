@@ -22,7 +22,7 @@ import { ReactNativeFile } from 'apollo-upload-client';
 import { GET_EVENTS } from '../../providers/getEvents.query';
 import { EditJobList } from './job/edit.job.list';
 import { clone } from '../../helpers/clone';
-import DateRangeButtons from './dates/DateRangeButtons';
+import DateRangeButtons from './dates/dateRangeButtons';
 import uuid from 'uuid/v4';
 import moment from 'moment';
 
@@ -60,8 +60,12 @@ class _EditEventForm extends Component<Props, State> {
                 .min(5, this.props.t('errors:toShort'))
                 .required(this.props.t('errors:required')),
             location: Yup.object().required(this.props.t('errors:required')),
-            start: Yup.date().min(new Date(), 'Darf nicht in Vergangenheit liegen'),
-            end: Yup.date().min(Yup.ref('start'), 'Darf nicht vor Start Datum'),
+            start: Yup.date()
+                .min(new Date(), this.props.t('errors:beforePresent'))
+                .required(this.props.t('errors:required')),
+            end: Yup.date()
+                .min(Yup.ref('start'), this.props.t('errors:beforeStart'))
+                .required(this.props.t('errors:required')),
         });
 
         this.state = {
@@ -128,6 +132,7 @@ class _EditEventForm extends Component<Props, State> {
     };
 
     update = event => {
+        console.log(event);
         return this.props.updateEventMutation({
             variables: {
                 eventId: this.props.event.id,
@@ -141,12 +146,11 @@ class _EditEventForm extends Component<Props, State> {
 
     onSubmit = async (values, actions) => {
         actions.setSubmitting(true);
-        const { start, end } = this.getStartEnd();
         let EVENT = {
             name: values.name,
             description: values.description,
-            start,
-            end,
+            start: moment(values.start).format(),
+            end: moment(values.end).format(),
         };
 
         let successMessage = 'creationSuccess';
@@ -180,12 +184,6 @@ class _EditEventForm extends Component<Props, State> {
         return;
     };
 
-    getStartEnd() {
-        let start = '2019-11-30T11:40:21+00:00';
-        let end = '2020-11-30T11:40:21+00:00';
-        return { start, end };
-    }
-
     getInitialFormValues = () => {
         return this.props.event || {};
     };
@@ -195,8 +193,6 @@ class _EditEventForm extends Component<Props, State> {
         if (errors.end) return errors.end;
         return undefined;
     };
-
-    
 
     render() {
         return (
@@ -233,7 +229,7 @@ class _EditEventForm extends Component<Props, State> {
                                         //if new start ist after end, end is the old diff plus the new start
                                         if (newStartDate > values.end) {
                                             const diff = moment(values.start).diff(values.end);
-                                            const newEndDate = moment(newStartDate).add(diff);
+                                            const newEndDate = moment(newStartDate).add(diff).toDate();
                                             setFieldValue('end', newEndDate);
                                         }
                                         setFieldValue('start', newStartDate);
@@ -253,7 +249,7 @@ class _EditEventForm extends Component<Props, State> {
                                     error={errors.name}
                                 />
                                 <HelperText type="error" visible={errors.name}>
-                                    <ErrorMessage name="name" />
+                                    {errors.name}
                                 </HelperText>
                                 <TextInput
                                     onChangeText={handleChange('description')}
@@ -264,7 +260,7 @@ class _EditEventForm extends Component<Props, State> {
                                     error={errors.description}
                                 />
                                 <HelperText type="error" visible={errors.description}>
-                                    <ErrorMessage name="description" />
+                                    {errors.description}
                                 </HelperText>
                                 <GooglePlacesInput
                                     onTextChange={() => {
@@ -279,7 +275,7 @@ class _EditEventForm extends Component<Props, State> {
                                     error={errors.location}
                                 />
                                 <HelperText type="error" visible={errors.location}>
-                                    <ErrorMessage name="location" />
+                                    {errors.location}
                                 </HelperText>
                                 <Headline>Jobs</Headline>
                                 <EditJobList

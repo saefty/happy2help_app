@@ -16,6 +16,7 @@ type Props = {
     style: StyleSheet,
     updateDate: (date: Date) => void,
     shouldUpdate: (date: Date) => boolean,
+    accentColor: String,
 };
 
 type State = {
@@ -44,7 +45,7 @@ export default class DateButton extends Component<Props, State> {
             <View style={this.props.style}>
                 <TouchableOpacity onPress={this.showDateTimePicker}>
                     <View style={styles.container}>
-                        <SlimDate accentColor={primaryColor} date={this.props.date} />
+                        <SlimDate accentColor={this.props.accentColor} date={this.props.date} />
                         <View>
                             <View style={styles.iconTime}>
                                 <Icon name="today" color="black" />

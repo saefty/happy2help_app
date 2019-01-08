@@ -10,6 +10,8 @@ export default {
         toLong: 'Too long!',
         email: 'Invalid e-mail address',
         required: 'This field is required!',
+        beforeStart: 'The end date shold be after the start date',
+        beforePresent: 'The event is not allowed to be in the past',
     },
     User: {
         userName: 'Username',
@@ -24,7 +26,7 @@ export default {
         logOut: 'Log out',
         creditPoints: 'Credit Points',
         skills: 'Skills',
-        editSuccess: 'Your profile was updated successfully!'
+        editSuccess: 'Your profile was updated successfully!',
     },
     Event: {
         myEvents: 'My Events',
@@ -92,6 +94,6 @@ export default {
         take: 'Take a photo',
         gallery: 'Upload from gallery',
         remove: 'Remove photo',
-        deleteSuccess: 'Profile picture was removed successfully!'
+        deleteSuccess: 'Profile picture was removed successfully!',
     },
 };

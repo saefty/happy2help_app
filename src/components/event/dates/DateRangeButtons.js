@@ -5,6 +5,10 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { Text, Divider } from 'react-native-paper';
 import { neutralColors } from '../../../../themes/colors';
+import { primaryColor } from '../../../../themes/colors';
+import { withTheme } from 'react-native-paper';
+import { styles } from './dateRangeButtons.style';
+
 import DateButton from './dateButton/dateButton';
 import moment from 'moment';
 
@@ -16,43 +20,68 @@ type Props = {
     errorMessage: string,
 };
 
-export default class DateRangeButtons extends Component<Props> {
+class DateRangeButtons extends Component<Props> {
     constructor(props: Props) {
         super(props);
     }
 
     renderError = () => {
         if (this.props.errorMessage) {
-            return <Text style={{ color: 'red', fontSize: 12, marginLeft: 10, position: 'absolute', bottom: 9 }}>{this.props.errorMessage}</Text>;
-        } 
+            const paperColors = this.props.theme.colors;
+            return <Text style={[{ color: paperColors.error }, styles.errorMessage]}>{this.props.errorMessage}</Text>;
+        }
     };
 
     render() {
+        const paperColors = this.props.theme.colors;
         return (
-            <View>
-                <View style={{ flexDirection: 'row', marginTop: 5 }}>
-                    <View style={{ width: '50%' }}>
-                        <Text style={{ alignSelf: 'center', fontWeight: 'bold' }}>Start</Text>
+            <View style={{ marginBottom: this.props.errorMessage ? 23 : 15 }}>
+                <View style={styles.container}>
+                    <View style={styles.headlines}>
+                        <View style={styles.headline}>
+                            <Text style={[{ color: this.props.errorMessage ? paperColors.error : paperColors.text }, styles.headlineText]}>
+                                Start
+                            </Text>
+                        </View>
+                        <View style={{ width: '50%' }}>
+                            <Text style={[{ color: this.props.errorMessage ? paperColors.error : paperColors.text }, styles.headlineText]}>
+                                Ende
+                            </Text>
+                        </View>
                     </View>
-                    <View style={{ width: '50%' }}>
-                        <Text style={{ fontWeight: 'bold', alignSelf: 'center' }}>Ende</Text>
+                    <View style={styles.dateButtonsContainer}>
+                        <DateButton
+                            date={this.props.startDate}
+                            updateDate={this.props.updateStart}
+                            style={[
+                                { borderColor: this.props.errorMessage ? paperColors.error : neutralColors.light },
+                                styles.leftDateButton,
+                            ]}
+                            accentColor={this.props.errorMessage ? paperColors.error : primaryColor}
+                        />
+                        <DateButton
+                            date={this.props.endDate}
+                            updateDate={this.props.updateEnd}
+                            style={[
+                                { borderColor: this.props.errorMessage ? paperColors.error : neutralColors.light },
+                                styles.rightDateButton,
+                            ]}
+                            accentColor={this.props.errorMessage ? paperColors.error : primaryColor}
+                        />
                     </View>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <DateButton
-                        date={this.props.startDate}
-                        updateDate={this.props.updateStart}
-                        style={{ width: '50%', borderRightWidth: 1, borderColor: neutralColors.light }}
-                    />
-                    <DateButton
-                        date={this.props.endDate}
-                        updateDate={this.props.updateEnd}
-                        style={{ width: '50%', borderLeftWidth: 1, borderColor: neutralColors.light }}
+                    <Divider
+                        style={[
+                            {
+                                backgroundColor: this.props.errorMessage ? paperColors.error : neutralColors.light,
+                            },
+                            styles.divider,
+                        ]}
                     />
                 </View>
-                <Divider style={{ backgroundColor: neutralColors.light, margin: 10, marginBottom: 30, height: 2 }} />
                 {this.renderError()}
             </View>
         );
     }
 }
+
+export default withTheme(DateRangeButtons);
