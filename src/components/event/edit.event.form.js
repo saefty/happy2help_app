@@ -130,7 +130,6 @@ class _EditEventForm extends Component<Props, State> {
     };
 
     update = event => {
-        console.log(event);
         return this.props.updateEventMutation({
             variables: {
                 eventId: this.props.event.id,
@@ -185,7 +184,7 @@ class _EditEventForm extends Component<Props, State> {
     };
 
     getInitialFormValues = () => {
-        return this.props.event || {};
+        return this.props.event || {start: new Date(), end: moment().add(1, 'hours').toDate()};
     };
 
     getDateErrorMessage = errors => {
