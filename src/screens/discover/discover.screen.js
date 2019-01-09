@@ -33,7 +33,8 @@ type State = {
     selectedIndex: number,
     sorting: string,
     descending: boolean,
-    filter: string,
+    requiredSkills: Array<string>,
+    showPrivate: boolean,
     searchQuery: string,
 };
 
@@ -72,9 +73,10 @@ class _DiscoverScreen extends Component<Props, State> {
                 longitude: 0,
             },
             funnelOpen: false,
-            sorting: '',
+            sorting: 'name',
             descending: false,
-            filter: '',
+            requiredSkills: [],
+            showPrivate: true,
             searchQuery: '',
         };
     }
@@ -226,6 +228,11 @@ class _DiscoverScreen extends Component<Props, State> {
             },
             search: this.state.searchQuery,
             sorting: {},
+            filtering: {},
+        };
+        params.filtering = {
+            requiredSkills: this.state.requiredSkills,
+            showPrivate: this.state.showPrivate,
         };
         if (this.state.sorting === 'distance') {
             params.sorting = {
@@ -242,11 +249,12 @@ class _DiscoverScreen extends Component<Props, State> {
         }
         return params;
     }
-    updateQuery = (sorting: string, descending: boolean, filter: string) => {
+    updateQuery = (sorting: string, descending: boolean, filtering: { requiredSkills: Array<string>, showPrivate: boolean }) => {
         this.setState({
             sorting: sorting,
             descending: descending,
-            filter: filter,
+            requiredSkills: filtering.requiredSkills,
+            showPrivate: filtering.showPrivate,
         });
         this.setState({
             funnelOpen: false,
@@ -285,6 +293,12 @@ class _DiscoverScreen extends Component<Props, State> {
                             funnelOpen={this.state.funnelOpen}
                             showSortOptions={this.state.selectedIndex === 1}
                             updateQuery={this.updateQuery}
+                            oldState={{
+                                    sorting: this.state.sorting,
+                                    descending: this.state.descending,
+                                    requiredSkills: this.state.requiredSkills,
+                                    showPrivateEvents: this.state.showPrivate,
+                                }}
                         />
                         <SegmentedControl values={['KARTE', 'LISTE']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
                     </View>

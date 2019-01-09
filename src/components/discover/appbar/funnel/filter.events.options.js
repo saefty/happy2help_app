@@ -10,20 +10,16 @@ import { AddSkillDialog } from '../../../profile/skillList/addSkillDialog';
 
 type Props = {
     t: i18n.t,
+    requiredSkills: Array<SkillObject>,
+    addSkill: (skill: SkillObject) => void,
+    delSkill: (skill: SkillObject) => void,
     showPrivateEvents: boolean,
     handleSwitch: () => void,
 };
 
-type State = {
-    skills: Array<SkillObject>,
-};
-
-class _FilterOptions extends Component<Props, State> {
+class _FilterOptions extends Component<Props> {
     constructor(props: Props) {
         super(props);
-        this.state = {
-            skills: [],
-        };
     }
 
     get title(): string {
@@ -49,18 +45,14 @@ class _FilterOptions extends Component<Props, State> {
                         <Paragraph style={styles.smallText}>{this.props.t('skills')}</Paragraph>
                     </View>
                     <View style={styles.right}>
-                        <AddSkillDialog addSkill={(skill: SkillObject) => this.setState({ skills: this.state.skills.concat(skill) })} />
+                        <AddSkillDialog addSkill={this.props.addSkill} />
                     </View>
                 </View>
 
                 <HorizontalSkillList
                     style={styles.scroll}
-                    skills={this.state.skills}
-                    delSkill={(skill: SkillObject) =>
-                        this.setState({
-                            skills: this.state.skills.filter(s => s.id != skill.id),
-                        })
-                    }
+                    skills={this.props.requiredSkills}
+                    delSkill={this.props.delSkill}
                 />
                 <View>
                     <Paragraph style={styles.smallText}>{this.props.t('datePick')}</Paragraph>
