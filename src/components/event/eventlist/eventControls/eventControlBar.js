@@ -5,6 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
 import IconFont5 from 'react-native-vector-icons/FontAwesome5';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIco from 'react-native-vector-icons/MaterialCommunityIcons';
 import { primaryColor, neutralColors } from '../../../../../themes/colors';
 
 type Props = {
@@ -22,17 +23,17 @@ export class EventControlBar extends Component<Props> {
             <View style={style.container}>
                 {this.props.controls.view && (
                     <TouchableRipple style={style.item} onPress={this.props.controls.view}>
-                        <IconFont5 name="eye" size={25} color={primaryColor} />
+                        <MaterialIco name="glasses" size={25} color={primaryColor} />
                     </TouchableRipple>
                 )}
                 {this.props.controls.edit && (
                     <TouchableRipple style={style.item} onPress={this.props.controls.edit}>
-                        <IconFont5 name="edit" size={25} color={primaryColor} />
+                        <MaterialIco name="playlist-edit" size={25} color={primaryColor} />
                     </TouchableRipple>
                 )}
                 {this.props.controls.participations && (
                     <TouchableRipple style={style.item} onPress={this.props.controls.participations}>
-                        <IconAntDesign name="login" size={25} color={primaryColor} />
+                        <MaterialIco name="account-group" size={25} color={primaryColor} />
                     </TouchableRipple>
                 )}
             </View>
@@ -47,13 +48,14 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: '#aaaaaa',
-        borderWidth: 1,
+        borderWidth: 0,
+
     },
     container: {
         height: 35,
         marginTop: 5,
         flex: 1,
-        borderTopWidth: 1,
+        borderTopWidth: 0,
         flexDirection: 'row',
     },
 });
