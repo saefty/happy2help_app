@@ -129,6 +129,7 @@ var styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         marginTop: 15,
+        marginBottom: 15,
         padding: 20,
         width: '100%',
     },
@@ -137,7 +138,6 @@ var styles = StyleSheet.create({
     },
     banner: {
         width: '70%',
-        marginBottom: -10,
     },
     signIn: {
         marginTop: 5,
