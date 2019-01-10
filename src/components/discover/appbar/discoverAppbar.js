@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { H2HTheme } from '../../../../themes/default.theme';
-import { FunnelDropdown } from './funnelDropdown';
+import { FunnelDropdown } from './funnel/funnelDropdown';
 import IconMatCom from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconMat from 'react-native-vector-icons/MaterialIcons';
 import { withNavigation } from 'react-navigation';
@@ -14,7 +14,14 @@ type Props = {
     searchQuery: (query: string) => void,
     openFunnel: () => void,
     funnelOpen: boolean,
-    updateQuery: (sorting: string, descending: boolean, filter: string) => void,
+    showSortOptions: boolean,
+    updateQuery: (sorting: string, descending: boolean, filtering: { requiredSkills: Array<string>, showPrivate: boolean }) => void,
+    oldState: {
+        sorting: string,
+        descending: boolean,
+        requiredSkills: Array<string>,
+        showPrivateEvents: boolean,
+    },
 };
 
 type State = {
@@ -57,7 +64,13 @@ class _DiscoverAppbar extends Component<Props, State> {
                     <IconButton icon={() => this.funnelIcon()} onPress={this.props.openFunnel} style={DiscoverAppbarStyle.filterButton} />
                 </View>
                 <View>
-                    <FunnelDropdown open={this.props.funnelOpen} updateQuery={this.props.updateQuery} />
+                    <FunnelDropdown
+                        oldState={this.props.oldState}
+                        showSortOptions={this.props.showSortOptions}
+                        open={this.props.funnelOpen}
+                        updateQuery={this.props.updateQuery}
+                        closeFunnel={this.props.openFunnel}
+                    />
                 </View>
             </View>
         );

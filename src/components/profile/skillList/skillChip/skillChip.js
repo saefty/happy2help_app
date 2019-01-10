@@ -7,11 +7,11 @@ import type { SkillObject } from './../../../../models/skill.model';
 
 type Props = {
     skillObject: SkillObject,
-    deleteChip?: skill => mixed,
+    deleteChip?: (skill: SkillObject) => mixed,
 };
 
 export class SkillChip extends Component<Props> {
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
     }
     render() {

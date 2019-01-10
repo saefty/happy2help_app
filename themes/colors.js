@@ -25,6 +25,7 @@ export const neutralColors = {
 };
 
 export const filterColors = {
-    active: color(primaryColor).darken(0.3).rgb().string(),
+    active: primaryColor,
     inactive: neutralColors.medium,
+    text: '#000',
 };
