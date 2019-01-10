@@ -107,7 +107,7 @@ class _JobListItem extends Component<Props> {
         if (
             job.totalPositions &&
             this.isFull() &&
-            (job.currentUsersParticipation === null || job.currentUsersParticipation.state == participationTypes.Canceled)
+            (!job.currentUsersParticipation || job.currentUsersParticipation.state == participationTypes.Canceled)
         ) {
             return (
                 <View style={styles.container}>

@@ -6,7 +6,6 @@ import { styles } from './slimDate.style';
 import moment from 'moment';
 
 type Props = {
-    t: i18n.t,
     date: Date,
     accentColor?: String,
 };

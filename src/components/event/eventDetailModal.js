@@ -162,7 +162,7 @@ export class EventDetailModal extends Component<Props> {
                         <Paragraph>{this.props.event.description}</Paragraph>
                         <Query query={JOB_QUERY} variables={{ id: this.props.event.id }}>
                             {({ error, loading, data, refetch }) => {
-                                if (error || loading) return <View />;
+                                if (!data.event && (error || loading)) return <View />;
                                 return (
                                     <Accordion title="Jobs" icon="work" expansion={true}>
                                         <NavigationEvents onWillFocus={refetch} />

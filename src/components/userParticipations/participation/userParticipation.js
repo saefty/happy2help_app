@@ -5,9 +5,9 @@ import { View, Image } from 'react-native';
 import { Divider, Button } from 'react-native-paper';
 import { JobListItem } from '../../event/job/jobListItem';
 import { styles } from './userParticipation.style';
-import { SlimDate } from '../../utils/date/slimDate';
 import { withNavigation } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { SlimDate } from '../../utils/date/slimDate';
 
 type Props = {
     job: Job,
@@ -24,13 +24,13 @@ class _UserParticipation extends Component<Props> {
         const event = this.props.job.event;
         if (event.organisation) {
             if (event.organisation.image) {
-                return {uri: event.organisation.image.url};
+                return { uri: event.organisation.image.url };
             } else {
                 return require('./../../../../assets/images/profile/profile_mult.png');
             }
         }
         if (event.creator.image) {
-            return {uri: event.creator.image.url};
+            return { uri: event.creator.image.url };
         } else {
             return require('./../../../../assets/images/profile/baseline_person_black_48.png');
         }
