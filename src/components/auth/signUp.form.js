@@ -46,8 +46,8 @@ class SignUpForm extends Component<Props, State> {
         });
         this.state = { validationSchema: SignUpSchema };
     }
+
     onSignUp = async (formValues, actions) => {
-        actions.setSubmitting(true);
         await this.props.mutate({
             variables: {
                 username: formValues.userName,
@@ -57,6 +57,7 @@ class SignUpForm extends Component<Props, State> {
             },
         });
         actions.setSubmitting(false);
+
         this.props.setSignUp(false);
 
         //await this.props.logIn(token.data.tokenAuth.token);

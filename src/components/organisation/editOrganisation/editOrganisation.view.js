@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { View, TouchableOpacity } from 'react-native';
-import { TextInput, HelperText, Subheading, Headline, Appbar } from 'react-native-paper';
+import { TextInput, HelperText, Appbar } from 'react-native-paper';
 import { Formik, ErrorMessage } from 'formik';
 import { withNamespaces, i18n } from 'react-i18next';
 import { graphql, compose } from 'react-apollo';
@@ -12,15 +12,13 @@ import { showMessage, hideMessage } from 'react-native-flash-message';
 import { ReactNativeFile } from 'apollo-upload-client';
 
 import type { OrganisationObject } from '../../../models/organisation.model';
-import { H2HTheme } from './../../../../themes/default.theme';
 import { styles } from './editOrganisation.style';
 import { mutations } from './editOrganisation.mutations.js';
-import OrganisationProfilePicture from '../organisationProfilePicture';
-import gql from 'graphql-tag';
 import { USER_ORGAS_QUERY } from '../../navigation/drawer/drawer.screen';
 import { Picker } from '../../image/pickerOptions';
 import { uploadMutations } from '../../image/upload.mutations';
 import { ImagePicker } from '../../image/imagePicker';
+import { OrganisationProfilePicture } from '../organisationProfilePicture';
 
 type Props = {
     organisation?: OrganisationObject,
@@ -34,7 +32,7 @@ type Props = {
 
 type State = {
     validationSchema: Yup.Schema,
-    pickedImage: String,
+    pickedImage: string,
     modalVisible: boolean,
 };
 
