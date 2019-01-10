@@ -6,6 +6,7 @@ import { View } from 'react-native';
 
 import { OrganisationView } from '../../components/organisation/viewOrganisation';
 import { Appbar, IconButton } from 'react-native-paper';
+import { withNamespaces } from 'react-i18next';
 import { ScrollView } from 'react-native-gesture-handler';
 import gql from 'graphql-tag';
 import { Query, withApollo } from 'react-apollo';
@@ -13,6 +14,7 @@ import { NavigationEvents } from 'react-navigation';
 import IconMat from 'react-native-vector-icons/MaterialIcons';
 
 type Props = {
+    t: i18n.t,
     organisation: OrganisationObject,
 };
 
@@ -35,6 +37,7 @@ const ORGANISATION_QUERY = gql`
                 name
                 description
                 image {
+                    id
                     url
                 }
             }
@@ -98,7 +101,7 @@ class _MyOrganisationScreen extends Component<Props, any> {
                                                 left: 4,
                                             }}
                                         />
-                                        <Appbar.Content title={data.organisation.name} subtitle="Organisation" />
+                                        <Appbar.Content title={data.organisation.name} subtitle={this.props.t('organization')} />
                                         <Appbar.Action
                                             icon="edit"
                                             onPress={() => {
@@ -119,4 +122,4 @@ class _MyOrganisationScreen extends Component<Props, any> {
     }
 }
 
-export const MyOrganisationScreen = withApollo(_MyOrganisationScreen);
+export const MyOrganisationScreen = withApollo(withNamespaces(['Organisation'])(_MyOrganisationScreen));

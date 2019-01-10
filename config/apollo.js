@@ -13,6 +13,7 @@ import gql from 'graphql-tag';
 import { onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
 
+import { print } from 'graphql/language/printer';
 import Config from 'react-native-config';
 import { Sentry } from 'react-native-sentry';
 
@@ -71,9 +72,24 @@ export const createApolloConfiguration = async () => {
     Sentry.captureMessage('URL set to', serverURI); // eslint-disable-line
     const uploadLink = createUploadLink({ uri: serverURI });
 
-    const Links = [errorLink, CreateHeaderLink, stateLink, uploadLink];
+    const consoleLink = new ApolloLink((operation, forward) => {
+        return forward(operation).map(response => {
+            console.log({ query: print(operation.query), operation, response });
+            return response;
+        });
+    });
+    const Links = [consoleLink, errorLink, CreateHeaderLink, stateLink, uploadLink];
 
-    const defaultOptions = {};
+    const defaultOptions = {
+        watchQuery: {
+            fetchPolicy: 'cache-and-network',
+            errorPolicy: 'ignore',
+        },
+        query: {
+            fetchPolicy: 'cache-and-network',
+            errorPolicy: 'all',
+        },
+    };
 
     return {
         cache,

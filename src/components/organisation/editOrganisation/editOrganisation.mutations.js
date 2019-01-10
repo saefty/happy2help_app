@@ -22,15 +22,11 @@ export const mutations = {
             $id: String!
             $name: String
             $description: String
-            $addMember: String
-            $deleteMember: String
         ) {
             updateEvent(
                 id: $id
                 name: $name
                 description: $description
-                addMember: $addMember
-                deleteMember: $deleteMember
             ) {
                 id
             }

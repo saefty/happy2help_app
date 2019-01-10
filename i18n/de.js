@@ -10,6 +10,8 @@ export default {
         toLong: 'Zu lang!',
         email: 'Ungültige E-Mail Addresse',
         required: 'Dieses Feld ist ein Pflichtfeld!',
+        beforeStart: 'Das Enddatum darf nicht vor dem Start Datum liegen',
+        beforePresent: 'Das Event darf nicht in der Vergangenheit liegen',
     },
     User: {
         userName: 'Benutzername',
@@ -24,7 +26,7 @@ export default {
         logOut: 'Abmelden',
         skills: 'Fähigkeiten',
         creditPoints: 'Helfer Punkte',
-        editSuccess: 'Profil wurde erfolgreich bearbeitet!'
+        editSuccess: 'Profil wurde erfolgreich bearbeitet!',
     },
     Event: {
         myEvents: 'Meine Events',
@@ -39,6 +41,7 @@ export default {
         editSuccess: 'Event wurde erfolgreich bearbeitet: ',
     },
     Organisation: {
+        organization: 'Organisation',
         about: 'Über uns',
         description: 'Beschreibung',
         name: 'Organisationsname',
@@ -89,6 +92,6 @@ export default {
         take: 'Foto schießen',
         gallery: 'Aus der Gallerie auswählen',
         remove: 'Foto löschen',
-        deleteSuccess: 'Dein Foto wurde erfolgreich entfernt!'
+        deleteSuccess: 'Dein Foto wurde erfolgreich entfernt!',
     },
 };
