@@ -73,7 +73,7 @@ export class MyJobsDataProvider extends Component<Props> {
         return (
             <Query query={GET_JOBS}>
                 {({ loading, error, data, refetch }) => {
-                    if (loading || error) return null;
+                    if (!data.user && (loading || error)) return null;
                     return this.props.children(data.user, refetch);
                 }}
             </Query>
