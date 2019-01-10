@@ -1,53 +1,42 @@
 // @flow
 import { StyleSheet } from 'react-native';
-import { H2HTheme } from './../../../../../themes/default.theme';
 import { primaryColor } from '../../../../../themes/colors';
 
 export const styles = StyleSheet.create({
     container: {
-        height: 100,
-    },
-    colouredBlock: {
-        position: 'absolute',
-        width: '100%',
-        height: '50%',
-        backgroundColor: primaryColor,
-    },
-    headerTextContainer: {
-        flex: 1,
-        left: 0,
-       // marginTop: 25,
-        top:0,
+        height: '40%',
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexDirection: 'row',
     },
-    userName: {
-        color: 'white',
-        fontSize: 25,
-        top: -15,
-        fontWeight: 'bold',
-    },
-    location: {
-        fontSize: 15,
-        fontStyle: 'italic',
-        width: '99%',
+    background: {
+        backgroundColor: primaryColor,
         position: 'absolute',
-        top: 20,
-        //left: 124,
+        height: '50%',
+        width: '100%',
+        top: 0,
     },
-    nameAndLocationContainer: {
-        margin: 10,
-        //marginTop: 10,
-        width: '100%'
+    pictureContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '85%',
     },
     profilePicture: {
-        width: 110,
-        height: 110,
+        height: 180,
+        width: 180,
         borderRadius: 150,
         margin: 10,
         borderWidth: 4,
         borderColor: 'white',
-        justifyContent: 'flex-start',
+    },
+    infoContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    name: {
+        fontSize: 24,
+        fontWeight: '400',
+    },
+    location: {
+        fontSize: 11,
     },
 });

@@ -38,7 +38,6 @@ export class ViewMyProfile extends Component<Props> {
                                         })
                                     }
                                 />
-                                <Appbar.Action icon="more-vert" />
                             </Appbar.Header>
                             <ProfileView user={user} {...this.props} />
                         </View>

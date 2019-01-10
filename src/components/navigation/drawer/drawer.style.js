@@ -17,4 +17,13 @@ export const DrawerStyle = StyleSheet.create({
         margin: 0,
         height: 40,
     },
+    profilePicture: {
+        width: 110,
+        height: 110,
+        borderRadius: 150,
+        margin: 10,
+        borderWidth: 4,
+        borderColor: 'white',
+        justifyContent: 'flex-start',
+    },
 });

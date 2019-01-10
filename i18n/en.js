@@ -27,6 +27,7 @@ export default {
         creditPoints: 'Credit Points',
         skills: 'Skills',
         editSuccess: 'Your profile was updated successfully!',
+        noLocation: 'This User has not specified their Location',
     },
     Event: {
         myEvents: 'My Events',

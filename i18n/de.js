@@ -27,6 +27,7 @@ export default {
         skills: 'Fähigkeiten',
         creditPoints: 'Helfer Punkte',
         editSuccess: 'Profil wurde erfolgreich bearbeitet!',
+        noLocation: 'Dieser Nutzer hat seinen Standort nicht angegeben',
     },
     Event: {
         myEvents: 'Meine Events',

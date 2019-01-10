@@ -24,12 +24,10 @@ class ProfileView extends Component<Props> {
     render() {
         return (
             <View>
-                <View>
-                    <Header userName={this.props.user.username} img={this.props.user.image} location={this.props.user.profile.location} />
-                    <CreditPoints creditPoints={this.props.user.profile.creditPoints} />
-                    <Title style={styles.title}>{this.props.t('skills')}</Title>
-                    <SkillList skillObjects={this.props.user.skills} />
-                </View>
+                <Header userName={this.props.user.username} img={this.props.user.image} location={this.props.user.profile.location} />
+                <CreditPoints creditPoints={this.props.user.profile.creditPoints} />
+                <Title style={styles.title}>{this.props.t('skills')}</Title>
+                <SkillList skillObjects={this.props.user.skills} />
             </View>
         );
     }
