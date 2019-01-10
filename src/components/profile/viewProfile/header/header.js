@@ -14,7 +14,7 @@ type Props = {
     userName: string,
     location: LocationObject,
 };
-const maxLocationLength = 20;
+const maxLocationLength = 50;
 
 export class _Header extends Component<Props> {
     constructor(props: Props) {
