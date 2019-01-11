@@ -33,7 +33,7 @@ class _AddMemberScreen extends Component<Props> {
                         <Appbar.Action icon="check" />
                     </Appbar.Header>
                 <ScrollView>
-                    <AddMemberView organisation={this.props.organisation} />
+                    <AddMemberView members={this.props.organisation.members} />
                 </ScrollView>
             </View>
         );

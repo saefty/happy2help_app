@@ -1,13 +1,12 @@
 /* @flow */
-import type { OrganisationObject } from '../../models/organisation.model';
-
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { withNamespaces } from 'react-i18next';
+import { UserListItem } from './userListItem/userListItem';
 
 type Props = {
     t: i18n.t,
-    organisation: OrganisationObject,
+    members: Array,
 };
 
 class _AddMemberView extends Component<Props, State> {
@@ -18,7 +17,7 @@ class _AddMemberView extends Component<Props, State> {
     render() {
         return (
             <View>
-                <Text>Add Member Screen</Text>
+        <FlatList data={this.props.members} renderItem={({item}) => <UserListItem user={item}/>}/>
             </View>
         );
     }

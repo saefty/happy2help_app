@@ -31,6 +31,10 @@ const ORGANISATION_QUERY = gql`
             members {
                 id
                 username
+                image {
+                    id
+                    url
+                }
             }
             eventSet {
                 id
