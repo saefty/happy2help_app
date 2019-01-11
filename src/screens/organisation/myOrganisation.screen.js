@@ -103,6 +103,14 @@ class _MyOrganisationScreen extends Component<Props, any> {
                                         />
                                         <Appbar.Content title={data.organisation.name} subtitle={this.props.t('organization')} />
                                         <Appbar.Action
+                                            icon="group-add"
+                                            onPress={() => {
+                                                this.props.navigation.navigate('Member', {
+                                                    organisation: data.organisation,
+                                                });
+                                            }}
+                                        />
+                                        <Appbar.Action
                                             icon="edit"
                                             onPress={() => {
                                                 this.props.navigation.navigate('Edit', {

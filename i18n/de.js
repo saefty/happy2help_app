@@ -51,6 +51,7 @@ export default {
         creationSuccess: 'Profil wurde erfolgreich erstellt für: ',
         currentEvents: 'Aktuelle Events',
         members: 'Mitglieder',
+        memberSubtitle: 'Verwaltung von Mitgliedern',
         editOrganisation: 'Organisation bearbeiten',
     },
     Job: {

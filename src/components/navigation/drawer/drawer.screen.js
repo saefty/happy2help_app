@@ -126,7 +126,7 @@ class _DrawerScreen extends React.Component<any, any> {
                                         <List.Item
                                             onPress={() => this.props.navigation.navigate('EditOrganisation')}
                                             left={props => <List.Icon {...props} icon="group-add" />}
-                                            title={<Text style={{ fontSize: 14 }}>Neue Organisationen</Text>}
+                                            title={<Text style={{ fontSize: 14 }}>Neue Organisation</Text>}
                                         />
 
                                         {data.user.organisationSet.map(orga => {

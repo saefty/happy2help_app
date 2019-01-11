@@ -51,6 +51,7 @@ export default {
         creationSuccess: 'Successfully created a profile for: ',
         currentEvents: 'Current Events',
         members: 'Members',
+        memberSubtitle: 'Member management',
         editOrganisation: 'Edit Organization',
     },
     Navigation: {
