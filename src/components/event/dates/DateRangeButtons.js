@@ -58,8 +58,8 @@ class DateRangeButtons extends Component<Props> {
         return (
             <View style={{ marginBottom: this.props.errorMessage ? 23 : 15 }}>
                 <View style={this.props.containerStyle ? this.props.containerStyle : styles.container}>
+                    {this.renderHeadline()}
                     <View style={styles.dateButtonsContainer}>
-                        {this.renderHeadline()}
                         <DateButton
                             date={this.props.startDate}
                             updateDate={this.props.updateStart}

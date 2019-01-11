@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         minWidth: 100,
+        borderRadius: 5,
     },
     optionText: {
         // fontSize: 15,
