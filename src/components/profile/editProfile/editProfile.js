@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Picker } from '../../image/pickerOptions';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { ReactNativeFile } from 'apollo-upload-client';
 import { Appbar, Title } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -42,6 +42,7 @@ type State = {
 };
 
 class EditProfileComponent extends Component<Props, State> {
+    scrollView: ScrollView;
     constructor(props) {
         super(props);
 
@@ -162,7 +163,7 @@ class EditProfileComponent extends Component<Props, State> {
 
     render() {
         return (
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView ref={(ref: ScrollView) => {this.scrollView = ref}}>
                 <Formik initialValues={this.initialValues} onSubmit={this.onSubmit}>
                     {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
                         <View>
@@ -194,6 +195,7 @@ class EditProfileComponent extends Component<Props, State> {
                             </View>
 
                             <GooglePlacesInput
+                                onTextChange={() => this.scrollView.scrollToEnd()}
                                 onChangeValue={v => {
                                     setFieldValue('location', {
                                         name: v.formatted_address,

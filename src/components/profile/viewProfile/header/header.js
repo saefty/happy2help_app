@@ -22,21 +22,19 @@ export class _Header extends Component<Props> {
     }
     render() {
         return (
-            <View style={styles.container}>
+            <View>
                 <View style={styles.pictureContainer}>
                     <View style={styles.background} />
                     <ProfilePicture style={styles.profilePicture} src={this.props.img ? this.props.img.url : ''} />
                 </View>
-                <View style={styles.infoContainer}>
-                    <Text style={styles.name}>{this.props.userName} </Text>
-                    <Text style={styles.location}>
-                        {this.props.location
-                            ? this.props.location.name.length <= maxLocationLength
-                                ? this.props.location.name
-                                : this.props.location.name.substr(0, maxLocationLength) + '..'
-                            : this.props.t('noLocation')}
-                    </Text>
-                </View>
+                <Text style={styles.name}>{this.props.userName} </Text>
+                <Text style={styles.location}>
+                    {this.props.location
+                        ? this.props.location.name.length <= maxLocationLength
+                            ? this.props.location.name
+                            : this.props.location.name.substr(0, maxLocationLength) + '..'
+                        : this.props.t('noLocation')}
+                </Text>
             </View>
         );
     }
