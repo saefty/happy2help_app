@@ -93,7 +93,7 @@ class _EditEventForm extends Component<Props, State> {
     removePickedImage = () => {
         this.setState({ pickedImage: '' });
         this.hideModal();
-    }
+    };
 
     saveImage = async id => {
         let fileImg = new ReactNativeFile({
@@ -143,11 +143,13 @@ class _EditEventForm extends Component<Props, State> {
 
     onSubmit = async (values, actions) => {
         actions.setSubmitting(true);
+        console.log(values);
         let EVENT = {
             name: values.name,
             description: values.description,
             start: moment(values.start).format(),
             end: moment(values.end).format(),
+            jobs: [],
         };
 
         let successMessage = 'creationSuccess';
@@ -184,7 +186,14 @@ class _EditEventForm extends Component<Props, State> {
     };
 
     getInitialFormValues = () => {
-        return this.props.event || {start: new Date(), end: moment().add(1, 'hours').toDate()};
+        return (
+            this.props.event || {
+                start: new Date(),
+                end: moment()
+                    .add(1, 'hours')
+                    .toDate(),
+            }
+        );
     };
 
     getDateErrorMessage = errors => {
@@ -228,7 +237,9 @@ class _EditEventForm extends Component<Props, State> {
                                         //if new start ist after end, end is the old diff plus the new start
                                         if (newStartDate > values.end) {
                                             const diff = moment(values.start).diff(values.end);
-                                            const newEndDate = moment(newStartDate).add(diff).toDate();
+                                            const newEndDate = moment(newStartDate)
+                                                .add(diff)
+                                                .toDate();
                                             setFieldValue('end', newEndDate);
                                         }
                                         setFieldValue('start', newStartDate);

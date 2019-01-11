@@ -11,6 +11,7 @@ export const mutations = {
             $start: DateTime!
             $end: DateTime!
             $organisationId: ID
+            $jobs: [JobInputType]
         ) {
             createEvent(
                 name: $name
@@ -21,26 +22,15 @@ export const mutations = {
                 start: $start
                 end: $end
                 organisationId: $organisationId
+                jobs: $jobs
             ) {
                 id
             }
         }
     `,
     UPDATE_EVENT: gql`
-        mutation updateEvent(
-            $eventId: ID!
-            $name: String
-            $description: String
-            $start: DateTime
-            $end: DateTime
-        ) {
-            updateEvent(
-                eventId: $eventId
-                name: $name
-                description: $description
-                start: $start
-                end: $end
-            ) {
+        mutation updateEvent($eventId: ID!, $name: String, $description: String, $start: DateTime, $end: DateTime, $jobs: [JobInputType]) {
+            updateEvent(eventId: $eventId, name: $name, description: $description, start: $start, end: $end, jobs: $jobs) {
                 id
             }
         }

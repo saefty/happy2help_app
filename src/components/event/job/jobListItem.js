@@ -81,7 +81,7 @@ class _JobListItem extends Component<Props> {
     };
 
     renderSkills = () => {
-        const skillSet = this.props.job.requiresskillSet;
+        const skillSet = this.props.job.requiredSkills;
         if (!skillSet || skillSet.length == 0) {
             return;
         }

@@ -62,10 +62,10 @@ class _EditJob extends Component<Props> {
                     <ErrorMessage name="name" />
                 </HelperText>
                 <SkillList
-                    skillObjects={values.requiresskillSet ? values.requiresskillSet.map(x => x.skill) : []}
+                    skillObjects={values.requiredSkills ? values.requiredSkills.map(x => x.skill) : []}
                     editable={true}
                     addSkill={(skill: SkillObject) => {
-                        let skills = clone(values.requiresskillSet || []);
+                        let skills = clone(values.requiredSkills || []);
 
                         skills.push({
                             skill: {
@@ -73,12 +73,12 @@ class _EditJob extends Component<Props> {
                                 id: uuid(),
                             },
                         });
-                        setFieldValue('requiresskillSet', skills);
+                        setFieldValue('requiredSkills', skills);
                     }}
                     deleteSkill={(skillToDelete: SkillObject) => {
-                        let skills = clone(values.requiresskillSet);
+                        let skills = clone(values.requiredSkills);
                         skills = skills.filter(tmp => tmp.skill.id !== skillToDelete.id);
-                        setFieldValue('requiresskillSet', skills);
+                        setFieldValue('requiredSkills', skills);
                     }}
                 />
                 <TextInput

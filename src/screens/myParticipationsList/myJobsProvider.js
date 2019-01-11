@@ -20,7 +20,7 @@ const GET_JOBS = gql`
                         id
                         state
                     }
-                    requiresskillSet {
+                    requiredSkills {
                         skill {
                             id
                             name
