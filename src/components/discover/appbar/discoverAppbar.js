@@ -9,6 +9,8 @@ import IconMat from 'react-native-vector-icons/MaterialIcons';
 import { withNavigation } from 'react-navigation';
 import { DiscoverAppbarStyle } from './discoverAppbar.style';
 import { primaryColor } from '../../../../themes/colors';
+import moment from 'moment';
+
 
 type Props = {
     searchQuery: (query: string) => void,

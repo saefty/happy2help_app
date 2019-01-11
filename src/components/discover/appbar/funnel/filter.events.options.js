@@ -38,7 +38,7 @@ class _FilterOptions extends Component<Props> {
 
                 <View style={styles.spacedContainer}>
                     <Paragraph style={{ marginTop: 6, marginLeft: 10, marginBottom: 12 }}>{this.props.t('hidePrivateEvents')}</Paragraph>
-                    <Switch style={{ marginRight: 15 }} value={!this.props.showPrivateEvents} onValueChange={this.props.handleSwitch} />
+                    <Switch style={{ marginRight: 20 }} value={!this.props.showPrivateEvents} onValueChange={this.props.handleSwitch} />
                 </View>
                 <Divider style={styles.divider} />
                 <View style={styles.spacedContainer}>
@@ -47,27 +47,6 @@ class _FilterOptions extends Component<Props> {
                         <AddSkillDialog addSkill={this.props.addSkill} />
                     </View>
                 </View>
-
-                {/* 
-                <Title style={styles.title}>{this.title}</Title>
-                <View style={styles.container}>
-                    <View style={styles.left}>
-                        <Paragraph style={styles.smallText}>{this.props.t('hidePrivateEvents')}</Paragraph>
-                    </View>
-                    <View style={styles.right}>
-                        <Switch value={!this.props.showPrivateEvents} onValueChange={this.props.handleSwitch} />
-                    </View>
-                </View>
-                <Divider style={styles.divider}/>
-
-                <View style={styles.container}>
-                    <View style={styles.left}>
-                        <Paragraph style={styles.smallText}>{this.props.t('skills')}</Paragraph>
-                    </View>
-                    <View style={styles.right}>
-                        <AddSkillDialog addSkill={this.props.addSkill} />
-                    </View>
-                </View> */}
                 <HorizontalSkillList style={styles.scroll} skills={this.props.requiredSkills} delSkill={this.props.delSkill} />
                 <Divider style={styles.divider} />
                 <View>
@@ -79,12 +58,7 @@ class _FilterOptions extends Component<Props> {
                         updateEnd={this.props.updateToDate}
                         containerStyle={{ marginTop: 10 }}
                         hideLabels={true}
-                    />
-                    {/* <Paragraph style={styles.smallText}>{this.props.t('datePick')}</Paragraph>
-                    <View style={styles.datePickerContainer}>
-                        <Paragraph style={styles.datePicker}>DATEPICKER 1</Paragraph>
-                        <Paragraph style={styles.datePicker}>DATEPICKER 2</Paragraph>
-                    </View> */}
+                    />              
                 </View>
             </View>
         );

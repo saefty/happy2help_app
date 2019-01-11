@@ -14,6 +14,8 @@ import { EventDataProvider } from '../../providers/eventDataProvider';
 import { NavigationEvents } from 'react-navigation';
 import { EditJobList } from '../../components/event/job/edit.job.list';
 
+import moment from 'moment';
+
 const APPBAR_SEG_HEIGHT = 130;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
@@ -78,6 +80,10 @@ class _DiscoverScreen extends Component<Props, State> {
             requiredSkills: [],
             showPrivate: true,
             searchQuery: '',
+            fromDate: new Date(),
+            toDate: moment()
+                .add(1, 'years')
+                .toDate(),
         };
     }
 
@@ -230,9 +236,16 @@ class _DiscoverScreen extends Component<Props, State> {
             sorting: {},
             filtering: {},
         };
+
+       
+
         params.filtering = {
             requiredSkills: this.state.requiredSkills,
             showPrivate: this.state.showPrivate,
+            time: {
+                start: moment(this.state.fromDate).format("YYYY-MM-DD"),
+                end: moment(this.state.toDate).format("YYYY-MM-DD"),
+            },
         };
         if (this.state.sorting === 'distance') {
             params.sorting = {
@@ -294,11 +307,13 @@ class _DiscoverScreen extends Component<Props, State> {
                             showSortOptions={this.state.selectedIndex === 1}
                             updateQuery={this.updateQuery}
                             oldState={{
-                                    sorting: this.state.sorting,
-                                    descending: this.state.descending,
-                                    requiredSkills: this.state.requiredSkills,
-                                    showPrivateEvents: this.state.showPrivate,
-                                }}
+                                sorting: this.state.sorting,
+                                descending: this.state.descending,
+                                requiredSkills: this.state.requiredSkills,
+                                showPrivateEvents: this.state.showPrivate,
+                                fromDate: this.state.fromDate,
+                                toDate: this.state.toDate,
+                            }}
                         />
                         <SegmentedControl values={['KARTE', 'LISTE']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
                     </View>

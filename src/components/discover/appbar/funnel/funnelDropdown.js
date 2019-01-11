@@ -8,7 +8,6 @@ import { IconButton } from 'react-native-paper';
 import IconMat from 'react-native-vector-icons/MaterialIcons';
 import { H2HTheme } from '../../../../../themes/default.theme';
 import type { SkillObject } from '../../../../models/skill.model';
-import moment from 'moment';
 
 type Props = {
     open: boolean,
@@ -19,6 +18,8 @@ type Props = {
         descending: boolean,
         requiredSkills: Array<string>,
         showPrivateEvents: boolean,
+        fromDate: date,
+        toDate: date,
     },
 };
 
@@ -35,10 +36,12 @@ export class FunnelDropdown extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            sorting: 'name',
-            descending: false,
-            requiredSkills: [],
-            showPrivateEvents: true,
+            sorting: props.oldState.sorting,
+            descending: props.oldState.descending,
+            requiredSkills: props.oldState.requiredSkills,
+            showPrivateEvents: props.oldState.showPrivateEvents,
+            fromDate: props.oldState.fromDate,
+            toDate: props.oldState.toDate,
         };
     }
     hasNotChanged(): boolean {
@@ -49,16 +52,29 @@ export class FunnelDropdown extends Component<Props, State> {
             this.state.requiredSkills.map(s => s.name).filter(s => this.props.oldState.requiredSkills.includes(s)).length ===
                 this.state.requiredSkills.map(s => s.name).length &&
             this.props.oldState.requiredSkills.filter(s => this.state.requiredSkills.map(s => s.name).includes(s)).length ===
-                this.props.oldState.requiredSkills.length
+                this.props.oldState.requiredSkills.length &&
+            this.state.fromDate === this.props.oldState.fromDate &&
+            this.state.toDate === this.props.oldState.toDate
         );
     }
     update = () => {
         let filtering = {
             requiredSkills: this.state.requiredSkills.map(skill => skill.name),
             showPrivate: this.state.showPrivateEvents,
+            fromDate: this.state.fromDate,
+            toDate: this.state.toDate,
         };
         this.props.updateQuery(this.state.sorting, this.state.descending, filtering);
     };
+
+    updateFromDate = (fromDate: Date) => {
+        this.setState({ fromDate: fromDate });
+    };
+
+    updateToDate = (toDate: Date) => {
+        this.setState({ toDate: toDate });
+    };
+
     renderSortOptions() {
         if (this.props.showSortOptions === true)
             return (
@@ -78,8 +94,8 @@ export class FunnelDropdown extends Component<Props, State> {
                 disabled={this.hasNotChanged()}
                 onPress={this.update}
                 style={{
-                    // alignSelf: 'center',
-                    right: 0,
+                    alignSelf: 'flex-end',
+                    marginRight: 30,
                 }}
             />
         );
@@ -103,8 +119,10 @@ export class FunnelDropdown extends Component<Props, State> {
                             })
                         }
                         handleSwitch={() => this.setState({ showPrivateEvents: !this.state.showPrivateEvents })}
-                        fromDate={new Date()}
-                        toDate={moment().add(1, 'years').toDate()}
+                        fromDate={this.state.fromDate}
+                        toDate={this.state.toDate}
+                        updateFromDate={this.updateFromDate}
+                        updateToDate={this.updateToDate}
                     />
                     {this.renderSortOptions()}
                     {this.renderAcceptButton()}

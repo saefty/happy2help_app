@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     scroll: {
-        marginTop: 5,
-        height: 45,
+        top: -8, 
+        height: 35,
         // borderTopWidth: 1,
         // borderTopColor: neutralColors.dark,
         // borderBottomWidth: 1,

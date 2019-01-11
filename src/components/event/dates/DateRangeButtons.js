@@ -64,7 +64,7 @@ class DateRangeButtons extends Component<Props> {
                             date={this.props.startDate}
                             updateDate={this.props.updateStart}
                             style={[
-                                { borderColor: this.props.errorMessage ? paperColors.error : neutralColors.light },
+                                { borderColor: this.props.errorMessage ? paperColors.error : neutralColors.dark },
                                 styles.leftDateButton,
                             ]}
                             accentColor={this.props.errorMessage ? paperColors.error : primaryColor}
@@ -73,7 +73,7 @@ class DateRangeButtons extends Component<Props> {
                             date={this.props.endDate}
                             updateDate={this.props.updateEnd}
                             style={[
-                                { borderColor: this.props.errorMessage ? paperColors.error : neutralColors.light },
+                                { borderColor: this.props.errorMessage ? paperColors.error : neutralColors.dark },
                                 styles.rightDateButton,
                             ]}
                             accentColor={this.props.errorMessage ? paperColors.error : primaryColor}
@@ -82,7 +82,7 @@ class DateRangeButtons extends Component<Props> {
                     <Divider
                         style={[
                             {
-                                backgroundColor: this.props.errorMessage ? paperColors.error : neutralColors.light,
+                                backgroundColor: this.props.errorMessage ? paperColors.error : neutralColors.dark,
                             },
                             styles.divider,
                         ]}
