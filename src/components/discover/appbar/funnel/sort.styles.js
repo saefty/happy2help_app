@@ -5,14 +5,21 @@ import { primaryColor } from '../../../../../themes/colors';
 
 const styles = StyleSheet.create({
     sortContainer: {
-        marginTop: 10,
-        marginLeft: 10,
-        marginRight: 10,
+        // marginTop: 10,
+        // marginLeft: 10,
+        // marginRight: 10,
     },
     title: {
-        fontSize: 18,
+        fontSize: 12,
+        marginTop: 5,
+        marginLeft: 10,
+        fontWeight: 'bold',
         color: primaryColor,
     },
+    // title: {
+    //     fontSize: 18,
+    //     color: primaryColor,
+    // },
     optionList: {
         marginTop: 2,
         flexDirection: 'row',
@@ -27,7 +34,7 @@ const styles = StyleSheet.create({
         minWidth: 100,
     },
     optionText: {
-        fontSize: 15,
+        // fontSize: 15,
     },
     radioContainer: {
         flexDirection: 'row',
@@ -42,8 +49,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     radioButtonText: {
-        fontSize: 15,
+        // fontSize: 15,
     },
+
 });
 
 export default styles;

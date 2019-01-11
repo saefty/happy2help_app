@@ -81,7 +81,7 @@ export default {
         start: 'date',
         distance: 'distance',
         filter: 'Filter:',
-        showPrivateEvents: 'Show Events created by private Users',
+        hidePrivateEvents: ' hide Events created by private Users',
         skills: 'Add Skills that should be searched for',
         noSkills: 'Filtering by Skills is inactive right now',
         datePick: 'Choose a timespan for Events',

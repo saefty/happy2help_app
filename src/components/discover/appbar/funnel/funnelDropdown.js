@@ -8,6 +8,7 @@ import { IconButton } from 'react-native-paper';
 import IconMat from 'react-native-vector-icons/MaterialIcons';
 import { H2HTheme } from '../../../../../themes/default.theme';
 import type { SkillObject } from '../../../../models/skill.model';
+import moment from 'moment';
 
 type Props = {
     open: boolean,
@@ -26,6 +27,8 @@ type State = {
     descending: boolean,
     requiredSkills: Array<SkillObject>,
     showPrivateEvents: boolean,
+    fromDate: date,
+    toDate: date,
 };
 
 export class FunnelDropdown extends Component<Props, State> {
@@ -43,8 +46,10 @@ export class FunnelDropdown extends Component<Props, State> {
             this.state.descending === this.props.oldState.descending &&
             this.state.sorting === this.props.oldState.sorting &&
             this.state.showPrivateEvents === this.props.oldState.showPrivateEvents &&
-            this.state.requiredSkills.map(s => s.name).filter(s => this.props.oldState.requiredSkills.includes(s)).length === this.state.requiredSkills.map(s => s.name).length &&
-            this.props.oldState.requiredSkills.filter(s => this.state.requiredSkills.map(s => s.name).includes(s)).length === this.props.oldState.requiredSkills.length
+            this.state.requiredSkills.map(s => s.name).filter(s => this.props.oldState.requiredSkills.includes(s)).length ===
+                this.state.requiredSkills.map(s => s.name).length &&
+            this.props.oldState.requiredSkills.filter(s => this.state.requiredSkills.map(s => s.name).includes(s)).length ===
+                this.props.oldState.requiredSkills.length
         );
     }
     update = () => {
@@ -73,8 +78,8 @@ export class FunnelDropdown extends Component<Props, State> {
                 disabled={this.hasNotChanged()}
                 onPress={this.update}
                 style={{
-                    alignSelf: 'center',
-                    right: 10,
+                    // alignSelf: 'center',
+                    right: 0,
                 }}
             />
         );
@@ -98,6 +103,8 @@ export class FunnelDropdown extends Component<Props, State> {
                             })
                         }
                         handleSwitch={() => this.setState({ showPrivateEvents: !this.state.showPrivateEvents })}
+                        fromDate={new Date()}
+                        toDate={moment().add(1, 'years').toDate()}
                     />
                     {this.renderSortOptions()}
                     {this.renderAcceptButton()}

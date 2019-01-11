@@ -5,14 +5,19 @@ import { primaryColor, neutralColors } from '../../../../../themes/colors';
 
 const styles = StyleSheet.create({
     filterContainer: {
-        marginLeft: 10,
-        marginRight: 10,
         flexDirection: 'column',
         justifyContent: 'flex-start',
     },
+    spacedContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
     title: {
-        fontSize: 18,
+        fontSize: 12,
         marginTop: 5,
+        marginLeft: 10,
+        fontWeight: 'bold',
         color: primaryColor,
     },
     container: {
@@ -28,10 +33,10 @@ const styles = StyleSheet.create({
     scroll: {
         marginTop: 5,
         height: 45,
-        borderTopWidth: 0.5,
-        borderTopColor: neutralColors.dark,
-        borderBottomWidth: 0.5,
-        borderBottomColor: neutralColors.dark,
+        // borderTopWidth: 1,
+        // borderTopColor: neutralColors.dark,
+        // borderBottomWidth: 1,
+        // borderBottomColor: neutralColors.dark,
     },
     left: {
         flex: 6,
@@ -40,16 +45,20 @@ const styles = StyleSheet.create({
     right: {
         flex: 1,
     },
-    datePickerContainer: {
-        marginTop: 10,
-        backgroundColor: '#cfcfcf',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    },
+    // datePickerContainer: {
+    //     marginTop: 10,
+    //     backgroundColor: '#cfcfcf',
+    //     flexDirection: 'row',
+    //     justifyContent: 'space-around',
+    //     alignItems: 'center',
+    // },
     datePicker: {
         color: '#000',
         fontSize: 12,
+    },
+    divider: {
+        height: 1,
+        backgroundColor: neutralColors.dark,
     },
 });
 
