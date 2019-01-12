@@ -6,7 +6,7 @@ import { View } from 'react-native';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { withNamespaces } from 'react-i18next';
 
-import { AddMemberView } from '../../components/organisation/editOrganisation/viewAddMember';
+import { AddMemberView } from '../../components/organisation/editOrganisation/viewAddMember/viewAddMember';
 import { Appbar } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -24,17 +24,18 @@ class _AddMemberScreen extends Component<Props> {
         return (
             <View>
                 <Appbar.Header>
-                        <Appbar.BackAction
-                            onPress={() => {
-                                this.props.navigation.goBack();
-                            }}
-                        />
-                        <Appbar.Content title={this.props.organisation.name} subtitle={this.props.t('memberSubtitle')} />
-                        <Appbar.Action icon="check" />
-                    </Appbar.Header>
-                <ScrollView>
-                    <AddMemberView members={this.props.organisation.members} />
-                </ScrollView>
+                    <Appbar.BackAction
+                        onPress={() => {
+                            this.props.navigation.goBack();
+                        }}
+                    />
+                    <Appbar.Content title={this.props.organisation.name} subtitle={this.props.t('memberSubtitle')} />
+                </Appbar.Header>
+                <View style={{ height: '100%' }}>
+                    <ScrollView>
+                        <AddMemberView members={this.props.organisation.members} adminId={this.props.organisation.admin.id} />
+                    </ScrollView>
+                </View>
             </View>
         );
     }

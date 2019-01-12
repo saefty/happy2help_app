@@ -36,6 +36,9 @@ const ORGANISATION_QUERY = gql`
                     url
                 }
             }
+            admin {
+                id
+            }
             eventSet {
                 id
                 name
