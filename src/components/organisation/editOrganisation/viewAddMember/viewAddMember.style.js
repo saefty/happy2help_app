@@ -33,4 +33,15 @@ export const styles = StyleSheet.create({
         backgroundColor: primaryColor,
         borderRadius: 60,
     },
+    modal: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalView: {
+        width: '80%',
+        backgroundColor: '#fff',
+        elevation: 6,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
