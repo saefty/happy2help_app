@@ -53,7 +53,7 @@ class _SortOption extends PureComponent<Props> {
                                 onPress={() => this.props.changeDescending(false)}
                                 disabled={this.props.sorting === 'distance'}
                             />
-                            <Text style={styles.radioButtonText}>{this.props.t('ascending')}</Text>
+                            <Text >{this.props.t('ascending')}</Text>
                         </View>
                     </TouchableRipple>
                     <TouchableRipple rippleColor={this.transparent} onPress={() => this.props.changeDescending(true)}>
@@ -65,7 +65,7 @@ class _SortOption extends PureComponent<Props> {
                                 onPress={() => this.props.changeDescending(true)}
                                 disabled={this.props.sorting === 'distance'}
                             />
-                            <Text style={styles.radioButtonText}>{this.props.t('descending')}</Text>
+                            <Text>{this.props.t('descending')}</Text>
                         </View>
                     </TouchableRipple>
                 </View>

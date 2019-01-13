@@ -32,11 +32,7 @@ const styles = StyleSheet.create({
     },
     scroll: {
         top: -8, 
-        height: 35,
-        // borderTopWidth: 1,
-        // borderTopColor: neutralColors.dark,
-        // borderBottomWidth: 1,
-        // borderBottomColor: neutralColors.dark,
+        height: 35,    
     },
     left: {
         flex: 6,
@@ -44,14 +40,7 @@ const styles = StyleSheet.create({
     },
     right: {
         flex: 1,
-    },
-    // datePickerContainer: {
-    //     marginTop: 10,
-    //     backgroundColor: '#cfcfcf',
-    //     flexDirection: 'row',
-    //     justifyContent: 'space-around',
-    //     alignItems: 'center',
-    // },
+    }, 
     datePicker: {
         color: '#000',
         fontSize: 12,

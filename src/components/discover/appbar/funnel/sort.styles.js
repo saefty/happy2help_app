@@ -25,10 +25,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         minWidth: 100,
         borderRadius: 5,
-    },
-    optionText: {
-        // fontSize: 15,
-    },
+    }, 
     radioContainer: {
         flexDirection: 'row',
         marginLeft: 15,
@@ -40,9 +37,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    radioButtonText: {
-        // fontSize: 15,
-    },
+   
 
 });
 
