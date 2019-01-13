@@ -11,13 +11,23 @@ import { DiscoverAppbarStyle } from './discoverAppbar.style';
 import { primaryColor } from '../../../../themes/colors';
 import moment from 'moment';
 
-
 type Props = {
     searchQuery: (query: string) => void,
     openFunnel: () => void,
     funnelOpen: boolean,
     showSortOptions: boolean,
-    updateQuery: (sorting: string, descending: boolean, filtering: { requiredSkills: Array<string>, showPrivate: boolean }) => void,
+    updateQuery: (
+        sorting: string,
+        descending: boolean,
+        filtering: {
+            requiredSkills: Array<string>,
+            showPrivate: boolean,
+            time: {
+                start: Date,
+                end: Date,
+            },
+        }
+    ) => void,
     oldState: {
         sorting: string,
         descending: boolean,

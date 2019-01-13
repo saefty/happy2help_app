@@ -237,14 +237,12 @@ class _DiscoverScreen extends Component<Props, State> {
             filtering: {},
         };
 
-       
-
         params.filtering = {
             requiredSkills: this.state.requiredSkills,
             showPrivate: this.state.showPrivate,
             time: {
-                start: moment(this.state.fromDate).format("YYYY-MM-DD"),
-                end: moment(this.state.toDate).format("YYYY-MM-DD"),
+                start: moment(this.state.fromDate).format('YYYY-MM-DD'),
+                end: moment(this.state.toDate).format('YYYY-MM-DD'),
             },
         };
         if (this.state.sorting === 'distance') {
@@ -262,12 +260,25 @@ class _DiscoverScreen extends Component<Props, State> {
         }
         return params;
     }
-    updateQuery = (sorting: string, descending: boolean, filtering: { requiredSkills: Array<string>, showPrivate: boolean }) => {
+    updateQuery = (
+        sorting: string,
+        descending: boolean,
+        filtering: {
+            requiredSkills: Array<string>,
+            showPrivate: boolean,
+            time: {
+                start: Date,
+                end: Date,
+            },
+        }
+    ) => {
         this.setState({
             sorting: sorting,
             descending: descending,
             requiredSkills: filtering.requiredSkills,
             showPrivate: filtering.showPrivate,
+            fromDate: filtering.time.start,
+            toDate: filtering.time.end,
         });
         this.setState({
             funnelOpen: false,

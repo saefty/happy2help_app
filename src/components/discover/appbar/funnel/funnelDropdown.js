@@ -11,7 +11,18 @@ import type { SkillObject } from '../../../../models/skill.model';
 
 type Props = {
     open: boolean,
-    updateQuery: (sorting: string, descending: boolean, filtering: { requiredSkills: Array<string>, showPrivate: boolean }) => void,
+    updateQuery: (
+        sorting: string,
+        descending: boolean,
+        filtering: {
+            requiredSkills: Array<string>,
+            showPrivate: boolean,
+            time: {
+                start: Date,
+                end: Date,
+            },
+        }
+    ) => void,
     showSortOptions: boolean,
     oldState: {
         sorting: string,
@@ -61,8 +72,11 @@ export class FunnelDropdown extends Component<Props, State> {
         let filtering = {
             requiredSkills: this.state.requiredSkills.map(skill => skill.name),
             showPrivate: this.state.showPrivateEvents,
-            fromDate: this.state.fromDate,
-            toDate: this.state.toDate,
+            time: {
+                start: this.state.fromDate,
+                end: this.state.toDate,
+            }
+          
         };
         this.props.updateQuery(this.state.sorting, this.state.descending, filtering);
     };
