@@ -11,6 +11,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { SlimDate } from './../../utils/date/slimDate';
 import { statusColors } from './../../../../themes/colors';
 import moment from 'moment';
+import { withNamespaces } from 'react-i18next';
+
 
 type Props = {
     event: EventObject,
@@ -20,7 +22,7 @@ type Props = {
     controls?: ControlsType,
 };
 
-export class Event extends Component<Props> {
+class _Event extends Component<Props> {
     constructor(props: Props) {
         super(props);
     }
@@ -128,11 +130,13 @@ export class Event extends Component<Props> {
     get distanceString() {
         const distance = this.props.event.location.distance;
         if (distance < 1) {
-            return String((distance * 100).toFixed(0) + ' m entfernt');
+            return (distance * 100).toFixed(0) + ' m ' + this.props.t('away');
         }
         if (distance < 10) {
-            return String(distance.toFixed(1) + ' km entfernt');
+            return distance.toFixed(1) + ' km ' + this.props.t('away'); ;
         }
-        return String(distance.toFixed(0) + ' km entfernt');
+        return distance.toFixed(0) + ' km ' + this.props.t('away');;
     }
 }
+
+export const Event = withNamespaces(['Event'])(_Event);
