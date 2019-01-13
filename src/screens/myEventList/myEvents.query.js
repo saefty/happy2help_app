@@ -8,6 +8,8 @@ export const MY_EVENTS = gql`
                 id
                 name
                 description
+                start
+                end
                 image {
                     id
                     url

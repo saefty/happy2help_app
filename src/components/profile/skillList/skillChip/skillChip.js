@@ -22,7 +22,7 @@ export class SkillChip extends Component<Props> {
                     icon={this.props.skillObject.approved ? 'check-circle' : null}
                     onClose={this.props.deleteChip ? () => this.props.deleteChip(this.props.skillObject) : null}
                 >
-                    <Text style={styles.text}>{this.props.skillObject.name}</Text>
+                    {this.props.skillObject.name}
                 </Chip>
             </View>
         );
