@@ -15,7 +15,6 @@ type Props = {
     date: Date,
     style: StyleSheet,
     updateDate: (date: Date) => void,
-    shouldUpdate: (date: Date) => boolean,
     accentColor: String,
 };
 

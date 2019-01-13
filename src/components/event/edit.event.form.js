@@ -46,7 +46,6 @@ class _EditEventForm extends Component<Props, State> {
     scrollView: ScrollView;
     constructor(props: Props) {
         super(props);
-
         let initialImg = '';
         if (this.props.event) {
             initialImg = this.props.event.image ? this.props.event.image.url : '';

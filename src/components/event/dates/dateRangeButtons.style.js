@@ -29,10 +29,10 @@ export const styles = StyleSheet.create({
     },
     rightDateButton: {
         width: '50%',
-        borderLeftWidth: 1,
+        // borderLeftWidth: 1,
     },
     divider: {
         marginTop: 10,
-        height: 2,
+        height: 1,
     },
 });

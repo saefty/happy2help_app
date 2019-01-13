@@ -4,13 +4,12 @@ import { StyleSheet } from 'react-native';
 import { primaryColor } from '../../../../../themes/colors';
 
 const styles = StyleSheet.create({
-    sortContainer: {
-        marginTop: 10,
-        marginLeft: 10,
-        marginRight: 10,
-    },
+  
     title: {
-        fontSize: 18,
+        fontSize: 12,
+        marginTop: 5,
+        marginLeft: 10,
+        fontWeight: 'bold',
         color: primaryColor,
     },
     optionList: {
@@ -25,13 +24,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         minWidth: 100,
-    },
-    optionText: {
-        fontSize: 15,
-    },
+        borderRadius: 5,
+    }, 
     radioContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         marginLeft: 15,
         marginRight: 15,
         height: 50,
@@ -41,9 +37,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    radioButtonText: {
-        fontSize: 15,
-    },
+   
+
 });
 
 export default styles;
