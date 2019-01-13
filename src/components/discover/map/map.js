@@ -110,7 +110,10 @@ export class Map extends PureComponent<Props, State> {
                     cache={true}
                     style={[styles.map]}
                     showsUserLocation={true}
-                    showsMyLocationButton={false}
+                    showsMyLocationButton={true}
+                    mapPadding={{
+                        top: 120,
+                    }}
                     showsPointsOfInterest={false}
                     showsBuildings={false}
                     showsIndoors={false}
