@@ -81,7 +81,18 @@ class _EditJobList extends Component<Props, State> {
                 </View>
             );
         } else {
-            item = <EditJob job={{}} save={this.saveNew} initWithEditMode={true} />;
+            item = (
+                <EditJob
+                    job={{}}
+                    save={this.saveNew}
+                    delete={() =>
+                        this.setState({
+                            showNewCard: false,
+                        })
+                    }
+                    initWithEditMode={true}
+                />
+            );
         }
         return item;
     };
@@ -89,7 +100,7 @@ class _EditJobList extends Component<Props, State> {
     render() {
         return (
             <View>
-                <FlatList data={this.props.jobs} keyExtractor={job => job.id} renderItem={this.renderJob} />
+                <FlatList data={this.props.jobs} keyExtractor={job => job.id || job._id} renderItem={this.renderJob} />
                 {this.renderNewItem()}
             </View>
         );

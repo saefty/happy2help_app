@@ -39,9 +39,10 @@ export default {
         createTitle: 'Create event',
         creationSuccess: 'Successfully created the event:  ',
         editSuccess: 'Successfully updated the event: ',
+        totalPositions: 'Number of total positions',
     },
     Organisation: {
-        organization: "Organization",
+        organization: 'Organization',
         about: 'About Us',
         description: 'Description',
         name: 'Name of the organization',

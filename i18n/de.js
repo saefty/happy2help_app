@@ -39,6 +39,7 @@ export default {
         createTitle: 'Event erstellen',
         creationSuccess: 'Event wurde erfolgreich erstellt: ',
         editSuccess: 'Event wurde erfolgreich bearbeitet: ',
+        totalPositions: 'Anzahl der Stellen',
     },
     Organisation: {
         organization: 'Organisation',

@@ -12,6 +12,10 @@ export const EVENT_DETAIL_DATA_FRAGMENT = gql`
         }
         start
         end
+        image {
+            id
+            url
+        }
         jobSet {
             id
             name
