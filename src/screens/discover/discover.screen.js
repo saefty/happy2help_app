@@ -82,7 +82,7 @@ class _DiscoverScreen extends Component<Props, State> {
             searchQuery: '',
             fromDate: new Date(),
             toDate: moment()
-                .add(1, 'years')
+                .add(1, 'year')
                 .toDate(),
         };
     }
@@ -241,8 +241,8 @@ class _DiscoverScreen extends Component<Props, State> {
             requiredSkills: this.state.requiredSkills,
             showPrivate: this.state.showPrivate,
             time: {
-                start: moment(this.state.fromDate).format('YYYY-MM-DD'),
-                end: moment(this.state.toDate).format('YYYY-MM-DD'),
+                start: moment(this.state.fromDate).format(),
+                end: moment(this.state.toDate).format(),
             },
         };
         if (this.state.sorting === 'distance') {
