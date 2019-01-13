@@ -39,6 +39,7 @@ export default {
         createTitle: 'Create event',
         creationSuccess: 'Successfully created the event:  ',
         editSuccess: 'Successfully updated the event: ',
+        away: 'away',
     },
     Organisation: {
         organization: "Organization",
