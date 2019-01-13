@@ -40,6 +40,7 @@ export default {
         creationSuccess: 'Successfully created the event:  ',
         editSuccess: 'Successfully updated the event: ',
         totalPositions: 'Number of total positions',
+        away: 'away',
     },
     Organisation: {
         organization: 'Organization',
