@@ -1,11 +1,12 @@
 // @flow
 import { StyleSheet } from 'react-native';
 import color from 'color';
-import { primaryColor } from '../../../../themes/colors';
+import { primaryColor, neutralTextColors } from '../../../../themes/colors';
 
 export const styles = StyleSheet.create({
     card: {
-        margin: 10,
+        marginBottom: 10,
+        borderRadius: 0,
     },
     coverContainer: {
         flex: 1,
@@ -18,31 +19,47 @@ export const styles = StyleSheet.create({
         width: undefined,
         height: undefined,
     },
-    defaultStyle: {
-        borderColor: color(primaryColor)
-            .lighten(0.25)
-            .rgb()
-            .string(),
-        borderWidth: 3,
-        borderRadius: 10,
+    contentContainer: {
+        flexDirection: 'row',
+        marginBottom: 5,
     },
-    highLightStyle: {
-        borderColor: color(primaryColor)
-            .darken(0.25)
-            .rgb()
-            .string(),
-        borderWidth: 3,
-        borderRadius: 10,
+    dateContainer: { marginTop: 10 },
+    rightContent: {
+        marginLeft: 15,
+        marginRight: 5,
+        width: '100%',
     },
-
     title: {
         marginTop: 10,
-        color: primaryColor,
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
+        maxWidth: '80%',
     },
-
-    creator: {
+    creatorContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    creatorText: {
+        color: neutralTextColors.dark,
+        maxWidth: '80%',
+    },
+    dates: {
+        color: neutralTextColors.medium,
+        maxWidth: '80%',
+    },
+    location: {
+        color: neutralTextColors.medium,
+        maxWidth: '80%',
+    },
+    distance: {
+        marginTop: 5,
+        color: neutralTextColors.medium,
         fontStyle: 'italic',
     },
+    distanceContainer: {
+        width: '85%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+    }
 });
