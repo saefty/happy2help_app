@@ -30,6 +30,7 @@ class _DrawerScreen extends React.Component<any, any> {
     state = {
         extended: true,
         activeOrga: null,
+        OrganisationModeScreenA: false,
         isVisible: false,
     };
 
@@ -133,9 +134,14 @@ class _DrawerScreen extends React.Component<any, any> {
                                                 <List.Section key={orga.id}>
                                                     <Drawer.Item
                                                         onPress={async () => {
-                                                            this.setState({ activeOrga: orga.id });
+                                                            this.setState({
+                                                                activeOrga: orga.id,
+                                                                OrganisationModeScreenA: !this.state.OrganisationModeScreenA,
+                                                            });
                                                             await this.setORGA(orga.id);
-                                                            this.props.navigation.navigate('OrganisationModeScreen');
+                                                            this.props.navigation.navigate(
+                                                                'OrganisationModeScreen' + (this.state.OrganisationModeScreenA ? 'A' : 'B')
+                                                            );
                                                         }}
                                                         label={orga.name}
                                                         active={

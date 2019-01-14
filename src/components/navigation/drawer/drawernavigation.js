@@ -41,7 +41,15 @@ export const DrawerNavigator = createDrawerNavigator(
                 };
             },
         },
-        OrganisationModeScreen: {
+        OrganisationModeScreenA: {
+            screen: withMappedNavigationProps()(OrganisationTabNavigator),
+            navigationOptions: () => {
+                return {
+                    drawerLabel: () => null,
+                };
+            },
+        },
+        OrganisationModeScreenB: {
             screen: withMappedNavigationProps()(OrganisationTabNavigator),
             navigationOptions: () => {
                 return {

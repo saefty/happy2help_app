@@ -11,10 +11,10 @@ import { OrganisationEventsStackNavigation } from './events.stack';
 export const OrganisationTabNavigator = createMaterialBottomTabNavigator(
     {
         ViewOrganisation: withMappedNavigationProps()(ViewMyOrganisationStack),
-        MyEvents: withMappedNavigationProps()(OrganisationEventsStackNavigation),
+        OrganisationEvents: withMappedNavigationProps()(OrganisationEventsStackNavigation),
     },
     {
-        initialRouteName: 'MyEvents',
+        initialRouteName: 'OrganisationEvents',
         labeled: true,
         shifting: false,
         defaultNavigationOptions: ({ navigation }) => {
@@ -22,7 +22,7 @@ export const OrganisationTabNavigator = createMaterialBottomTabNavigator(
 
             let tabBarLabel;
 
-            if (routeName === 'MyEvents') {
+            if (routeName === 'OrganisationEvents') {
                 tabBarLabel = 'Events';
             } else if (routeName === 'ViewOrganisation') {
                 tabBarLabel = 'Organisation';
@@ -36,7 +36,7 @@ export const OrganisationTabNavigator = createMaterialBottomTabNavigator(
                     switch (routeName) {
                         case 'ViewOrganisation':
                             return <MaterialIcon name="group" size={25} color={tintColor} />;
-                        case 'MyEvents':
+                        case 'OrganisationEvents':
                             return <MaterialIcon name="work" size={25} color={tintColor} />;
                     }
                 },
