@@ -92,7 +92,7 @@ class _EditEventForm extends Component<Props, State> {
     removePickedImage = () => {
         this.setState({ pickedImage: '' });
         this.hideModal();
-    }
+    };
 
     saveImage = async id => {
         let fileImg = new ReactNativeFile({
@@ -183,13 +183,35 @@ class _EditEventForm extends Component<Props, State> {
     };
 
     getInitialFormValues = () => {
-        return this.props.event || {start: new Date(), end: moment().add(1, 'hours').toDate()};
+        return (
+            this.props.event || {
+                start: new Date(),
+                end: moment()
+                    .add(1, 'hours')
+                    .toDate(),
+            }
+        );
     };
 
     getDateErrorMessage = errors => {
         if (errors.start) return errors.start;
         if (errors.end) return errors.end;
         return undefined;
+    };
+
+    renderImagePicker = () => {
+        if (this.props.orgaId || (this.props.event && this.props.event.organisation)) {
+            return (
+                <View style={styles.imgContainer}>
+                    <EventImage src={this.state.pickedImage} style={styles.eventImage} grayscale={true} resizeMode={'cover'} />
+                    <TouchableOpacity style={styles.imgButton} onPress={this.showModal}>
+                        <Icon name={'photo-camera'} size={30} color="#fff" />
+                    </TouchableOpacity>
+                </View>
+            );
+        } else {
+            return <View />;
+        }
     };
 
     render() {
@@ -212,12 +234,7 @@ class _EditEventForm extends Component<Props, State> {
                                 deleteImage={this.removePickedImage}
                             />
 
-                            <View style={styles.imgContainer}>
-                                <EventImage src={this.state.pickedImage} style={styles.eventImage} grayscale={true} resizeMode={'cover'} />
-                                <TouchableOpacity style={styles.imgButton} onPress={this.showModal}>
-                                    <Icon name={'photo-camera'} size={30} color="#fff" />
-                                </TouchableOpacity>
-                            </View>
+                            {this.renderImagePicker()}
 
                             <View style={styles.container}>
                                 <DateRangeButtons
@@ -227,7 +244,9 @@ class _EditEventForm extends Component<Props, State> {
                                         //if new start ist after end, end is the old diff plus the new start
                                         if (newStartDate > values.end) {
                                             const diff = moment(values.start).diff(values.end);
-                                            const newEndDate = moment(newStartDate).add(diff).toDate();
+                                            const newEndDate = moment(newStartDate)
+                                                .add(diff)
+                                                .toDate();
                                             setFieldValue('end', newEndDate);
                                         }
                                         setFieldValue('start', newStartDate);
