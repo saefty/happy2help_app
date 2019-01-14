@@ -74,7 +74,7 @@ export class FunnelDropdown extends Component<Props, State> {
 
     update = () => {
         let filtering = {
-            requiredSkills: this.state.requiredSkills.map(skill => skill.name),
+            requiredSkills: this.state.requiredSkills,
             showPrivate: this.state.showPrivateEvents,
             time: this.state.time,
         };
@@ -82,11 +82,11 @@ export class FunnelDropdown extends Component<Props, State> {
     };
 
     updateFromDate = (fromDate: Date) => {
-        this.setState({ time: { start: fromDate } });
+        this.setState({ time: { start: fromDate, end: this.state.time.end } });
     };
 
     updateToDate = (toDate: Date) => {
-        this.setState({ time: { end: toDate } });
+        this.setState({ time: { start: this.state.time.start, end: toDate } });
     };
 
     renderSortOptions() {
