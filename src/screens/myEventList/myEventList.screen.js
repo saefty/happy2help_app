@@ -1,10 +1,9 @@
 // @flow
 import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
-import { Portal, Headline, Appbar } from 'react-native-paper';
+import { Portal, Headline, Appbar, FAB } from 'react-native-paper';
 import { UserEventList } from '../../components/userEvents/userEventList';
 import { MyEventDataProvider } from './myEventDataProvider';
-import { EventFAB } from '../../components/userEvents/eventFAB';
 import { Provider } from 'react-native-paper';
 import type { EventObject } from '../../models/event.model';
 import { H2HTheme } from '../../../themes/default.theme';
@@ -69,7 +68,11 @@ class _MyEventList extends Component<Props, State> {
                                         }}
                                     />
                                     <Portal>
-                                        <EventFAB addEvent={() => this.props.navigation.navigate('Edit')} />
+                                        <FAB
+                                        icon="add"
+                                        style={{ position: 'absolute', bottom: 0, right: 0, margin: 20 }}
+                                        onPress={() => this.props.navigation.navigate('Edit')}
+                                         />
                                     </Portal>
                                 </View>
                             );

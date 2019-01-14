@@ -48,7 +48,7 @@ class _EditJob extends Component<Props> {
     _renderForm = (errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue) => {
         return (
             <View style={styles.container}>
-                <TextInput onChangeText={handleChange('name')} value={values.name} label={this.props.t('name')} error={errors.name} />
+                <TextInput onChangeText={handleChange('name')} value={values.name} label={this.props.t('job_name')} error={errors.name} />
                 <HelperText type="error" visible={errors.name}>
                     <ErrorMessage name="name" />
                 </HelperText>
@@ -103,7 +103,7 @@ class _EditJob extends Component<Props> {
                 color={primaryColor}
                 icon="edit"
                 onPress={() => {
-                    setFieldValue('editing', !values.editing);
+                    setFieldValue('editing', true);
                 }}
             />
         ) : (
@@ -117,15 +117,16 @@ class _EditJob extends Component<Props> {
                         }}
                     />
                 )}
-                <IconButton
-                    color={primaryColor}
-                    icon="cancel"
-                    onPress={() => {
-                        setFieldValue('editing', !values.editing);
-                        resetForm();
-                        this.props.cancel && this.props.cancel();
-                    }}
-                />
+                {this.props.job.id && (
+                    <IconButton
+                        color={primaryColor}
+                        icon="cancel"
+                        onPress={() => {
+                            setFieldValue('editing', false);
+                            this.props.cancel && this.props.cancel();
+                        }}
+                    />
+                )}
                 <IconButton
                     color={primaryColor}
                     icon="done"
@@ -145,7 +146,7 @@ class _EditJob extends Component<Props> {
                     {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue, resetForm }) => {
                         const formButtons = this._renderActionButtons(values, setFieldValue, handleSubmit, resetForm);
                         const formState = !values.editing ? (
-                            <JobListItem job={values} />
+                            <JobListItem job={values} hidePraticipationButton={true} />
                         ) : (
                             this._renderForm(errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue)
                         );
