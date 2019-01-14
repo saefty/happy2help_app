@@ -15,7 +15,7 @@ type Props = {
     addSkill: (skill: SkillObject) => void,
     delSkill: (skill: SkillObject) => void,
     showPrivateEvents: boolean,
-    filterPrivateEventsValueChange: () => void,
+    togglePrivatEventsFilter: () => void,
     fromDate: Date,
     toDate: Date,
     updateFromDate: (date: Date) => void,
@@ -38,7 +38,7 @@ class _FilterOptions extends Component<Props> {
 
                 <View style={styles.spacedContainer}>
                     <Paragraph style={{ marginTop: 6, marginLeft: 10, marginBottom: 12 }}>{this.props.t('hidePrivateEvents')}</Paragraph>
-                    <Switch style={{ marginRight: 20 }} value={!this.props.showPrivateEvents} onValueChange={this.props.filterPrivateEventsValueChange} />
+                    <Switch style={{ marginRight: 20 }} value={!this.props.showPrivateEvents} onValueChange={this.props.togglePrivatEventsFilter} />
                 </View>
                 <Divider style={styles.divider} />
                 <View style={styles.spacedContainer}>

@@ -132,7 +132,7 @@ export class FunnelDropdown extends Component<Props, State> {
                             requiredSkills: this.state.requiredSkills.filter(s => s.id != skill.id),
                         })
                     }
-                    filterPrivateEventsValueChange={() => this.setState({ showPrivateEvents: !this.state.showPrivateEvents })}
+                    togglePrivatEventsFilter={() => this.setState({ showPrivateEvents: !this.state.showPrivateEvents })}
                     fromDate={this.state.time.start}
                     toDate={this.state.time.end}
                     updateFromDate={this.updateFromDate}
