@@ -31,10 +31,6 @@ const ORGANISATION_QUERY = gql`
             members {
                 id
                 username
-                image {
-                    id
-                    url
-                }
             }
             admin {
                 id
@@ -113,7 +109,8 @@ class _MyOrganisationScreen extends Component<Props, any> {
                                             icon="group-add"
                                             onPress={() => {
                                                 this.props.navigation.navigate('Member', {
-                                                    organisation: data.organisation,
+                                                    orgaId: orgaId,
+                                                    orgaName: data.organisation.name,
                                                 });
                                             }}
                                         />

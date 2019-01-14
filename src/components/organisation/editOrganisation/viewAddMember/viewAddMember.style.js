@@ -1,20 +1,10 @@
 /* @flow */
 
 import { StyleSheet } from 'react-native';
-import { primaryColor } from '../../../../../themes/colors';
 
 export const styles = StyleSheet.create({
-    container: {
-        height: '100%',
-        width: '100%',
-    },
-    titleAndButton: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     title: {
-        flex: 0,
+        width: '100%',
         fontSize: 30,
         marginTop: 15,
         textAlign: 'center',
@@ -25,13 +15,11 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 10,
     },
-    circularButton: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 50,
-        height: 50,
-        backgroundColor: primaryColor,
-        borderRadius: 60,
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
     },
     modal: {
         justifyContent: 'center',
@@ -40,6 +28,7 @@ export const styles = StyleSheet.create({
     modalView: {
         width: '80%',
         backgroundColor: '#fff',
+        borderRadius: 15,
         elevation: 6,
         alignItems: 'center',
         justifyContent: 'center',
