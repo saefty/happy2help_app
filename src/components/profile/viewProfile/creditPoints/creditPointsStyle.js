@@ -5,15 +5,17 @@ import { neutralColors, primaryColor } from '../../../../../themes/colors';
 export const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        marginLeft: 10,
-        marginRight: 10,
+        backgroundColor: primaryColor,
+        height: '10%',
     },
     title: {
-        fontSize: 18,
+        fontSize: 16,
+        color: neutralColors.surface,
     },
     creditPoints: {
-        fontSize: 18,
+        fontSize: 16,
+        color: neutralColors.surface,
     },
 });

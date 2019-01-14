@@ -20,7 +20,7 @@ class CreditPointsComponent extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
-                <IconMat name="favorite" size={20} color={H2HTheme.colors.primary} />
+                <IconMat name="favorite" size={20} color={H2HTheme.colors.surface} />
                 <Text style={styles.title}>{this.props.t('creditPoints')}</Text>
                 <Text style={styles.creditPoints}>{this.props.creditPoints}</Text>
             </View>

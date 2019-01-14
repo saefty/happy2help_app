@@ -22,7 +22,7 @@ export class _Header extends Component<Props> {
     }
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <View style={styles.pictureContainer}>
                     <View style={styles.background} />
                     <ProfilePicture style={styles.profilePicture} src={this.props.img ? this.props.img.url : ''} />

@@ -3,6 +3,9 @@ import { StyleSheet } from 'react-native';
 import { primaryColor } from '../../../../../themes/colors';
 
 export const styles = StyleSheet.create({
+    container: {
+        height: '40%',
+    },
     pictureContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
