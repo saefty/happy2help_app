@@ -18,6 +18,14 @@ type Props = {
     organisation: OrganisationObject,
 };
 
+const USER_QUERY = gql`
+    {
+        user {
+            id
+        }
+    }
+`;
+
 const ORGANISATION_QUERY = gql`
     query organisation($id: ID!) {
         organisation(id: $id) {
@@ -79,6 +87,30 @@ class _MyOrganisationScreen extends Component<Props, any> {
         this.setState({ orgaId: id });
     };
 
+    renderAddButton = (adminId, orgaId, orgaName) => {
+        return (
+            <Query query={USER_QUERY}>
+                {({ error, data, loading }) => {
+                    if (error || loading) return null;
+                    else if (data.user.id === adminId)
+                        return (
+                            <Appbar.Action
+                                icon="group-add"
+                                color={'#fff'}
+                                onPress={() => {
+                                    this.props.navigation.navigate('Member', {
+                                        orgaId: orgaId,
+                                        orgaName: orgaName,
+                                    });
+                                }}
+                            />
+                        );
+                    else return null;
+                }}
+            </Query>
+        );
+    };
+
     render() {
         const orgaId = this.state.orgaId;
         if (!orgaId) return <View />;
@@ -105,15 +137,9 @@ class _MyOrganisationScreen extends Component<Props, any> {
                                             }}
                                         />
                                         <Appbar.Content title={data.organisation.name} subtitle={this.props.t('organization')} />
-                                        <Appbar.Action
-                                            icon="group-add"
-                                            onPress={() => {
-                                                this.props.navigation.navigate('Member', {
-                                                    orgaId: orgaId,
-                                                    orgaName: data.organisation.name,
-                                                });
-                                            }}
-                                        />
+
+                                        {this.renderAddButton(data.organisation.admin.id, orgaId, data.organisation.name)}
+
                                         <Appbar.Action
                                             icon="edit"
                                             onPress={() => {
