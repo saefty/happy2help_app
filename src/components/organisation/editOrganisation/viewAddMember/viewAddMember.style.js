@@ -15,12 +15,6 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 10,
     },
-    fab: {
-        position: 'absolute',
-        margin: 16,
-        right: 0,
-        bottom: 0,
-    },
     modal: {
         justifyContent: 'center',
         alignItems: 'center',

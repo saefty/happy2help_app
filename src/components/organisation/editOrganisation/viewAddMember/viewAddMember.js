@@ -35,7 +35,7 @@ const ORGANISATION_MEMBER_QUERY = gql`
 
 type Props = {
     t: i18n.t,
-    orgaId: ID,
+    orgaId: String,
     addMemberMutation: graphql.mutate,
     removeMemberMutation: graphql.mutate,
 };
@@ -68,7 +68,7 @@ class _AddMemberView extends Component<Props, State> {
     showDeleteModal = () => this.setState({ deleteModalVisible: true });
     hideDeleteModal = () => this.setState({ deleteModalVisible: false });
 
-    addMember = async (refetch) => {
+    addMember = async refetch => {
         try {
             await this.props.addMemberMutation({
                 variables: {
@@ -96,7 +96,7 @@ class _AddMemberView extends Component<Props, State> {
         }
     };
 
-    removeMember = async (refetch) => {
+    removeMember = async refetch => {
         await this.props.removeMemberMutation({
             variables: {
                 organisationId: this.props.orgaId,
@@ -141,9 +141,7 @@ class _AddMemberView extends Component<Props, State> {
                                             </View>
                                         </View>
                                     </Modal>
-                                </Portal>
 
-                                <Portal>
                                     <Modal visible={this.state.deleteModalVisible} onDismiss={this.hideDeleteModal}>
                                         <View style={styles.modal}>
                                             <View style={styles.modalView}>
@@ -191,7 +189,7 @@ class _AddMemberView extends Component<Props, State> {
                                 />
                                 <View style={{ height: 80 }} />
                             </ScrollView>
-                            <FAB style={styles.fab} icon="add" onPress={this.showAddModal} />
+                            <FAB style={{ position: 'absolute', margin: 16, bottom: 0, right: 0 }} icon="add" onPress={this.showAddModal} />
                         </View>
                     );
                 }}

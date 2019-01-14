@@ -9,7 +9,7 @@ import { Appbar } from 'react-native-paper';
 
 type Props = {
     t: i18n.t,
-    orgaId: ID,
+    orgaId: String,
     orgaName: String,
 };
 
