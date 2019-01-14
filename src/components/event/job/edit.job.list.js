@@ -81,7 +81,18 @@ class _EditJobList extends Component<Props, State> {
                 </View>
             );
         } else {
-            item = <EditJob job={{}} save={this.saveNew} initWithEditMode={true} />;
+            item = (
+                <EditJob
+                    job={{}}
+                    save={this.saveNew}
+                    delete={() =>
+                        this.setState({
+                            showNewCard: false,
+                        })
+                    }
+                    initWithEditMode={true}
+                />
+            );
         }
         return item;
     };
