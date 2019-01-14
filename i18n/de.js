@@ -40,6 +40,7 @@ export default {
         createTitle: 'Event erstellen',
         creationSuccess: 'Event wurde erfolgreich erstellt: ',
         editSuccess: 'Event wurde erfolgreich bearbeitet: ',
+        away: 'entfernt'
     },
     Organisation: {
         organization: 'Organisation',
@@ -71,10 +72,14 @@ export default {
         sort: 'Sortierung',
         ascending: 'aufsteigend',
         descending: 'absteigend',
-        name: 'nach Titel',
-        start: 'nach Datum',
-        distance: 'nach Entfernung',
+        name: 'Titel',
+        start: 'Datum',
+        distance: 'Entfernung',
         filter: 'Filter',
+        hidePrivateEvents: 'Nutzer Events ausblenden',
+        skills: 'Nach Fähigkeit filtern',
+        noSkills: 'Füge Fähigkeiten mit dem Button hinzu',
+        datePick: 'Gib einen Zeitrahmen für Events an',
     },
     FlashMessages: {
         checkedIn: 'Nutzer nimmt jetzt teil!',

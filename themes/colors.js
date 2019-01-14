@@ -24,7 +24,15 @@ export const neutralColors = {
     dark: '#89929c',
 };
 
+export const neutralTextColors = {
+    light: '#BDBDBD',
+    medium: '#757575',
+    dark: '#424242',
+
+}
+
 export const filterColors = {
-    active: color(primaryColor).darken(0.3).rgb().string(),
+    active: primaryColor,
     inactive: neutralColors.medium,
+    text: '#000',
 };

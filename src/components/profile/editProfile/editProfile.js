@@ -222,6 +222,7 @@ class EditProfileComponent extends Component<Props, State> {
                                     skills = skills.filter(skill => skill.id != skillToDelete.id);
                                     setFieldValue('skills', skills);
                                 }}
+                                scrollable={false}
                             />
                         </View>
                     )}

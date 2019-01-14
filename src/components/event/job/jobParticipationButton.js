@@ -5,6 +5,7 @@ import { Text, List, Button } from 'react-native-paper';
 import { View } from 'react-native';
 import { getNextParticipationActionAsHelper, getParticipationType } from '../../../models/participation.model';
 import { withNamespaces, i18n } from 'react-i18next';
+import { Formik } from 'formik';
 
 type Props = {
     participation: Participation,
@@ -20,16 +21,11 @@ type State = {
 class _JobParticipationButton extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        this.state = {
-            triggered: false,
-        };
     }
 
-    trigger = async () => {
-        if (this.state.triggered) return;
-        this.setState({ triggered: true });
+    trigger = async (_, action) => {
         await this.getTriggerFunction()();
-        this.setState({ triggered: false });
+        action.setSubmitting(false);
     };
 
     getTriggerFunction() {
@@ -50,18 +46,20 @@ class _JobParticipationButton extends Component<Props, State> {
 
     render() {
         return (
-            <Button
-                loading={this.state.triggered}
-                disabled={this.state.triggered || !this.canBePressed()}
-                mode="contained"
-                onPress={() => {
-                    if (!(this.state.triggered || !this.canBePressed())) {
-                        this.trigger();
-                    }
+            <Formik onSubmit={this.trigger}>
+                {({ isSubmitting, submitForm }) => {
+                    return (
+                        <Button
+                            loading={isSubmitting}
+                            disabled={isSubmitting || !this.canBePressed()}
+                            mode="contained"
+                            onPress={submitForm}
+                        >
+                            {this.props.t(getNextParticipationActionAsHelper(this.props.participation))}
+                        </Button>
+                    );
                 }}
-            >
-                {this.props.t(getNextParticipationActionAsHelper(this.props.participation))}
-            </Button>
+            </Formik>
         );
     }
 }

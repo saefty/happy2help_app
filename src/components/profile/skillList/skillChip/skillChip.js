@@ -7,11 +7,11 @@ import type { SkillObject } from './../../../../models/skill.model';
 
 type Props = {
     skillObject: SkillObject,
-    deleteChip?: skill => mixed,
+    deleteChip?: (skill: SkillObject) => mixed,
 };
 
 export class SkillChip extends Component<Props> {
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
     }
     render() {
@@ -22,7 +22,7 @@ export class SkillChip extends Component<Props> {
                     icon={this.props.skillObject.approved ? 'check-circle' : null}
                     onClose={this.props.deleteChip ? () => this.props.deleteChip(this.props.skillObject) : null}
                 >
-                    <Text style={styles.text}>{this.props.skillObject.name}</Text>
+                    {this.props.skillObject.name}
                 </Chip>
             </View>
         );

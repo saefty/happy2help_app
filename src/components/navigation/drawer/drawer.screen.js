@@ -30,8 +30,10 @@ class _DrawerScreen extends React.Component<any, any> {
     state = {
         extended: true,
         activeOrga: null,
+        isVisible: false,
     };
 
+    refetchOrgas: () => void;
     constructor(props) {
         super(props);
     }
@@ -63,6 +65,13 @@ class _DrawerScreen extends React.Component<any, any> {
         return result.data;
     };
 
+    UNSAFE_componentWillReceiveProps(props) {
+        if (props.navigation.state.isDrawerOpen !== this.state.isVisible) {
+            this.refetchOrgas();
+            this.setState({ isVisible: props.navigation.state.isDrawerOpen });
+        }
+    }
+
     render() {
         const { props } = this;
         return (
@@ -89,9 +98,10 @@ class _DrawerScreen extends React.Component<any, any> {
                                 height: 3,
                             }}
                         />
-                        <Query query={USER_ORGAS_QUERY} pollInterval={10000}>
-                            {({ error, loading, data }) => {
-                                if (error || loading) return <View />;
+                        <Query query={USER_ORGAS_QUERY} fetchPolicy="cache-first">
+                            {({ error, data, refetch }) => {
+                                if (error || !data.user) return <View />;
+                                this.refetchOrgas = refetch;
                                 return (
                                     <List.Accordion
                                         style={{
