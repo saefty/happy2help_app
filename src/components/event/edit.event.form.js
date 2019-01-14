@@ -12,7 +12,7 @@ import { showMessage } from 'react-native-flash-message';
 import { withNamespaces, i18n } from 'react-i18next';
 import { GooglePlacesInput } from '../location/location.input';
 import { styles } from './edit.event.style';
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, Query } from 'react-apollo';
 import { mutations } from './edit.event.mutations';
 import { EventImage } from './event.image';
 import { ImagePicker } from '../image/imagePicker';
@@ -25,9 +25,10 @@ import { clone } from '../../helpers/clone';
 import DateRangeButtons from './dates/DateRangeButtons';
 import uuid from 'uuid/v4';
 import moment from 'moment';
+import { EVENT_DETAIL_QUERY } from './event.detail.query';
 
 type Props = {
-    event?: EventObject,
+    eventId?: Number,
     orgaId?: ID,
     t: i18n.t,
     updateEventMutation: graphql.mutate,
@@ -38,7 +39,6 @@ type Props = {
 
 type State = {
     validationSchema: Yup.Schema,
-    pickedImage: string,
     modalVisible: boolean,
 };
 
@@ -46,11 +46,6 @@ class _EditEventForm extends Component<Props, State> {
     scrollView: ScrollView;
     constructor(props: Props) {
         super(props);
-
-        let initialImg = '';
-        if (this.props.event) {
-            initialImg = this.props.event.image ? this.props.event.image.url : '';
-        }
 
         const EventSchema = Yup.object().shape({
             name: Yup.string()
@@ -70,7 +65,6 @@ class _EditEventForm extends Component<Props, State> {
 
         this.state = {
             validationSchema: EventSchema,
-            pickedImage: initialImg,
             modalVisible: false,
         };
     }
@@ -78,26 +72,32 @@ class _EditEventForm extends Component<Props, State> {
     showModal = () => this.setState({ modalVisible: true });
     hideModal = () => this.setState({ modalVisible: false });
 
-    takeImage = async () => {
-        let img = await Picker.eventCamera();
-        this.setState({ pickedImage: img });
-        this.hideModal();
+    takeImage = setFieldValue => {
+        return async () => {
+            let img = await Picker.eventCamera();
+            setFieldValue('pickedImage', img);
+            this.hideModal();
+        };
     };
 
-    pickImage = async () => {
-        let img = await Picker.eventGallery();
-        this.setState({ pickedImage: img });
-        this.hideModal();
+    pickImage = setFieldValue => {
+        return async () => {
+            let img = await Picker.eventGallery();
+            setFieldValue('pickedImage', img);
+            this.hideModal();
+        };
     };
 
-    removePickedImage = () => {
-        this.setState({ pickedImage: '' });
-        this.hideModal();
-    }
+    removePickedImage = setFieldValue => {
+        return () => {
+            setFieldValue('pickedImage', '');
+            this.hideModal();
+        };
+    };
 
-    saveImage = async id => {
+    saveImage = async (id, pickedImage) => {
         let fileImg = new ReactNativeFile({
-            uri: this.state.pickedImage,
+            uri: pickedImage,
             name: id + '.jpg',
             type: 'image/jpg',
         });
@@ -105,9 +105,9 @@ class _EditEventForm extends Component<Props, State> {
         await Picker.clean();
     };
 
-    deleteImage = async () => {
-        if (this.props.event && this.props.event.image) {
-            await this.props.deleteImageMutation({ variables: { imageId: this.props.event.image.id } });
+    deleteImage = async values => {
+        if (values && values.image) {
+            await this.props.deleteImageMutation({ variables: { imageId: values.image.id } });
         }
     };
 
@@ -132,43 +132,59 @@ class _EditEventForm extends Component<Props, State> {
     update = event => {
         return this.props.updateEventMutation({
             variables: {
-                eventId: this.props.event.id,
+                eventId: event.eventId,
                 name: event.name || this.props.event.name,
                 description: event.description || this.props.event.description,
                 start: event.start,
                 end: event.end,
+                jobs: event.jobs,
             },
         });
     };
 
     onSubmit = async (values, actions) => {
         actions.setSubmitting(true);
+        console.log(values);
         let EVENT = {
+            eventId: values.id,
             name: values.name,
             description: values.description,
             start: moment(values.start).format(),
             end: moment(values.end).format(),
+            jobs: values.jobSet
+                .map(x => ({
+                    id: x.id,
+                    name: x.name,
+                    description: x.description,
+                    totalPositions: x.totalPositions || undefined,
+                    requiredSkills: x.requiresskillSet.map(x => x.skill.name),
+                }))
+                .map(x => {
+                    let newJob = clone(x);
+                    if (isNaN(+newJob.id)) newJob.id = null;
+                    return newJob;
+                }),
         };
 
         let successMessage = 'creationSuccess';
         let created;
 
-        if (!this.props.event) {
+        if (!values.id) {
             (EVENT.location = {
                 name: values.location.formatted_address,
                 lat: values.location.geometry.location.lat,
                 long: values.location.geometry.location.lng,
             }),
                 (created = await this.create(EVENT));
-            if (this.state.pickedImage !== '') {
-                await this.saveImage(created.data.createEvent.id);
+            if (values.pickedImage !== '') {
+                await this.saveImage(created.data.createEvent.id, values.pickedImage);
             }
         } else {
             await this.update(EVENT);
-            if (this.state.pickedImage !== '') {
-                await this.saveImage(values.id);
-            } else {
-                await this.deleteImage();
+            if (values.pickedImage !== '') {
+                await this.saveImage(values.id, values.pickedImage);
+            } else if (values.image) {
+                await this.deleteImage(values);
             }
             successMessage = 'editSuccess';
         }
@@ -183,8 +199,11 @@ class _EditEventForm extends Component<Props, State> {
         return;
     };
 
-    getInitialFormValues = () => {
-        return this.props.event || {start: new Date(), end: moment().add(1, 'hours').toDate()};
+    getInitialFormValues = (event: EventObject) => {
+        return {
+            ...event,
+            pickedImage: (event.image && event.image.url) || '',
+        };
     };
 
     getDateErrorMessage = errors => {
@@ -193,114 +212,144 @@ class _EditEventForm extends Component<Props, State> {
         return undefined;
     };
 
+    getEvent = children => {
+        if (this.props.event && this.props.event.id) {
+            return (
+                <Query query={EVENT_DETAIL_QUERY} variables={{ id: this.props.event.id }} fetchPolicy="network-only">
+                    {children}
+                </Query>
+            );
+        } else {
+            return children({ data: { event: {} } });
+        }
+    };
+
+    renderImagePicker = (values, setFieldValue) => {
+        if (this.props.orgaId || (values && values.organisation)) {
+            return (
+                <View>
+                    <ImagePicker
+                        visible={this.state.modalVisible}
+                        hideModal={this.hideModal}
+                        takeImage={this.takeImage(setFieldValue)}
+                        pickImage={this.pickImage(setFieldValue)}
+                        deleteImage={this.removePickedImage(setFieldValue)}
+                    />
+                    <View style={styles.imgContainer}>
+                        <EventImage src={values.pickedImage} style={styles.eventImage} grayscale={true} resizeMode={'cover'} />
+                        <TouchableOpacity style={styles.imgButton} onPress={this.showModal}>
+                            <Icon name={'photo-camera'} size={30} color="#fff" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            );
+        } else {
+            return <View />;
+        }
+    };
+
     render() {
-        return (
-            <KeyboardAwareScrollView ref={(ref: ScrollView) => (this.scrollView = ref)}>
-                <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSubmit} initialValues={this.getInitialFormValues()}>
+        return this.getEvent(({ data }) => {
+            if (!data || !data.event) return <View />;
+            return (
+                <Formik
+                    validationSchema={this.state.validationSchema}
+                    onSubmit={this.onSubmit}
+                    initialValues={this.getInitialFormValues(data.event)}
+                >
                     {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
-                        <View>
+                        <View style={{ flex: 1 }}>
                             <Appbar.Header>
                                 <Appbar.Action icon="close" onPress={() => this.props.navigation.goBack()} />
-                                <Appbar.Content title={this.props.t(!this.props.event ? 'createTitle' : 'editTitle')} />
+                                <Appbar.Content title={this.props.t(!data.event.id ? 'createTitle' : 'editTitle')} />
                                 <Appbar.Action icon="check" onPress={handleSubmit} disabled={isSubmitting} />
                             </Appbar.Header>
-
-                            <ImagePicker
-                                visible={this.state.modalVisible}
-                                hideModal={this.hideModal}
-                                takeImage={this.takeImage}
-                                pickImage={this.pickImage}
-                                deleteImage={this.removePickedImage}
-                            />
-
-                            <View style={styles.imgContainer}>
-                                <EventImage src={this.state.pickedImage} style={styles.eventImage} grayscale={true} resizeMode={'cover'} />
-                                <TouchableOpacity style={styles.imgButton} onPress={this.showModal}>
-                                    <Icon name={'photo-camera'} size={30} color="#fff" />
-                                </TouchableOpacity>
-                            </View>
-
-                            <View style={styles.container}>
-                                <DateRangeButtons
-                                    startDate={new Date(values.start)}
-                                    endDate={new Date(values.end)}
-                                    updateStart={(newStartDate: Date) => {
-                                        //if new start ist after end, end is the old diff plus the new start
-                                        if (newStartDate > values.end) {
-                                            const diff = moment(values.start).diff(values.end);
-                                            const newEndDate = moment(newStartDate).add(diff).toDate();
+                            <KeyboardAwareScrollView ref={(ref: ScrollView) => (this.scrollView = ref)}>
+                                {this.renderImagePicker(values, setFieldValue)}
+                                <View style={styles.container}>
+                                    <DateRangeButtons
+                                        startDate={new Date(values.start)}
+                                        endDate={new Date(values.end)}
+                                        updateStart={(newStartDate: Date) => {
+                                            //if new start ist after end, end is the old diff plus the new start
+                                            if (newStartDate > values.end) {
+                                                const diff = moment(values.start).diff(values.end);
+                                                const newEndDate = moment(newStartDate)
+                                                    .add(diff)
+                                                    .toDate();
+                                                setFieldValue('end', newEndDate);
+                                            }
+                                            setFieldValue('start', newStartDate);
+                                        }}
+                                        updateEnd={(newEndDate: Date) => {
                                             setFieldValue('end', newEndDate);
-                                        }
-                                        setFieldValue('start', newStartDate);
-                                    }}
-                                    updateEnd={(newEndDate: Date) => {
-                                        setFieldValue('end', newEndDate);
-                                    }}
-                                    errorMessage={this.getDateErrorMessage(errors)}
-                                />
+                                        }}
+                                        errorMessage={this.getDateErrorMessage(errors)}
+                                    />
 
-                                <TextInput
-                                    onChangeText={handleChange('name')}
-                                    value={values.name}
-                                    label={this.props.t('name')}
-                                    error={errors.name}
-                                />
-                                <HelperText type="error" visible={errors.name}>
-                                    {errors.name}
-                                </HelperText>
-                                <TextInput
-                                    onChangeText={handleChange('description')}
-                                    multiline={true}
-                                    numberOfLines={10}
-                                    value={values.description}
-                                    label={this.props.t('description')}
-                                    error={errors.description}
-                                />
-                                <HelperText type="error" visible={errors.description}>
-                                    {errors.description}
-                                </HelperText>
-                                <GooglePlacesInput
-                                    onTextChange={() => {
-                                        this.scrollView.scrollToEnd();
-                                    }}
-                                    onChangeValue={v => {
-                                        setFieldValue('location', v);
-                                        handleChange('location');
-                                    }}
-                                    initialValue={{ formatted_address: values.location ? values.location.name : undefined }}
-                                    label={this.props.t('locationSearch')}
-                                    error={errors.location}
-                                />
-                                <HelperText type="error" visible={errors.location}>
-                                    {errors.location}
-                                </HelperText>
-                                <Headline>Jobs</Headline>
-                                <EditJobList
-                                    jobs={values.jobs || []}
-                                    saveNew={job => {
-                                        let jobs = clone(values.jobs || []);
-                                        job.id = uuid();
-                                        jobs.push(job);
-                                        setFieldValue('jobs', jobs);
-                                        handleChange('jobs');
-                                    }}
-                                    update={updateJob => {
-                                        let jobs = clone(values.jobs);
-                                        jobs = jobs.map(job => (job.id === updateJob.id ? updateJob : job));
-                                        setFieldValue('jobs', jobs);
-                                    }}
-                                    delete={jobToDelete => {
-                                        let jobs = clone(values.jobs);
-                                        jobs = jobs.filter(job => job.id != jobToDelete.id);
-                                        setFieldValue('jobs', jobs);
-                                    }}
-                                />
-                            </View>
+                                    <TextInput
+                                        onChangeText={handleChange('name')}
+                                        value={values.name}
+                                        label={this.props.t('name')}
+                                        error={errors.name}
+                                    />
+                                    <HelperText type="error" visible={errors.name}>
+                                        {errors.name}
+                                    </HelperText>
+                                    <TextInput
+                                        onChangeText={handleChange('description')}
+                                        multiline={true}
+                                        numberOfLines={10}
+                                        value={values.description}
+                                        label={this.props.t('description')}
+                                        error={errors.description}
+                                    />
+                                    <HelperText type="error" visible={errors.description}>
+                                        {errors.description}
+                                    </HelperText>
+                                    <GooglePlacesInput
+                                        onTextChange={() => {
+                                            this.scrollView.scrollToEnd();
+                                        }}
+                                        onChangeValue={v => {
+                                            setFieldValue('location', v);
+                                            handleChange('location');
+                                        }}
+                                        initialValue={{ formatted_address: values.location ? values.location.name : undefined }}
+                                        label={this.props.t('locationSearch')}
+                                        error={errors.location}
+                                    />
+                                    <HelperText type="error" visible={errors.location}>
+                                        {errors.location}
+                                    </HelperText>
+                                    <Headline>Jobs</Headline>
+                                    <EditJobList
+                                        jobs={values.jobSet || []}
+                                        saveNew={job => {
+                                            let jobs = clone(values.jobSet || []);
+                                            job.id = uuid();
+                                            jobs.push(job);
+                                            setFieldValue('jobSet', jobs);
+                                            handleChange('jobSet');
+                                        }}
+                                        update={updateJob => {
+                                            let jobs = clone(values.jobSet);
+                                            jobs = jobs.map(job => (job.id === updateJob.id ? updateJob : job));
+                                            setFieldValue('jobSet', jobs);
+                                        }}
+                                        delete={jobToDelete => {
+                                            let jobs = clone(values.jobSet);
+                                            jobs = jobs.filter(job => job.id != jobToDelete.id);
+                                            setFieldValue('jobSet', jobs);
+                                        }}
+                                    />
+                                </View>
+                            </KeyboardAwareScrollView>
                         </View>
                     )}
                 </Formik>
-            </KeyboardAwareScrollView>
-        );
+            );
+        });
     }
 }
 

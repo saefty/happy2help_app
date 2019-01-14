@@ -9,18 +9,35 @@ import IconMat from 'react-native-vector-icons/MaterialIcons';
 import { withNavigation } from 'react-navigation';
 import { DiscoverAppbarStyle } from './discoverAppbar.style';
 import { primaryColor } from '../../../../themes/colors';
+import type { SkillObject } from '../../../models/skill.model';
+import moment from 'moment';
 
 type Props = {
     searchQuery: (query: string) => void,
     openFunnel: () => void,
     funnelOpen: boolean,
     showSortOptions: boolean,
-    updateQuery: (sorting: string, descending: boolean, filtering: { requiredSkills: Array<string>, showPrivate: boolean }) => void,
-    oldState: {
+    updateQuery: (
         sorting: string,
         descending: boolean,
-        requiredSkills: Array<string>,
+        filtering: {
+            requiredSkills: Array<SkillObject>,
+            showPrivate: boolean,
+            time: {
+                start: Date,
+                end: Date,
+            },
+        }
+    ) => void,
+    currentQuery: {
+        sorting: string,
+        descending: boolean,
+        requiredSkills: Array<SkillObject>,
         showPrivateEvents: boolean,
+        time: {
+            start: Date,
+            end: Date,
+        }
     },
 };
 
@@ -64,13 +81,15 @@ class _DiscoverAppbar extends Component<Props, State> {
                     <IconButton icon={() => this.funnelIcon()} onPress={this.props.openFunnel} style={DiscoverAppbarStyle.filterButton} />
                 </View>
                 <View>
-                    <FunnelDropdown
-                        oldState={this.props.oldState}
-                        showSortOptions={this.props.showSortOptions}
-                        open={this.props.funnelOpen}
-                        updateQuery={this.props.updateQuery}
-                        closeFunnel={this.props.openFunnel}
-                    />
+                    {this.props.funnelOpen && (
+                        <FunnelDropdown
+                            currentQuery={this.props.currentQuery}
+                            showSortOptions={this.props.showSortOptions}
+                            open={this.props.funnelOpen}
+                            updateQuery={this.props.updateQuery}
+                            closeFunnel={this.props.openFunnel}
+                        />
+                    )}
                 </View>
             </View>
         );

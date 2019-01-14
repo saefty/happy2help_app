@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { View, ScrollView, Platform, Animated, ActivityIndicator } from 'react-native';
 import { Provider, Surface, Text } from 'react-native-paper';
 import { withNamespaces, i18n } from 'react-i18next';
-
+import type { SkillObject } from '../../models/skill.model';
 import { DiscoverAppbar } from './../../components/discover/appbar/discoverAppbar';
 import { SegmentedControl } from '../../components/utils/SegmentedControl';
 import { Map } from '../../components/discover/map/map';
@@ -13,6 +13,8 @@ import { EventList } from './../../components/event/eventlist/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
 import { NavigationEvents } from 'react-navigation';
 import { EditJobList } from '../../components/event/job/edit.job.list';
+
+import moment from 'moment';
 
 const APPBAR_SEG_HEIGHT = 130;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
@@ -33,9 +35,11 @@ type State = {
     selectedIndex: number,
     sorting: string,
     descending: boolean,
-    requiredSkills: Array<string>,
+    requiredSkills: Array<SkillObject>,
     showPrivate: boolean,
     searchQuery: string,
+    fromDate: Date,
+    toDate: Date,
 };
 
 class _DiscoverScreen extends Component<Props, State> {
@@ -78,6 +82,10 @@ class _DiscoverScreen extends Component<Props, State> {
             requiredSkills: [],
             showPrivate: true,
             searchQuery: '',
+            fromDate: new Date(),
+            toDate: moment()
+                .add(1, 'year')
+                .toDate(),
         };
     }
 
@@ -230,9 +238,14 @@ class _DiscoverScreen extends Component<Props, State> {
             sorting: {},
             filtering: {},
         };
+
         params.filtering = {
-            requiredSkills: this.state.requiredSkills,
+            requiredSkills: this.state.requiredSkills.map(skill => skill.name),
             showPrivate: this.state.showPrivate,
+            time: {
+                start: moment(this.state.fromDate).format(),
+                end: moment(this.state.toDate).format(),
+            },
         };
         if (this.state.sorting === 'distance') {
             params.sorting = {
@@ -249,12 +262,26 @@ class _DiscoverScreen extends Component<Props, State> {
         }
         return params;
     }
-    updateQuery = (sorting: string, descending: boolean, filtering: { requiredSkills: Array<string>, showPrivate: boolean }) => {
+ 
+    updateQuery = (
+        sorting: string,
+        descending: boolean,
+        filtering: {
+            requiredSkills: Array<SkillObject>,
+            showPrivate: boolean,
+            time: {
+                start: Date,
+                end: Date,
+            },
+        }
+    ) => {
         this.setState({
             sorting: sorting,
             descending: descending,
             requiredSkills: filtering.requiredSkills,
             showPrivate: filtering.showPrivate,
+            fromDate: filtering.time.start,
+            toDate: filtering.time.end,
         });
         this.setState({
             funnelOpen: false,
@@ -293,12 +320,16 @@ class _DiscoverScreen extends Component<Props, State> {
                             funnelOpen={this.state.funnelOpen}
                             showSortOptions={this.state.selectedIndex === 1}
                             updateQuery={this.updateQuery}
-                            oldState={{
-                                    sorting: this.state.sorting,
-                                    descending: this.state.descending,
-                                    requiredSkills: this.state.requiredSkills,
-                                    showPrivateEvents: this.state.showPrivate,
-                                }}
+                            currentQuery={{
+                                sorting: this.state.sorting,
+                                descending: this.state.descending,
+                                requiredSkills: this.state.requiredSkills,
+                                showPrivateEvents: this.state.showPrivate,
+                                time: {
+                                    start: this.state.fromDate,
+                                    end: this.state.toDate,
+                                },
+                            }}
                         />
                         <SegmentedControl values={['KARTE', 'LISTE']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
                     </View>

@@ -1,12 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Title, Switch, Paragraph } from 'react-native-paper';
+import { Title, Switch, Paragraph, Divider } from 'react-native-paper';
 import styles from './filter.styles';
 import { withNamespaces, i18n } from 'react-i18next';
 import type { SkillObject } from '../../../../models/skill.model';
 import { HorizontalSkillList } from './funnelElements/horizontalSkillList';
 import { AddSkillDialog } from '../../../profile/skillList/addSkillDialog';
+import DateRangeButtons from './../../../event/dates/DateRangeButtons';
 
 type Props = {
     t: i18n.t,
@@ -14,7 +15,11 @@ type Props = {
     addSkill: (skill: SkillObject) => void,
     delSkill: (skill: SkillObject) => void,
     showPrivateEvents: boolean,
-    handleSwitch: () => void,
+    togglePrivateEventsFilter: () => void,
+    fromDate: Date,
+    toDate: Date,
+    updateFromDate: (date: Date) => void,
+    updateToDate: (date: Date) => void,
 };
 
 class _FilterOptions extends Component<Props> {
@@ -31,35 +36,29 @@ class _FilterOptions extends Component<Props> {
             <View style={styles.filterContainer}>
                 <Title style={styles.title}>{this.title}</Title>
 
-                <View style={styles.container}>
-                    <View style={styles.left}>
-                        <Paragraph style={styles.smallText}>{this.props.t('showPrivateEvents')}</Paragraph>
-                    </View>
-                    <View style={styles.right}>
-                        <Switch value={this.props.showPrivateEvents} onValueChange={this.props.handleSwitch} />
-                    </View>
+                <View style={styles.spacedContainer}>
+                    <Paragraph style={{ marginTop: 6, marginLeft: 10, marginBottom: 12 }}>{this.props.t('hidePrivateEvents')}</Paragraph>
+                    <Switch style={{ marginRight: 20 }} value={!this.props.showPrivateEvents} onValueChange={this.props.togglePrivateEventsFilter} />
                 </View>
-
-                <View style={styles.container}>
-                    <View style={styles.left}>
-                        <Paragraph style={styles.smallText}>{this.props.t('skills')}</Paragraph>
-                    </View>
-                    <View style={styles.right}>
+                <Divider style={styles.divider} />
+                <View style={styles.spacedContainer}>
+                    <Paragraph style={{ marginTop: 12, marginLeft: 10, marginBottom: 12 }}>{this.props.t('skills')}</Paragraph>
+                    <View style={{ marginRight: 20 }}>
                         <AddSkillDialog addSkill={this.props.addSkill} />
                     </View>
                 </View>
-
-                <HorizontalSkillList
-                    style={styles.scroll}
-                    skills={this.props.requiredSkills}
-                    delSkill={this.props.delSkill}
-                />
+                <HorizontalSkillList style={styles.scroll} skills={this.props.requiredSkills} delSkill={this.props.delSkill} />
+                <Divider style={styles.divider} />
                 <View>
-                    <Paragraph style={styles.smallText}>{this.props.t('datePick')}</Paragraph>
-                    <View style={styles.datePickerContainer}>
-                        <Paragraph style={styles.datePicker}>DATEPICKER 1</Paragraph>
-                        <Paragraph style={styles.datePicker}>DATEPICKER 2</Paragraph>
-                    </View>
+                    <Paragraph style={{ marginTop: 12, marginLeft: 10 }}>{'Nach Zeitraum filtern'}</Paragraph>
+                    <DateRangeButtons
+                        startDate={this.props.fromDate}
+                        endDate={this.props.toDate}
+                        updateStart={this.props.updateFromDate}
+                        updateEnd={this.props.updateToDate}
+                        containerStyle={{ marginTop: 10 }}
+                        hideLabels={true}
+                    />
                 </View>
             </View>
         );
