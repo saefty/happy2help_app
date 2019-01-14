@@ -48,7 +48,7 @@ class _EditJob extends Component<Props> {
     _renderForm = (errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue) => {
         return (
             <View style={styles.container}>
-                <TextInput onChangeText={handleChange('name')} value={values.name} label={this.props.t('name')} error={errors.name} />
+                <TextInput onChangeText={handleChange('name')} value={values.name} label={this.props.t('job_name')} error={errors.name} />
                 <HelperText type="error" visible={errors.name}>
                     <ErrorMessage name="name" />
                 </HelperText>

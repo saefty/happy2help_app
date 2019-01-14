@@ -32,6 +32,7 @@ export default {
         myEvents: 'Meine Events',
         myJobs: 'Meine Jobs',
         name: 'Veranstaltungsname',
+        job_name: 'Job name',
         description: 'Beschreibung',
         locationSearch: 'Standortsuche',
         create: 'Veröffentlichen',
@@ -40,7 +41,7 @@ export default {
         creationSuccess: 'Event wurde erfolgreich erstellt: ',
         editSuccess: 'Event wurde erfolgreich bearbeitet: ',
         totalPositions: 'Anzahl der Stellen',
-        away: 'entfernt'
+        away: 'entfernt',
     },
     Organisation: {
         organization: 'Organisation',

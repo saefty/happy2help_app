@@ -100,7 +100,7 @@ class _EditJobList extends Component<Props, State> {
     render() {
         return (
             <View>
-                <FlatList data={this.props.jobs} keyExtractor={job => job.id || job._id} renderItem={this.renderJob} />
+                <FlatList data={this.props.jobs} keyExtractor={job => job.id} renderItem={this.renderJob} />
                 {this.renderNewItem()}
             </View>
         );

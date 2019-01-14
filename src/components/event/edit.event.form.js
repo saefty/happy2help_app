@@ -144,6 +144,7 @@ class _EditEventForm extends Component<Props, State> {
 
     onSubmit = async (values, actions) => {
         actions.setSubmitting(true);
+        console.log(values);
         let EVENT = {
             eventId: values.id,
             name: values.name,
@@ -155,14 +156,12 @@ class _EditEventForm extends Component<Props, State> {
                     id: x.id,
                     name: x.name,
                     description: x.description,
-                    totalPositions: x.totalPositions,
-                    requiredSkills: x.requiresskillSet.map(x => x.name),
+                    totalPositions: x.totalPositions || undefined,
+                    requiredSkills: x.requiresskillSet.map(x => x.skill.name),
                 }))
                 .map(x => {
                     let newJob = clone(x);
-                    if (isNaN(parseInt(newJob.id))) {
-                        newJob.id = null;
-                    }
+                    if (isNaN(+newJob.id)) newJob.id = null;
                     return newJob;
                 }),
         };
@@ -216,7 +215,7 @@ class _EditEventForm extends Component<Props, State> {
     getEvent = children => {
         if (this.props.event && this.props.event.id) {
             return (
-                <Query query={EVENT_DETAIL_QUERY} variables={{ id: this.props.event.id }}>
+                <Query query={EVENT_DETAIL_QUERY} variables={{ id: this.props.event.id }} fetchPolicy="network-only">
                     {children}
                 </Query>
             );
@@ -224,8 +223,8 @@ class _EditEventForm extends Component<Props, State> {
             return children({ data: { event: {} } });
         }
     };
-    
-    renderImagePicker = (values) => {
+
+    renderImagePicker = (values, setFieldValue) => {
         if (this.props.orgaId || (values && values.organisation)) {
             return (
                 <View>
@@ -247,11 +246,10 @@ class _EditEventForm extends Component<Props, State> {
         } else {
             return <View />;
         }
-    }
+    };
 
     render() {
         return this.getEvent(({ data }) => {
-            console.log(data);
             if (!data || !data.event) return <View />;
             return (
                 <Formik
@@ -267,7 +265,7 @@ class _EditEventForm extends Component<Props, State> {
                                 <Appbar.Action icon="check" onPress={handleSubmit} disabled={isSubmitting} />
                             </Appbar.Header>
                             <KeyboardAwareScrollView ref={(ref: ScrollView) => (this.scrollView = ref)}>
-                                {this.renderImagePicker()}
+                                {this.renderImagePicker(values, setFieldValue)}
                                 <View style={styles.container}>
                                     <DateRangeButtons
                                         startDate={new Date(values.start)}
