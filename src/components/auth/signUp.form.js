@@ -28,6 +28,7 @@ type Props = {
 
 type State = {
     validationSchema: Yup.Schema,
+    signUpError?: any,
 };
 
 class SignUpForm extends Component<Props, State> {
@@ -41,24 +42,31 @@ class SignUpForm extends Component<Props, State> {
                 .email(this.props.t('errors:email'))
                 .required(this.props.t('errors:required')),
             password: Yup.string()
-                .min(6, this.props.t('errors:toShort'))
+                .min(8, this.props.t('errors:toShort'))
                 .required(this.props.t('errors:required')),
         });
         this.state = { validationSchema: SignUpSchema };
     }
 
     onSignUp = async (formValues, actions) => {
-        await this.props.mutate({
-            variables: {
-                username: formValues.userName,
-                email: formValues.email,
-                password: formValues.password,
-                birthday: formValues.birthday,
-            },
-        });
-        actions.setSubmitting(false);
+        try {
+            await this.props.mutate({
+                variables: {
+                    username: formValues.userName,
+                    email: formValues.email,
+                    password: formValues.password,
+                    birthday: formValues.birthday,
+                },
+            });
+            this.props.setSignUp(false);
+        } catch (e) {
+            console.log(JSON.stringify(e));
+            this.setState({
+                signUpError: e.graphQLErrors.map(x => x.message).join(', '),
+            });
+        }
 
-        this.props.setSignUp(false);
+        actions.setSubmitting(false);
 
         //await this.props.logIn(token.data.tokenAuth.token);
     };
@@ -105,7 +113,9 @@ class SignUpForm extends Component<Props, State> {
                                 <HelperText type="error" visible={errors.password}>
                                     <ErrorMessage name="password" />
                                 </HelperText>
-
+                                <HelperText type="error" visible={this.state.signUpError !== undefined}>
+                                    {String(this.state.signUpError)}
+                                </HelperText>
                                 <Button
                                     mode="contained"
                                     icon={({ size, color }) => <Icon size={size} color={color} name="adduser" />}
