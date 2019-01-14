@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     },
     modalView: {
         backgroundColor: '#fff',
+        borderRadius: 15,
         elevation: 6,
     },
     modalOptions: {
