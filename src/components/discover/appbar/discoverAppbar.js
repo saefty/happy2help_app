@@ -9,6 +9,7 @@ import IconMat from 'react-native-vector-icons/MaterialIcons';
 import { withNavigation } from 'react-navigation';
 import { DiscoverAppbarStyle } from './discoverAppbar.style';
 import { primaryColor } from '../../../../themes/colors';
+import type { SkillObject } from '../../../models/skill.model';
 import moment from 'moment';
 
 type Props = {
@@ -20,7 +21,7 @@ type Props = {
         sorting: string,
         descending: boolean,
         filtering: {
-            requiredSkills: Array<string>,
+            requiredSkills: Array<SkillObject>,
             showPrivate: boolean,
             time: {
                 start: Date,
@@ -28,11 +29,15 @@ type Props = {
             },
         }
     ) => void,
-    oldState: {
+    currentQuery: {
         sorting: string,
         descending: boolean,
-        requiredSkills: Array<string>,
+        requiredSkills: Array<SkillObject>,
         showPrivateEvents: boolean,
+        time: {
+            start: Date,
+            end: Date,
+        }
     },
 };
 
@@ -78,7 +83,7 @@ class _DiscoverAppbar extends Component<Props, State> {
                 <View>
                     {this.props.funnelOpen && (
                         <FunnelDropdown
-                            oldState={this.props.oldState}
+                            currentQuery={this.props.currentQuery}
                             showSortOptions={this.props.showSortOptions}
                             open={this.props.funnelOpen}
                             updateQuery={this.props.updateQuery}

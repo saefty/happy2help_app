@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { SortOptions } from './sort.events.options';
 import { FilterOptions } from './filter.events.options';
 import { IconButton } from 'react-native-paper';
@@ -14,7 +14,7 @@ type Props = {
         sorting: string,
         descending: boolean,
         filtering: {
-            requiredSkills: Array<string>,
+            requiredSkills: Array<SkillObject>,
             showPrivate: boolean,
             time: {
                 start: Date,
@@ -23,13 +23,15 @@ type Props = {
         }
     ) => void,
     showSortOptions: boolean,
-    oldState: {
+    currentQuery: {
         sorting: string,
         descending: boolean,
-        requiredSkills: Array<string>,
+        requiredSkills: Array<SkillObject>,
         showPrivateEvents: boolean,
-        fromDate: Date,
-        toDate: Date,
+        time: {
+            start: Date,
+            end: Date,
+        },
     },
 };
 
@@ -38,55 +40,53 @@ type State = {
     descending: boolean,
     requiredSkills: Array<SkillObject>,
     showPrivateEvents: boolean,
-    fromDate: Date,
-    toDate: Date,
+    time: {
+        start: Date,
+        end: Date,
+    },
 };
 
 export class FunnelDropdown extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            sorting: props.oldState.sorting,
-            descending: props.oldState.descending,
-            requiredSkills: props.oldState.requiredSkills,
-            showPrivateEvents: props.oldState.showPrivateEvents,
-            fromDate: props.oldState.fromDate,
-            toDate: props.oldState.toDate,
+            sorting: props.currentQuery.sorting,
+            descending: props.currentQuery.descending,
+            requiredSkills: props.currentQuery.requiredSkills,
+            showPrivateEvents: props.currentQuery.showPrivateEvents,
+            time: props.currentQuery.time,
         };
     }
 
-    hasNotChanged(): boolean {
+    hasNotChanged = () => {
         return (
-            this.state.descending === this.props.oldState.descending &&
-            this.state.sorting === this.props.oldState.sorting &&
-            this.state.showPrivateEvents === this.props.oldState.showPrivateEvents &&
-            this.state.requiredSkills.map(s => s.name).filter(s => this.props.oldState.requiredSkills.includes(s)).length ===
+            this.state.descending === this.props.currentQuery.descending &&
+            this.state.sorting === this.props.currentQuery.sorting &&
+            this.state.showPrivateEvents === this.props.currentQuery.showPrivateEvents &&
+            this.state.requiredSkills.map(s => s.name).filter(s => this.props.currentQuery.requiredSkills.includes(s)).length ===
                 this.state.requiredSkills.map(s => s.name).length &&
-            this.props.oldState.requiredSkills.filter(s => this.state.requiredSkills.map(s => s.name).includes(s)).length ===
-                this.props.oldState.requiredSkills.length &&
-            this.state.fromDate === this.props.oldState.fromDate &&
-            this.state.toDate === this.props.oldState.toDate
+            this.props.currentQuery.requiredSkills.filter(s => this.state.requiredSkills.map(s => s.name).includes(s)).length ===
+                this.props.currentQuery.requiredSkills.length &&
+            this.state.time.start === this.props.currentQuery.time.start &&
+            this.state.time.end === this.props.currentQuery.time.end
         );
-    }
+    };
 
     update = () => {
         let filtering = {
             requiredSkills: this.state.requiredSkills.map(skill => skill.name),
             showPrivate: this.state.showPrivateEvents,
-            time: {
-                start: this.state.fromDate,
-                end: this.state.toDate,
-            },
+            time: this.state.time,
         };
         this.props.updateQuery(this.state.sorting, this.state.descending, filtering);
     };
 
     updateFromDate = (fromDate: Date) => {
-        this.setState({ fromDate: fromDate });
+        this.setState({ time: { start: fromDate } });
     };
 
     updateToDate = (toDate: Date) => {
-        this.setState({ toDate: toDate });
+        this.setState({ time: { end: toDate } });
     };
 
     renderSortOptions() {
@@ -132,9 +132,9 @@ export class FunnelDropdown extends Component<Props, State> {
                             requiredSkills: this.state.requiredSkills.filter(s => s.id != skill.id),
                         })
                     }
-                    handleSwitch={() => this.setState({ showPrivateEvents: !this.state.showPrivateEvents })}
-                    fromDate={this.state.fromDate}
-                    toDate={this.state.toDate}
+                    filterPrivateEventsValueChange={() => this.setState({ showPrivateEvents: !this.state.showPrivateEvents })}
+                    fromDate={this.state.time.start}
+                    toDate={this.state.time.end}
                     updateFromDate={this.updateFromDate}
                     updateToDate={this.updateToDate}
                 />
