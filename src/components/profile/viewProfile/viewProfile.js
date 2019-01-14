@@ -23,20 +23,11 @@ class ProfileView extends Component<Props> {
     render() {
         return (
             <View>
-<<<<<<< HEAD
                 <Header userName={this.props.user.username} img={this.props.user.image} location={this.props.user.profile.location} />
                 <Divider style={{ marginTop: 5, marginBottom: 2 }} />
                 <MySkills skills={this.props.user.skills} title={this.props.t('skills')} />
                 <Divider style={{ marginTop: 2, marginBottom: 5 }} />
                 <CreditPoints creditPoints={this.props.user.profile.creditPoints} />
-=======
-                <View>
-                    <Header userName={this.props.user.username} img={this.props.user.image} location={this.props.user.profile.location} />
-                    <CreditPoints creditPoints={this.props.user.profile.creditPoints} />
-                    <Title style={styles.title}>{this.props.t('skills')}</Title>
-                    <SkillList skillObjects={this.props.user.skills} scrollable={false} />
-                </View>
->>>>>>> aac804af2b4cdb69f3a8a297177a70edd08467f9
             </View>
         );
     }
