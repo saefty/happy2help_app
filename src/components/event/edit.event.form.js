@@ -224,6 +224,30 @@ class _EditEventForm extends Component<Props, State> {
             return children({ data: { event: {} } });
         }
     };
+    
+    renderImagePicker = (values) => {
+        if (this.props.orgaId || (values && values.organisation)) {
+            return (
+                <View>
+                    <ImagePicker
+                        visible={this.state.modalVisible}
+                        hideModal={this.hideModal}
+                        takeImage={this.takeImage(setFieldValue)}
+                        pickImage={this.pickImage(setFieldValue)}
+                        deleteImage={this.removePickedImage(setFieldValue)}
+                    />
+                    <View style={styles.imgContainer}>
+                        <EventImage src={values.pickedImage} style={styles.eventImage} grayscale={true} resizeMode={'cover'} />
+                        <TouchableOpacity style={styles.imgButton} onPress={this.showModal}>
+                            <Icon name={'photo-camera'} size={30} color="#fff" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            );
+        } else {
+            return <View />;
+        }
+    }
 
     render() {
         return this.getEvent(({ data }) => {
@@ -243,21 +267,7 @@ class _EditEventForm extends Component<Props, State> {
                                 <Appbar.Action icon="check" onPress={handleSubmit} disabled={isSubmitting} />
                             </Appbar.Header>
                             <KeyboardAwareScrollView ref={(ref: ScrollView) => (this.scrollView = ref)}>
-                                <ImagePicker
-                                    visible={this.state.modalVisible}
-                                    hideModal={this.hideModal}
-                                    takeImage={this.takeImage(setFieldValue)}
-                                    pickImage={this.pickImage(setFieldValue)}
-                                    deleteImage={this.removePickedImage(setFieldValue)}
-                                />
-
-                                <View style={styles.imgContainer}>
-                                    <EventImage src={values.pickedImage} style={styles.eventImage} grayscale={true} resizeMode={'cover'} />
-                                    <TouchableOpacity style={styles.imgButton} onPress={this.showModal}>
-                                        <Icon name={'photo-camera'} size={30} color="#fff" />
-                                    </TouchableOpacity>
-                                </View>
-
+                                {this.renderImagePicker()}
                                 <View style={styles.container}>
                                     <DateRangeButtons
                                         startDate={new Date(values.start)}

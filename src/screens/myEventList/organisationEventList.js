@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Portal, Headline, Appbar, IconButton } from 'react-native-paper';
 import { UserEventList } from '../../components/userEvents/userEventList';
-import { EventFAB } from '../../components/userEvents/eventFAB';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, FAB } from 'react-native-paper';
 import type { EventObject } from '../../models/event.model';
 import { H2HTheme } from '../../../themes/default.theme';
 import { withNamespaces, i18n } from 'react-i18next';
@@ -102,13 +101,14 @@ class _OrganisationEventList extends Component<Props, State> {
                                         }}
                                     />
                                     <Portal>
-                                        <EventFAB
-                                            addEvent={() =>
-                                                this.props.navigation.navigate('EditEvent', {
-                                                    orgaId: orgaId,
-                                                })
-                                            }
-                                        />
+                                        <FAB
+                                        icon="add"
+                                        style={{ position: 'absolute', bottom: 0, right: 0, margin: 20 }}
+                                        onPress={() =>
+                                            this.props.navigation.navigate('EditEvent', {
+                                                orgaId: orgaId,
+                                            })}
+                                         />
                                     </Portal>
                                 </View>
                             );
