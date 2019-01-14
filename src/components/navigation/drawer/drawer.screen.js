@@ -4,7 +4,6 @@ import { ScrollView, View } from 'react-native';
 import { DrawerItems, SafeAreaView } from 'react-navigation';
 import { ImageProvider } from '../../image/imageProvider';
 import { ProfilePicture } from './../../profile/profilePicture/profilePicture';
-import { styles } from './../../profile/viewProfile/header/headerStyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { H2HTheme } from '../../../../themes/default.theme';
 import { DrawerStyle } from './drawer.style';
@@ -81,7 +80,7 @@ class _DrawerScreen extends React.Component<any, any> {
                     <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
                         <ImageProvider>
                             {(image, refetch) => {
-                                return <ProfilePicture style={styles.profilePicture} src={image ? image.url : ''} />;
+                                return <ProfilePicture style={DrawerStyle.profilePicture} src={image ? image.url : ''} />;
                             }}
                         </ImageProvider>
                         <Icon
@@ -126,7 +125,7 @@ class _DrawerScreen extends React.Component<any, any> {
                                         <List.Item
                                             onPress={() => this.props.navigation.navigate('EditOrganisation')}
                                             left={props => <List.Icon {...props} icon="group-add" />}
-                                            title={<Text style={{ fontSize: 14 }}>Neue Organisationen</Text>}
+                                            title={<Text style={{ fontSize: 14 }}>Neue Organisation</Text>}
                                         />
 
                                         {data.user.organisationSet.map(orga => {
