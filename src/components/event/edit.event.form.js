@@ -120,6 +120,7 @@ class _EditEventForm extends Component<Props, State> {
             locationName: event.location.name,
             start: event.start,
             end: event.end,
+            jobs: event.jobs,
         };
         if (this.props.orgaId) {
             variables.organisationId = this.props.orgaId;
