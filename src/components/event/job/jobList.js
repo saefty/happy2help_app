@@ -49,7 +49,7 @@ class _JobList extends Component<Props> {
 
     renderJob = ({ item: job }) => {
         return (
-            <Card style={{ margin: 10 }}>
+            <Card style={{ margin: 5 }}>
                 <Card.Content>
                     <JobListItem
                         job={job}
