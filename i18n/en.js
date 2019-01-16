@@ -14,6 +14,7 @@ export default {
         beforePresent: 'The event is not allowed to be in the past',
     },
     User: {
+        user: 'User',
         userName: 'Username',
         password: 'Password',
         email: 'E-Mail',

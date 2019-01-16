@@ -49,9 +49,11 @@ class _JobListItem extends Component<Props> {
     renderPositionsText = () => {
         return (
             <View style={(styles.row, styles.positions)}>
-                <Text style={styles.boldText}>{this.props.t('positions')}: </Text>
-                <Text>
-                    {this.jobParticipationCount()}/{this.totalPositions()}
+                <Text style={styles.boldText}>
+                    {this.props.t('positions')}:{' '}
+                    <Text>
+                        {this.jobParticipationCount()}/{this.totalPositions()}
+                    </Text>{' '}
                 </Text>
             </View>
         );
