@@ -23,18 +23,12 @@ class _HidableTabBar extends Component<any, any> {
         const oldParams = oldRoute.params;
         const wasVisible = !oldParams || oldParams.visible;
         const oldAnimHeight = !oldParams || oldParams.animHeight;
-        const oldNavOpacity = !oldParams || oldParams.navOpacity;
 
         const newState = props.navigation.state;
         const newRoute = newState.routes[newState.index];
         const newParams = newRoute.params;
         const isVisible = !newParams || newParams.visible;
         const animHeight = !newParams || newParams.animHeight;
-        const navOpacity = !newParams || newParams.navOpacity;
-
-        if (navOpacity && navOpacity !== oldNavOpacity) {
-            this.setState({ navOpacity: navOpacity });
-        }
 
         if (!isVisible && animHeight) {
             const appbarTranslate = animHeight.interpolate({

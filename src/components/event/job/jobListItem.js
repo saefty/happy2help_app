@@ -20,6 +20,7 @@ type Props = {
     createParticipation: (job: Job, participation: Participation) => any,
     updateParticipation: (job: Job, participation: Participation) => any,
     t: i18n.t,
+    hidePraticipationButton?: boolean,
     startDate: Date,
 };
 
@@ -134,7 +135,7 @@ class _JobListItem extends Component<Props> {
                     </Paragraph>
                     {this.renderSkills()}
                     <View>{this.renderPositionsText()}</View>
-                    {this.renderJobParticipationButton()}
+                    {!this.props.hidePraticipationButton && this.renderJobParticipationButton()}
                     {this.props.job.currentUsersParticipation && this.renderParticipationState()}
                 </View>
             );
