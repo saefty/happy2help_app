@@ -50,6 +50,7 @@ export default {
         creationSubtitle: 'Erstelle hier ein neues Organisationsprofil',
         updateSubtitle: 'Update hier das Profil deiner Organisation',
         creationSuccess: 'Profil wurde erfolgreich erstellt für: ',
+        updateSuccess: 'Profil wurde erfolgreich aktualisiert für: ' ,
         currentEvents: 'Aktuelle Events',
         members: 'Mitglieder',
         editOrganisation: 'Organisation bearbeiten',
