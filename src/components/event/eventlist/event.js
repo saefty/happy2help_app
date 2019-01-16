@@ -17,7 +17,7 @@ type Props = {
     event: EventObject,
     descriptionMaxLength: number,
     showCreatorName: boolean,
-    onEventTouch?: (event: EventObject) => void,
+    onEventTouch: (event: EventObject) => void,
     controls?: ControlsType,
 };
 
@@ -62,9 +62,9 @@ class _Event extends Component<Props> {
             controlBar = (
                 <EventControlBar
                     controls={{
-                        view: this.props.controls.view
+                        viewApplications: this.props.controls.viewApplications
                             ? () => {
-                                  this.props.controls.view(this.props.event);
+                                  this.props.controls.viewApplications(this.props.event);
                               }
                             : undefined,
                         edit: this.props.controls.edit
@@ -72,21 +72,18 @@ class _Event extends Component<Props> {
                                   this.props.controls.edit(this.props.event);
                               }
                             : undefined,
-                        participations: this.props.controls.participations
+                        checkIn: this.props.controls.checkIn
                             ? () => {
-                                  this.props.controls.participations(this.props.event);
+                                  this.props.controls.checkIn(this.props.event);
                               }
                             : undefined,
                     }}
                 />
             );
-        }
-        const onPress = !this.props.controls
-            ? () => this.props.onEventTouch(this.props.event)
-            : () => this.props.controls.view(this.props.event); //<--quick fix
+        }  
 
         return (
-            <Card style={[styles.card]} onPress={onPress}>
+            <Card style={[styles.card]} onPress={() => this.props.onEventTouch(this.props.event)}>
                 {this.renderCoverImage()}
                 <Card.Content>
                     <View style={styles.contentContainer}>

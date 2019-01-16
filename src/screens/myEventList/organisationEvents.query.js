@@ -4,10 +4,13 @@ export const ORGANISATION_EVENTS = gql`
     query organisationEvents($id: ID!) {
         organisation(id: $id) {
             id
+            name
             eventSet {
                 id
                 name
                 description
+                start
+                end
                 image {
                     id
                     url
@@ -36,6 +39,7 @@ export const ORGANISATION_EVENTS = gql`
                     }
                 }
                 location {
+                    id
                     latitude
                     longitude
                     name

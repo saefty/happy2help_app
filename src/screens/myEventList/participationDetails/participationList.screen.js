@@ -40,7 +40,7 @@ export class PartcipationListScreen extends Component<Props> {
             <View>
                 <Appbar.Header style={{ elevation: 0 }}>
                     <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.dispatch(NavigationActions.back())} />
-                    <Appbar.Content title={this.props.screenProps.event.name} />
+                    <Appbar.Content title={this.props.screenProps.event.name + " - Bewerbungen"} />
                 </Appbar.Header>
                 <ScrollView>
                     <Query query={PARTICIPATION_LIST_QUERY} variables={{ id: this.props.screenProps.event.id }}>

@@ -160,7 +160,7 @@ export class ScanScreen_ extends Component<any, any> {
             <View style={{ flex: 1 }}>
                 <Appbar.Header style={{ elevation: 0 }}>
                     <Appbar.BackAction onPress={() => this.props.navigation.dispatch(NavigationActions.back())} />
-                    <Appbar.Content title={this.props.screenProps.event.name} />
+                    <Appbar.Content title={this.props.screenProps.event.name + " - Check-in"} />
                 </Appbar.Header>
                 <Query query={PARTICIPATION_LIST_QUERY} variables={{ id: this.props.screenProps.event.id }}>
                     {({ error, loading, data }) => {
