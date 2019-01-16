@@ -236,6 +236,15 @@ export class EventDetailModal extends Component<Props> {
             />
         );
 
+        const date2 = (
+            <SlimDate
+                date={new Date(this.props.event.start)}
+                styleContainer={styles.dateContainer}
+                styleDay={styles.dateDay}
+                styleText={styles.dateText}
+            />
+        );
+
         return (
             <View style={{flex: 1}}>
                 <Appbar.Header>

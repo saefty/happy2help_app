@@ -18,24 +18,29 @@ export const styles = StyleSheet.create({
         padding: 8,
     },
     dateContainer: {
+        width: 60,
         marginLeft: 5,
         marginRight: 5,
         marginTop: 10,
         alignItems: 'center',
     },
     dateText: {
+        width: '100%',
+        textAlign: 'center',
         marginTop: 2,
         fontSize: 25,
     },
     dateDay: {
+        width: '100%',
+        textAlign: 'center',
         fontSize: 36,
         marginBottom: 2,
     },
-    dates: { 
+    dates: {
         fontSize: 14,
         fontWeight: 'bold',
-        color: secondaryColor, 
-        maxWidth: '80%' 
+        color: secondaryColor,
+        maxWidth: '80%',
     },
     profilePicture: {
         flex: 1,
