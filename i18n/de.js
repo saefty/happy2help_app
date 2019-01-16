@@ -45,6 +45,8 @@ export default {
         editSuccess: 'Event wurde erfolgreich bearbeitet: ',
         totalPositions: 'Anzahl der Stellen',
         away: 'entfernt',
+        edit: 'Bearbeiten',
+        applications:  'Bewerbungen',
     },
     Organisation: {
         organization: 'Organisation',
