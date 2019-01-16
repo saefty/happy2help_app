@@ -1,10 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { ProfileDataProvider } from '../profileDataProvider';
 import ProfileView from '../../../components/profile/viewProfile/viewProfile';
 import { Appbar } from 'react-native-paper';
 import { NavigationEvents } from 'react-navigation';
+import { styles } from './viewMyProfile.screen.style';
+import { CreditPoints } from '../../../components/profile/viewProfile/creditPoints/creditPoints';
 
 type Props = {
     t: i18n.t,
@@ -12,22 +14,23 @@ type Props = {
 };
 
 export class ViewMyProfile extends Component<Props> {
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
     }
 
     render() {
         return (
-            <View>
-                <ProfileDataProvider>
-                    {(user, refetch) => (
-                        <View>
-                            <NavigationEvents
-                                onWillFocus={() => {
-                                    refetch();
-                                }}
-                            />
-                            <Appbar.Header style={{ elevation: 0 }}>
+            <ProfileDataProvider>
+                {(user, refetch) => (
+                    <View style={styles.container}>
+                        <NavigationEvents
+                            onWillFocus={() => {
+                                refetch();
+                            }}
+                        />
+
+                        <ScrollView style={styles.profileViewContainer}>
+                            <Appbar.Header style={styles.appbar}>
                                 <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.navigate('Discover')} />
                                 <Appbar.Content title="" />
                                 <Appbar.Action
@@ -38,13 +41,13 @@ export class ViewMyProfile extends Component<Props> {
                                         })
                                     }
                                 />
-                                <Appbar.Action icon="more-vert" />
                             </Appbar.Header>
                             <ProfileView user={user} {...this.props} />
-                        </View>
-                    )}
-                </ProfileDataProvider>
-            </View>
+                        </ScrollView>
+                        <CreditPoints creditPoints={user.profile.creditPoints} />
+                    </View>
+                )}
+            </ProfileDataProvider>
         );
     }
 }

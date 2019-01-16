@@ -1,12 +1,22 @@
 // @flow
 import { StyleSheet } from 'react-native';
-import { neutralColors } from '../../../../../themes/colors';
+import { neutralColors, primaryColor } from '../../../../../themes/colors';
 
 export const styles = StyleSheet.create({
-    divider: { backgroundColor: neutralColors.light, marginVertical: 10, marginHorizontal: 20, height: 2 },
-    outerContainer: { alignItems: 'center' },
-    innerContainer: { flexDirection: 'row', alignItems: 'center' },
-    title: { fontSize: 20 },
-    creditPoints: { fontSize: 30 },
-    view: { marginTop: 15 },
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: primaryColor,
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
+    title: {
+        fontSize: 16,
+        color: neutralColors.surface,
+    },
+    creditPoints: {
+        fontSize: 16,
+        color: neutralColors.surface,
+    },
 });
