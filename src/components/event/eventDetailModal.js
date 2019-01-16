@@ -237,13 +237,13 @@ export class EventDetailModal extends Component<Props> {
         );
 
         return (
-            <View>
-                <ScrollView>
-                    <Appbar.Header>
+            <View style={{flex: 1}}>
+                <Appbar.Header>
                         <Appbar.Action icon="close" onPress={() => this.props.navigation.navigate('View')} />
-                        <Appbar.Content title="Event" subtitle={this.props.event.name} />
+                        <Appbar.Content title={this.props.event.name} subtitle="Event" />
                         <Appbar.Action icon="edit" onPress={() => this.props.navigation.navigate('Edit', { event: this.props.event })} />
                     </Appbar.Header>
+                <ScrollView>
                     {this.renderImage()}
                     {this.renderOwner()}
                     <View>
