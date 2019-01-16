@@ -40,6 +40,7 @@ type State = {
     searchQuery: string,
     fromDate: Date,
     toDate: Date,
+    mapBarVisible: boolean,
 };
 
 class _DiscoverScreen extends Component<Props, State> {
@@ -59,7 +60,7 @@ class _DiscoverScreen extends Component<Props, State> {
                         inputRange: [0, 1],
                         outputRange: [0, 1],
                         extrapolateLeft: 'clamp',
-                        useNativeDriver: true,
+                        useNativeDriver: false,
                     }),
                     offsetAnim
                 ),
@@ -86,6 +87,7 @@ class _DiscoverScreen extends Component<Props, State> {
             toDate: moment()
                 .add(1, 'year')
                 .toDate(),
+            mapBarVisible: true,
         };
     }
 
@@ -106,7 +108,6 @@ class _DiscoverScreen extends Component<Props, State> {
             const diff = value - this._scrollValue;
             this._scrollValue = value;
             this._clampedScrollValue = Math.min(Math.max(this._clampedScrollValue + diff, 0), APPBAR_SEG_HEIGHT - STATUS_BAR_HEIGHT);
-            this.props.navigation.dangerouslyGetParent().setParams({ visible: false, animHeight: this.state.clampedScroll });
         });
         this.state.offsetAnim.addListener(({ value }) => {
             this._offsetValue = value;
@@ -161,34 +162,19 @@ class _DiscoverScreen extends Component<Props, State> {
 
     setIndex = index => {
         if (index === this.state.selectedIndex) return;
-        // reshow the bottom tab bar
-        this.resetBars();
-        // If map
-        if (index === 0) this.props.navigation.dangerouslyGetParent().setParams({ navOpacity: 0.6 });
-        else this.props.navigation.dangerouslyGetParent().setParams({ navOpacity: 1 });
-
         this.setState({ selectedIndex: index });
     };
 
     toogleMapTouch = () => {
-        const current = this.props.navigation.dangerouslyGetParent().getParam('visible');
-
         Animated.timing(this.state.offsetAnim, {
-            toValue: current === true ? APPBAR_SEG_HEIGHT : 0,
-            duration: 100,
+            toValue: this.state.mapBarVisible
+                ? APPBAR_SEG_HEIGHT
+                : 0,
+            duration: 300,
             useNativeDriver: false,
         }).start();
 
-        this.props.navigation.dangerouslyGetParent().setParams({ visible: current !== undefined && !current });
-    };
-
-    resetBars = () => {
-        Animated.timing(this.state.offsetAnim, {
-            toValue: 0,
-            duration: 100,
-            useNativeDriver: false,
-        }).start();
-        this.props.navigation.dangerouslyGetParent().setParams({ visible: true, animHeight: undefined });
+        this.setState({ mapBarVisible: !this.state.mapBarVisible });
     };
 
     renderMap = (events: any) => {
@@ -220,6 +206,7 @@ class _DiscoverScreen extends Component<Props, State> {
             >
                 <View style={{ height: 110 }} />
                 <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
+                <View style={{ height: 60 }} />
             </AnimatedScrollView>
         );
     };
@@ -262,7 +249,7 @@ class _DiscoverScreen extends Component<Props, State> {
         }
         return params;
     }
- 
+
     updateQuery = (
         sorting: string,
         descending: boolean,

@@ -22,7 +22,12 @@ export class EventDataProvider extends Component<Props> {
         return (
             <Query query={GET_EVENTS} pollInterval={this.props.pollInterval} variables={this.props.variables}>
                 {({ loading, error, data, refetch }) => {
-                    if (!data || (!data.events && (loading || error))) return <ActivityIndicator size={150} color={secondaryColor} />;
+                    if (!data || (!data.events && (loading || error)))
+                        return (
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <ActivityIndicator size={45} color={secondaryColor} />
+                            </View>
+                        );
                     return this.props.children(data.events, refetch);
                 }}
             </Query>
