@@ -36,6 +36,7 @@ export const ORGANISATION_EVENTS = gql`
                     }
                 }
                 location {
+                    id
                     latitude
                     longitude
                     name
