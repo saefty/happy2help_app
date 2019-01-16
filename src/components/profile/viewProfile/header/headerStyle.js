@@ -4,7 +4,7 @@ import { primaryColor } from '../../../../../themes/colors';
 
 export const styles = StyleSheet.create({
     container: {
-        height: '40%',
+        marginBottom: 15,
     },
     pictureContainer: {
         flexDirection: 'row',

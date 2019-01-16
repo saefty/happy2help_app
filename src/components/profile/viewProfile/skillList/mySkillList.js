@@ -20,13 +20,15 @@ export class MySkills extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.titleContainer}>
-                    <IconMat name="build" size={20} color={H2HTheme.colors.primary} />
-                    <Title style={styles.title}>{this.props.title}</Title>
+                <View style={styles.leftTitle}>
+                    <View style={styles.titleContainer}>
+                        <IconMat name="star" size={20} color={H2HTheme.colors.primary} />
+                        <Title style={styles.title}>{this.props.title}</Title>
+                    </View>
                 </View>
-                <ScrollView style={styles.scroll}>
+                <View style={styles.list}>
                     <SkillList skillObjects={this.props.skills} />
-                </ScrollView>
+                </View>
             </View>
         );
     }

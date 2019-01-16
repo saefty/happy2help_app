@@ -25,7 +25,6 @@ class ProfileView extends Component<Props> {
             <View style={styles.container}>
                 <Header userName={this.props.user.username} img={this.props.user.image} location={this.props.user.profile.location} />
                 <MySkills skills={this.props.user.skills} title={this.props.t('skills')} />
-                <CreditPoints creditPoints={this.props.user.profile.creditPoints} />
             </View>
         );
     }

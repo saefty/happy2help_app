@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     profileViewContainer: {
-        flex: 1,
     },
     appbar: {
         elevation: 0,

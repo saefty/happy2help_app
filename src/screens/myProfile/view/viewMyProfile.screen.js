@@ -1,11 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { ProfileDataProvider } from '../profileDataProvider';
 import ProfileView from '../../../components/profile/viewProfile/viewProfile';
 import { Appbar } from 'react-native-paper';
 import { NavigationEvents } from 'react-navigation';
 import { styles } from './viewMyProfile.screen.style';
+import { CreditPoints } from '../../../components/profile/viewProfile/creditPoints/creditPoints';
 
 type Props = {
     t: i18n.t,
@@ -27,21 +28,23 @@ export class ViewMyProfile extends Component<Props> {
                                 refetch();
                             }}
                         />
-                        <Appbar.Header style={styles.appbar}>
-                            <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.navigate('Discover')} />
-                            <Appbar.Content title="" />
-                            <Appbar.Action
-                                icon="edit"
-                                onPress={() =>
-                                    this.props.navigation.navigate('Edit', {
-                                        close: refetch,
-                                    })
-                                }
-                            />
-                        </Appbar.Header>
-                        <View style={styles.profileViewContainer}>
+
+                        <ScrollView style={styles.profileViewContainer}>
+                            <Appbar.Header style={styles.appbar}>
+                                <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.navigate('Discover')} />
+                                <Appbar.Content title="" />
+                                <Appbar.Action
+                                    icon="edit"
+                                    onPress={() =>
+                                        this.props.navigation.navigate('Edit', {
+                                            close: refetch,
+                                        })
+                                    }
+                                />
+                            </Appbar.Header>
                             <ProfileView user={user} {...this.props} />
-                        </View>
+                        </ScrollView>
+                        <CreditPoints creditPoints={user.profile.creditPoints} />
                     </View>
                 )}
             </ProfileDataProvider>

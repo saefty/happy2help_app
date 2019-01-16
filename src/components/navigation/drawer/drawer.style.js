@@ -22,8 +22,6 @@ export const DrawerStyle = StyleSheet.create({
         height: 110,
         borderRadius: 150,
         margin: 10,
-        borderWidth: 4,
-        borderColor: 'white',
         justifyContent: 'flex-start',
     },
 });

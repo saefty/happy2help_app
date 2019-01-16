@@ -14,8 +14,6 @@ export const styles = StyleSheet.create({
         height: 200,
         borderRadius: 200,
         margin: 20,
-        borderWidth: 8,
-        borderColor: 'white',
     },
     title: { margin: 5 },
     circularButton: {

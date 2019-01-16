@@ -2,19 +2,19 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-    container: {
-        height: '40%',
-        justifyContent: 'space-between',
-    },
-    scroll: {
-        height: '35%',
+    container: {},
+    list: {
         alignSelf: 'center',
     },
     titleContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
-        paddingLeft: 10,
+    },
+    leftTitle: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        paddingLeft: 15,
     },
     title: {
         fontSize: 18,
