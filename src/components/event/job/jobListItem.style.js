@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { neutralColors } from '../../../../themes/colors';
+import { neutralColors, secondaryColor } from '../../../../themes/colors';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
     },
     heading: {
-        // marginLeft: 10,
+        color: secondaryColor,
+        fontWeight: 'bold',
     },
     row: {
         width: '100%',

@@ -10,6 +10,7 @@ type Props = {
     icon: string,
     expansion: boolean,
     children: (() => React.Node) | React.Node,
+    padding?: number,
 };
 
 type State = {
@@ -30,7 +31,7 @@ export default class Accordion extends Component<Props, State> {
         });
 
     render() {
-        let indentation = 28;
+        let indentation = this.props.padding ? this.props.padding : 28;
         return (
             <List.Accordion
                 expanded={this.state.expanded}
