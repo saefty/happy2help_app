@@ -13,7 +13,6 @@ import { statusColors } from './../../../../themes/colors';
 import moment from 'moment';
 import { withNamespaces } from 'react-i18next';
 
-
 type Props = {
     event: EventObject,
     descriptionMaxLength: number,
@@ -82,7 +81,9 @@ class _Event extends Component<Props> {
                 />
             );
         }
-        const onPress = !this.props.controls ? () => this.props.onEventTouch(this.props.event) : () => {};
+        const onPress = !this.props.controls
+            ? () => this.props.onEventTouch(this.props.event)
+            : () => this.props.controls.view(this.props.event); //<--quick fix
 
         return (
             <Card style={[styles.card]} onPress={onPress}>
@@ -104,7 +105,7 @@ class _Event extends Component<Props> {
                                 {moment(this.props.event.end).format('DD. MMM. HH:MM')}
                             </Text>
                             <Text style={styles.location}>{this.props.event.location.name}</Text>
-                            {this.renderDistanceToUser()}                       
+                            {this.renderDistanceToUser()}
                         </View>
                     </View>
                 </Card.Content>
@@ -133,9 +134,9 @@ class _Event extends Component<Props> {
             return (distance * 100).toFixed(0) + ' m ' + this.props.t('away');
         }
         if (distance < 10) {
-            return distance.toFixed(1) + ' km ' + this.props.t('away'); ;
+            return distance.toFixed(1) + ' km ' + this.props.t('away');
         }
-        return distance.toFixed(0) + ' km ' + this.props.t('away');;
+        return distance.toFixed(0) + ' km ' + this.props.t('away');
     }
 }
 
