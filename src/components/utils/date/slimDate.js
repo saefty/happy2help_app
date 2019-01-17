@@ -21,7 +21,7 @@ export class SlimDate extends Component<Props> {
     render() {
         return (
             <View style={this.props.styleContainer ? this.props.styleContainer : styles.container}>
-                <Text style={this.props.styleDay ? this.props.styleDay : styles.day}> {this.props.date.getDate()} </Text>
+                <Text style={this.props.styleDay ? this.props.styleDay : styles.day}>{this.props.date.getDate()}</Text>
                 <Text
                     style={{
                         color: this.props.accentColor !== undefined ? this.props.accentColor : 'red',
