@@ -5,7 +5,7 @@ import type { SkillObject } from '../../../models/skill.model';
 
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
-import { Card, Text, TextInput, HelperText, Button, IconButton } from 'react-native-paper';
+import { Card, Text, TextInput, HelperText, Button, IconButton, Subheading } from 'react-native-paper';
 import { compose, graphql } from 'react-apollo';
 import { styles } from './edit.job.style';
 import { Formik, ErrorMessage } from 'formik';
@@ -73,6 +73,7 @@ class _EditJob extends Component<Props, any> {
                 <HelperText type="error" visible={errors.description}>
                     {errors.description}
                 </HelperText>
+                <Subheading>{this.props.t('skills')}</Subheading>
                 <SkillList
                     skillObjects={values.requiresskillSet ? values.requiresskillSet.map(x => x.skill) : []}
                     editable={true}

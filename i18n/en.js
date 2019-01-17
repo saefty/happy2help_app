@@ -35,6 +35,7 @@ export default {
         noLocation: 'This User has not specified their Location',
     },
     Event: {
+        skills: 'Skills',
         myEvents: 'My Events',
         myJobs: 'My Jobs',
         name: 'Event name',
