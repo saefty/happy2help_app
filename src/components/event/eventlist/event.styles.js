@@ -5,6 +5,7 @@ import { primaryColor, neutralTextColors } from '../../../../themes/colors';
 
 export const styles = StyleSheet.create({
     card: {
+        width: '100%',
         marginTop: 4,
         marginBottom: 10,
     },

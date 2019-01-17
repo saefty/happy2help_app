@@ -217,7 +217,9 @@ class _EditEventForm extends Component<Props, State> {
         if (this.props.event && this.props.event.id) {
             return (
                 <Query query={EVENT_DETAIL_QUERY} variables={{ id: this.props.event.id }} fetchPolicy="network-only">
-                    {children}
+                    {data => {
+                        return children(data);
+                    }}
                 </Query>
             );
         } else {
@@ -251,6 +253,7 @@ class _EditEventForm extends Component<Props, State> {
 
     render() {
         return this.getEvent(({ data }) => {
+            console.log(data);
             if (!data || !data.event) return <View />;
             return (
                 <Formik
@@ -269,8 +272,8 @@ class _EditEventForm extends Component<Props, State> {
                                 {this.renderImagePicker(values, setFieldValue)}
                                 <View style={styles.container}>
                                     <DateRangeButtons
-                                        startDate={new Date(values.start)}
-                                        endDate={new Date(values.end)}
+                                        startDate={values.start && new Date(values.start)}
+                                        endDate={values.end && new Date(values.end)}
                                         updateStart={(newStartDate: Date) => {
                                             //if new start ist after end, end is the old diff plus the new start
                                             if (newStartDate > values.end) {
