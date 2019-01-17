@@ -5,6 +5,8 @@ import { primaryColor, neutralTextColors } from '../../../../themes/colors';
 
 export const styles = StyleSheet.create({
     card: {
+        width: '100%',
+        marginTop: 4,
         marginBottom: 10,
         borderRadius: 0,
     },
@@ -61,5 +63,5 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
-    }
+    },
 });
