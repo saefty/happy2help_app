@@ -16,7 +16,7 @@ import { EditJobList } from '../../components/event/job/edit.job.list';
 
 import moment from 'moment';
 
-const APPBAR_SEG_HEIGHT = 130;
+const APPBAR_SEG_HEIGHT = 120;
 const STATUS_BAR_HEIGHT = Platform.select({ ios: 20, android: 24 });
 const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
@@ -167,9 +167,7 @@ class _DiscoverScreen extends Component<Props, State> {
 
     toogleMapTouch = () => {
         Animated.timing(this.state.offsetAnim, {
-            toValue: this.state.mapBarVisible
-                ? APPBAR_SEG_HEIGHT
-                : 0,
+            toValue: this.state.mapBarVisible ? APPBAR_SEG_HEIGHT : 0,
             duration: 300,
             useNativeDriver: false,
         }).start();
@@ -204,7 +202,7 @@ class _DiscoverScreen extends Component<Props, State> {
                     useNativeDriver: false,
                 })}
             >
-                <View style={{ height: 110 }} />
+                <View style={{ height: APPBAR_SEG_HEIGHT - 20 }} />
                 <EventList onEventTouch={this.openEventModal} events={events} {...this.props} />
                 <View style={{ height: 60 }} />
             </AnimatedScrollView>
