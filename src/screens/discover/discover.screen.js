@@ -60,7 +60,7 @@ class _DiscoverScreen extends Component<Props, State> {
                         inputRange: [0, 1],
                         outputRange: [0, 1],
                         extrapolateLeft: 'clamp',
-                        useNativeDriver: false,
+                        useNativeDriver: true,
                     }),
                     offsetAnim
                 ),
