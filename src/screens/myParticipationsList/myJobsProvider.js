@@ -21,6 +21,7 @@ const GET_JOBS = gql`
                         state
                     }
                     requiresskillSet {
+                        id
                         skill {
                             id
                             name
@@ -36,12 +37,15 @@ const GET_JOBS = gql`
                         name
                         description
                         creator {
+                            id
                             username
                             image {
+                                id
                                 url
                             }
                         }
                         location {
+                            id
                             latitude
                             longitude
                             name
@@ -50,6 +54,7 @@ const GET_JOBS = gql`
                             id
                             name
                             image {
+                                id
                                 url
                             }
                         }

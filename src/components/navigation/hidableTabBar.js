@@ -29,7 +29,7 @@ class _HidableTabBar extends Component<any, any> {
         const newParams = newRoute.params;
         const isVisible = !newParams || newParams.visible;
         const animHeight = !newParams || newParams.animHeight;
-
+        
         if (!isVisible && animHeight) {
             const appbarTranslate = animHeight.interpolate({
                 inputRange: [0, TAB_BAR_OFFSET],

@@ -19,6 +19,7 @@ export const MY_EVENTS = gql`
                     name
                 }
                 location {
+                    id
                     latitude
                     longitude
                     name

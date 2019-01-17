@@ -13,9 +13,11 @@ export const GET_EVENTS = gql`
                 url
             }
             creator {
+                id
                 username
             }
             location {
+                id
                 latitude
                 longitude
                 name

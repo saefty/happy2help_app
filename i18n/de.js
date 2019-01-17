@@ -14,6 +14,7 @@ export default {
         beforePresent: 'Das Event darf nicht in der Vergangenheit liegen',
     },
     User: {
+        user: 'Benutzer',
         userName: 'Benutzername',
         password: 'Passwort',
         email: 'E-Mail',
@@ -30,6 +31,7 @@ export default {
         skills: 'Fähigkeiten',
         creditPoints: 'Helfer Punkte',
         editSuccess: 'Profil wurde erfolgreich bearbeitet!',
+        noLocation: 'Dieser Nutzer hat seinen Standort nicht angegeben',
     },
     Event: {
         myEvents: 'Meine Events',
@@ -55,6 +57,7 @@ export default {
         creationSubtitle: 'Erstelle hier ein neues Organisationsprofil',
         updateSubtitle: 'Update hier das Profil deiner Organisation',
         creationSuccess: 'Profil wurde erfolgreich erstellt für: ',
+        updateSuccess: 'Profil wurde erfolgreich aktualisiert für: ' ,
         currentEvents: 'Aktuelle Events',
         member: 'Mitglied',
         members: 'Mitglieder',

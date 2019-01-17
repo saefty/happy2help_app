@@ -7,6 +7,8 @@ export const ORGANISATION_EVENTS = gql`
             eventSet {
                 id
                 name
+                start
+                end
                 description
                 image {
                     id
@@ -36,6 +38,7 @@ export const ORGANISATION_EVENTS = gql`
                     }
                 }
                 location {
+                    id
                     latitude
                     longitude
                     name

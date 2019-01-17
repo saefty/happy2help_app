@@ -106,23 +106,41 @@ class _EditOrganisationView extends Component<Props, State> {
             },
         });
     };
+    update = organisation => {
+        return this.props.updateOrganisationMutation({
+            variables: {
+                organisationId: organisation.id,
+                name: organisation.name,
+                description: organisation.description,
+            },
+        });
+    };
 
     onSubmit = async (values, actions) => {
         actions.setSubmitting(true);
-        const ORGANISATION = {
-            name: values.organisationName,
-            description: values.organisationDescription,
-        };
 
-        let created = await this.create(ORGANISATION);
+        let NEW;
+        if (this.props.organisation) {
+            NEW = await this.update({
+                id: this.props.organisation.id,
+                name: values.organisationName,
+                description: values.organisationDescription,
+            });
+        } else {
+            NEW = await this.create({
+                name: values.organisationName,
+                description: values.organisationDescription,
+            });
+        }
+
         if (this.state.pickedImage !== '') {
-            await this.saveImage(created.data.createOrganisation.id);
+            await this.saveImage(this.props.organisation ? this.props.organisation.id : NEW.data.createOrganisation.id);
         }
 
         actions.setSubmitting(false);
         this.props.close();
         showMessage({
-            message: this.props.t('creationSuccess') + values.organisationName,
+            message: this.props.t(this.props.organisation ? 'updateSuccess' : 'creationSuccess') + values.organisationName,
             type: 'success',
             icon: 'auto',
         });

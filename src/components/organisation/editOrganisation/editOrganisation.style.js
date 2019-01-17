@@ -23,8 +23,6 @@ export const styles = StyleSheet.create({
         height: 200,
         borderRadius: 200,
         margin: 10,
-        borderWidth: 8,
-        borderColor: 'white',
     },
     circularButton: {
         alignItems: 'center',
