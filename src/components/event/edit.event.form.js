@@ -61,6 +61,9 @@ class _EditEventForm extends Component<Props, State> {
             end: Yup.date()
                 .min(Yup.ref('start'), this.props.t('errors:beforeStart'))
                 .required(this.props.t('errors:required')),
+            jobSet: Yup.array()
+                .min(1, this.props.t('errors:requiredJob'))
+                .required(this.props.t('errors:requiredJob')),
         });
 
         this.state = {
@@ -145,7 +148,6 @@ class _EditEventForm extends Component<Props, State> {
 
     onSubmit = async (values, actions) => {
         actions.setSubmitting(true);
-        console.log(values);
         let EVENT = {
             eventId: values.id,
             name: values.name,
@@ -253,7 +255,6 @@ class _EditEventForm extends Component<Props, State> {
 
     render() {
         return this.getEvent(({ data }) => {
-            console.log(data);
             if (!data || !data.event) return <View />;
             return (
                 <Formik
@@ -327,6 +328,9 @@ class _EditEventForm extends Component<Props, State> {
                                         {errors.location}
                                     </HelperText>
                                     <Headline>Jobs</Headline>
+                                    <HelperText type="error" visible={errors.jobSet}>
+                                        {errors.jobSet}
+                                    </HelperText>
                                     <EditJobList
                                         jobs={values.jobSet || []}
                                         saveNew={job => {
