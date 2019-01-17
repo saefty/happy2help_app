@@ -5,13 +5,12 @@ import { primaryColor, neutralTextColors } from '../../../../themes/colors';
 
 export const styles = StyleSheet.create({
     card: {
+        marginTop: 4,
         marginBottom: 10,
-        borderRadius: 0,
     },
     coverContainer: {
         flex: 1,
         height: 96,
-        overflow: 'hidden',
     },
     cover: {
         flex: 1,
@@ -20,17 +19,16 @@ export const styles = StyleSheet.create({
         height: undefined,
     },
     contentContainer: {
+        marginTop: 10,
         flexDirection: 'row',
         marginBottom: 5,
     },
-    dateContainer: { marginTop: 10 },
+    dateContainer: {},
     rightContent: {
         marginLeft: 15,
-        marginRight: 5,
-        width: '100%',
+        flex: 1,
     },
     title: {
-        marginTop: 10,
         fontSize: 18,
         fontWeight: 'bold',
         maxWidth: '80%',
@@ -45,21 +43,17 @@ export const styles = StyleSheet.create({
     },
     dates: {
         color: neutralTextColors.medium,
-        maxWidth: '80%',
     },
     location: {
         color: neutralTextColors.medium,
-        maxWidth: '80%',
     },
     distance: {
-        marginTop: 5,
         color: neutralTextColors.medium,
         fontStyle: 'italic',
     },
     distanceContainer: {
-        width: '85%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
-    }
+    },
 });

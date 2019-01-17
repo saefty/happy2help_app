@@ -13,7 +13,6 @@ import { statusColors } from './../../../../themes/colors';
 import moment from 'moment';
 import { withNamespaces } from 'react-i18next';
 
-
 type Props = {
     event: EventObject,
     descriptionMaxLength: number,
@@ -104,7 +103,7 @@ class _Event extends Component<Props> {
                                 {moment(this.props.event.end).format('DD. MMM. HH:MM')}
                             </Text>
                             <Text style={styles.location}>{this.props.event.location.name}</Text>
-                            {this.renderDistanceToUser()}                       
+                            {this.renderDistanceToUser()}
                         </View>
                     </View>
                 </Card.Content>
@@ -128,14 +127,13 @@ class _Event extends Component<Props> {
     }
 
     get distanceString() {
-        const distance = this.props.event.location.distance;
-        if (distance < 1) {
+        const distance: Number = this.props.event.location.distance;
+        if (!distance) return '';
+        else if (distance < 1) {
             return (distance * 100).toFixed(0) + ' m ' + this.props.t('away');
-        }
-        if (distance < 10) {
-            return distance.toFixed(1) + ' km ' + this.props.t('away'); ;
-        }
-        return distance.toFixed(0) + ' km ' + this.props.t('away');;
+        } else if (distance < 10) {
+            return distance.toFixed(1) + ' km ' + this.props.t('away');
+        } else return distance.toFixed(0) + ' km ' + this.props.t('away');
     }
 }
 
