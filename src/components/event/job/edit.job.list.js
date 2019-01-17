@@ -34,7 +34,7 @@ class _EditJobList extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            showNewCard: false,
+            showNewCard: this.props.jobs.length === 0,
         };
     }
 
