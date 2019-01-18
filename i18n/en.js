@@ -102,6 +102,7 @@ export default {
         skills: 'Add Skills that should be searched for',
         noSkills: 'Filtering by Skills is inactive right now',
         datePick: 'Choose a timespan for Events',
+        apply: 'Apply',
     },
     FlashMessages: {
         checkedIn: 'User is now participating!',

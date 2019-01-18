@@ -1,13 +1,11 @@
 /* @flow */
 
 import { StyleSheet } from 'react-native';
-import { primaryColor } from '../../../../../themes/colors';
+import { primaryColor, neutralColors } from '../../../../../themes/colors';
 
 const styles = StyleSheet.create({
-  
     title: {
         fontSize: 12,
-        marginTop: 5,
         marginLeft: 10,
         fontWeight: 'bold',
         color: primaryColor,
@@ -25,7 +23,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         minWidth: 100,
         borderRadius: 5,
-    }, 
+    },
     radioContainer: {
         flexDirection: 'row',
         marginLeft: 15,
@@ -37,8 +35,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-   
-
+    divider : {
+        height: 1,
+        backgroundColor: neutralColors.dark,
+    }
 });
 
 export default styles;
