@@ -11,7 +11,7 @@ import { SegmentedControl } from '../../components/utils/SegmentedControl';
 import { Map } from '../../components/discover/map/map';
 import { EventList } from './../../components/event/eventlist/eventList';
 import { EventDataProvider } from '../../providers/eventDataProvider';
-import { NavigationEvents } from 'react-navigation';
+import { NavigationEvents, SafeAreaView } from 'react-navigation';
 import { EditJobList } from '../../components/event/job/edit.job.list';
 
 import moment from 'moment';
@@ -298,7 +298,7 @@ class _DiscoverScreen extends Component<Props, State> {
                         { transform: [{ translateY: appbarTranslate }] },
                     ]}
                 >
-                    <View>
+                    <SafeAreaView>
                         <DiscoverAppbar
                             searchQuery={this.searchQuery}
                             openFunnel={() => this.setState({ funnelOpen: !this.state.funnelOpen })}
@@ -317,7 +317,7 @@ class _DiscoverScreen extends Component<Props, State> {
                             }}
                         />
                         <SegmentedControl values={['KARTE', 'LISTE']} selectedIndex={this.state.selectedIndex} onTabPress={this.setIndex} />
-                    </View>
+                    </SafeAreaView>
                 </Animated.View>
                 <EventDataProvider variables={this.queryParams}>
                     {(events, refetch) => {
