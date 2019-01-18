@@ -18,7 +18,7 @@ const fonts = {
 export default fonts;
 export const H2HTheme = {
     dark: false,
-    roundness: 3,
+    roundness: 0,
     colors: {
         primary: primaryColor,
         accent: color(primaryColor)

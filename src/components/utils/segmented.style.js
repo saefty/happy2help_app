@@ -9,7 +9,7 @@ export const segmentStyle = StyleSheet.create({
     },
 
     tabsContainerStyle: {
-        height: 50,
+        height: 40,
         backgroundColor: 'transparent',
     },
 

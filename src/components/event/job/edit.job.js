@@ -5,7 +5,7 @@ import type { SkillObject } from '../../../models/skill.model';
 
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
-import { Card, Text, TextInput, HelperText, Button, IconButton } from 'react-native-paper';
+import { Card, Text, TextInput, HelperText, Button, IconButton, Subheading } from 'react-native-paper';
 import { compose, graphql } from 'react-apollo';
 import { styles } from './edit.job.style';
 import { Formik, ErrorMessage } from 'formik';
@@ -17,6 +17,7 @@ import { JobListItem } from './jobListItem';
 import uuid from 'uuid/v4';
 import TextInputMask from 'react-native-text-input-mask';
 import { primaryColor } from '../../../../themes/colors';
+import * as Yup from 'yup';
 
 type Props = {
     job: Job,
@@ -27,9 +28,20 @@ type Props = {
     cancel?: () => void,
 };
 
-class _EditJob extends Component<Props> {
+class _EditJob extends Component<Props, any> {
     constructor(props: Props) {
         super(props);
+        this.state = {
+            validationSchema: Yup.object().shape({
+                name: Yup.string()
+                    .min(5, this.props.t('errors:toShort'))
+                    .required(this.props.t('errors:required')),
+                description: Yup.string()
+                    .min(5, this.props.t('errors:toShort'))
+                    .required(this.props.t('errors:required')),
+                totalPositions: Yup.number().required(this.props.t('errors:required')),
+            }),
+        };
     }
 
     onSubmit = async (values, actions) => {
@@ -50,7 +62,7 @@ class _EditJob extends Component<Props> {
             <View style={styles.container}>
                 <TextInput onChangeText={handleChange('name')} value={values.name} label={this.props.t('job_name')} error={errors.name} />
                 <HelperText type="error" visible={errors.name}>
-                    <ErrorMessage name="name" />
+                    {errors.name}
                 </HelperText>
                 <TextInput
                     onChangeText={handleChange('description')}
@@ -58,9 +70,10 @@ class _EditJob extends Component<Props> {
                     label={this.props.t('description')}
                     error={errors.description}
                 />
-                <HelperText type="error" visible={errors.name}>
-                    <ErrorMessage name="name" />
+                <HelperText type="error" visible={errors.description}>
+                    {errors.description}
                 </HelperText>
+                <Subheading>{this.props.t('skills')}</Subheading>
                 <SkillList
                     skillObjects={values.requiresskillSet ? values.requiresskillSet.map(x => x.skill) : []}
                     editable={true}
@@ -91,7 +104,7 @@ class _EditJob extends Component<Props> {
                     render={props => <TextInputMask {...props} autoCorrect={false} mask="[999]" />}
                 />
                 <HelperText type="error" visible={errors.totalPositions}>
-                    <ErrorMessage name="totalPositions" />
+                    {errors.totalPositions}
                 </HelperText>
             </View>
         );
@@ -142,7 +155,7 @@ class _EditJob extends Component<Props> {
     render() {
         return (
             <View>
-                <Formik onSubmit={this.onSubmit} initialValues={this.getInitialFormValues()}>
+                <Formik validationSchema={this.state.validationSchema} onSubmit={this.onSubmit} initialValues={this.getInitialFormValues()}>
                     {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue, resetForm }) => {
                         const formButtons = this._renderActionButtons(values, setFieldValue, handleSubmit, resetForm);
                         const formState = !values.editing ? (

@@ -12,6 +12,7 @@ export default {
         required: 'This field is required!',
         beforeStart: 'The end date shold be after the start date',
         beforePresent: 'The event is not allowed to be in the past',
+        requiredJob: 'There must be at least one job.',
     },
     User: {
         user: 'User',
@@ -34,6 +35,7 @@ export default {
         noLocation: 'This User has not specified their Location',
     },
     Event: {
+        skills: 'Skills',
         myEvents: 'My Events',
         myJobs: 'My Jobs',
         name: 'Event name',
@@ -57,7 +59,7 @@ export default {
         creationSubtitle: 'Create a new profile for an organization',
         updateSubtitle: 'Update your organization profile',
         creationSuccess: 'Successfully created a profile for: ',
-        updateSuccess: 'Successfully updated the profile for: ' ,
+        updateSuccess: 'Successfully updated the profile for: ',
         currentEvents: 'Current Events',
         member: 'Member',
         members: 'Members',

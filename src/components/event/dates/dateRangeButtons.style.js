@@ -24,11 +24,11 @@ export const styles = StyleSheet.create({
     },
     dateButtonsContainer: { flexDirection: 'row' },
     leftDateButton: {
-        width: '50%',
+        flex: 1,
         borderRightWidth: 1,
     },
     rightDateButton: {
-        width: '50%',
+        flex: 1,
         // borderLeftWidth: 1,
     },
     divider: {

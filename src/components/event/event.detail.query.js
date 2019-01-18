@@ -6,6 +6,7 @@ export const EVENT_DETAIL_DATA_FRAGMENT = gql`
         name
         description
         location {
+            id
             latitude
             longitude
             name
@@ -15,6 +16,9 @@ export const EVENT_DETAIL_DATA_FRAGMENT = gql`
         image {
             id
             url
+        }
+        organisation {
+            id
         }
         jobSet {
             id
@@ -29,6 +33,7 @@ export const EVENT_DETAIL_DATA_FRAGMENT = gql`
                 }
             }
             requiresskillSet {
+                id
                 skill {
                     id
                     name
