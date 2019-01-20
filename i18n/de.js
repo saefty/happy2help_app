@@ -96,6 +96,7 @@ export default {
         skills: 'Nach Fähigkeit filtern',
         noSkills: 'Füge Fähigkeiten mit dem Button hinzu',
         datePick: 'Gib einen Zeitrahmen für Events an',
+        apply: 'Anwenden',
     },
     FlashMessages: {
         checkedIn: 'Nutzer nimmt jetzt teil!',

@@ -8,6 +8,7 @@ import { IconButton } from 'react-native-paper';
 import IconMat from 'react-native-vector-icons/MaterialIcons';
 import { H2HTheme } from '../../../../../themes/default.theme';
 import type { SkillObject } from '../../../../models/skill.model';
+import { ApplyButton } from './funnelElements/applyButton';
 
 type Props = {
     updateQuery: (
@@ -115,7 +116,7 @@ export class FunnelDropdown extends Component<Props, State> {
             />
         );
     }
-
+    
     render() {
         return (
             <View>
@@ -139,7 +140,7 @@ export class FunnelDropdown extends Component<Props, State> {
                     updateToDate={this.updateToDate}
                 />
                 {this.renderSortOptions()}
-                {this.renderAcceptButton()}
+                <ApplyButton disabled={this.hasNotChanged()} applyFilter={this.update} />
             </View>
         );
     }
