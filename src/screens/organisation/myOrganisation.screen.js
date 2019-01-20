@@ -12,6 +12,7 @@ import gql from 'graphql-tag';
 import { Query, withApollo } from 'react-apollo';
 import { NavigationEvents } from 'react-navigation';
 import IconMat from 'react-native-vector-icons/MaterialIcons';
+import { BASE_ORGANISATION } from '../../fragments';
 
 type Props = {
     t: i18n.t,
@@ -29,20 +30,7 @@ const USER_QUERY = gql`
 const ORGANISATION_QUERY = gql`
     query organisation($id: ID!) {
         organisation(id: $id) {
-            id
-            name
-            description
-            image {
-                id
-                url
-            }
-            members {
-                id
-                username
-            }
-            admin {
-                id
-            }
+            ...BASE_ORGANISATION
             eventSet {
                 id
                 name
@@ -54,6 +42,7 @@ const ORGANISATION_QUERY = gql`
             }
         }
     }
+    ${BASE_ORGANISATION}
 `;
 /**
  * Used for organisation mode

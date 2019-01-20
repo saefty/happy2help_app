@@ -83,7 +83,7 @@ class _OrganisationEventList extends Component<Props, State> {
                             left: 4,
                         }}
                     />
-                    <Appbar.Content title={this.props.t('myEvents')} />
+                    <Appbar.Content title={this.props.t('orgaEvents')} />
                 </Appbar.Header>
                 <KeyboardAwareScrollView>
                     <OrganisationEventDataProvider id={orgaId}>
@@ -102,13 +102,14 @@ class _OrganisationEventList extends Component<Props, State> {
                                     />
                                     <Portal>
                                         <FAB
-                                        icon="add"
-                                        style={{ position: 'absolute', bottom: 0, right: 0, margin: 20 }}
-                                        onPress={() =>
-                                            this.props.navigation.navigate('EditEvent', {
-                                                orgaId: orgaId,
-                                            })}
-                                         />
+                                            icon="add"
+                                            style={{ position: 'absolute', bottom: 0, right: 0, margin: 20 }}
+                                            onPress={() =>
+                                                this.props.navigation.navigate('EditEventFromOrga', {
+                                                    orgaId: orgaId,
+                                                })
+                                            }
+                                        />
                                     </Portal>
                                 </View>
                             );

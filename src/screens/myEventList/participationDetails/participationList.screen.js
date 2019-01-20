@@ -7,15 +7,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Query } from 'react-apollo';
 import { ApplicantsView } from '../../../components/event/participations/applicantsView';
 import gql from 'graphql-tag';
+import { BASE_JOBSET } from '../../../fragments';
 
 export const PARTICIPATION_LIST_QUERY = gql`
     query event($id: ID!) {
         event(id: $id) {
             id
             jobSet {
-                id
-                name
-                description
+                ...BASE_JOBSET
                 participationSet {
                     id
                     state
@@ -27,6 +26,7 @@ export const PARTICIPATION_LIST_QUERY = gql`
             }
         }
     }
+    ${BASE_JOBSET}
 `;
 
 type Props = {};

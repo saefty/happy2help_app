@@ -37,6 +37,7 @@ export default {
     Event: {
         skills: 'Fähigkeiten',
         myEvents: 'Meine Events',
+        orgaEvents: 'Organisations Events',
         myJobs: 'Meine Jobs',
         name: 'Veranstaltungsname',
         job_name: 'Job name',

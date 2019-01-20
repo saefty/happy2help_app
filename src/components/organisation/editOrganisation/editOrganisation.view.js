@@ -19,6 +19,7 @@ import { Picker } from '../../image/pickerOptions';
 import { uploadMutations } from '../../image/upload.mutations';
 import { ImagePicker } from '../../image/imagePicker';
 import { OrganisationProfilePicture } from '../organisationProfilePicture';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type Props = {
     organisation?: OrganisationObject,
@@ -174,45 +175,46 @@ class _EditOrganisationView extends Component<Props, State> {
                                     <Appbar.Action icon="check" onPress={handleSubmit} disabled={isSubmitting} />
                                 </Appbar.Header>
                             </View>
+                            <KeyboardAwareScrollView>
+                                <ImagePicker
+                                    visible={this.state.modalVisible}
+                                    hideModal={this.hideModal}
+                                    takeImage={this.takeImage}
+                                    pickImage={this.pickImage}
+                                    deleteImage={this.deleteImage}
+                                />
 
-                            <ImagePicker
-                                visible={this.state.modalVisible}
-                                hideModal={this.hideModal}
-                                takeImage={this.takeImage}
-                                pickImage={this.pickImage}
-                                deleteImage={this.deleteImage}
-                            />
-
-                            <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                                <View style={{ flex: 1 }} />
-                                <OrganisationProfilePicture style={styles.editPicture} src={this.state.pickedImage} />
-                                <View style={{ flex: 1, paddingBottom: 35 }}>
-                                    <TouchableOpacity style={styles.circularButton} onPress={this.showModal}>
-                                        <Icon name={'photo-camera'} size={30} color="#fff" />
-                                    </TouchableOpacity>
+                                <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                                    <View style={{ flex: 1 }} />
+                                    <OrganisationProfilePicture style={styles.editPicture} src={this.state.pickedImage} />
+                                    <View style={{ flex: 1, paddingBottom: 35 }}>
+                                        <TouchableOpacity style={styles.circularButton} onPress={this.showModal}>
+                                            <Icon name={'photo-camera'} size={30} color="#fff" />
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
-                            </View>
 
-                            <View style={styles.inputContainer}>
-                                <TextInput
-                                    onChangeText={handleChange('organisationName')}
-                                    value={values.organisationName}
-                                    error={errors.organisationName}
-                                    label={this.props.t('name')}
-                                />
-                                <HelperText type="error" visible={errors.organisationName}>
-                                    <ErrorMessage name="organisationName" />
-                                </HelperText>
+                                <View style={styles.inputContainer}>
+                                    <TextInput
+                                        onChangeText={handleChange('organisationName')}
+                                        value={values.organisationName}
+                                        error={errors.organisationName}
+                                        label={this.props.t('name')}
+                                    />
+                                    <HelperText type="error" visible={errors.organisationName}>
+                                        <ErrorMessage name="organisationName" />
+                                    </HelperText>
 
-                                <TextInput
-                                    multiline={true}
-                                    numberOfLines={10}
-                                    label={this.props.t('description')}
-                                    onChangeText={handleChange('organisationDescription')}
-                                    value={values.organisationDescription}
-                                    error={errors.organisationDescription}
-                                />
-                            </View>
+                                    <TextInput
+                                        multiline={true}
+                                        numberOfLines={10}
+                                        label={this.props.t('description')}
+                                        onChangeText={handleChange('organisationDescription')}
+                                        value={values.organisationDescription}
+                                        error={errors.organisationDescription}
+                                    />
+                                </View>
+                            </KeyboardAwareScrollView>
                         </View>
                     )}
                 </Formik>

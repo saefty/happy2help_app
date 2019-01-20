@@ -1,28 +1,15 @@
 import gql from 'graphql-tag';
+import { BASE_ORGANISATION, BASE_EVENT, BASE_JOBSET } from '../../fragments';
 
 export const ORGANISATION_EVENTS = gql`
     query organisationEvents($id: ID!) {
         organisation(id: $id) {
             id
+            ...BASE_ORGANISATION
             eventSet {
-                id
-                name
-                start
-                end
-                description
-                image {
-                    id
-                    url
-                }
-                organisation {
-                    id
-                    name
-                }
+                ...BASE_EVENT
                 jobSet {
-                    id
-                    name
-                    description
-                    totalPositions
+                    ...BASE_JOBSET
                     participationSet {
                         id
                         state
@@ -37,13 +24,10 @@ export const ORGANISATION_EVENTS = gql`
                         }
                     }
                 }
-                location {
-                    id
-                    latitude
-                    longitude
-                    name
-                }
             }
         }
     }
+    ${BASE_EVENT}
+    ${BASE_JOBSET}
+    ${BASE_ORGANISATION}
 `;

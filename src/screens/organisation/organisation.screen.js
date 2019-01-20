@@ -23,17 +23,17 @@ class OrganisationScreen extends Component<Props> {
     render() {
         return (
             <View>
+                <Appbar.Header>
+                    <Appbar.BackAction
+                        onPress={() => {
+                            this.props.navigation.goBack();
+                        }}
+                    />
+                    <Appbar.Content title={this.props.organisation.name} subtitle={this.props.t('organization')} />
+                    <Appbar.Action icon="edit" />
+                    <Appbar.Action icon="more-vert" />
+                </Appbar.Header>
                 <ScrollView>
-                    <Appbar.Header>
-                        <Appbar.BackAction
-                            onPress={() => {
-                                this.props.navigation.goBack();
-                            }}
-                        />
-                        <Appbar.Content title={this.props.organisation.name} subtitle={this.props.t('organization')} />
-                        <Appbar.Action icon="edit" />
-                        <Appbar.Action icon="more-vert" />
-                    </Appbar.Header>
                     <OrganisationView organisation={this.props.organisation} />
                 </ScrollView>
             </View>
