@@ -8,6 +8,7 @@ import { Query } from 'react-apollo';
 import { ApplicantsView } from '../../../components/event/participations/applicantsView';
 import gql from 'graphql-tag';
 import { BASE_JOBSET } from '../../../fragments';
+import { withNamespaces } from 'react-i18next';
 
 export const PARTICIPATION_LIST_QUERY = gql`
     query event($id: ID!) {
@@ -30,7 +31,7 @@ export const PARTICIPATION_LIST_QUERY = gql`
 `;
 
 type Props = {};
-export class PartcipationListScreen extends Component<Props> {
+class _PartcipationListScreen extends Component<Props> {
     constructor(props: Props) {
         super(props);
     }
@@ -40,7 +41,7 @@ export class PartcipationListScreen extends Component<Props> {
             <View>
                 <Appbar.Header style={{ elevation: 0 }}>
                     <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.dispatch(NavigationActions.back())} />
-                    <Appbar.Content title={this.props.screenProps.event.name} />
+                    <Appbar.Content subtitle={this.props.screenProps.event.name} title={this.props.t('applications')} />
                 </Appbar.Header>
                 <ScrollView>
                     <Query query={PARTICIPATION_LIST_QUERY} variables={{ id: this.props.screenProps.event.id }}>
@@ -54,3 +55,5 @@ export class PartcipationListScreen extends Component<Props> {
         );
     }
 }
+
+export const PartcipationListScreen = withNamespaces(['Event'])(_PartcipationListScreen);

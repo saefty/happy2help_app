@@ -50,6 +50,8 @@ export default {
         editSuccess: 'Event wurde erfolgreich bearbeitet: ',
         totalPositions: 'Anzahl der Stellen',
         away: 'entfernt',
+        edit: 'Bearbeiten',
+        applications:  'Bewerbungen',
     },
     Organisation: {
         organization: 'Organisation',
@@ -97,6 +99,7 @@ export default {
         skills: 'Nach Fähigkeit filtern',
         noSkills: 'Füge Fähigkeiten mit dem Button hinzu',
         datePick: 'Gib einen Zeitrahmen für Events an',
+        apply: 'Anwenden',
     },
     FlashMessages: {
         checkedIn: 'Nutzer nimmt jetzt teil!',
@@ -106,10 +109,10 @@ export default {
         your: 'Dein QR Code',
         info: 'Lass deinen QR Code vom Eventveranstalter scannen, um dich für das Event einzuchecken!',
     },
-    Image: {
+    Image: { 
         add: 'Füge ein Foto hinzu!',
         take: 'Foto schießen',
-        gallery: 'Aus der Gallerie auswählen',
+        gallery: 'Aus der Galerie auswählen',
         remove: 'Foto löschen',
         deleteSuccess: 'Dein Foto wurde erfolgreich entfernt!',
     },

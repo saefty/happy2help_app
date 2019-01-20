@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
-import { RadioButton, Text, Title, TouchableRipple } from 'react-native-paper';
+import { RadioButton, Text, Title, TouchableRipple, Divider } from 'react-native-paper';
 import styles from './sort.styles';
 import { withNamespaces, i18n } from 'react-i18next';
 import { filterColors } from '../../../../../themes/colors';
@@ -43,32 +43,6 @@ class _SortOption extends PureComponent<Props> {
         return (
             <View>
                 <Title style={styles.title}>{this.props.t('sort')}</Title>
-                <View style={styles.radioContainer}>
-                    <TouchableRipple rippleColor={this.transparent} onPress={() => this.props.changeDescending(false)}>
-                        <View style={styles.radioButton}>
-                            <RadioButton
-                                value={this.props.t('ascending')}
-                                color={filterColors.active}
-                                status={this.asc}
-                                onPress={() => this.props.changeDescending(false)}
-                                disabled={this.props.sorting === 'distance'}
-                            />
-                            <Text >{this.props.t('ascending')}</Text>
-                        </View>
-                    </TouchableRipple>
-                    <TouchableRipple rippleColor={this.transparent} onPress={() => this.props.changeDescending(true)}>
-                        <View style={styles.radioButton}>
-                            <RadioButton
-                                value={this.props.t('descending')}
-                                color={filterColors.active}
-                                status={this.desc}
-                                onPress={() => this.props.changeDescending(true)}
-                                disabled={this.props.sorting === 'distance'}
-                            />
-                            <Text>{this.props.t('descending')}</Text>
-                        </View>
-                    </TouchableRipple>
-                </View>
                 <View style={styles.optionList}>
                     <TouchableRipple rippleColor={this.transparent} onPress={() => this.props.changeSort('name')}>
                         <View
@@ -101,6 +75,33 @@ class _SortOption extends PureComponent<Props> {
                         </View>
                     </TouchableRipple>
                 </View>
+                <View style={styles.radioContainer}>
+                    <TouchableRipple rippleColor={this.transparent} onPress={() => this.props.changeDescending(false)}>
+                        <View style={styles.radioButton}>
+                            <RadioButton
+                                value={this.props.t('ascending')}
+                                color={filterColors.active}
+                                status={this.asc}
+                                onPress={() => this.props.changeDescending(false)}
+                                disabled={this.props.sorting === 'distance'}
+                            />
+                            <Text>{this.props.t('ascending')}</Text>
+                        </View>
+                    </TouchableRipple>
+                    <TouchableRipple rippleColor={this.transparent} onPress={() => this.props.changeDescending(true)}>
+                        <View style={styles.radioButton}>
+                            <RadioButton
+                                value={this.props.t('descending')}
+                                color={filterColors.active}
+                                status={this.desc}
+                                onPress={() => this.props.changeDescending(true)}
+                                disabled={this.props.sorting === 'distance'}
+                            />
+                            <Text>{this.props.t('descending')}</Text>
+                        </View>
+                    </TouchableRipple>
+                </View>
+                <Divider style={styles.divider}/>
             </View>
         );
     }

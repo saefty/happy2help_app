@@ -8,7 +8,8 @@ type Props = {
     events: Array<EventObject>,
     onEventTouch: (event: EventObject) => void,
     onEventEdit: (event: EventObject) => void,
-    onEventParticipation: (event: EventObject) => void,
+    onEventCheckIn: (event: EventObject) => void,
+    onEventApplications: (event: EventObject) => void,
 };
 
 const MAX_DESCRIPTION_LENGTH = 50;
@@ -26,14 +27,15 @@ export class UserEventList extends Component<Props> {
                 {this.props.events.map(event => (
                     <Event
                         controls={{
-                            view: this.props.onEventTouch,
+                            viewApplications: this.props.onEventApplications,
                             edit: this.props.onEventEdit,
-                            participations: this.props.onEventParticipation,
+                            checkIn: this.props.onEventCheckIn,
                         }}
                         key={event.id}
                         event={event}
                         showCreatorName={false}
                         descriptionMaxLength={MAX_DESCRIPTION_LENGTH}
+                        onEventTouch={this.props.onEventTouch}
                     />
                 ))}
             </View>

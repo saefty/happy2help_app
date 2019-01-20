@@ -37,8 +37,14 @@ class _MyEventList extends Component<Props, State> {
         });
     };
 
-    onEventParticipation = (event: EventObject, refetch: () => void) => {
-        this.props.navigation.navigate('Participations', {
+    onEventCheckIn = (event: EventObject, refetch: () => void) => {
+        this.props.navigation.navigate('CheckIn', {
+            screenProps: { event, refetch },
+        });
+    };
+
+    onEventApplications = (event: EventObject, refetch: () => void) => {
+        this.props.navigation.navigate('Applications', {
             screenProps: { event, refetch },
         });
     };
@@ -63,16 +69,19 @@ class _MyEventList extends Component<Props, State> {
                                         events={user.eventSet}
                                         onEventTouch={this.openEventModal}
                                         onEventEdit={this.onEventEdit}
-                                        onEventParticipation={event => {
-                                            this.onEventParticipation(event, refetch);
+                                        onEventCheckIn={event => {
+                                            this.onEventCheckIn(event, refetch);
+                                        }}
+                                        onEventApplications={event => {
+                                            this.onEventApplications(event, refetch);
                                         }}
                                     />
                                     <Portal>
                                         <FAB
-                                        icon="add"
-                                        style={{ position: 'absolute', bottom: 0, right: 0, margin: 20 }}
-                                        onPress={() => this.props.navigation.navigate('Edit')}
-                                         />
+                                            icon="add"
+                                            style={{ position: 'absolute', bottom: 0, right: 0, margin: 20 }}
+                                            onPress={() => this.props.navigation.navigate('Edit')}
+                                        />
                                     </Portal>
                                 </View>
                             );
