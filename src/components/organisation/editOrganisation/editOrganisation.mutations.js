@@ -19,12 +19,12 @@ export const mutations = {
     
     UPDATE_ORGANISATION: gql`
         mutation updateOrganisation(
-            $id: String!
+            $organisationId: ID!
             $name: String
             $description: String
         ) {
-            updateEvent(
-                id: $id
+            updateOrganisation(
+                organisationId: $organisationId
                 name: $name
                 description: $description
             ) {

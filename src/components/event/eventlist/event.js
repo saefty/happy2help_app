@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
-import { Card, Title, Paragraph, Text } from 'react-native-paper';
+import { View } from 'react-native';
+import { Card, Text } from 'react-native-paper';
 import type { EventObject } from '../../../models/event.model';
 import type { ControlsType } from './eventControls/eventControlBar';
 import { styles } from './event.styles.js';
@@ -80,7 +80,7 @@ class _Event extends Component<Props> {
                     }}
                 />
             );
-        }  
+        }
 
         return (
             <Card style={[styles.card]} onPress={() => this.props.onEventTouch(this.props.event)}>
@@ -126,14 +126,13 @@ class _Event extends Component<Props> {
     }
 
     get distanceString() {
-        const distance = this.props.event.location.distance;
-        if (distance < 1) {
+        const distance: Number = this.props.event.location.distance;
+        if (!distance) return '';
+        else if (distance < 1) {
             return (distance * 100).toFixed(0) + ' m ' + this.props.t('away');
-        }
-        if (distance < 10) {
+        } else if (distance < 10) {
             return distance.toFixed(1) + ' km ' + this.props.t('away');
-        }
-        return distance.toFixed(0) + ' km ' + this.props.t('away');
+        } else return distance.toFixed(0) + ' km ' + this.props.t('away');
     }
 }
 

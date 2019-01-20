@@ -2,7 +2,7 @@
 import { Component } from 'react';
 import * as React from 'react';
 
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Platform } from 'react-native';
 import { Query } from 'react-apollo';
 import { GET_EVENTS } from './getEvents.query';
 import { secondaryColor } from '../../themes/colors';
@@ -22,7 +22,12 @@ export class EventDataProvider extends Component<Props> {
         return (
             <Query query={GET_EVENTS} pollInterval={this.props.pollInterval} variables={this.props.variables}>
                 {({ loading, error, data, refetch }) => {
-                    if (!data || (!data.events && (loading || error))) return <ActivityIndicator size={150} color={secondaryColor} />;
+                    if (!data || (!data.events && (loading || error)))
+                        return (
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <ActivityIndicator size={Platform.select({ ios: 0, android: 45 })} color={secondaryColor} />
+                            </View>
+                        );
                     return this.props.children(data.events, refetch);
                 }}
             </Query>

@@ -1,13 +1,13 @@
 // @flow
 import { StyleSheet } from 'react-native';
-import { H2HTheme } from '../../../../themes/default.theme';
-
-
 
 export const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    profileViewContainer: {
+    },
     appbar: {
         elevation: 0,
     },
-    title: { margin: 5 },
-
 });

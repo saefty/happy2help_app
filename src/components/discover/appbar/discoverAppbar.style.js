@@ -5,7 +5,7 @@ export const DiscoverAppbarStyle = StyleSheet.create({
     container: {
         flexDirection: 'row',
         width: '100%',
-        height: 56,
+        height: 54,
         alignSelf: 'center',
         backgroundColor: 'transparent',
         justifyContent: 'space-between',
@@ -19,7 +19,7 @@ export const DiscoverAppbarStyle = StyleSheet.create({
     searchContainer: {
         flexDirection: 'row',
         alignSelf: 'center',
-        height: 42,
+        height: 40,
         width: '70%',
     },
 

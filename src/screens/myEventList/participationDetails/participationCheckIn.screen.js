@@ -28,10 +28,13 @@ const VERIFY_QUERY = gql`
                 }
                 creditPoints
             }
+            image {
+                id
+                url
+            }
             skills {
                 id
                 name
-                approved
             }
         }
     }
@@ -57,9 +60,11 @@ export class ScanScreen_ extends Component<any, any> {
     onSuccess = async (e: { data: string }, event: any) => {
         const rsp = await this.props.client.query({
             query: VERIFY_QUERY,
+            fetchPolicy: 'no-cache',
             variables: { token: e.data },
         });
         const user = rsp.data.qrCheckToken;
+
         if (rsp.errors) {
             showMessage({
                 message: 'QR Code is invalid',

@@ -53,6 +53,11 @@ class DateRangeButtons extends Component<Props> {
         );
     };
 
+    _updateStart = async date => {
+        await this.props.updateStart(date);
+        if (!this.props.endDate) this.endPicker.showDateTimePicker();
+    };
+
     render() {
         const paperColors = this.props.theme.colors;
         return (
@@ -62,7 +67,7 @@ class DateRangeButtons extends Component<Props> {
                     <View style={styles.dateButtonsContainer}>
                         <DateButton
                             date={this.props.startDate}
-                            updateDate={this.props.updateStart}
+                            updateDate={this._updateStart}
                             style={[
                                 { borderColor: this.props.errorMessage ? paperColors.error : neutralColors.dark },
                                 styles.leftDateButton,
@@ -70,6 +75,7 @@ class DateRangeButtons extends Component<Props> {
                             accentColor={this.props.errorMessage ? paperColors.error : primaryColor}
                         />
                         <DateButton
+                            ref={ref => (this.endPicker = ref)}
                             date={this.props.endDate}
                             updateDate={this.props.updateEnd}
                             style={[

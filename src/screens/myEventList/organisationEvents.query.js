@@ -8,6 +8,8 @@ export const ORGANISATION_EVENTS = gql`
             eventSet {
                 id
                 name
+                start
+                end
                 description
                 start
                 end

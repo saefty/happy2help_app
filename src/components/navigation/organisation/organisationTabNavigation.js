@@ -37,7 +37,7 @@ export const OrganisationTabNavigator = createMaterialBottomTabNavigator(
                         case 'ViewOrganisation':
                             return <MaterialIcon name="group" size={25} color={tintColor} />;
                         case 'OrganisationEvents':
-                            return <MaterialIcon name="work" size={25} color={tintColor} />;
+                            return <MaterialIcon name="event-available" size={25} color={tintColor} />;
                     }
                 },
             };
