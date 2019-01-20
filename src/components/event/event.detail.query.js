@@ -1,42 +1,23 @@
 import gql from 'graphql-tag';
+import { BASE_EVENT, BASE_ORGANISATION, BASE_JOBSET } from '../../fragments';
 
 export const EVENT_DETAIL_DATA_FRAGMENT = gql`
     fragment FULL_EVENT_DATA on EventType {
-        id
-        name
-        description
-        location {
-            id
-            latitude
-            longitude
-            name
-        }
-        start
-        end
+        ...BASE_EVENT
         image {
             id
             url
         }
         organisation {
-            id
+            ...BASE_ORGANISATION
         }
         jobSet {
-            id
-            name
-            description
-            totalPositions
+            ...BASE_JOBSET
             currentUsersParticipation {
                 id
                 state
                 job {
                     id
-                }
-            }
-            requiresskillSet {
-                id
-                skill {
-                    id
-                    name
                 }
             }
             participationSet {
@@ -45,6 +26,9 @@ export const EVENT_DETAIL_DATA_FRAGMENT = gql`
             }
         }
     }
+    ${BASE_EVENT}
+    ${BASE_ORGANISATION}
+    ${BASE_JOBSET}
 `;
 
 export const EVENT_DETAIL_QUERY = gql`

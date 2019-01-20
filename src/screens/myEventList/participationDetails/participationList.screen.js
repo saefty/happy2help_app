@@ -7,17 +7,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Query } from 'react-apollo';
 import { ApplicantsView } from '../../../components/event/participations/applicantsView';
 import gql from 'graphql-tag';
+import { BASE_JOBSET } from '../../../fragments';
 import { withNamespaces } from 'react-i18next';
-
 
 export const PARTICIPATION_LIST_QUERY = gql`
     query event($id: ID!) {
         event(id: $id) {
             id
             jobSet {
-                id
-                name
-                description
+                ...BASE_JOBSET
                 participationSet {
                     id
                     state
@@ -29,6 +27,7 @@ export const PARTICIPATION_LIST_QUERY = gql`
             }
         }
     }
+    ${BASE_JOBSET}
 `;
 
 type Props = {};
@@ -41,7 +40,7 @@ class _PartcipationListScreen extends Component<Props> {
         return (
             <View>
                 <Appbar.Header style={{ elevation: 0 }}>
-                    <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.dispatch(NavigationActions.back())} />
+                    <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.goBack()} />
                     <Appbar.Content subtitle={this.props.screenProps.event.name} title={this.props.t('applications')} />
                 </Appbar.Header>
                 <ScrollView>
@@ -57,4 +56,4 @@ class _PartcipationListScreen extends Component<Props> {
     }
 }
 
-export const PartcipationListScreen = withNamespaces(['Event'])(_PartcipationListScreen)
+export const PartcipationListScreen = withNamespaces(['Event'])(_PartcipationListScreen);

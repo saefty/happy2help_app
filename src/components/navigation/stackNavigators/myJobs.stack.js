@@ -9,7 +9,7 @@ import React from 'react';
 
 export const MyJobsStackNavigator = createStackNavigator(
     {
-        View: MyParticipations,
+        ViewMyParticipations: MyParticipations,
         Edit: EditEventFormNamespaced,
         DetailedEventView: EventDetailModalNavigationMapped,
         DetailedOrganisationView: OrganisationDetailScreenMapped,
@@ -20,13 +20,13 @@ export const MyJobsStackNavigator = createStackNavigator(
             let { routeName } = navigation.state.routes[navigation.state.index];
             let navigationOptions = {};
 
-            if (routeName !== 'View') {
+            if (routeName !== 'ViewMyParticipations') {
                 navigationOptions.tabBarVisible = false;
             }
             return navigationOptions;
         },
     },
     {
-        initialRouteName: 'View',
+        initialRouteName: 'ViewMyParticipations',
     }
 );
