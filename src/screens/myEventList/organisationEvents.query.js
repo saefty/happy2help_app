@@ -4,12 +4,15 @@ export const ORGANISATION_EVENTS = gql`
     query organisationEvents($id: ID!) {
         organisation(id: $id) {
             id
+            name
             eventSet {
                 id
                 name
                 start
                 end
                 description
+                start
+                end
                 image {
                     id
                     url
