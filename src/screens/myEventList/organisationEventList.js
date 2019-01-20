@@ -40,7 +40,7 @@ class _OrganisationEventList extends Component<Props, State> {
     };
 
     onEventEdit = (event: EventObject) => {
-        this.props.navigation.navigate('EditEvent', {
+        this.props.navigation.navigate('EditEventFromOrga', {
             event: event,
         });
     };
@@ -69,7 +69,7 @@ class _OrganisationEventList extends Component<Props, State> {
         return result.data.ORGANISATION_ID;
     };
 
-    refresh = async () => {
+    refresh = async refetch => {
         const id = await this.getORGA();
         this.setState({ orgaId: id });
     };
@@ -80,10 +80,10 @@ class _OrganisationEventList extends Component<Props, State> {
         return (
             <OrganisationEventDataProvider id={orgaId}>
                 {(organisation, refetch) => {
-                    <NavigationEvents onWillFocus={refetch} />;
                     return (
                         <PaperProvider theme={H2HTheme}>
-                            <NavigationEvents onWillFocus={() => this.refresh()} />
+                            <NavigationEvents onWillFocus={() => this.refresh(refetch)} />
+                            <NavigationEvents onWillFocus={() => refetch()} />
                             <Appbar.Header>
                                 <IconButton
                                     icon={() => <IconMat name="menu" size={24} color={'#fff'} />}

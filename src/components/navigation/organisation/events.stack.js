@@ -5,8 +5,9 @@ import { OrganisationEventList } from '../../../screens/myEventList/organisation
 import { EditEventFormNamespaced } from '../../event/edit.event.form';
 import { EventDetailModalNavigationMapped } from '../../event/eventDetailModal';
 import { OrganisationDetailScreenMapped } from '../../../screens/organisation/organisation.screen';
-import { ParticipationBottomNavigation } from '../../../screens/myEventList/participationDetails/participationDetails.navigation';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
+import { ParticipationCheckInScreen } from '../../../screens/myEventList/participationDetails/participationCheckIn.screen';
+import { PartcipationListScreen } from '../../../screens/myEventList/participationDetails/participationList.screen';
 
 export const OrganisationEventsStackNavigation = createStackNavigator(
     {
@@ -14,7 +15,8 @@ export const OrganisationEventsStackNavigation = createStackNavigator(
         EditEventFromOrga: EditEventFormNamespaced,
         DetailedEventView: EventDetailModalNavigationMapped,
         DetailedOrganisationView: OrganisationDetailScreenMapped,
-        Participations: withMappedNavigationProps()(ParticipationBottomNavigation),
+        CheckIn: withMappedNavigationProps()(ParticipationCheckInScreen),
+        Applications: withMappedNavigationProps()(PartcipationListScreen),
     },
     {
         navigationOptions: ({ navigation }) => {

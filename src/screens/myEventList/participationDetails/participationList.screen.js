@@ -40,7 +40,7 @@ class _PartcipationListScreen extends Component<Props> {
         return (
             <View>
                 <Appbar.Header style={{ elevation: 0 }}>
-                    <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.dispatch(NavigationActions.back())} />
+                    <Appbar.BackAction icon="menu" onPress={() => this.props.navigation.goBack()} />
                     <Appbar.Content subtitle={this.props.screenProps.event.name} title={this.props.t('applications')} />
                 </Appbar.Header>
                 <ScrollView>
