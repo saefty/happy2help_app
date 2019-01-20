@@ -93,7 +93,7 @@ class _OrganisationEventList extends Component<Props, State> {
                                         left: 4,
                                     }}
                                 />
-                                <Appbar.Content title={organisation.name + " Events"} />
+                                <Appbar.Content  title="Events"  subtitle={organisation.name}/>
                             </Appbar.Header>
                             <KeyboardAwareScrollView>
                                 <View>

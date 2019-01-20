@@ -107,7 +107,7 @@ export default {
         your: 'Dein QR Code',
         info: 'Lass deinen QR Code vom Eventveranstalter scannen, um dich für das Event einzuchecken!',
     },
-    Image: {
+    Image: { 
         add: 'Füge ein Foto hinzu!',
         take: 'Foto schießen',
         gallery: 'Aus der Galerie auswählen',
