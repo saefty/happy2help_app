@@ -72,7 +72,7 @@ class EditProfileComponent extends Component<Props, State> {
     removePickedImage = () => {
         this.setState({ pickedImage: '' });
         this.hideModal();
-    }
+    };
 
     //functions to save changes in the db:
 
@@ -163,16 +163,19 @@ class EditProfileComponent extends Component<Props, State> {
 
     render() {
         return (
-            <KeyboardAwareScrollView ref={(ref: ScrollView) => {this.scrollView = ref}}>
-                <Formik initialValues={this.initialValues} onSubmit={this.onSubmit}>
-                    {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
-                        <View>
-                            <Appbar.Header style={styles.appbar}>
-                                <Appbar.Action icon="close" onPress={this.onClose} />
-                                <Appbar.Content title={this.props.t('editProfile')} />
-                                <Appbar.Action icon="check" onPress={handleSubmit} />
-                            </Appbar.Header>
-
+            <Formik initialValues={this.initialValues} onSubmit={this.onSubmit}>
+                {({ errors, handleChange, handleSubmit, isSubmitting, values, setFieldValue }) => (
+                    <View>
+                        <Appbar.Header style={styles.appbar}>
+                            <Appbar.Action icon="close" onPress={this.onClose} />
+                            <Appbar.Content title={this.props.t('editProfile')} />
+                            <Appbar.Action icon="check" onPress={handleSubmit} />
+                        </Appbar.Header>
+                        <KeyboardAwareScrollView
+                            ref={(ref: ScrollView) => {
+                                this.scrollView = ref;
+                            }}
+                        >
                             <ImagePicker
                                 visible={this.state.modalVisible}
                                 hideModal={this.hideModal}
@@ -183,10 +186,7 @@ class EditProfileComponent extends Component<Props, State> {
 
                             <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                                 <View style={{ flex: 1 }} />
-                                <ProfilePicture
-                                    style={styles.profilePicture}
-                                    src={this.state.pickedImage}
-                                />
+                                <ProfilePicture style={styles.profilePicture} src={this.state.pickedImage} />
                                 <View style={{ flex: 1, paddingBottom: 35, marginRight: 20 }}>
                                     <TouchableOpacity style={styles.circularButton} onPress={this.showModal}>
                                         <Icon name={'photo-camera'} size={30} color="#fff" />
@@ -224,10 +224,10 @@ class EditProfileComponent extends Component<Props, State> {
                                 }}
                                 scrollable={false}
                             />
-                        </View>
-                    )}
-                </Formik>
-            </KeyboardAwareScrollView>
+                        </KeyboardAwareScrollView>
+                    </View>
+                )}
+            </Formik>
         );
     }
 }

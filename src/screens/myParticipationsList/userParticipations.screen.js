@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
-import { Appbar } from 'react-native-paper';
+import { Appbar, Text, Button } from 'react-native-paper';
 import { UserParticipationsList } from '../../components/userParticipations/participationsList/userParticipationList';
 import { MyJobsDataProvider } from './myJobsProvider';
 import { Provider } from 'react-native-paper';
