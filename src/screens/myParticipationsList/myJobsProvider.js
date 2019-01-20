@@ -1,9 +1,11 @@
 // @flow
 import { Component } from 'react';
 import * as React from 'react';
-import { View } from 'react-native';
+import { View, ActivityIndicator, Platform } from 'react-native';
 import gql from 'graphql-tag';
 import { Query, graphql } from 'react-apollo';
+import { secondaryColor } from '../../../themes/colors';
+import { BASE_JOBSET } from '../../fragments';
 
 const GET_JOBS = gql`
     {
@@ -12,30 +14,19 @@ const GET_JOBS = gql`
             participationSet {
                 id
                 job {
-                    id
-                    name
-                    description
-                    totalPositions
+                    ...BASE_JOBSET
                     currentUsersParticipation {
                         id
                         state
-                    }
-                    requiresskillSet {
-                        id
-                        skill {
-                            id
-                            name
-                        }
                     }
                     participationSet {
                         id
                         state
                     }
                     event {
-                        start
                         id
+                        start
                         name
-                        description
                         creator {
                             id
                             username
@@ -46,8 +37,6 @@ const GET_JOBS = gql`
                         }
                         location {
                             id
-                            latitude
-                            longitude
                             name
                         }
                         organisation {
@@ -63,6 +52,7 @@ const GET_JOBS = gql`
             }
         }
     }
+    ${BASE_JOBSET}
 `;
 
 type Props = {
@@ -78,7 +68,12 @@ export class MyJobsDataProvider extends Component<Props> {
         return (
             <Query query={GET_JOBS}>
                 {({ loading, error, data, refetch }) => {
-                    if (!data.user && (loading || error)) return null;
+                    if (!data || !data.user)
+                        return (
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                <ActivityIndicator size={Platform.select({ ios: 0, android: 45 })} color={secondaryColor} />
+                            </View>
+                        );
                     return this.props.children(data.user, refetch);
                 }}
             </Query>

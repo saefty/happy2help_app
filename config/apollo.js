@@ -83,7 +83,7 @@ export const createApolloConfiguration = async () => {
     const defaultOptions = {
         watchQuery: {
             fetchPolicy: 'cache-and-network',
-            errorPolicy: 'ignore',
+            errorPolicy: 'all',
         },
         query: {
             fetchPolicy: 'cache-and-network',
