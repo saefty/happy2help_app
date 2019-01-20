@@ -108,42 +108,42 @@ class _MyOrganisationScreen extends Component<Props, any> {
             <View>
                 <NavigationEvents onWillFocus={() => this.refresh()} />
 
-                <ScrollView>
-                    <Query query={ORGANISATION_QUERY} variables={{ id: orgaId }}>
-                        {({ error, data, loading, refetch }) => {
-                            if (error || loading) return <View />;
-                            return (
-                                <View>
-                                    <NavigationEvents onWillFocus={refetch} />
+                <Query query={ORGANISATION_QUERY} variables={{ id: orgaId }}>
+                    {({ error, data, loading, refetch }) => {
+                        if (error || loading) return <View />;
+                        return (
+                            <View>
+                                <NavigationEvents onWillFocus={refetch} />
 
-                                    <Appbar.Header>
-                                        <IconButton
-                                            icon={() => <IconMat name="menu" size={24} color={'#fff'} />}
-                                            onPress={() => this.props.navigation.openDrawer()}
-                                            style={{
-                                                alignSelf: 'center',
-                                                left: 4,
-                                            }}
-                                        />
-                                        <Appbar.Content title={data.organisation.name} subtitle={this.props.t('organization')} />
+                                <Appbar.Header>
+                                    <IconButton
+                                        icon={() => <IconMat name="menu" size={24} color={'#fff'} />}
+                                        onPress={() => this.props.navigation.openDrawer()}
+                                        style={{
+                                            alignSelf: 'center',
+                                            left: 4,
+                                        }}
+                                    />
+                                    <Appbar.Content title={data.organisation.name} subtitle={this.props.t('organization')} />
 
-                                        {this.renderAddButton(data.organisation.admin.id, orgaId, data.organisation.name)}
+                                    {this.renderAddButton(data.organisation.admin.id, orgaId, data.organisation.name)}
 
-                                        <Appbar.Action
-                                            icon="edit"
-                                            onPress={() => {
-                                                this.props.navigation.navigate('Edit', {
-                                                    organisation: data.organisation,
-                                                });
-                                            }}
-                                        />
-                                    </Appbar.Header>
+                                    <Appbar.Action
+                                        icon="edit"
+                                        onPress={() => {
+                                            this.props.navigation.navigate('Edit', {
+                                                organisation: data.organisation,
+                                            });
+                                        }}
+                                    />
+                                </Appbar.Header>
+                                <ScrollView>
                                     <OrganisationView organisation={data.organisation} />
-                                </View>
-                            );
-                        }}
-                    </Query>
-                </ScrollView>
+                                </ScrollView>
+                            </View>
+                        );
+                    }}
+                </Query>
             </View>
         );
     }
