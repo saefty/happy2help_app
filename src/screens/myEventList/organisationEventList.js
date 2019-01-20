@@ -45,8 +45,14 @@ class _OrganisationEventList extends Component<Props, State> {
         });
     };
 
-    onEventParticipation = (event: EventObject, refetch: () => void) => {
-        this.props.navigation.navigate('Participations', {
+    onEventCheckIn = (event: EventObject, refetch: () => void) => {
+        this.props.navigation.navigate('CheckIn', {
+            screenProps: { event, refetch },
+        });
+    };
+
+    onEventApplications = (event: EventObject, refetch: () => void) => {
+        this.props.navigation.navigate('Applications', {
             screenProps: { event, refetch },
         });
     };
@@ -72,50 +78,54 @@ class _OrganisationEventList extends Component<Props, State> {
         const orgaId = this.state.orgaId;
         if (!orgaId) return <View />;
         return (
-            <PaperProvider theme={H2HTheme}>
-                <NavigationEvents onWillFocus={() => this.refresh()} />
-                <Appbar.Header>
-                    <IconButton
-                        icon={() => <IconMat name="menu" size={24} color={'#fff'} />}
-                        onPress={() => this.props.navigation.openDrawer()}
-                        style={{
-                            alignSelf: 'center',
-                            left: 4,
-                        }}
-                    />
-                    <Appbar.Content title={this.props.t('myEvents')} />
-                </Appbar.Header>
-                <KeyboardAwareScrollView>
-                    <OrganisationEventDataProvider id={orgaId}>
-                        {(organisation, refetch) => {
-                            <NavigationEvents onWillFocus={refetch} />;
-                            return (
+            <OrganisationEventDataProvider id={orgaId}>
+                {(organisation, refetch) => {
+                    <NavigationEvents onWillFocus={refetch} />;
+                    return (
+                        <PaperProvider theme={H2HTheme}>
+                            <NavigationEvents onWillFocus={() => this.refresh()} />
+                            <Appbar.Header>
+                                <IconButton
+                                    icon={() => <IconMat name="menu" size={24} color={'#fff'} />}
+                                    onPress={() => this.props.navigation.openDrawer()}
+                                    style={{
+                                        alignSelf: 'center',
+                                        left: 4,
+                                    }}
+                                />
+                                <Appbar.Content  title="Events"  subtitle={organisation.name}/>
+                            </Appbar.Header>
+                            <KeyboardAwareScrollView>
                                 <View>
                                     <Headline>{}</Headline>
                                     <UserEventList
                                         events={organisation.eventSet}
                                         onEventTouch={this.openEventModal}
                                         onEventEdit={this.onEventEdit}
-                                        onEventParticipation={event => {
-                                            this.onEventParticipation(event, refetch);
+                                        onEventCheckIn={event => {
+                                            this.onEventCheckIn(event, refetch);
+                                        }}
+                                        onEventApplications={event => {
+                                            this.onEventApplications(event, refetch);
                                         }}
                                     />
                                     <Portal>
                                         <FAB
-                                        icon="add"
-                                        style={{ position: 'absolute', bottom: 0, right: 0, margin: 20 }}
-                                        onPress={() =>
-                                            this.props.navigation.navigate('EditEvent', {
-                                                orgaId: orgaId,
-                                            })}
-                                         />
+                                            icon="add"
+                                            style={{ position: 'absolute', bottom: 0, right: 0, margin: 20 }}
+                                            onPress={() =>
+                                                this.props.navigation.navigate('EditEvent', {
+                                                    orgaId: orgaId,
+                                                })
+                                            }
+                                        />
                                     </Portal>
                                 </View>
-                            );
-                        }}
-                    </OrganisationEventDataProvider>
-                </KeyboardAwareScrollView>
-            </PaperProvider>
+                            </KeyboardAwareScrollView>
+                        </PaperProvider>
+                    );
+                }}
+            </OrganisationEventDataProvider>
         );
     }
 }

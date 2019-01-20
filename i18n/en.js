@@ -49,6 +49,8 @@ export default {
         editSuccess: 'Successfully updated the event: ',
         totalPositions: 'Number of total positions',
         away: 'away',
+        edit: 'Edit',
+        applications:  'Applications',
     },
     Organisation: {
         organization: 'Organization',

@@ -49,6 +49,8 @@ export default {
         editSuccess: 'Event wurde erfolgreich bearbeitet: ',
         totalPositions: 'Anzahl der Stellen',
         away: 'entfernt',
+        edit: 'Bearbeiten',
+        applications:  'Bewerbungen',
     },
     Organisation: {
         organization: 'Organisation',
@@ -106,10 +108,10 @@ export default {
         your: 'Dein QR Code',
         info: 'Lass deinen QR Code vom Eventveranstalter scannen, um dich für das Event einzuchecken!',
     },
-    Image: {
+    Image: { 
         add: 'Füge ein Foto hinzu!',
         take: 'Foto schießen',
-        gallery: 'Aus der Gallerie auswählen',
+        gallery: 'Aus der Galerie auswählen',
         remove: 'Foto löschen',
         deleteSuccess: 'Dein Foto wurde erfolgreich entfernt!',
     },
