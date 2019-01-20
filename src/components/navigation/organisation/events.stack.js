@@ -12,7 +12,7 @@ import { PartcipationListScreen } from '../../../screens/myEventList/participati
 export const OrganisationEventsStackNavigation = createStackNavigator(
     {
         ViewOrgaEvents: OrganisationEventList,
-        EditEventFromOrga: EditEventFormNamespaced,
+        Edit: EditEventFormNamespaced,
         DetailedEventView: EventDetailModalNavigationMapped,
         DetailedOrganisationView: OrganisationDetailScreenMapped,
         CheckIn: withMappedNavigationProps()(ParticipationCheckInScreen),
