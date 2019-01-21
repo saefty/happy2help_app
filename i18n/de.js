@@ -112,4 +112,8 @@ export default {
         remove: 'Foto löschen',
         deleteSuccess: 'Dein Foto wurde erfolgreich entfernt!',
     },
+    Date: {
+        start: 'Anfang',
+        end: 'Ende',
+    },
 };

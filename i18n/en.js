@@ -118,4 +118,8 @@ export default {
         remove: 'Remove photo',
         deleteSuccess: 'Profile picture was removed successfully!',
     },
+    Date: {
+        start: 'From',
+        end: 'To',
+    },
 };

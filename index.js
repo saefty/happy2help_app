@@ -22,6 +22,8 @@ import { requestPermission } from './src/helpers/requestPermission';
 import { Sentry } from 'react-native-sentry';
 import { SentryConfig } from './config/sentry';
 import { AppState, Platform } from 'react-native';
+import moment from 'moment';
+import 'moment/locale/de';
 
 type I18nProps = {
     t: i18n.t,
@@ -46,6 +48,7 @@ export default class AppApollo extends Component<I18nProps, State> {
 
     constructor(props: I18nProps) {
         super(props);
+        moment.locale(RNLanguages.language);
         RNLanguages.addEventListener('change', this.onLanguageChange);
     }
 
@@ -145,8 +148,10 @@ export default class AppApollo extends Component<I18nProps, State> {
         // i18n.changeLanguage(language);
         if (i18n.language === 'de') {
             i18n.changeLanguage('en');
+            moment.locale('en');
         } else {
             i18n.changeLanguage('de');
+            moment.locale('de');
         }
     }
 
