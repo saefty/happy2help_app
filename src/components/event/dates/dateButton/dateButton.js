@@ -34,7 +34,7 @@ export default class DateButton extends Component<Props, State> {
 
     hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
-    handleDatePicked = date => {
+    handleDatePicked = (date: Date) => {
         this.props.updateDate(date);
         this.hideDateTimePicker();
     };
