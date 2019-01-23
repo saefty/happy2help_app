@@ -48,7 +48,7 @@ export default class AppApollo extends Component<I18nProps, State> {
 
     constructor(props: I18nProps) {
         super(props);
-        moment.locale(RNLanguages.language);
+        moment.locale(RNLanguages.language === 'de-DE' ? 'de' : 'en');
         RNLanguages.addEventListener('change', this.onLanguageChange);
     }
 
@@ -146,12 +146,12 @@ export default class AppApollo extends Component<I18nProps, State> {
     onLanguageChange(language: any) {
         // eslint-disable-line
         // i18n.changeLanguage(language);
-        if (i18n.language === 'de') {
-            i18n.changeLanguage('en');
-            moment.locale('en');
-        } else {
+        if (i18n.language === 'de-DE') {
             i18n.changeLanguage('de');
             moment.locale('de');
+        } else {
+            i18n.changeLanguage('en');
+            moment.locale('en');
         }
     }
 
