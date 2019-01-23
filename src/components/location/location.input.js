@@ -41,12 +41,8 @@ export class GooglePlacesInput extends PureComponent<Props, State> {
 
     setResults = async ({ search }: any, text: string) => {
         this.setState({ text });
-        if (text === '') {
-            this.props.onChangeValue('');
-        } else {
-            const results = await search(text);
-            this.setState({ predictions: results.predictions });
-        }
+        const results = await search(text);
+        this.setState({ predictions: results.predictions });
     };
 
     setSelectedPlace = (p: any, fetchedPlace: any) => {
