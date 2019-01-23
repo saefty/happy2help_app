@@ -159,7 +159,6 @@ export class EventDetailModal extends Component<Props> {
                             <Appbar.Header>
                                 <Appbar.Action icon="close" onPress={() => this.props.navigation.goBack()} />
                                 <Appbar.Content title={data.event.name} subtitle="Event" />
-                                <Appbar.Action icon="edit" onPress={() => this.props.navigation.navigate('Edit', { event: data.event })} />
                             </Appbar.Header>
                             <ScrollView>
                                 {this.renderImage(data.event)}
