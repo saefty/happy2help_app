@@ -160,7 +160,7 @@ class _EditEventForm extends Component<Props, State> {
                     name: x.name,
                     description: x.description,
                     totalPositions: x.totalPositions || undefined,
-                    requiredSkills: x.requiresskillSet.map(x => x.skill.name),
+                    requiredSkills: (x.requiresskillSet || []).map(x => x.skill.name),
                 }))
                 .map(x => {
                     let newJob = clone(x);
