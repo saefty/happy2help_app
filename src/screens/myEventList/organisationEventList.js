@@ -40,7 +40,7 @@ class _OrganisationEventList extends Component<Props, State> {
     };
 
     onEventEdit = (event: EventObject) => {
-        this.props.navigation.navigate('EditEventFromOrga', {
+        this.props.navigation.navigate('Edit', {
             event: event,
         });
     };
