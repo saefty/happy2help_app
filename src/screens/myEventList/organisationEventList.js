@@ -114,7 +114,7 @@ class _OrganisationEventList extends Component<Props, State> {
                                             icon="add"
                                             style={{ position: 'absolute', bottom: 0, right: 0, margin: 20 }}
                                             onPress={() =>
-                                                this.props.navigation.navigate('EditEventFromOrga', {
+                                                this.props.navigation.navigate('Edit', {
                                                     orgaId: orgaId,
                                                 })
                                             }
