@@ -81,7 +81,7 @@ export class GooglePlacesInput extends PureComponent<Props, State> {
                                 value={this.state.text}
                                 error={this.props.error}
                                 onChangeText={text => this.setResults(props, text)}
-                                onFocus={() => this.props.onFocus()}
+                                onFocus={() => this.props.onFocus && this.props.onFocus()}
                             />
                             <KeyboardAwareFlatList
                                 data={this.state.predictions}
