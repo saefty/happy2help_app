@@ -41,12 +41,8 @@ export class GooglePlacesInput extends PureComponent<Props, State> {
 
     setResults = async ({ search }: any, text: string) => {
         this.setState({ text });
-        if (text === '') {
-            this.props.onChangeValue('');
-        } else {
-            const results = await search(text);
-            this.setState({ predictions: results.predictions });
-        }
+        const results = await search(text);
+        this.setState({ predictions: results.predictions });
     };
 
     setSelectedPlace = (p: any, fetchedPlace: any) => {
@@ -81,7 +77,7 @@ export class GooglePlacesInput extends PureComponent<Props, State> {
                                 value={this.state.text}
                                 error={this.props.error}
                                 onChangeText={text => this.setResults(props, text)}
-                                onFocus={() => this.props.onFocus()}
+                                onFocus={() => this.props.onFocus && this.props.onFocus()}
                             />
                             <KeyboardAwareFlatList
                                 data={this.state.predictions}
