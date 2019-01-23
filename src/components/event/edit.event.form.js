@@ -313,7 +313,7 @@ class _EditEventForm extends Component<Props, State> {
                                         {errors.description}
                                     </HelperText>
                                     <GooglePlacesInput
-                                        onTextChange={() => {
+                                        onFocus={() => {
                                             this.scrollView.scrollToEnd();
                                         }}
                                         onChangeValue={v => {
