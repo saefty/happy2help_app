@@ -8,11 +8,11 @@ import { neutralColors } from '../../../../themes/colors';
 import { primaryColor } from '../../../../themes/colors';
 import { withTheme } from 'react-native-paper';
 import { styles } from './dateRangeButtons.style';
-
 import DateButton from './dateButton/dateButton';
-import moment from 'moment';
+import { withNamespaces, i18n } from 'react-i18next';
 
 type Props = {
+    t: i18n.t,
     startDate: Date,
     endDate: Date,
     updateStart: (date: Date) => void,
@@ -41,12 +41,12 @@ class DateRangeButtons extends Component<Props> {
             <View style={styles.headlines}>
                 <View style={styles.headline}>
                     <Text style={[{ color: this.props.errorMessage ? paperColors.error : paperColors.text }, styles.headlineText]}>
-                        Start
+                        {this.props.t('start')}
                     </Text>
                 </View>
                 <View style={{ width: '50%' }}>
                     <Text style={[{ color: this.props.errorMessage ? paperColors.error : paperColors.text }, styles.headlineText]}>
-                        Ende
+                        {this.props.t('end')}
                     </Text>
                 </View>
             </View>
@@ -100,4 +100,4 @@ class DateRangeButtons extends Component<Props> {
     }
 }
 
-export default withTheme(DateRangeButtons);
+export default withNamespaces('Date')(withTheme(DateRangeButtons));
