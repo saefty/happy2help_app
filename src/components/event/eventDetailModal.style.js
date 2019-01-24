@@ -18,8 +18,8 @@ export const styles = StyleSheet.create({
         padding: 8,
     },
     dateContainer: {
-        minWidth: 60,
-        maxWidth: 80,
+        minWidth: 65,
+        maxWidth: 85,
         marginLeft: 5,
         marginRight: 5,
         marginTop: 10,
