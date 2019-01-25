@@ -24,6 +24,7 @@ import { SentryConfig } from './config/sentry';
 import { AppState, Platform } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/de';
+import { UserGuide } from './src/screens/userguide.sceen';
 
 type I18nProps = {
     t: i18n.t,
@@ -32,6 +33,7 @@ type State = {
     apolloClient: ApolloClient,
     loggedIn: boolean,
     appState: AppState.AppStateStatic,
+    shownUserGuide: boolean,
 };
 
 Sentry.config(SentryConfig.link, SentryConfig.props);
@@ -44,24 +46,22 @@ export default class AppApollo extends Component<I18nProps, State> {
         apolloClient: {},
         loggedIn: false, // Be optimistic and hope the user is logged in
         appState: AppState.currentState,
+        shownUserGuide: false,
     };
 
     constructor(props: I18nProps) {
-        super(props);  
+        super(props);
         this.setUpMoment();
         RNLanguages.addEventListener('change', this.onLanguageChange);
     }
-    
+
     setUpMoment() {
         moment.updateLocale('de', {
-            monthsShort : [
-                "Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
-                "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"
-            ]
+            monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
         });
         moment.locale(RNLanguages.language === 'de-DE' ? 'de' : 'en');
     }
-    
+
     async componentDidMount() {
         if (Platform.OS !== 'ios') {
             await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
@@ -169,7 +169,9 @@ export default class AppApollo extends Component<I18nProps, State> {
         // Blank screen if apollo was not started
         if (!this.state.apolloClient.query) return <View />;
         let path;
-        if (this.state.loggedIn === false) {
+        if (!this.state.shownUserGuide && this.state.loggedIn === false) {
+            path = <UserGuide done={() => this.setState({ shownUserGuide: true })} />;
+        } else if (this.state.loggedIn === false) {
             path = <AuthScreen logIn={this.logIn} logOut={this.logOut} />;
         } else {
             path = <App logOut={this.logOut} />;
