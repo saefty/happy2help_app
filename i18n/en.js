@@ -1,4 +1,18 @@
 export default {
+    UserGuide: {
+        mapTitle: 'Events nearby',
+        mapSubtitle: 'Just become volunteer and be flexible!',
+        eventListTitle: 'Search for Events',
+        eventListSubtitle: 'Search and filter Events according to your skills.',
+        eventDetailTitle: 'Apply to Events',
+        eventDetailSubtitle: 'If you have found a suitable Event, you can easily apply.',
+        orgaTitle: 'Organisations',
+        orgaSubtitle: 'See an organisation to learn more and find other events.',
+        createEventTitle: 'Do not go away empty-handed!',
+        createEventSubtitle: "Once you've participated in an Event, you'll earn helpers points. Create own events for helper points",
+        next: 'Next',
+        done: 'Done',
+    },
     common: {
         title: 'Deutsch',
         welcome: 'Welcome to Happy to Help',
@@ -51,7 +65,7 @@ export default {
         totalPositions: 'Number of total positions',
         away: 'away',
         edit: 'Edit',
-        applications:  'Applications',
+        applications: 'Applications',
     },
     Organisation: {
         organization: 'Organization',
