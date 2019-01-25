@@ -1,4 +1,19 @@
 export default {
+    UserGuide: {
+        mapTitle: 'Events in deiner nähe',
+        mapSubtitle: 'Werde ganz einfach ehrenamtlich und flexibel tätig!',
+        eventListTitle: 'Durchsuche Events',
+        eventListSubtitle: 'Suche und filtere Events nach deinen Fähigkeiten.',
+        eventDetailTitle: 'Bewerbe dich auf Events',
+        eventDetailSubtitle: 'Hast du ein passendes Event gefunden kannst du dich spielend einfach bewerben.',
+        orgaTitle: 'Organisationen',
+        orgaSubtitle: 'Betrachte eine Organisation, um mehr zu erfahren und weitere Events zu finden.',
+        createEventTitle: 'Gehe nicht leer aus!',
+        createEventSubtitle:
+            'Sobald du an einem Event teilgenommen hast, verdienst du dir Helferpunkte. Erstelle für Helferpunkte eigene Events',
+        next: 'Weiter',
+        done: 'Fertig',
+    },
     common: {
         title: 'Englisch',
         welcome: 'Willkommen bei Happy to Help',
@@ -51,7 +66,7 @@ export default {
         totalPositions: 'Anzahl der Stellen',
         away: 'entfernt',
         edit: 'Bearbeiten',
-        applications:  'Bewerbungen',
+        applications: 'Bewerbungen',
     },
     Organisation: {
         organization: 'Organisation',
@@ -109,7 +124,7 @@ export default {
         your: 'Dein QR Code',
         info: 'Lass deinen QR Code vom Eventveranstalter scannen, um dich für das Event einzuchecken!',
     },
-    Image: { 
+    Image: {
         add: 'Füge ein Foto hinzu!',
         take: 'Foto schießen',
         gallery: 'Aus der Galerie auswählen',
