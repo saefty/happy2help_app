@@ -51,6 +51,7 @@ export default class AppApollo extends Component<I18nProps, State> {
         this.setUpMoment();
         RNLanguages.addEventListener('change', this.onLanguageChange);
     }
+    
     setUpMoment() {
         moment.updateLocale('de', {
             monthsShort : [
@@ -60,6 +61,7 @@ export default class AppApollo extends Component<I18nProps, State> {
         });
         moment.locale(RNLanguages.language === 'de-DE' ? 'de' : 'en');
     }
+    
     async componentDidMount() {
         if (Platform.OS !== 'ios') {
             await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
