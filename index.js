@@ -47,11 +47,21 @@ export default class AppApollo extends Component<I18nProps, State> {
     };
 
     constructor(props: I18nProps) {
-        super(props);
-        moment.locale(RNLanguages.language === 'de-DE' ? 'de' : 'en');
+        super(props);  
+        this.setUpMoment();
         RNLanguages.addEventListener('change', this.onLanguageChange);
     }
-
+    
+    setUpMoment() {
+        moment.updateLocale('de', {
+            monthsShort : [
+                "Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
+                "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"
+            ]
+        });
+        moment.locale(RNLanguages.language === 'de-DE' ? 'de' : 'en');
+    }
+    
     async componentDidMount() {
         if (Platform.OS !== 'ios') {
             await requestPermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
