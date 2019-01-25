@@ -18,7 +18,8 @@ export const styles = StyleSheet.create({
         padding: 8,
     },
     dateContainer: {
-        width: 60,
+        minWidth: 65,
+        maxWidth: 85,
         marginLeft: 5,
         marginRight: 5,
         marginTop: 10,
@@ -33,7 +34,7 @@ export const styles = StyleSheet.create({
     dateDay: {
         width: '100%',
         textAlign: 'center',
-        fontSize: 36,
+        fontSize: 34,
         marginBottom: 2,
     },
     dates: {
