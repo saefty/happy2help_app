@@ -36,6 +36,12 @@ class _PartcipationListScreen extends Component<Props> {
         super(props);
     }
 
+    _openProfile = (id: number) => {
+        this.props.navigation.navigate('ViewParticipant', {
+            userId: id,
+        });
+    };
+
     render() {
         return (
             <View>
@@ -47,7 +53,7 @@ class _PartcipationListScreen extends Component<Props> {
                     <Query query={PARTICIPATION_LIST_QUERY} variables={{ id: this.props.screenProps.event.id }}>
                         {({ data, loading, error }) => {
                             if (loading || error) return null;
-                            return <ApplicantsView event={data.event} />;
+                            return <ApplicantsView event={data.event} onUserPress={this._openProfile} />;
                         }}
                     </Query>
                 </ScrollView>

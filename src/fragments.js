@@ -58,3 +58,25 @@ export const BASE_JOBSET = gql`
         }
     }
 `;
+
+export const BASE_USER = gql`
+    fragment BASE_USER on UserType {
+        id
+        username
+        profile {
+            location {
+                name
+            }
+            creditPoints
+        }
+        skills {
+            id
+            name
+            approved
+        }
+        image {
+            id
+            url
+        }
+    }
+`;

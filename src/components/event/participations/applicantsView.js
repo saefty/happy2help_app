@@ -10,6 +10,7 @@ import * as mutations from './participation.mutation';
 type Props = {
     event: EventObject,
     updateParticipation: graphql.mutate,
+    onUserPress: (id: number) => void,
 };
 
 class _ApplicantsView extends Component<Props> {
@@ -35,7 +36,13 @@ class _ApplicantsView extends Component<Props> {
         return (
             <View>
                 {this.props.event.jobSet.map(job => (
-                    <ApplicantList key={job.id} title={job.name} participationSet={job.participationSet} handleChange={this.handleChange} />
+                    <ApplicantList
+                        key={job.id}
+                        title={job.name}
+                        participationSet={job.participationSet}
+                        onUserPress={this.props.onUserPress}
+                        handleChange={this.handleChange}
+                    />
                 ))}
             </View>
         );
