@@ -12,6 +12,7 @@ type Props = {
     title: string,
     participationSet: Array<Participation>,
     handleChange: (id: number, state: number) => any,
+    onUserPress: (id: number) => void,
 };
 
 export class ApplicantList extends Component<Props> {
@@ -24,9 +25,18 @@ export class ApplicantList extends Component<Props> {
         else
             return (
                 <View>
-                    <Accordion title={this.props.title} expansion={false} icon={'work'}>
+                    <Accordion title={this.props.title} expansion={this.props.participationSet.length <= 5} icon={'work'}>
                         {this.props.participationSet.map(p => (
-                            <ApplicantCard key={p.id} id={p.id} user={p.user} state={p.state} handleChange={this.props.handleChange} />
+                            <ApplicantCard
+                                key={p.id}
+                                id={p.id}
+                                user={p.user}
+                                state={p.state}
+                                onPress={() => {
+                                    this.props.onUserPress(p.user.id);
+                                }}
+                                handleChange={this.props.handleChange}
+                            />
                         ))}
                     </Accordion>
                 </View>

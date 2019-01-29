@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { BASE_EVENT, BASE_ORGANISATION, BASE_JOBSET } from '../../fragments';
+import { BASE_EVENT, BASE_ORGANISATION, BASE_JOBSET, BASE_USER } from '../../fragments';
 
 export const EVENT_DETAIL_DATA_FRAGMENT = gql`
     fragment FULL_EVENT_DATA on EventType {
@@ -10,6 +10,9 @@ export const EVENT_DETAIL_DATA_FRAGMENT = gql`
         }
         organisation {
             ...BASE_ORGANISATION
+        }
+        creator {
+            ...BASE_USER
         }
         jobSet {
             ...BASE_JOBSET
@@ -29,6 +32,7 @@ export const EVENT_DETAIL_DATA_FRAGMENT = gql`
     ${BASE_EVENT}
     ${BASE_ORGANISATION}
     ${BASE_JOBSET}
+    ${BASE_USER}
 `;
 
 export const EVENT_DETAIL_QUERY = gql`

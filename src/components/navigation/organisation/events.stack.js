@@ -8,6 +8,7 @@ import { OrganisationDetailScreenMapped } from '../../../screens/organisation/or
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import { ParticipationCheckInScreen } from '../../../screens/myEventList/participationDetails/participationCheckIn.screen';
 import { PartcipationListScreen } from '../../../screens/myEventList/participationDetails/participationList.screen';
+import { ViewParticipantScreen } from '../../../screens/myProfile/view/viewParticipant.screen';
 
 export const OrganisationEventsStackNavigation = createStackNavigator(
     {
@@ -17,6 +18,7 @@ export const OrganisationEventsStackNavigation = createStackNavigator(
         DetailedOrganisationView: OrganisationDetailScreenMapped,
         CheckIn: withMappedNavigationProps()(ParticipationCheckInScreen),
         Applications: withMappedNavigationProps()(PartcipationListScreen),
+        ViewParticipant: withMappedNavigationProps()(ViewParticipantScreen),
     },
     {
         navigationOptions: ({ navigation }) => {
