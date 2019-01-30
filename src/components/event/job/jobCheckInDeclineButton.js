@@ -25,7 +25,7 @@ export const JobCheckInDeclineButton = (props: any) => {
                             disabled={!declineEnabled}
                             onPress={() => props.decline(mutate)}
                         >
-                            Decline
+                            Ablehnen
                         </Button>
                         <Button disabled={!acceptEnabled} mode="contained" onPress={() => props.checkin(mutate)}>
                             Check-in
