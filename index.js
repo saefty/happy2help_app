@@ -1,7 +1,7 @@
 /** @format */
 // @flow
 import React, { Component } from 'react';
-import { AppRegistry, View, AsyncStorage, PermissionsAndroid } from 'react-native';
+import { AppRegistry, View, AsyncStorage, PermissionsAndroid, StatusBar } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -24,6 +24,8 @@ import { SentryConfig } from './config/sentry';
 import { AppState, Platform } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/de';
+import { UserGuide } from './src/screens/userguide.sceen';
+import { secondaryColor } from './themes/colors';
 
 type I18nProps = {
     t: i18n.t,
@@ -32,6 +34,7 @@ type State = {
     apolloClient: ApolloClient,
     loggedIn: boolean,
     appState: AppState.AppStateStatic,
+    shownUserGuide: boolean,
 };
 
 Sentry.config(SentryConfig.link, SentryConfig.props);
@@ -44,12 +47,20 @@ export default class AppApollo extends Component<I18nProps, State> {
         apolloClient: {},
         loggedIn: false, // Be optimistic and hope the user is logged in
         appState: AppState.currentState,
+        shownUserGuide: false,
     };
 
     constructor(props: I18nProps) {
         super(props);
-        moment.locale(RNLanguages.language === 'de-DE' ? 'de' : 'en');
+        this.setUpMoment();
         RNLanguages.addEventListener('change', this.onLanguageChange);
+    }
+
+    setUpMoment() {
+        moment.updateLocale('de', {
+            monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'],
+        });
+        moment.locale(RNLanguages.language === 'de-DE' ? 'de' : 'en');
     }
 
     async componentDidMount() {
@@ -159,7 +170,9 @@ export default class AppApollo extends Component<I18nProps, State> {
         // Blank screen if apollo was not started
         if (!this.state.apolloClient.query) return <View />;
         let path;
-        if (this.state.loggedIn === false) {
+        if (!this.state.shownUserGuide && this.state.loggedIn === false) {
+            path = <UserGuide done={() => this.setState({ shownUserGuide: true })} />;
+        } else if (this.state.loggedIn === false) {
             path = <AuthScreen logIn={this.logIn} logOut={this.logOut} />;
         } else {
             path = <App logOut={this.logOut} />;
@@ -167,6 +180,8 @@ export default class AppApollo extends Component<I18nProps, State> {
 
         return (
             <PaperProvider theme={H2HTheme}>
+                <StatusBar backgroundColor={secondaryColor} />
+
                 <ApolloProvider client={this.state.apolloClient} screenProps={this.props.t}>
                     {path}
                 </ApolloProvider>

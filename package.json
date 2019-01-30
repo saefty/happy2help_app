@@ -43,6 +43,7 @@
     "react-apollo": "^2.2.3",
     "react-i18next": "^8.1.2",
     "react-native": "0.57.1",
+    "react-native-app-intro-slider": "^1.0.1",
     "react-native-camera": "^1.5.1",
     "react-native-config": "^0.11.5",
     "react-native-flash-message": "^0.1.10",

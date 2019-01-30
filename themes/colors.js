@@ -1,10 +1,7 @@
 import color from 'color';
 export const primaryColor = '#0277BD';
-export const secondaryColor = '#607D8B';
-export const primaryStatusBar = color(primaryColor)
-    .darken(0.5)
-    .rgb()
-    .string();
+export const secondaryColor = '#014771';
+export const primaryStatusBar = '#014771';
 
 export const statusColors = {
     success: '#4cab00',
@@ -28,8 +25,7 @@ export const neutralTextColors = {
     light: '#BDBDBD',
     medium: '#757575',
     dark: '#424242',
-
-}
+};
 
 export const filterColors = {
     active: primaryColor,

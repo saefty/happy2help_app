@@ -1,8 +1,8 @@
 // @flow
 
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { Card, Title, Paragraph, Button } from 'react-native-paper';
+import { View, TouchableOpacity } from 'react-native';
+import { Card, Title, Paragraph, Button, Text } from 'react-native-paper';
 import type { UserObject } from '../../../models/user.model';
 import type { ParticipationEnum } from '../../../models/participation.model';
 import { getParticipationType, participationTypes } from '../../../models/participation.model';
@@ -14,6 +14,7 @@ type Props = {
     user?: UserObject,
     state: ParticipationEnum,
     handleChange: (id: number, state: number) => any,
+    onPress: () => void,
 };
 
 export class ApplicantCard extends Component<Props> {
@@ -59,7 +60,10 @@ export class ApplicantCard extends Component<Props> {
             <Card>
                 <Card.Content>
                     <View style={styles.header}>
-                        <Title style={styles.headerTitle}>{this.props.user.username}</Title>
+                        <Button mode="text" onPress={this.props.onPress}>
+                            <Text style={styles.headerTitle}>{this.props.user.username}</Text>
+                        </Button>
+
                         <Paragraph style={[styles.text, this.styleParticipationState()]}>
                             {getParticipationType(this.props.state)}
                         </Paragraph>

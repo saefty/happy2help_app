@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { primaryStatusBar, statusColors, neutralColors } from '../../../../themes/colors';
+import { primaryStatusBar, statusColors, neutralColors, primaryColor } from '../../../../themes/colors';
 
 export const styles = StyleSheet.create({
     accept: {
@@ -31,8 +31,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     headerTitle: {
-        color: '#000',
-        fontSize: 25,
+        fontSize: 30,
+        color: primaryColor,
     },
     text: {
         fontSize: 15,
