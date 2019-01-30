@@ -31,11 +31,11 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     headerTitle: {
-        fontSize: 30,
+        fontSize: 25,
         color: primaryColor,
     },
     text: {
-        fontSize: 15,
+        fontSize: 12,
     },
     textApplied: {
         color: primaryStatusBar,
