@@ -1,7 +1,7 @@
 /** @format */
 // @flow
 import React, { Component } from 'react';
-import { AppRegistry, View, AsyncStorage, PermissionsAndroid } from 'react-native';
+import { AppRegistry, View, AsyncStorage, PermissionsAndroid, StatusBar } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -25,6 +25,7 @@ import { AppState, Platform } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/de';
 import { UserGuide } from './src/screens/userguide.sceen';
+import { secondaryColor } from './themes/colors';
 
 type I18nProps = {
     t: i18n.t,
@@ -179,6 +180,8 @@ export default class AppApollo extends Component<I18nProps, State> {
 
         return (
             <PaperProvider theme={H2HTheme}>
+                <StatusBar backgroundColor={secondaryColor} />
+
                 <ApolloProvider client={this.state.apolloClient} screenProps={this.props.t}>
                     {path}
                 </ApolloProvider>
