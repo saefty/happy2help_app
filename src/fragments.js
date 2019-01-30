@@ -72,7 +72,6 @@ export const BASE_USER = gql`
         skills {
             id
             name
-            approved
         }
         image {
             id
