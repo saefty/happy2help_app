@@ -1,10 +1,10 @@
 export default {
     UserGuide: {
-        mapTitle: 'Events in deiner nähe',
+        mapTitle: 'Events in deiner Nähe',
         mapSubtitle: 'Werde ganz einfach ehrenamtlich und flexibel tätig!',
         eventListTitle: 'Durchsuche Events',
         eventListSubtitle: 'Suche und filtere Events nach deinen Fähigkeiten.',
-        eventDetailTitle: 'Bewerbe dich auf Events',
+        eventDetailTitle: 'Bewirb dich auf Events',
         eventDetailSubtitle: 'Hast du ein passendes Event gefunden kannst du dich spielend einfach bewerben.',
         orgaTitle: 'Organisationen',
         orgaSubtitle: 'Betrachte eine Organisation, um mehr zu erfahren und weitere Events zu finden.',
