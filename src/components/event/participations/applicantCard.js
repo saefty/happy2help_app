@@ -27,7 +27,7 @@ export class ApplicantCard extends Component<Props> {
                 color={statusColors.success}
                 onPress={() => this.props.handleChange(this.props.id, participationTypes.Accepted)}
             >
-                ACCEPT
+                ANNEHMEN
             </Button>
         );
     }
@@ -39,7 +39,7 @@ export class ApplicantCard extends Component<Props> {
                 color={statusColors.alert}
                 onPress={() => this.props.handleChange(this.props.id, participationTypes.Declined)}
             >
-                DECLINE
+                ABLEHNEN
             </Button>
         );
     }
