@@ -135,4 +135,11 @@ export default {
         start: 'Anfang',
         end: 'Ende',
     },
+    Participation: {
+        'Participated': 'teilgenommen',
+        'Applied': 'beworben',
+        'Declined': 'abgelehnt',
+        'Accepted': 'angenommen',
+        'Canceled': 'abgebrochen',
+    }
 };
