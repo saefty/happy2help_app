@@ -1,13 +1,14 @@
 // @flow
 
 import React, { Component } from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { Card, Title, Paragraph, Button, Text } from 'react-native-paper';
+import { View } from 'react-native';
+import { Card, Paragraph, Button, Text } from 'react-native-paper';
 import type { UserObject } from '../../../models/user.model';
 import type { ParticipationEnum } from '../../../models/participation.model';
 import { getParticipationType, participationTypes } from '../../../models/participation.model';
 import { styles } from './applicantCard.style';
 import { statusColors } from '../../../../themes/colors';
+import { i18n, withNamespaces} from 'react-i18next';
 
 type Props = {
     id: number,
@@ -15,9 +16,10 @@ type Props = {
     state: ParticipationEnum,
     handleChange: (id: number, state: number) => any,
     onPress: () => void,
+    t: i18n.t; 
 };
 
-export class ApplicantCard extends Component<Props> {
+class _ApplicantCard extends Component<Props> {
     constructor(props: Props) {
         super(props);
     }
@@ -28,7 +30,7 @@ export class ApplicantCard extends Component<Props> {
                 color={statusColors.success}
                 onPress={() => this.props.handleChange(this.props.id, participationTypes.Accepted)}
             >
-                ACCEPT
+                ANNEHMEN
             </Button>
         );
     }
@@ -40,7 +42,7 @@ export class ApplicantCard extends Component<Props> {
                 color={statusColors.alert}
                 onPress={() => this.props.handleChange(this.props.id, participationTypes.Declined)}
             >
-                DECLINE
+                ABLEHNEN
             </Button>
         );
     }
@@ -52,6 +54,7 @@ export class ApplicantCard extends Component<Props> {
             ? styles.textAccepted
             : styles.textElse;
     }
+    
     render() {
         const button = [participationTypes.Applied, participationTypes.Declined].includes(this.props.state)
             ? this.renderAcceptButton()
@@ -65,7 +68,7 @@ export class ApplicantCard extends Component<Props> {
                         </Button>
 
                         <Paragraph style={[styles.text, this.styleParticipationState()]}>
-                            {getParticipationType(this.props.state)}
+                            {this.props.t(getParticipationType(this.props.state))}
                         </Paragraph>
                     </View>
                     {button}
@@ -74,3 +77,4 @@ export class ApplicantCard extends Component<Props> {
         );
     }
 }
+export const ApplicantCard = withNamespaces("Participation")(_ApplicantCard);

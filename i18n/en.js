@@ -140,4 +140,12 @@ export default {
         start: 'From',
         end: 'To',
     },
+
+    Participation: {
+        'Participated': 'participated',
+        'Applied':  'applied',
+        'Declined': 'declined',
+        'Accepted': 'accepted',
+        'Canceled': 'canceled',
+    }
 };
